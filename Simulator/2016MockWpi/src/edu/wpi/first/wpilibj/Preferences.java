@@ -271,14 +271,4 @@ public class Preferences {
       return backup;
     }
   }
-
-  /**
-   * This function is no longer required, as NetworkTables automatically
-   * saves persistent values (which all Preferences values are) periodically
-   * when running as a server.
-   * @deprecated backwards compatibility shim
-   */
-  public void save() {
-        NetworkTablesJNI.__save();
-  }
 }

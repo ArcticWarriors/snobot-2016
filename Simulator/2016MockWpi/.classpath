@@ -2,5 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="3rdParyLibraries/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="3rdParyLibraries/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="3rdParyLibraries/jinput-test.jar"/>
+	<classpathentry kind="lib" path="3rdParyLibraries/jinput.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="2016MockWpi/3rdParyLibraries"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
