@@ -56,7 +56,7 @@ public class JNIWrapper
                 }
                 else
                 {
-                    System.loadLibrary("wpilibJavaJNI");
+                    // System.loadLibrary("wpilibJavaJNI");
                 }
 
                 libraryLoaded = true;

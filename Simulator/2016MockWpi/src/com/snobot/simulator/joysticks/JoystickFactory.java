@@ -91,6 +91,12 @@ public class JoystickFactory
     {
         try
         {
+            String comment = "Acceptable Types:\n  ";
+            comment += GenericGamepadJoystick.class.getName() + "\n  ";
+            comment += KeyboardJoystick.class.getName() + "\n  ";
+            comment += LogitechJoystick.class.getName() + "\n  ";
+            comment += Ps4Joystick.class.getName() + "\n  ";
+            comment += XboxJoystick.class.getName() + "\n  ";
 
             Properties p = new Properties();
             for (int i = 0; i < sNUMBER_OF_STICKS; ++i)
@@ -100,7 +106,7 @@ public class JoystickFactory
 
             FileOutputStream stream = new FileOutputStream(sJOYSTICK_CONFIG_FILE);
 
-            p.store(stream, "");
+            p.store(stream, comment);
             System.out.println("Wrote joystick config file to " + new File(sJOYSTICK_CONFIG_FILE).getAbsolutePath());
             stream.close();
         }

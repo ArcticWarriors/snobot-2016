@@ -1,0 +1,6 @@
+/bin/
+
+/logs/
+*.preferences.ini
+joystick_config.properties
+simulator_config.properties
