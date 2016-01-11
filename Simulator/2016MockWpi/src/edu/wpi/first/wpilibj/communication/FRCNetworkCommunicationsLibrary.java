@@ -9,6 +9,9 @@ package edu.wpi.first.wpilibj.communication;
 
 import java.nio.ByteBuffer;
 
+import com.snobot.simulator.RobotStateSingleton;
+import com.snobot.simulator.joysticks.JoystickFactory;
+
 import edu.wpi.first.wpilibj.hal.JNIWrapper;
 
 /**
@@ -16,6 +19,16 @@ import edu.wpi.first.wpilibj.hal.JNIWrapper;
  */
 public class FRCNetworkCommunicationsLibrary extends JNIWrapper
 {
+    // **************************************************
+    // Our stuff
+    // **************************************************
+    private static RobotStateSingleton sRobotState = RobotStateSingleton.get();
+    private static final JoystickFactory sJoystickFactory = JoystickFactory.get();
+
+    // **************************************************
+    // /Our stuff
+    // **************************************************
+
     /** Module type from LoadOut.h */
     public static interface tModuleType
     {
@@ -207,13 +220,9 @@ public class FRCNetworkCommunicationsLibrary extends JNIWrapper
 
     }
 
-    private static native int NativeHALGetControlWord();
-
     public static HALControlWord HALGetControlWord()
     {
-        int word = NativeHALGetControlWord();
-        return new HALControlWord((word & 1) != 0, ((word >> 1) & 1) != 0, ((word >> 2) & 1) != 0, ((word >> 3) & 1) != 0, ((word >> 4) & 1) != 0,
-                ((word >> 5) & 1) != 0);
+        return sRobotState.getControlWord();
     }
 
     private static native int NativeHALGetAllianceStation();
@@ -244,20 +253,31 @@ public class FRCNetworkCommunicationsLibrary extends JNIWrapper
 
     public static short[] HALGetJoystickAxes(byte joystickNum)
     {
-        return new short[] {};
+        return sJoystickFactory.get(joystickNum).getAxisValues();
     }
 
     public static short[] HALGetJoystickPOVs(byte joystickNum)
     {
-        return new short[] {};
+        return sJoystickFactory.get(joystickNum).getPovValues();
     }
 
     public static int HALGetJoystickButtons(byte joystickNum, ByteBuffer count)
     {
-        return 0;
+        int num_buttons = sJoystickFactory.get(joystickNum).getButtonCount();
+        int masked_values = sJoystickFactory.get(joystickNum).getButtonMask();
+
+        count.clear();
+        count.put((byte) num_buttons);
+        count.position(0);
+
+        return masked_values;
     }
 
-    public static native int HALSetJoystickOutputs(byte joystickNum, int outputs, short leftRumble, short rightRumble);
+    public static int HALSetJoystickOutputs(byte joystickNum, int outputs, short leftRumble, short rightRumble)
+    {
+        sJoystickFactory.get(joystickNum).setRumble(leftRumble);
+        return 0;
+    }
 
     public static int HALGetJoystickIsXbox(byte joystickNum)
     {
@@ -271,7 +291,7 @@ public class FRCNetworkCommunicationsLibrary extends JNIWrapper
 
     public static String HALGetJoystickName(byte joystickNum)
     {
-        return "";
+        return "Joystick " + joystickNum;
     }
 
     public static int HALGetJoystickAxisType(byte joystickNum, byte axis)
@@ -279,7 +299,10 @@ public class FRCNetworkCommunicationsLibrary extends JNIWrapper
         return 0;
     }
 
-    public static native float HALGetMatchTime();
+    public static float HALGetMatchTime()
+    {
+        return sRobotState.getMatchTime();
+    }
 
     public static boolean HALGetSystemActive()
     {

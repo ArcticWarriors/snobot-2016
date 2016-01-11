@@ -72,12 +72,12 @@ public class JNIWrapper
 
     public static long getPortWithModule(byte module, byte pin)
     {
-        return 0;
+        return pin;
     }
 
     public static long getPort(byte pin)
     {
-        return 0;
+        return pin;
     }
 
     public static void freePort(long port_pointer)

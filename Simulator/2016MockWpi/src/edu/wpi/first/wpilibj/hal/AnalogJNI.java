@@ -10,6 +10,9 @@ package edu.wpi.first.wpilibj.hal;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.AnalogWrapper;
+
 public class AnalogJNI extends JNIWrapper
 {
     /**
@@ -43,7 +46,10 @@ public class AnalogJNI extends JNIWrapper
 
     public static long initializeAnalogInputPort(long port_pointer)
     {
-        return 0;
+        AnalogWrapper wrapper = new AnalogWrapper((int) port_pointer);
+        SensorActuatorRegistry.get().register(wrapper, (int) port_pointer);
+
+        return port_pointer;
     }
 
     public static void freeAnalogInputPort(long port_pointer)
@@ -53,7 +59,10 @@ public class AnalogJNI extends JNIWrapper
 
     public static long initializeAnalogOutputPort(long port_pointer)
     {
-        return 0;
+        AnalogWrapper wrapper = new AnalogWrapper((int) port_pointer);
+        SensorActuatorRegistry.get().register(wrapper, (int) port_pointer);
+
+        return port_pointer;
     }
 
     public static void freeAnalogOutputPort(long port_pointer)
@@ -68,7 +77,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static boolean checkAnalogInputChannel(int pin)
     {
-        return false;
+        return !SensorActuatorRegistry.get().getAnalog().containsKey(pin);
     }
 
     public static boolean checkAnalogOutputChannel(int pin)
@@ -93,7 +102,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static double getAnalogSampleRate()
     {
-        return 0;
+        return 100000;
     }
 
     public static void setAnalogAverageBits(long analog_port_pointer, int bits)
@@ -116,7 +125,10 @@ public class AnalogJNI extends JNIWrapper
         return 0;
     }
 
-    public static native short getAnalogValue(long analog_port_pointer);
+    public static short getAnalogValue(long analog_port_pointer)
+    {
+        return 0;
+    }
 
     public static int getAnalogAverageValue(long analog_port_pointer)
     {
@@ -233,3 +245,4 @@ public class AnalogJNI extends JNIWrapper
         return false;
     }
 }
+

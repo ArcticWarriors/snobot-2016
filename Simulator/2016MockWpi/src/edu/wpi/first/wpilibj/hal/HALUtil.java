@@ -7,8 +7,42 @@
 
 package edu.wpi.first.wpilibj.hal;
 
+import com.snobot.simulator.RobotStateSingleton;
+
+import edu.wpi.first.wpilibj.Timer;
+
 public class HALUtil extends JNIWrapper
 {
+    // *****************************************************
+    // Our Stuff
+    // *****************************************************
+
+    private static final double sCYCLE_TIME = .02; //The period that the main loop should be run at
+    private static double sWaitTime = .02; // The time to sleep. You can run
+                                           // simulations faster/slower by
+                                           // changing this. For example,
+                                           // making the wait time 1 second,
+                                           // means one 20ms cycle will happen
+                                           // each second, 50x slower than
+                                           // normal. Or, you could make it
+                                           // .002, which would make the code
+                                           // execute at 10x speed
+    private static double sMatchTime = 0;
+
+    public static double getCycleTime()
+    {
+        return sCYCLE_TIME;
+    }
+    
+    public static void setWaitTime(double aTime)
+    {
+        sWaitTime = aTime;
+    }
+
+    // *****************************************************
+    // /Our Stuff
+    // *****************************************************
+
     public static final int NULL_PARAMETER = -1005;
     public static final int SAMPLE_RATE_TOO_HIGH = 1001;
     public static final int VOLTAGE_OUT_OF_RANGE = 1002;
@@ -51,10 +85,16 @@ public class HALUtil extends JNIWrapper
 
     public static void takeMultiWait(long sem, long m)
     {
+        Timer.delay(sWaitTime);
+        sMatchTime += sCYCLE_TIME;
 
+        RobotStateSingleton.get().updateLoopListeners();
     }
 
-    public static native short getFPGAVersion();
+    public static short getFPGAVersion()
+    {
+        return 0;
+    }
 
     public static int getFPGARevision()
     {
@@ -63,7 +103,7 @@ public class HALUtil extends JNIWrapper
 
     public static long getFPGATime()
     {
-        return 0;
+        return (long) (sMatchTime * 1e6);
     }
 
     public static boolean getFPGAButton()

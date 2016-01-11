@@ -12,6 +12,7 @@ import java.util.Vector;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
@@ -278,5 +279,6 @@ public class Preferences {
    * @deprecated backwards compatibility shim
    */
   public void save() {
+        NetworkTablesJNI.__save();
   }
 }

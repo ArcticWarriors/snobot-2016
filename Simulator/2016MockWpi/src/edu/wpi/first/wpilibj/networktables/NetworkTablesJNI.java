@@ -1,11 +1,18 @@
 package edu.wpi.first.wpilibj.networktables;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
@@ -79,7 +86,7 @@ public class NetworkTablesJNI
 
     public static boolean containsKey(String key)
     {
-        return false;
+        return sStorage.containsKey(key);
     }
 
     public static int getType(String key)
@@ -89,17 +96,20 @@ public class NetworkTablesJNI
 
     public static boolean putBoolean(String key, boolean value)
     {
-        return false;
+        sStorage.put(key, value);
+        return true;
     }
 
     public static boolean putDouble(String key, double value)
     {
-        return false;
+        sStorage.put(key, value);
+        return true;
     }
 
     public static boolean putString(String key, String value)
     {
-        return false;
+        sStorage.put(key, value);
+        return true;
     }
 
     public static boolean putRaw(String key, byte[] value)
@@ -129,17 +139,17 @@ public class NetworkTablesJNI
 
     public static void forcePutBoolean(String key, boolean value)
     {
-
+        sStorage.put(key, value);
     }
 
     public static void forcePutDouble(String key, double value)
     {
-
+        sStorage.put(key, value);
     }
 
     public static void forcePutString(String key, String value)
     {
-
+        sStorage.put(key, value);
     }
 
     public static void forcePutRaw(String key, byte[] value)
@@ -167,22 +177,37 @@ public class NetworkTablesJNI
 
     }
 
-    public static native Object getValue(String key) throws TableKeyNotDefinedException;
+    public static Object getValue(String key) throws TableKeyNotDefinedException
+    {
+        if(!containsKey(key))
+        {
+            throw new TableKeyNotDefinedException(key);
+        }
+
+        return sStorage.get(key);
+    }
 
     public static boolean getBoolean(String key) throws TableKeyNotDefinedException
     {
-        return false;
+        if (!containsKey(key))
+        {
+            throw new TableKeyNotDefinedException(key);
+        }
+
+        return Boolean.parseBoolean(sStorage.get(key).toString());
     }
 
     public static double getDouble(String key) throws TableKeyNotDefinedException
     {
-        return 0;
+        if (!containsKey(key))
+        {
+            throw new TableKeyNotDefinedException(key);
+        }
+
+        return Double.parseDouble(sStorage.get(key).toString());
     }
 
-    public static String getString(String key) throws TableKeyNotDefinedException
-    {
-        return "";
-    }
+    public static native String getString(String key) throws TableKeyNotDefinedException;
 
     public static native byte[] getRaw(String key) throws TableKeyNotDefinedException;
 
@@ -196,17 +221,41 @@ public class NetworkTablesJNI
 
     public static boolean getBoolean(String key, boolean defaultValue)
     {
-        return false;
+        if (!containsKey(key))
+        {
+            return defaultValue;
+        }
+        else
+        {
+            return Boolean.parseBoolean(sStorage.get(key).toString());
+        }
+
     }
 
     public static double getDouble(String key, double defaultValue)
     {
-        return 0;
+        if (!containsKey(key))
+        {
+            return defaultValue;
+        }
+        else
+        {
+            return Double.parseDouble(sStorage.get(key).toString());
+        }
+
     }
 
     public static String getString(String key, String defaultValue)
     {
-        return "";
+        if (!containsKey(key))
+        {
+            return defaultValue;
+        }
+        else
+        {
+            return sStorage.get(key).toString();
+        }
+
     }
 
     public static native byte[] getRaw(String key, byte[] defaultValue);
@@ -329,11 +378,40 @@ public class NetworkTablesJNI
 
     public static void savePersistent(String filename) throws PersistentException
     {
-
+        try
+        {
+            
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+            for (Entry<String, Object> pair : sStorage.entrySet())
+            {
+                bw.write(pair.getKey() + "=" + pair.getValue().toString() + "\n");
+            }
+            bw.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public static native String[] loadPersistent(String filename) throws PersistentException; // returns
-                                                                                              // warnings
+    public static String[] loadPersistent(String filename) throws PersistentException
+    {
+        Properties p = new Properties();
+        try
+        {
+            p.load(new FileInputStream(new File(filename)));
+            for (Object key : p.keySet())
+            {
+                sStorage.put(key.toString(), p.get(key));
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static long now()
     {
@@ -349,4 +427,41 @@ public class NetworkTablesJNI
     {
 
     }
+
+    private static Map<String, Object> sStorage = new LinkedHashMap<>();
+
+    // *************************************************
+    private static String sSaveFileName = "";
+
+    public static void __setFileName(String aName)
+    {
+        sSaveFileName = aName;
+        __load();
+    }
+
+    public static void __save()
+    {
+        try
+        {
+            savePersistent(sSaveFileName);
+        }
+        catch (PersistentException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void __load()
+    {
+        try
+        {
+            loadPersistent(sSaveFileName);
+        }
+        catch (PersistentException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    // *************************************************
 }

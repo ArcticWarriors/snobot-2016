@@ -7,11 +7,14 @@
 
 package edu.wpi.first.wpilibj.hal;
 
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.DigitalSourceWrapper;
+
 public class DIOJNI extends JNIWrapper
 {
     public static long initializeDigitalPort(long port_pointer)
     {
-        return 0;
+        return port_pointer;
     }
 
     public static void freeDigitalPort(long port_pointer)
@@ -21,6 +24,10 @@ public class DIOJNI extends JNIWrapper
 
     public static boolean allocateDIO(long digital_port_pointer, boolean input)
     {
+        int pin = (int) digital_port_pointer;
+        DigitalSourceWrapper wrapper = new DigitalSourceWrapper(pin);
+        SensorActuatorRegistry.get().register(wrapper, pin);
+
         return false;
     }
 
@@ -59,5 +66,8 @@ public class DIOJNI extends JNIWrapper
         return false;
     }
 
-    public static native short getLoopTiming();
+    public static short getLoopTiming()
+    {
+        return (short) (HALUtil.getCycleTime() * 1e3);
+    }
 }
