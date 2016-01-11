@@ -1,13 +1,13 @@
 package edu.wpi.first.wpilibj.networktables;
 
-import edu.wpi.first.wpilibj.tables.*;
-
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
+
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
 public class NetworkTablesJNI {
   static boolean libraryLoaded = false;
@@ -54,7 +54,7 @@ public class NetworkTablesJNI {
 
           System.load(jniLibrary.getAbsolutePath());
         } else {
-          System.loadLibrary("ntcore");
+                    // System.loadLibrary("ntcore");
         }
       } catch (IOException ex) {
         ex.printStackTrace();
@@ -64,92 +64,224 @@ public class NetworkTablesJNI {
     }
   }
 
-  public static native boolean containsKey(String key);
-  public static native int getType(String key);
+  public static boolean containsKey(String key)
+  {
+    return false;
+  }
+  public static int getType(String key)
+  {
+    return 0;
+  }
 
-  public static native boolean putBoolean(String key, boolean value);
-  public static native boolean putDouble(String key, double value);
-  public static native boolean putString(String key, String value);
-  public static native boolean putRaw(String key, byte[] value);
-  public static native boolean putRaw(String key, ByteBuffer value, int len);
-  public static native boolean putBooleanArray(String key, boolean[] value);
-  public static native boolean putDoubleArray(String key, double[] value);
-  public static native boolean putStringArray(String key, String[] value);
+  public static boolean putBoolean(String key, boolean value)
+  {
+    return false;
+  }
+  public static boolean putDouble(String key, double value)
+  {
+    return false;
+  }
+  public static boolean putString(String key, String value)
+  {
+    return false;
+  }
+  public static boolean putRaw(String key, byte[] value)
+  {
+    return false;
+  }
+  public static boolean putRaw(String key, ByteBuffer value, int len)
+  {
+    return false;
+  }
+  public static boolean putBooleanArray(String key, boolean[] value)
+  {
+    return false;
+  }
+  public static boolean putDoubleArray(String key, double[] value)
+  {
+    return false;
+  }
+  public static boolean putStringArray(String key, String[] value)
+  {
+    return false;
+  }
 
-  public static native void forcePutBoolean(String key, boolean value);
-  public static native void forcePutDouble(String key, double value);
-  public static native void forcePutString(String key, String value);
-  public static native void forcePutRaw(String key, byte[] value);
-  public static native void forcePutRaw(String key, ByteBuffer value, int len);
-  public static native void forcePutBooleanArray(String key, boolean[] value);
-  public static native void forcePutDoubleArray(String key, double[] value);
-  public static native void forcePutStringArray(String key, String[] value);
+  public static void forcePutBoolean(String key, boolean value)
+  {
+
+  }
+  public static void forcePutDouble(String key, double value)
+  {
+
+  }
+  public static void forcePutString(String key, String value)
+  {
+
+  }
+  public static void forcePutRaw(String key, byte[] value)
+  {
+
+  }
+  public static void forcePutRaw(String key, ByteBuffer value, int len)
+  {
+
+  }
+  public static void forcePutBooleanArray(String key, boolean[] value)
+  {
+
+  }
+  public static void forcePutDoubleArray(String key, double[] value)
+  {
+
+  }
+  public static void forcePutStringArray(String key, String[] value)
+  {
+
+  }
 
   public static native Object getValue(String key) throws TableKeyNotDefinedException;
-  public static native boolean getBoolean(String key) throws TableKeyNotDefinedException;
-  public static native double getDouble(String key) throws TableKeyNotDefinedException;
-  public static native String getString(String key) throws TableKeyNotDefinedException;
+  public static boolean getBoolean(String key) throws TableKeyNotDefinedException
+  {
+    return false;
+  }
+  public static double getDouble(String key) throws TableKeyNotDefinedException
+  {
+    return 0;
+  }
+  public static String getString(String key) throws TableKeyNotDefinedException
+  {
+    return "";
+  }
   public static native byte[] getRaw(String key) throws TableKeyNotDefinedException;
   public static native boolean[] getBooleanArray(String key) throws TableKeyNotDefinedException;
   public static native double[] getDoubleArray(String key) throws TableKeyNotDefinedException;
   public static native String[] getStringArray(String key) throws TableKeyNotDefinedException;
 
   public static native Object getValue(String key, Object defaultValue);
-  public static native boolean getBoolean(String key, boolean defaultValue);
-  public static native double getDouble(String key, double defaultValue);
-  public static native String getString(String key, String defaultValue);
+  public static boolean getBoolean(String key, boolean defaultValue)
+  {
+    return false;
+  }
+  public static double getDouble(String key, double defaultValue)
+  {
+    return 0;
+  }
+  public static String getString(String key, String defaultValue)
+  {
+    return "";
+  }
   public static native byte[] getRaw(String key, byte[] defaultValue);
   public static native boolean[] getBooleanArray(String key, boolean[] defaultValue);
   public static native double[] getDoubleArray(String key, double[] defaultValue);
   public static native String[] getStringArray(String key, String[] defaultValue);
 
-  public static native void setEntryFlags(String key, int flags);
-  public static native int getEntryFlags(String key);
+  public static void setEntryFlags(String key, int flags)
+  {
 
-  public static native void deleteEntry(String key);
-  public static native void deleteAllEntries();
+  }
+  public static int getEntryFlags(String key)
+  {
+    return 0;
+  }
+
+  public static void deleteEntry(String key)
+  {
+
+  }
+  public static void deleteAllEntries()
+  {
+
+  }
 
   public static native EntryInfo[] getEntries(String prefix, int types);
 
-  public static native void flush();
+  public static void flush()
+  {
+
+  }
 
   public interface EntryListenerFunction {
     void apply(int uid, String key, Object value, int flags);
   }
-  public static native int addEntryListener(String prefix, EntryListenerFunction listener, int flags);
-  public static native void removeEntryListener(int entryListenerUid);
+  public static int addEntryListener(String prefix, EntryListenerFunction listener, int flags)
+  {
+    return 0;
+  }
+  public static void removeEntryListener(int entryListenerUid)
+  {
+
+  }
 
   public interface ConnectionListenerFunction {
     void apply(int uid, boolean connected, ConnectionInfo conn);
   }
-  public static native int addConnectionListener(ConnectionListenerFunction listener, boolean immediateNotify);
-  public static native void removeConnectionListener(int connListenerUid);
+  public static int addConnectionListener(ConnectionListenerFunction listener, boolean immediateNotify)
+  {
+    return 0;
+  }
+  public static void removeConnectionListener(int connListenerUid)
+  {
+
+  }
 
   // public static native void createRpc(String key, byte[] def, IRpc rpc);
   // public static native void createRpc(String key, ByteBuffer def, int def_len, IRpc rpc);
   public static native byte[] getRpc(String key) throws TableKeyNotDefinedException;
   public static native byte[] getRpc(String key, byte[] defaultValue);
-  public static native int callRpc(String key, byte[] params);
-  public static native int callRpc(String key, ByteBuffer params, int params_len);
+  public static int callRpc(String key, byte[] params)
+  {
+    return 0;
+  }
+  public static int callRpc(String key, ByteBuffer params, int params_len)
+  {
+    return 0;
+  }
   // public static native byte[] getRpcResultBlocking(int callUid);
   // public static native byte[] getRpcResultNonblocking(int callUid) throws RpcNoResponseException;
 
-  public static native void setNetworkIdentity(String name);
-  public static native void startServer(String persistFilename, String listenAddress, int port);
-  public static native void stopServer();
-  public static native void startClient(String serverName, int port);
-  public static native void stopClient();
-  public static native void setUpdateRate(double interval);
+  public static void setNetworkIdentity(String name)
+  {
+
+  }
+  public static void startServer(String persistFilename, String listenAddress, int port)
+  {
+
+  }
+  public static void stopServer()
+  {
+
+  }
+  public static void startClient(String serverName, int port)
+  {
+
+  }
+  public static void stopClient()
+  {
+
+  }
+  public static void setUpdateRate(double interval)
+  {
+
+  }
 
   public static native ConnectionInfo[] getConnections();
 
-  public static native void savePersistent(String filename) throws PersistentException;
+  public static void savePersistent(String filename) throws PersistentException
+  {
+
+  }
   public static native String[] loadPersistent(String filename) throws PersistentException;  // returns warnings
 
-  public static native long now();
+  public static long now()
+  {
+    return 0;
+  }
 
   public interface LoggerFunction {
     void apply(int level, String file, int line, String msg);
   }
-  public static native void setLogger(LoggerFunction func, int minLevel);
+  public static void setLogger(LoggerFunction func, int minLevel)
+  {
+
+  }
 }

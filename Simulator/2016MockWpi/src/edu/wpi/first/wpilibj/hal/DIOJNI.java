@@ -7,26 +7,57 @@
 
 package edu.wpi.first.wpilibj.hal;
 
-public class DIOJNI extends JNIWrapper {
-  public static native long initializeDigitalPort(long port_pointer);
+public class DIOJNI extends JNIWrapper
+{
+    public static long initializeDigitalPort(long port_pointer)
+    {
+        return 0;
+    }
 
-  public static native void freeDigitalPort(long port_pointer);
+    public static void freeDigitalPort(long port_pointer)
+    {
 
-  public static native boolean allocateDIO(long digital_port_pointer, boolean input);
+    }
 
-  public static native void freeDIO(long digital_port_pointer);
+    public static boolean allocateDIO(long digital_port_pointer, boolean input)
+    {
+        return false;
+    }
 
-  public static native void setDIO(long digital_port_pointer, short value);
+    public static void freeDIO(long digital_port_pointer)
+    {
 
-  public static native boolean getDIO(long digital_port_pointer);
+    }
 
-  public static native boolean getDIODirection(long digital_port_pointer);
+    public static void setDIO(long digital_port_pointer, short value)
+    {
 
-  public static native void pulse(long digital_port_pointer, double pulseLength);
+    }
 
-  public static native boolean isPulsing(long digital_port_pointer);
+    public static boolean getDIO(long digital_port_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean isAnyPulsing();
+    public static boolean getDIODirection(long digital_port_pointer)
+    {
+        return false;
+    }
 
-  public static native short getLoopTiming();
+    public static void pulse(long digital_port_pointer, double pulseLength)
+    {
+
+    }
+
+    public static boolean isPulsing(long digital_port_pointer)
+    {
+        return false;
+    }
+
+    public static boolean isAnyPulsing()
+    {
+        return false;
+    }
+
+    public static native short getLoopTiming();
 }

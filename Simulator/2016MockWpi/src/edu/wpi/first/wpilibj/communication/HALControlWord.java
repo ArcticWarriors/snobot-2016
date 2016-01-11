@@ -18,7 +18,7 @@ public class HALControlWord {
   private boolean m_fmsAttached;
   private boolean m_dsAttached;
 
-  protected HALControlWord(boolean enabled, boolean autonomous, boolean test, boolean eStop,
+  public HALControlWord(boolean enabled, boolean autonomous, boolean test, boolean eStop,
       boolean fmsAttached, boolean dsAttached) {
     m_enabled = enabled;
     m_autonomous = autonomous;

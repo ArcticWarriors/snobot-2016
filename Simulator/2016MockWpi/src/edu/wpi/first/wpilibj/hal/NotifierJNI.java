@@ -16,31 +16,46 @@ import java.lang.Runtime;
  * edu.wpi.first.wpilibj.Notifier class, which corresponds to the C++ Notifier
  * class, should be used.
  */
-public class NotifierJNI extends JNIWrapper {
-  /**
-   * Callback function
-   */
-  public interface NotifierJNIHandlerFunction {
-    void apply(long curTime);
-  }
+public class NotifierJNI extends JNIWrapper
+{
+    /**
+     * Callback function
+     */
+    public interface NotifierJNIHandlerFunction
+    {
+        void apply(long curTime);
+    }
 
-  /**
-   * Initializes the notifier.
-   */
-  public static native long initializeNotifier(NotifierJNIHandlerFunction func);
+    /**
+     * Initializes the notifier.
+     */
+    public static long initializeNotifier(NotifierJNIHandlerFunction func)
+    {
+        return 0;
+    }
 
-  /**
-   * Deletes the notifier object when we are done with it.
-   */
-  public static native void cleanNotifier(long notifierPtr);
+    /**
+     * Deletes the notifier object when we are done with it.
+     */
+    public static void cleanNotifier(long notifierPtr)
+    {
 
-  /**
-   * Sets the notifier to call the callback in another triggerTime microseconds.
-   */
-  public static native void updateNotifierAlarm(long notifierPtr, long triggerTime);
+    }
 
-  /**
-   * Tells the notifier to stop calling the callback.
-   */
-  public static native void stopNotifierAlarm(long notifierPtr);
+    /**
+     * Sets the notifier to call the callback in another triggerTime
+     * microseconds.
+     */
+    public static void updateNotifierAlarm(long notifierPtr, long triggerTime)
+    {
+
+    }
+
+    /**
+     * Tells the notifier to stop calling the callback.
+     */
+    public static void stopNotifierAlarm(long notifierPtr)
+    {
+
+    }
 }
