@@ -50,14 +50,14 @@ public class EncoderJNI extends JNIWrapper
     }
 
     public static void setEncoderReverseDirection(long encoder_pointer, boolean reverseDirection)
-  {
+    {
 
-  }
+    }
 
     public static void setEncoderSamplesToAverage(long encoder_pointer, int samplesToAverage)
-  {
+    {
 
-  }
+    }
 
     public static int getEncoderSamplesToAverage(long encoder_pointer)
     {
@@ -65,7 +65,7 @@ public class EncoderJNI extends JNIWrapper
     }
 
     public static void setEncoderIndexSource(long digital_port, int pin, boolean analogTrigger, boolean activeHigh, boolean edgeSensitive)
-  {
+    {
 
-  }
+    }
 }

@@ -27,14 +27,14 @@ public class CounterJNI extends JNIWrapper
     }
 
     public static void setCounterUpSource(long counter_pointer, int pin, boolean analogTrigger)
-  {
+    {
 
-  }
+    }
 
     public static void setCounterUpSourceEdge(long counter_pointer, boolean risingEdge, boolean fallingEdge)
-  {
+    {
 
-  }
+    }
 
     public static void clearCounterUpSource(long counter_pointer)
     {
@@ -42,14 +42,14 @@ public class CounterJNI extends JNIWrapper
     }
 
     public static void setCounterDownSource(long counter_pointer, int pin, boolean analogTrigger)
-  {
+    {
 
-  }
+    }
 
     public static void setCounterDownSourceEdge(long counter_pointer, boolean risingEdge, boolean fallingEdge)
-  {
+    {
 
-  }
+    }
 
     public static void clearCounterDownSource(long counter_pointer)
     {
@@ -67,9 +67,9 @@ public class CounterJNI extends JNIWrapper
     }
 
     public static void setCounterSemiPeriodMode(long counter_pointer, boolean highSemiPeriod)
-  {
+    {
 
-  }
+    }
 
     public static void setCounterPulseLengthMode(long counter_pointer, double threshold)
     {
@@ -82,9 +82,9 @@ public class CounterJNI extends JNIWrapper
     }
 
     public static void setCounterSamplesToAverage(long counter_pointer, int samplesToAverage)
-  {
+    {
 
-  }
+    }
 
     public static void resetCounter(long counter_pointer)
     {
@@ -122,7 +122,7 @@ public class CounterJNI extends JNIWrapper
     }
 
     public static void setCounterReverseDirection(long counter_pointer, boolean reverseDirection)
-  {
+    {
 
-  }
+    }
 }

@@ -184,9 +184,9 @@ public class AnalogJNI extends JNIWrapper
     }
 
     public static void getAccumulatorOutput(long analog_port_pointer, LongBuffer value, IntBuffer count)
-  {
+    {
 
-  }
+    }
 
     public static long initializeAnalogTrigger(long port_pointer, IntBuffer index)
     {
@@ -199,24 +199,24 @@ public class AnalogJNI extends JNIWrapper
     }
 
     public static void setAnalogTriggerLimitsRaw(long analog_trigger_pointer, int lower, int upper)
-  {
+    {
 
-  }
+    }
 
     public static void setAnalogTriggerLimitsVoltage(long analog_trigger_pointer, double lower, double upper)
-  {
+    {
 
-  }
+    }
 
     public static void setAnalogTriggerAveraged(long analog_trigger_pointer, boolean useAveragedValue)
-  {
+    {
 
-  }
+    }
 
     public static void setAnalogTriggerFiltered(long analog_trigger_pointer, boolean useFilteredValue)
-  {
+    {
 
-  }
+    }
 
     public static boolean getAnalogTriggerInWindow(long analog_trigger_pointer)
     {

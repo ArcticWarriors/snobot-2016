@@ -25,9 +25,9 @@ public class InterruptJNI extends JNIWrapper
     }
 
     public static int waitForInterrupt(long interrupt_pointer, double timeout, boolean ignorePrevious)
-  {
-    return 0;
-  }
+    {
+        return 0;
+    }
 
     public static void enableInterrupts(long interrupt_pointer)
     {
@@ -50,17 +50,17 @@ public class InterruptJNI extends JNIWrapper
     }
 
     public static void requestInterrupts(long interrupt_pointer, byte routing_module, int routing_pin, boolean routing_analog_trigger)
-  {
+    {
 
-  }
+    }
 
     public static void attachInterruptHandler(long interrupt_pointer, InterruptJNIHandlerFunction handler, Object param)
-  {
+    {
 
-  }
+    }
 
     public static void setInterruptUpSourceEdge(long interrupt_pointer, boolean risingEdge, boolean fallingEdge)
-  {
+    {
 
-  }
+    }
 }

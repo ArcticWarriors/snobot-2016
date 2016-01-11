@@ -17,9 +17,9 @@ public class I2CJNI extends JNIWrapper
     }
 
     public static int i2CTransaction(byte port, byte address, ByteBuffer dataToSend, byte sendSize, ByteBuffer dataReceived, byte receiveSize)
-  {
-    return 0;
-  }
+    {
+        return 0;
+    }
 
     public static int i2CWrite(byte port, byte address, ByteBuffer dataToSend, byte sendSize)
     {
@@ -27,9 +27,9 @@ public class I2CJNI extends JNIWrapper
     }
 
     public static int i2CRead(byte port, byte address, ByteBuffer dataRecieved, byte receiveSize)
-  {
-    return 0;
-  }
+    {
+        return 0;
+    }
 
     public static void i2CClose(byte port)
     {

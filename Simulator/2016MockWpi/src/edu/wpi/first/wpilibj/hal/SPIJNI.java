@@ -19,9 +19,9 @@ public class SPIJNI extends JNIWrapper
     }
 
     public static int spiTransaction(byte port, ByteBuffer dataToSend, ByteBuffer dataReceived, byte size)
-  {
-    return 0;
-  }
+    {
+        return 0;
+    }
 
     public static int spiWrite(byte port, ByteBuffer dataToSend, byte sendSize)
     {
@@ -44,9 +44,9 @@ public class SPIJNI extends JNIWrapper
     }
 
     public static void spiSetOpts(byte port, int msb_first, int sample_on_trailing, int clk_idle_high)
-  {
+    {
 
-  }
+    }
 
     public static void spiSetChipSelectActiveHigh(byte port)
     {
@@ -102,7 +102,7 @@ public class SPIJNI extends JNIWrapper
     }
 
     public static void spiGetAccumulatorOutput(byte port, LongBuffer value, IntBuffer count)
-  {
+    {
 
-  }
+    }
 }
