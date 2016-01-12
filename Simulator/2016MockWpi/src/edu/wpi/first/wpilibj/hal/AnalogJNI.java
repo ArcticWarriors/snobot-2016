@@ -15,6 +15,12 @@ import com.snobot.simulator.module_wrapper.AnalogWrapper;
 
 public class AnalogJNI extends JNIWrapper
 {
+    private static AnalogWrapper getWrapperFromBuffer(long buffer)
+    {
+        int port = (int) buffer;
+        return SensorActuatorRegistry.get().getAnalog().get(port);
+    }
+
     /**
      * <i>native declaration :
      * AthenaJava\target\native\include\HAL\Analog.h:58</i><br>
@@ -142,7 +148,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static double getAnalogVoltage(long analog_port_pointer)
     {
-        return 0;
+        return getWrapperFromBuffer(analog_port_pointer).getVoltage();
     }
 
     public static double getAnalogAverageVoltage(long analog_port_pointer)
@@ -172,7 +178,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static void resetAccumulator(long analog_port_pointer)
     {
-
+        getWrapperFromBuffer(analog_port_pointer).setAccumulator(0);
     }
 
     public static void setAccumulatorCenter(long analog_port_pointer, int center)
@@ -197,12 +203,18 @@ public class AnalogJNI extends JNIWrapper
 
     public static void getAccumulatorOutput(long analog_port_pointer, LongBuffer value, IntBuffer count)
     {
+        double accum_value = getWrapperFromBuffer(analog_port_pointer).getAccumulator();
+        accum_value *= 1000000000;
+        accum_value *= .007; // Volts per degree second
+        accum_value *= 100;
 
+        value.put((long) accum_value);
+        count.put(1);
     }
 
     public static long initializeAnalogTrigger(long port_pointer, IntBuffer index)
     {
-        return 0;
+        return port_pointer;
     }
 
     public static void cleanAnalogTrigger(long analog_trigger_pointer)
