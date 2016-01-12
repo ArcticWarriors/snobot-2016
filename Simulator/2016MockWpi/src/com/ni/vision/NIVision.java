@@ -5,8 +5,9 @@
 
 package com.ni.vision;
 
-import java.lang.reflect.*;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -14,7 +15,10 @@ import java.nio.ByteOrder;
 public class NIVision {
   private NIVision() {}
 
-  private static native void imaqDispose(long addr);
+  private static void imaqDispose(long addr)
+  {
+
+  }
 
   private static Constructor<?> constructDirectByteBuffer;
   private static Field bufferAddressField;
@@ -24287,7 +24291,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqAnd(long dest, long sourceA, long sourceB);
+  private static void _imaqAnd(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqCompare(Image dest, Image source, Image compareImage,
       ComparisonFunction compare) {
@@ -24297,7 +24304,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCompare(long dest, long source, long compareImage, int compare);
+  private static void _imaqCompare(long dest, long source, long compareImage, int compare)
+  {
+
+  }
 
   public static void imaqLogicalDifference(Image dest, Image sourceA, Image sourceB) {
 
@@ -24305,7 +24315,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqLogicalDifference(long dest, long sourceA, long sourceB);
+  private static void _imaqLogicalDifference(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqNand(Image dest, Image sourceA, Image sourceB) {
 
@@ -24313,7 +24326,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqNand(long dest, long sourceA, long sourceB);
+  private static void _imaqNand(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqNor(Image dest, Image sourceA, Image sourceB) {
 
@@ -24321,7 +24337,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqNor(long dest, long sourceA, long sourceB);
+  private static void _imaqNor(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqOr(Image dest, Image sourceA, Image sourceB) {
 
@@ -24329,7 +24348,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqOr(long dest, long sourceA, long sourceB);
+  private static void _imaqOr(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqXnor(Image dest, Image sourceA, Image sourceB) {
 
@@ -24337,7 +24359,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqXnor(long dest, long sourceA, long sourceB);
+  private static void _imaqXnor(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqXor(Image dest, Image sourceA, Image sourceB) {
 
@@ -24345,7 +24370,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqXor(long dest, long sourceA, long sourceB);
+  private static void _imaqXor(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   /**
    * Particle Analysis functions
@@ -24360,7 +24388,10 @@ public class NIVision {
     return numParticles;
   }
 
-  private static native void _imaqCountParticles(long image, int connectivity8, long numParticles);
+  private static void _imaqCountParticles(long image, int connectivity8, long numParticles)
+  {
+
+  }
 
   public static double imaqMeasureParticle(Image image, int particleNumber, int calibrated,
       MeasurementType measurement) {
@@ -24428,7 +24459,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqConvexHull(long dest, long source, int connectivity8);
+  private static void _imaqConvexHull(long dest, long source, int connectivity8)
+  {
+
+  }
 
   public static void imaqDanielssonDistance(Image dest, Image source) {
 
@@ -24436,7 +24470,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDanielssonDistance(long dest, long source);
+  private static void _imaqDanielssonDistance(long dest, long source)
+  {
+
+  }
 
   public static void imaqFillHoles(Image dest, Image source, int connectivity8) {
 
@@ -24444,7 +24481,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFillHoles(long dest, long source, int connectivity8);
+  private static void _imaqFillHoles(long dest, long source, int connectivity8)
+  {
+
+  }
 
   public static class FindCirclesResult {
     public CircleReport[] array;
@@ -24513,7 +24553,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRejectBorder(long dest, long source, int connectivity8);
+  private static void _imaqRejectBorder(long dest, long source, int connectivity8)
+  {
+
+  }
 
   public static void imaqSegmentation(Image dest, Image source) {
 
@@ -24521,7 +24564,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSegmentation(long dest, long source);
+  private static void _imaqSegmentation(long dest, long source)
+  {
+
+  }
 
   public static void imaqSeparation(Image dest, Image source, int erosions,
       StructuringElement structuringElement) {
@@ -24542,7 +24588,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSimpleDistance(long dest, long source, long structuringElement);
+  private static void _imaqSimpleDistance(long dest, long source, long structuringElement)
+  {
+
+  }
 
   public static void imaqSizeFilter(Image dest, Image source, int connectivity8, int erosions,
       SizeType keepSize, StructuringElement structuringElement) {
@@ -24561,7 +24610,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSkeleton(long dest, long source, int method);
+  private static void _imaqSkeleton(long dest, long source, int method)
+  {
+
+  }
 
   /**
    * Acquisition functions
@@ -24577,7 +24629,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqAbsoluteDifference(long dest, long sourceA, long sourceB);
+  private static void _imaqAbsoluteDifference(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqAdd(Image dest, Image sourceA, Image sourceB) {
 
@@ -24585,7 +24640,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqAdd(long dest, long sourceA, long sourceB);
+  private static void _imaqAdd(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqAverage(Image dest, Image sourceA, Image sourceB) {
 
@@ -24593,7 +24651,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqAverage(long dest, long sourceA, long sourceB);
+  private static void _imaqAverage(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqDivide2(Image dest, Image sourceA, Image sourceB, RoundingMode roundingMode) {
 
@@ -24602,7 +24663,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDivide2(long dest, long sourceA, long sourceB, int roundingMode);
+  private static void _imaqDivide2(long dest, long sourceA, long sourceB, int roundingMode)
+  {
+
+  }
 
   public static void imaqMax(Image dest, Image sourceA, Image sourceB) {
 
@@ -24610,7 +24674,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMax(long dest, long sourceA, long sourceB);
+  private static void _imaqMax(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqMin(Image dest, Image sourceA, Image sourceB) {
 
@@ -24618,7 +24685,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMin(long dest, long sourceA, long sourceB);
+  private static void _imaqMin(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqModulo(Image dest, Image sourceA, Image sourceB) {
 
@@ -24626,7 +24696,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqModulo(long dest, long sourceA, long sourceB);
+  private static void _imaqModulo(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqMulDiv(Image dest, Image sourceA, Image sourceB, float value) {
 
@@ -24634,7 +24707,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMulDiv(long dest, long sourceA, long sourceB, float value);
+  private static void _imaqMulDiv(long dest, long sourceA, long sourceB, float value)
+  {
+
+  }
 
   public static void imaqMultiply(Image dest, Image sourceA, Image sourceB) {
 
@@ -24642,7 +24718,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMultiply(long dest, long sourceA, long sourceB);
+  private static void _imaqMultiply(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static void imaqSubtract(Image dest, Image sourceA, Image sourceB) {
 
@@ -24650,7 +24729,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSubtract(long dest, long sourceA, long sourceB);
+  private static void _imaqSubtract(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   /**
    * Caliper functions
@@ -25036,7 +25118,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCannyEdgeFilter(long dest, long source, long options);
+  private static void _imaqCannyEdgeFilter(long dest, long source, long options)
+  {
+
+  }
 
   public static void imaqCorrelate(Image dest, Image source, Image templateImage, Rect rect) {
 
@@ -25045,7 +25130,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCorrelate(long dest, long source, long templateImage, long rect);
+  private static void _imaqCorrelate(long dest, long source, long templateImage, long rect)
+  {
+
+  }
 
   public static void imaqEdgeFilter(Image dest, Image source, OutlineMethod method, Image mask) {
 
@@ -25054,7 +25142,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqEdgeFilter(long dest, long source, int method, long mask);
+  private static void _imaqEdgeFilter(long dest, long source, int method, long mask)
+  {
+
+  }
 
   public static void imaqLowPass(Image dest, Image source, int width, int height, float tolerance,
       Image mask) {
@@ -25124,7 +25215,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqInterlaceCombine(long frame, long odd, long even);
+  private static void _imaqInterlaceCombine(long frame, long odd, long even)
+  {
+
+  }
 
   public static void imaqInterlaceSeparate(Image frame, Image odd, Image even) {
 
@@ -25133,7 +25227,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqInterlaceSeparate(long frame, long odd, long even);
+  private static void _imaqInterlaceSeparate(long frame, long odd, long even)
+  {
+
+  }
 
   /**
    * Image Information functions
@@ -25186,7 +25283,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqEnumerateCustomKeys(long image, long size);
+  private static long _imaqEnumerateCustomKeys(long image, long size)
+  {
+    return 0;
+  }
 
   public static int imaqGetBitDepth(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25197,7 +25297,10 @@ public class NIVision {
     return bitDepth;
   }
 
-  private static native void _imaqGetBitDepth(long image, long bitDepth);
+  private static void _imaqGetBitDepth(long image, long bitDepth)
+  {
+
+  }
 
   public static int imaqGetBytesPerPixel(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25208,7 +25311,10 @@ public class NIVision {
     return byteCount;
   }
 
-  private static native void _imaqGetBytesPerPixel(long image, long byteCount);
+  private static void _imaqGetBytesPerPixel(long image, long byteCount)
+  {
+
+  }
 
   public static ImageInfo imaqGetImageInfo(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25220,7 +25326,10 @@ public class NIVision {
     return info;
   }
 
-  private static native void _imaqGetImageInfo(long image, long info);
+  private static void _imaqGetImageInfo(long image, long info)
+  {
+
+  }
 
   public static class GetImageSizeResult {
     public int width;
@@ -25240,7 +25349,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native void _imaqGetImageSize(long image, long width, long height);
+  private static void _imaqGetImageSize(long image, long width, long height)
+  {
+
+  }
 
   public static ImageType imaqGetImageType(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25251,7 +25363,10 @@ public class NIVision {
     return type;
   }
 
-  private static native void _imaqGetImageType(long image, long type);
+  private static void _imaqGetImageType(long image, long type)
+  {
+
+  }
 
   public static Point imaqGetMaskOffset(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25263,7 +25378,10 @@ public class NIVision {
     return offset;
   }
 
-  private static native void _imaqGetMaskOffset(long image, long offset);
+  private static void _imaqGetMaskOffset(long image, long offset)
+  {
+
+  }
 
   public static int imaqGetVisionInfoTypes(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25274,7 +25392,10 @@ public class NIVision {
     return present;
   }
 
-  private static native void _imaqGetVisionInfoTypes(long image, long present);
+  private static void _imaqGetVisionInfoTypes(long image, long present)
+  {
+
+  }
 
   public static int imaqIsImageEmpty(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25285,7 +25406,10 @@ public class NIVision {
     return empty;
   }
 
-  private static native void _imaqIsImageEmpty(long image, long empty);
+  private static void _imaqIsImageEmpty(long image, long empty)
+  {
+
+  }
 
   public static RawData imaqReadCustomData(Image image, String key) {
     ByteBuffer key_buf = null;
@@ -25311,7 +25435,10 @@ public class NIVision {
     return val;
   }
 
-  private static native long _imaqReadCustomData(long image, long key, long size);
+  private static long _imaqReadCustomData(long image, long key, long size)
+  {
+    return 0;
+  }
 
   public static void imaqRemoveCustomData(Image image, String key) {
     ByteBuffer key_buf = null;
@@ -25329,7 +25456,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRemoveCustomData(long image, long key);
+  private static void _imaqRemoveCustomData(long image, long key)
+  {
+
+  }
 
   public static void imaqRemoveVisionInfo2(Image image, int info) {
 
@@ -25337,7 +25467,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRemoveVisionInfo2(long image, int info);
+  private static void _imaqRemoveVisionInfo2(long image, int info)
+  {
+
+  }
 
   public static void imaqSetBitDepth(Image image, int bitDepth) {
 
@@ -25345,7 +25478,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetBitDepth(long image, int bitDepth);
+  private static void _imaqSetBitDepth(long image, int bitDepth)
+  {
+
+  }
 
   public static void imaqSetImageSize(Image image, int width, int height) {
 
@@ -25353,7 +25489,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetImageSize(long image, int width, int height);
+  private static void _imaqSetImageSize(long image, int width, int height)
+  {
+
+  }
 
   public static void imaqSetMaskOffset(Image image, Point offset) {
 
@@ -25361,7 +25500,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetMaskOffset(long image, long offset);
+  private static void _imaqSetMaskOffset(long image, long offset)
+  {
+
+  }
 
   public static void imaqWriteCustomData(Image image, String key, RawData data, int size) {
     ByteBuffer key_buf = null;
@@ -25380,7 +25522,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqWriteCustomData(long image, long key, long data, int size);
+  private static void _imaqWriteCustomData(long image, long key, long data, int size)
+  {
+
+  }
 
   /**
    * Display functions
@@ -25396,7 +25541,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCopyRect(long dest, long source, long rect, long destLoc);
+  private static void _imaqCopyRect(long dest, long source, long rect, long destLoc)
+  {
+
+  }
 
   public static void imaqDuplicate(Image dest, Image source) {
 
@@ -25404,7 +25552,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDuplicate(long dest, long source);
+  private static void _imaqDuplicate(long dest, long source)
+  {
+
+  }
 
   public static RawData imaqFlatten(Image image, FlattenType type, CompressionType compression,
       int quality) {
@@ -25420,8 +25571,11 @@ public class NIVision {
     return val;
   }
 
-  private static native long _imaqFlatten(long image, int type, int compression, int quality,
-      long size);
+    private static long _imaqFlatten(long image, int type, int compression, int quality,
+      long size)
+      {
+        return 0;
+      }
 
   public static void imaqFlip(Image dest, Image source, FlipAxis axis) {
 
@@ -25429,7 +25583,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFlip(long dest, long source, int axis);
+  private static void _imaqFlip(long dest, long source, int axis)
+  {
+
+  }
 
   public static void imaqMask(Image dest, Image source, Image mask) {
 
@@ -25437,7 +25594,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMask(long dest, long source, long mask);
+  private static void _imaqMask(long dest, long source, long mask)
+  {
+
+  }
 
   public static void imaqResample(Image dest, Image source, int newWidth, int newHeight,
       InterpolationMethod method, Rect rect) {
@@ -25467,7 +25627,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqTranspose(long dest, long source);
+  private static void _imaqTranspose(long dest, long source)
+  {
+
+  }
 
   public static void imaqUnflatten(Image image, RawData data, int size) {
 
@@ -25475,7 +25638,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqUnflatten(long image, long data, int size);
+  private static void _imaqUnflatten(long image, long data, int size)
+  {
+
+  }
 
   public static void imaqUnwrapImage(Image dest, Image source, Annulus annulus,
       RectOrientation orientation, InterpolationMethod method) {
@@ -25494,7 +25660,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqView3D(long dest, long source, long options);
+  private static void _imaqView3D(long dest, long source, long options)
+  {
+
+  }
 
   /**
    * File I/O functions
@@ -25636,7 +25805,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqWriteFile(long image, long fileName, long colorTable);
+  private static void _imaqWriteFile(long image, long fileName, long colorTable)
+  {
+
+  }
 
   public static void imaqWriteJPEGFile(Image image, String fileName, int quality, RawData colorTable) {
     ByteBuffer fileName_buf = null;
@@ -25724,7 +25896,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqWriteVisionFile(long image, long fileName, long colorTable);
+  private static void _imaqWriteVisionFile(long image, long fileName, long colorTable)
+  {
+
+  }
 
   /**
    * Analytic Geometry functions
@@ -25758,7 +25933,10 @@ public class NIVision {
     return new BestCircle2(jn_rv, true);
   }
 
-  private static native long _imaqFitCircle2(long points, int numPoints, long options);
+  private static long _imaqFitCircle2(long points, int numPoints, long options)
+  {
+    return 0;
+  }
 
   public static BestEllipse2 imaqFitEllipse2(PointFloat[] points, FitEllipseOptions options) {
     int numPoints = points.length;
@@ -25774,7 +25952,10 @@ public class NIVision {
     return new BestEllipse2(jn_rv, true);
   }
 
-  private static native long _imaqFitEllipse2(long points, int numPoints, long options);
+  private static long _imaqFitEllipse2(long points, int numPoints, long options)
+  {
+    return 0;
+  }
 
   public static BestLine imaqFitLine(PointFloat[] points, FitLineOptions options) {
     int numPoints = points.length;
@@ -25789,7 +25970,10 @@ public class NIVision {
     return new BestLine(jn_rv, true);
   }
 
-  private static native long _imaqFitLine(long points, int numPoints, long options);
+  private static long _imaqFitLine(long points, int numPoints, long options)
+  {
+    return 0;
+  }
 
   public static float imaqGetAngle(PointFloat start1, PointFloat end1, PointFloat start2,
       PointFloat end2) {
@@ -25839,7 +26023,10 @@ public class NIVision {
     return distance;
   }
 
-  private static native void _imaqGetDistance(long point1, long point2, long distance);
+  private static void _imaqGetDistance(long point1, long point2, long distance)
+  {
+
+  }
 
   public static PointFloat imaqGetIntersection(PointFloat start1, PointFloat end1,
       PointFloat start2, PointFloat end2) {
@@ -25941,7 +26128,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqGetPointsOnContour(long image, long numSegments);
+  private static long _imaqGetPointsOnContour(long image, long numSegments)
+  {
+    return 0;
+  }
 
   public static class GetPointsOnLineResult {
     public Point[] array;
@@ -25976,7 +26166,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqGetPointsOnLine(long start, long end, long numPoints);
+  private static long _imaqGetPointsOnLine(long start, long end, long numPoints)
+  {
+    return 0;
+  }
 
   public static float imaqGetPolygonArea(PointFloat points, int numPoints) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -25987,7 +26180,10 @@ public class NIVision {
     return area;
   }
 
-  private static native void _imaqGetPolygonArea(long points, int numPoints, long area);
+  private static void _imaqGetPolygonArea(long points, int numPoints, long area)
+  {
+
+  }
 
   public static class InterpolatePointsResult {
     public float[] array;
@@ -26045,7 +26241,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFillBorder(long image, int method);
+  private static void _imaqFillBorder(long image, int method)
+  {
+
+  }
 
   public static int imaqGetBorderSize(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -26056,7 +26255,10 @@ public class NIVision {
     return borderSize;
   }
 
-  private static native void _imaqGetBorderSize(long image, long borderSize);
+  private static void _imaqGetBorderSize(long image, long borderSize)
+  {
+
+  }
 
   public static void imaqSetBorderSize(Image image, int size) {
 
@@ -26064,7 +26266,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetBorderSize(long image, int size);
+  private static void _imaqSetBorderSize(long image, int size)
+  {
+
+  }
 
   /**
    * Image Management functions
@@ -26076,7 +26281,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqArrayToImage(long image, long array, int numCols, int numRows);
+  private static void _imaqArrayToImage(long image, long array, int numCols, int numRows)
+  {
+
+  }
 
   public static Image imaqCreateImage(ImageType type, int borderSize) {
 
@@ -26085,7 +26293,10 @@ public class NIVision {
     return new Image(jn_rv, true);
   }
 
-  private static native long _imaqCreateImage(int type, int borderSize);
+  private static long _imaqCreateImage(int type, int borderSize)
+  {
+    return 0;
+  }
 
   /**
    * Color Processing functions
@@ -26109,7 +26320,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqColorEqualize(long dest, long source, int colorEqualization);
+  private static void _imaqColorEqualize(long dest, long source, int colorEqualization)
+  {
+
+  }
 
   public static ColorHistogramReport imaqColorHistogram2(Image image, int numClasses,
       ColorMode mode, CIEXYZValue whiteReference, Image mask) {
@@ -26179,7 +26393,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqBCGTransform(long dest, long source, long options, long mask);
+  private static void _imaqBCGTransform(long dest, long source, long options, long mask)
+  {
+
+  }
 
   public static void imaqEqualize(Image dest, Image source, float min, float max, Image mask) {
 
@@ -26188,7 +26405,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqEqualize(long dest, long source, float min, float max, long mask);
+  private static void _imaqEqualize(long dest, long source, float min, float max, long mask)
+  {
+
+  }
 
   public static void imaqInverse(Image dest, Image source, Image mask) {
 
@@ -26196,7 +26416,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqInverse(long dest, long source, long mask);
+  private static void _imaqInverse(long dest, long source, long mask)
+  {
+
+  }
 
   public static void imaqMathTransform(Image dest, Image source, MathTransformMethod method,
       float rangeMin, float rangeMax, float power, Image mask) {
@@ -26238,7 +26461,10 @@ public class NIVision {
     return customNumCores;
   }
 
-  private static native void _imaqMulticoreOptions(int operation, long customNumCores);
+  private static void _imaqMulticoreOptions(int operation, long customNumCores)
+  {
+
+  }
 
   /**
    * Tool Window functions
@@ -26293,7 +26519,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCopyCalibrationInfo2(long dest, long source, long offset);
+  private static void _imaqCopyCalibrationInfo2(long dest, long source, long offset)
+  {
+
+  }
 
   public static CalibrationInfo imaqGetCalibrationInfo2(Image image) {
 
@@ -26302,7 +26531,10 @@ public class NIVision {
     return new CalibrationInfo(jn_rv, true);
   }
 
-  private static native long _imaqGetCalibrationInfo2(long image);
+  private static long _imaqGetCalibrationInfo2(long image)
+  {
+    return 0;
+  }
 
   public static CalibrationInfo imaqGetCalibrationInfo3(Image image, int isGetErrorMap) {
 
@@ -26311,7 +26543,10 @@ public class NIVision {
     return new CalibrationInfo(jn_rv, true);
   }
 
-  private static native long _imaqGetCalibrationInfo3(long image, int isGetErrorMap);
+  private static long _imaqGetCalibrationInfo3(long image, int isGetErrorMap)
+  {
+    return 0;
+  }
 
   public static float imaqLearnCalibrationGrid(Image image, ROI roi,
       LearnCalibrationOptions options, GridDescriptor grid, CoordinateSystem system,
@@ -26348,7 +26583,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetCoordinateSystem(long image, long system);
+  private static void _imaqSetCoordinateSystem(long image, long system)
+  {
+
+  }
 
   public static void imaqSetSimpleCalibration(Image image, ScalingMethod method, int learnTable,
       GridDescriptor grid, CoordinateSystem system) {
@@ -26407,7 +26645,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetSimpleCalibration2(long image, long gridDescriptor);
+  private static void _imaqSetSimpleCalibration2(long image, long gridDescriptor)
+  {
+
+  }
 
   public static CoordinateSystem imaqCalibrationSetAxisInfo(Image image) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -26419,7 +26660,10 @@ public class NIVision {
     return axisInfo;
   }
 
-  private static native void _imaqCalibrationSetAxisInfo(long image, long axisInfo);
+  private static void _imaqCalibrationSetAxisInfo(long image, long axisInfo)
+  {
+
+  }
 
   public static void imaqCalibrationGetThumbnailImage(Image templateImage, Image image,
       CalibrationThumbnailType type, int index) {
@@ -26440,7 +26684,10 @@ public class NIVision {
     return new GetCalibrationInfoReport(jn_rv, true);
   }
 
-  private static native long _imaqCalibrationGetCalibrationInfo(long image, int isGetErrorMap);
+  private static long _imaqCalibrationGetCalibrationInfo(long image, int isGetErrorMap)
+  {
+    return 0;
+  }
 
   public static GetCameraParametersReport imaqCalibrationGetCameraParameters(Image templateImage) {
 
@@ -26449,7 +26696,10 @@ public class NIVision {
     return new GetCameraParametersReport(jn_rv, true);
   }
 
-  private static native long _imaqCalibrationGetCameraParameters(long templateImage);
+  private static long _imaqCalibrationGetCameraParameters(long templateImage)
+  {
+    return 0;
+  }
 
   public static void imaqCalibrationCompactInformation(Image image) {
 
@@ -26457,7 +26707,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCalibrationCompactInformation(long image);
+  private static void _imaqCalibrationCompactInformation(long image)
+  {
+
+  }
 
   /**
    * Pixel Manipulation functions
@@ -26481,7 +26734,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqExtractComplexPlane(long dest, long source, int plane);
+  private static void _imaqExtractComplexPlane(long dest, long source, int plane)
+  {
+
+  }
 
   public static void imaqReplaceColorPlanes(Image dest, Image source, ColorMode mode, Image plane1,
       Image plane2, Image plane3) {
@@ -26520,7 +26776,10 @@ public class NIVision {
     return new ColorInformation(jn_rv, true);
   }
 
-  private static native long _imaqLearnColor(long image, long roi, int sensitivity, int saturation);
+  private static long _imaqLearnColor(long image, long roi, int sensitivity, int saturation)
+  {
+    return 0;
+  }
 
   public static class MatchColorResult {
     public int[] array;
@@ -26553,7 +26812,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqMatchColor(long image, long info, long roi, long numScores);
+  private static long _imaqMatchColor(long image, long info, long roi, long numScores)
+  {
+    return 0;
+  }
 
   /**
    * Frequency Domain Analysis functions
@@ -26565,7 +26827,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqAttenuate(long dest, long source, int highlow);
+  private static void _imaqAttenuate(long dest, long source, int highlow)
+  {
+
+  }
 
   public static void imaqConjugate(Image dest, Image source) {
 
@@ -26573,7 +26838,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqConjugate(long dest, long source);
+  private static void _imaqConjugate(long dest, long source)
+  {
+
+  }
 
   public static void imaqFFT(Image dest, Image source) {
 
@@ -26581,7 +26849,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFFT(long dest, long source);
+  private static void _imaqFFT(long dest, long source)
+  {
+
+  }
 
   public static void imaqFlipFrequencies(Image dest, Image source) {
 
@@ -26589,7 +26860,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFlipFrequencies(long dest, long source);
+  private static void _imaqFlipFrequencies(long dest, long source)
+  {
+
+  }
 
   public static void imaqInverseFFT(Image dest, Image source) {
 
@@ -26597,7 +26871,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqInverseFFT(long dest, long source);
+  private static void _imaqInverseFFT(long dest, long source)
+  {
+
+  }
 
   public static void imaqTruncate(Image dest, Image source, TruncateMode highlow, float ratioToKeep) {
 
@@ -26605,7 +26882,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqTruncate(long dest, long source, int highlow, float ratioToKeep);
+  private static void _imaqTruncate(long dest, long source, int highlow, float ratioToKeep)
+  {
+
+  }
 
   /**
    * Barcode I/O functions
@@ -26621,7 +26901,10 @@ public class NIVision {
     return report;
   }
 
-  private static native void _imaqGradeDataMatrixBarcodeAIM(long image, long report);
+  private static void _imaqGradeDataMatrixBarcodeAIM(long image, long report)
+  {
+
+  }
 
   public static BarcodeInfo imaqReadBarcode(Image image, BarcodeType type, ROI roi, int validate) {
 
@@ -26632,7 +26915,10 @@ public class NIVision {
     return new BarcodeInfo(jn_rv, true);
   }
 
-  private static native long _imaqReadBarcode(long image, int type, long roi, int validate);
+  private static long _imaqReadBarcode(long image, int type, long roi, int validate)
+  {
+    return 0;
+  }
 
   public static DataMatrixReport imaqReadDataMatrixBarcode2(Image image, ROI roi,
       DataMatrixGradingMode prepareForGrading, DataMatrixDescriptionOptions descriptionOptions,
@@ -26713,7 +26999,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqFindLCDSegments(long roi, long image, long options);
+  private static void _imaqFindLCDSegments(long roi, long image, long options)
+  {
+
+  }
 
   public static LCDReport imaqReadLCD(Image image, ROI roi, LCDOptions options) {
 
@@ -26724,7 +27013,10 @@ public class NIVision {
     return new LCDReport(jn_rv, true);
   }
 
-  private static native long _imaqReadLCD(long image, long roi, long options);
+  private static long _imaqReadLCD(long image, long roi, long options)
+  {
+    return 0;
+  }
 
   /**
    * Shape Matching functions
@@ -26886,7 +27178,10 @@ public class NIVision {
     return contourColor;
   }
 
-  private static native void _imaqGetContourColor(long roi, int id, long contourColor);
+  private static void _imaqGetContourColor(long roi, int id, long contourColor)
+  {
+
+  }
 
   public static void imaqGetContourCount(ROI roi) {
 
@@ -26894,7 +27189,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqGetContourCount(long roi);
+  private static void _imaqGetContourCount(long roi)
+  {
+
+  }
 
   public static ContourInfo2 imaqGetContourInfo2(ROI roi, int id) {
 
@@ -26903,7 +27201,10 @@ public class NIVision {
     return new ContourInfo2(jn_rv, true);
   }
 
-  private static native long _imaqGetContourInfo2(long roi, int id);
+  private static long _imaqGetContourInfo2(long roi, int id)
+  {
+    return 0;
+  }
 
   public static void imaqMoveContour(ROI roi, int id, int deltaX, int deltaY) {
 
@@ -26911,7 +27212,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMoveContour(long roi, int id, int deltaX, int deltaY);
+  private static void _imaqMoveContour(long roi, int id, int deltaX, int deltaY)
+  {
+
+  }
 
   public static void imaqRemoveContour(ROI roi, int id) {
 
@@ -26919,7 +27223,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRemoveContour(long roi, int id);
+  private static void _imaqRemoveContour(long roi, int id)
+  {
+
+  }
 
   public static void imaqSetContourColor(ROI roi, int id, RGBValue color) {
 
@@ -26927,7 +27234,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetContourColor(long roi, int id, long color);
+  private static void _imaqSetContourColor(long roi, int id, long color)
+  {
+
+  }
 
   /**
    * Regions of Interest functions
@@ -26940,7 +27250,10 @@ public class NIVision {
     return new ROI(jn_rv, true);
   }
 
-  private static native long _imaqCreateROI();
+  private static long _imaqCreateROI()
+  {
+    return 0;
+  }
 
   public static Rect imaqGetROIBoundingBox(ROI roi) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -26952,7 +27265,10 @@ public class NIVision {
     return boundingBox;
   }
 
-  private static native void _imaqGetROIBoundingBox(long roi, long boundingBox);
+  private static void _imaqGetROIBoundingBox(long roi, long boundingBox)
+  {
+
+  }
 
   public static RGBValue imaqGetROIColor(ROI roi) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -26964,7 +27280,10 @@ public class NIVision {
     return roiColor;
   }
 
-  private static native void _imaqGetROIColor(long roi, long roiColor);
+  private static void _imaqGetROIColor(long roi, long roiColor)
+  {
+
+  }
 
   public static void imaqSetROIColor(ROI roi, RGBValue color) {
 
@@ -26972,7 +27291,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetROIColor(long roi, long color);
+  private static void _imaqSetROIColor(long roi, long color)
+  {
+
+  }
 
   /**
    * Image Analysis functions
@@ -26988,7 +27310,10 @@ public class NIVision {
     return centroid;
   }
 
-  private static native void _imaqCentroid(long image, long centroid, long mask);
+  private static void _imaqCentroid(long image, long centroid, long mask)
+  {
+
+  }
 
   public static class ExtractCurvesResult {
     public Curve[] array;
@@ -27049,7 +27374,10 @@ public class NIVision {
     return new LinearAverages(jn_rv, true);
   }
 
-  private static native long _imaqLinearAverages2(long image, int mode, long rect);
+  private static long _imaqLinearAverages2(long image, int mode, long rect)
+  {
+    return 0;
+  }
 
   public static LineProfile imaqLineProfile(Image image, Point start, Point end) {
 
@@ -27058,7 +27386,10 @@ public class NIVision {
     return new LineProfile(jn_rv, true);
   }
 
-  private static native long _imaqLineProfile(long image, long start, long end);
+  private static long _imaqLineProfile(long image, long start, long end)
+  {
+    return 0;
+  }
 
   public static QuantifyReport imaqQuantify(Image image, Image mask) {
 
@@ -27067,7 +27398,10 @@ public class NIVision {
     return new QuantifyReport(jn_rv, true);
   }
 
-  private static native long _imaqQuantify(long image, long mask);
+  private static long _imaqQuantify(long image, long mask)
+  {
+    return 0;
+  }
 
   /**
    * Threshold functions
@@ -27122,7 +27456,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqMultithreshold(long dest, long source, long ranges, int numRanges);
+  private static void _imaqMultithreshold(long dest, long source, long ranges, int numRanges)
+  {
+
+  }
 
   public static void imaqThreshold(Image dest, Image source, float rangeMin, float rangeMax,
       int useNewValue, float newValue) {
@@ -27396,7 +27733,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqGetGeometricTemplateFeatureInfo(long pattern, long numFeatures);
+  private static long _imaqGetGeometricTemplateFeatureInfo(long pattern, long numFeatures)
+  {
+    return 0;
+  }
 
   public static void imaqLearnColorPattern(Image image, LearnColorPatternOptions options) {
 
@@ -27404,7 +27744,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqLearnColorPattern(long image, long options);
+  private static void _imaqLearnColorPattern(long image, long options)
+  {
+
+  }
 
   public static void imaqLearnGeometricPattern(Image image, PointFloat originOffset,
       CurveOptions curveOptions, LearnGeometricPatternAdvancedOptions advancedLearnOptions,
@@ -27586,7 +27929,10 @@ public class NIVision {
     return new MultipleGeometricPattern(jn_rv, true);
   }
 
-  private static native long _imaqReadMultipleGeometricPatternFile(long fileName, long description);
+  private static long _imaqReadMultipleGeometricPatternFile(long fileName, long description)
+  {
+    return 0;
+  }
 
   public static class RefineMatchesResult {
     public MatchPatternOptions options;
@@ -27814,7 +28160,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqClearOverlay(long image, long group);
+  private static void _imaqClearOverlay(long image, long group)
+  {
+
+  }
 
   public static void imaqCopyOverlay(Image dest, Image source, String group) {
     ByteBuffer group_buf = null;
@@ -27833,7 +28182,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqCopyOverlay(long dest, long source, long group);
+  private static void _imaqCopyOverlay(long dest, long source, long group)
+  {
+
+  }
 
   public static TransformBehaviors imaqGetOverlayProperties(Image image, String group) {
     ByteBuffer group_buf = null;
@@ -28168,7 +28520,10 @@ public class NIVision {
     return new CharSet(jn_rv, true);
   }
 
-  private static native long _imaqCreateCharSet();
+  private static long _imaqCreateCharSet()
+  {
+    return 0;
+  }
 
   public static void imaqDeleteChar(CharSet set, int index) {
 
@@ -28176,7 +28531,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDeleteChar(long set, int index);
+  private static void _imaqDeleteChar(long set, int index)
+  {
+
+  }
 
   public static void imaqGetCharCount(CharSet set) {
 
@@ -28184,7 +28542,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqGetCharCount(long set);
+  private static void _imaqGetCharCount(long set)
+  {
+
+  }
 
   public static CharInfo2 imaqGetCharInfo2(CharSet set, int index) {
 
@@ -28193,7 +28554,10 @@ public class NIVision {
     return new CharInfo2(jn_rv, true);
   }
 
-  private static native long _imaqGetCharInfo2(long set, int index);
+  private static long _imaqGetCharInfo2(long set, int index)
+  {
+    return 0;
+  }
 
   public static class ReadOCRFileResult {
     public ReadTextOptions readOptions;
@@ -28280,7 +28644,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRenameChar(long set, int index, long newCharValue);
+  private static void _imaqRenameChar(long set, int index, long newCharValue)
+  {
+
+  }
 
   public static void imaqSetReferenceChar(CharSet set, int index, int isReferenceChar) {
 
@@ -28288,7 +28655,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetReferenceChar(long set, int index, int isReferenceChar);
+  private static void _imaqSetReferenceChar(long set, int index, int isReferenceChar)
+  {
+
+  }
 
   public static void imaqTrainChars(Image image, CharSet set, int index, String charValue, ROI roi,
       OCRProcessingOptions processingOptions, OCRSpacingOptions spacingOptions) {
@@ -28458,7 +28828,10 @@ public class NIVision {
     return new ContourComputeCurvatureReport(jn_rv, true);
   }
 
-  private static native long _imaqContourComputeCurvature(long contourImage, int kernel);
+  private static long _imaqContourComputeCurvature(long contourImage, int kernel)
+  {
+    return 0;
+  }
 
   public static CurvatureAnalysisReport imaqContourClassifyCurvature(Image contourImage,
       int kernel, RangeLabel[] curvatureClasses) {
@@ -28522,7 +28895,10 @@ public class NIVision {
     return new ContourInfoReport(jn_rv, true);
   }
 
-  private static native long _imaqContourInfo(long contourImage);
+  private static long _imaqContourInfo(long contourImage)
+  {
+    return 0;
+  }
 
   public static class ContourSetupMatchPatternResult {
     public MatchMode matchMode;
@@ -28591,7 +28967,10 @@ public class NIVision {
     return new ContourFitLineReport(jn_rv, true);
   }
 
-  private static native long _imaqContourFitLine(long image, double pixelRadius);
+  private static long _imaqContourFitLine(long image, double pixelRadius)
+  {
+    return 0;
+  }
 
   public static PartialCircle imaqContourFitCircle(Image image, double pixelRadius,
       int rejectOutliers) {
@@ -28623,7 +29002,10 @@ public class NIVision {
     return new ContourFitSplineReport(jn_rv, true);
   }
 
-  private static native long _imaqContourFitSpline(long image, int degree, int numberOfControlPoints);
+  private static long _imaqContourFitSpline(long image, int degree, int numberOfControlPoints)
+  {
+    return 0;
+  }
 
   public static ContourFitPolynomialReport imaqContourFitPolynomial(Image image, int order) {
 
@@ -28632,7 +29014,10 @@ public class NIVision {
     return new ContourFitPolynomialReport(jn_rv, true);
   }
 
-  private static native long _imaqContourFitPolynomial(long image, int order);
+  private static long _imaqContourFitPolynomial(long image, int order)
+  {
+    return 0;
+  }
 
   /**
    * Edge Detection functions
@@ -28748,7 +29133,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqMaskToROI(long mask, long withinLimit);
+  private static long _imaqMaskToROI(long mask, long withinLimit)
+  {
+    return 0;
+  }
 
   public static ROIProfile imaqROIProfile(Image image, ROI roi) {
 
@@ -28757,7 +29145,10 @@ public class NIVision {
     return new ROIProfile(jn_rv, true);
   }
 
-  private static native long _imaqROIProfile(long image, long roi);
+  private static long _imaqROIProfile(long image, long roi)
+  {
+    return 0;
+  }
 
   public static int imaqROIToMask(Image mask, ROI roi, int fillValue, Image imageModel) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -28779,7 +29170,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqTransformROI2(long roi, long baseSystem, long newSystem);
+  private static void _imaqTransformROI2(long roi, long baseSystem, long newSystem)
+  {
+
+  }
 
   public static LabelToROIReport imaqLabelToROI(Image image, int[] labelsIn, int maxNumVectors,
       int isExternelEdges) {
@@ -28885,7 +29279,10 @@ public class NIVision {
     return new ClassifierSession(jn_rv, true);
   }
 
-  private static native long _imaqCreateClassifier(int type);
+  private static long _imaqCreateClassifier(int type)
+  {
+    return 0;
+  }
 
   public static void imaqDeleteClassifierSample(ClassifierSession session, int index) {
 
@@ -28893,7 +29290,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDeleteClassifierSample(long session, int index);
+  private static void _imaqDeleteClassifierSample(long session, int index)
+  {
+
+  }
 
   public static ClassifierAccuracyReport imaqGetClassifierAccuracy(ClassifierSession session) {
 
@@ -28902,7 +29302,10 @@ public class NIVision {
     return new ClassifierAccuracyReport(jn_rv, true);
   }
 
-  private static native long _imaqGetClassifierAccuracy(long session);
+  private static long _imaqGetClassifierAccuracy(long session)
+  {
+    return 0;
+  }
 
   public static class GetClassifierSampleInfoResult {
     public int numSamples;
@@ -28923,7 +29326,10 @@ public class NIVision {
     return rv;
   }
 
-  private static native long _imaqGetClassifierSampleInfo(long session, int index, long numSamples);
+  private static long _imaqGetClassifierSampleInfo(long session, int index, long numSamples)
+  {
+    return 0;
+  }
 
   public static ColorOptions imaqGetColorClassifierOptions(ClassifierSession session) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -28935,7 +29341,10 @@ public class NIVision {
     return options;
   }
 
-  private static native void _imaqGetColorClassifierOptions(long session, long options);
+  private static void _imaqGetColorClassifierOptions(long session, long options)
+  {
+
+  }
 
   public static NearestNeighborOptions imaqGetNearestNeighborOptions(ClassifierSession session) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -28947,7 +29356,10 @@ public class NIVision {
     return options;
   }
 
-  private static native void _imaqGetNearestNeighborOptions(long session, long options);
+  private static void _imaqGetNearestNeighborOptions(long session, long options)
+  {
+
+  }
 
   public static class GetParticleClassifierOptions2Result {
     public ParticleClassifierPreprocessingOptions2 preprocessingOptions;
@@ -29043,7 +29455,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqRelabelClassifierSample(long session, int index, long newClass);
+  private static void _imaqRelabelClassifierSample(long session, int index, long newClass)
+  {
+
+  }
 
   public static void imaqSetParticleClassifierOptions2(ClassifierSession session,
       ParticleClassifierPreprocessingOptions2 preprocessingOptions,
@@ -29063,7 +29478,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqSetColorClassifierOptions(long session, long options);
+  private static void _imaqSetColorClassifierOptions(long session, long options)
+  {
+
+  }
 
   public static NearestNeighborTrainingReport imaqTrainNearestNeighborClassifier(
       ClassifierSession session, NearestNeighborOptions options) {
@@ -29073,7 +29491,10 @@ public class NIVision {
     return new NearestNeighborTrainingReport(jn_rv, true);
   }
 
-  private static native long _imaqTrainNearestNeighborClassifier(long session, long options);
+  private static long _imaqTrainNearestNeighborClassifier(long session, long options)
+  {
+    return 0;
+  }
 
   public static void imaqWriteClassifierFile(ClassifierSession session, String fileName,
       WriteClassifierFileMode mode, String description) {
@@ -29209,7 +29630,10 @@ public class NIVision {
     return advancedOptions;
   }
 
-  private static native void _imaqLearnPattern2(long image, int learningMode, long advancedOptions);
+  private static void _imaqLearnPattern2(long image, int learningMode, long advancedOptions)
+  {
+
+  }
 
   public static void imaqDivide(Image dest, Image sourceA, Image sourceB) {
 
@@ -29217,7 +29641,10 @@ public class NIVision {
 
   }
 
-  private static native void _imaqDivide(long dest, long sourceA, long sourceB);
+  private static void _imaqDivide(long dest, long sourceA, long sourceB)
+  {
+
+  }
 
   public static EdgeReport2 imaqEdgeTool3(Image image, ROI roi, EdgeProcess processType,
       EdgeOptions2 edgeOptions) {
@@ -29229,7 +29656,10 @@ public class NIVision {
     return new EdgeReport2(jn_rv, true);
   }
 
-  private static native long _imaqEdgeTool3(long image, long roi, int processType, long edgeOptions);
+  private static long _imaqEdgeTool3(long image, long roi, int processType, long edgeOptions)
+  {
+    return 0;
+  }
 
   public static ConcentricRakeReport imaqConcentricRake(Image image, ROI roi,
       ConcentricRakeDirection direction, EdgeProcess process, RakeOptions options) {
@@ -29330,7 +29760,10 @@ public class NIVision {
 
   }
 
-  private static native void _Priv_ReadJPEGString_C(long image, long string, int stringLength);
+  private static void _Priv_ReadJPEGString_C(long image, long string, int stringLength)
+  {
+
+  }
 
   /**
    * Purpose : Include file for NI-IMAQdx library support.
@@ -30258,7 +30691,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSnap(int id, long image);
+  private static void _IMAQdxSnap(int id, long image)
+  {
+
+  }
 
   public static void IMAQdxConfigureGrab(int id) {
 
@@ -30266,7 +30702,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxConfigureGrab(int id);
+  private static void _IMAQdxConfigureGrab(int id)
+  {
+
+  }
 
   public static int IMAQdxGrab(int id, Image image, int waitForNextBuffer) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -30277,8 +30716,11 @@ public class NIVision {
     return actualBufferNumber;
   }
 
-  private static native void _IMAQdxGrab(int id, long image, int waitForNextBuffer,
-      long actualBufferNumber);
+    private static void _IMAQdxGrab(int id, long image, int waitForNextBuffer,
+      long actualBufferNumber)
+      {
+      
+      }
 
   public static void IMAQdxDiscoverEthernetCameras(String address, int timeout) {
     ByteBuffer address_buf = null;
@@ -30297,7 +30739,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxDiscoverEthernetCameras(long address, int timeout);
+  private static void _IMAQdxDiscoverEthernetCameras(long address, int timeout)
+  {
+
+  }
 
   public static void IMAQdxResetCamera(String name, int resetAll) {
     ByteBuffer name_buf = null;
@@ -30315,7 +30760,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxResetCamera(long name, int resetAll);
+  private static void _IMAQdxResetCamera(long name, int resetAll)
+  {
+
+  }
 
   public static int IMAQdxOpenCamera(String name, IMAQdxCameraControlMode mode) {
     ByteBuffer name_buf = null;
@@ -30338,7 +30786,10 @@ public class NIVision {
     return id;
   }
 
-  private static native void _IMAQdxOpenCamera(long name, int mode, long id);
+  private static void _IMAQdxOpenCamera(long name, int mode, long id)
+  {
+
+  }
 
   public static void IMAQdxCloseCamera(int id) {
 
@@ -30346,7 +30797,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxCloseCamera(int id);
+  private static void _IMAQdxCloseCamera(int id)
+  {
+
+  }
 
   public static void IMAQdxConfigureAcquisition(int id, int continuous, int bufferCount) {
 
@@ -30354,7 +30808,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxConfigureAcquisition(int id, int continuous, int bufferCount);
+  private static void _IMAQdxConfigureAcquisition(int id, int continuous, int bufferCount)
+  {
+
+  }
 
   public static void IMAQdxStartAcquisition(int id) {
 
@@ -30362,7 +30819,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxStartAcquisition(int id);
+  private static void _IMAQdxStartAcquisition(int id)
+  {
+
+  }
 
   public static int IMAQdxGetImage(int id, Image image, IMAQdxBufferNumberMode mode,
       int desiredBufferNumber) {
@@ -30393,7 +30853,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxStopAcquisition(int id);
+  private static void _IMAQdxStopAcquisition(int id)
+  {
+
+  }
 
   public static void IMAQdxUnconfigureAcquisition(int id) {
 
@@ -30401,7 +30864,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxUnconfigureAcquisition(int id);
+  private static void _IMAQdxUnconfigureAcquisition(int id)
+  {
+
+  }
 
   public static class dxEnumerateVideoModesResult {
     public IMAQdxEnumItem[] videoModeArray;
@@ -30456,7 +30922,10 @@ public class NIVision {
     return type;
   }
 
-  private static native void _IMAQdxGetAttributeType(int id, long name, long type);
+  private static void _IMAQdxGetAttributeType(int id, long name, long type)
+  {
+
+  }
 
   public static int IMAQdxIsAttributeReadable(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30478,7 +30947,10 @@ public class NIVision {
     return readable;
   }
 
-  private static native void _IMAQdxIsAttributeReadable(int id, long name, long readable);
+  private static void _IMAQdxIsAttributeReadable(int id, long name, long readable)
+  {
+
+  }
 
   public static int IMAQdxIsAttributeWritable(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30500,7 +30972,10 @@ public class NIVision {
     return writable;
   }
 
-  private static native void _IMAQdxIsAttributeWritable(int id, long name, long writable);
+  private static void _IMAQdxIsAttributeWritable(int id, long name, long writable)
+  {
+
+  }
 
   public static void IMAQdxWriteRegister(int id, int offset, int value) {
 
@@ -30508,7 +30983,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxWriteRegister(int id, int offset, int value);
+  private static void _IMAQdxWriteRegister(int id, int offset, int value)
+  {
+
+  }
 
   public static int IMAQdxReadRegister(int id, int offset) {
     ByteBuffer rv_buf = ByteBuffer.allocateDirect(8).order(ByteOrder.nativeOrder());
@@ -30519,7 +30997,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxReadRegister(int id, int offset, long value);
+  private static void _IMAQdxReadRegister(int id, int offset, long value)
+  {
+
+  }
 
   public static void IMAQdxWriteAttributes(int id, String filename) {
     ByteBuffer filename_buf = null;
@@ -30538,7 +31019,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxWriteAttributes(int id, long filename);
+  private static void _IMAQdxWriteAttributes(int id, long filename)
+  {
+
+  }
 
   public static void IMAQdxReadAttributes(int id, String filename) {
     ByteBuffer filename_buf = null;
@@ -30557,7 +31041,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxReadAttributes(int id, long filename);
+  private static void _IMAQdxReadAttributes(int id, long filename)
+  {
+
+  }
 
   public static void IMAQdxResetEthernetCameraAddress(String name, String address, String subnet,
       String gateway, int timeout) {
@@ -30638,7 +31125,10 @@ public class NIVision {
     return visibility;
   }
 
-  private static native void _IMAQdxGetAttributeVisibility(int id, long name, long visibility);
+  private static void _IMAQdxGetAttributeVisibility(int id, long name, long visibility)
+  {
+
+  }
 
   public static int IMAQdxGetAttributeU32(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30660,7 +31150,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeU32(int id, long name, long value);
+  private static void _IMAQdxGetAttributeU32(int id, long name, long value)
+  {
+
+  }
 
   public static long IMAQdxGetAttributeI64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30682,7 +31175,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeI64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeI64(int id, long name, long value)
+  {
+
+  }
 
   public static double IMAQdxGetAttributeF64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30704,7 +31200,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeF64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeF64(int id, long name, long value)
+  {
+
+  }
 
   public static String IMAQdxGetAttributeString(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30738,7 +31237,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeString(int id, long name, long value);
+  private static void _IMAQdxGetAttributeString(int id, long name, long value)
+  {
+
+  }
 
   public static IMAQdxEnumItem IMAQdxGetAttributeEnum(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30761,7 +31263,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeEnum(int id, long name, long value);
+  private static void _IMAQdxGetAttributeEnum(int id, long name, long value)
+  {
+
+  }
 
   public static int IMAQdxGetAttributeBool(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30783,7 +31288,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeBool(int id, long name, long value);
+  private static void _IMAQdxGetAttributeBool(int id, long name, long value)
+  {
+
+  }
 
   public static int IMAQdxGetAttributeMinimumU32(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30806,7 +31314,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMinimumU32(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMinimumU32(int id, long name, long value)
+  {
+
+  }
 
   public static long IMAQdxGetAttributeMinimumI64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30829,7 +31340,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMinimumI64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMinimumI64(int id, long name, long value)
+  {
+
+  }
 
   public static double IMAQdxGetAttributeMinimumF64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30852,7 +31366,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMinimumF64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMinimumF64(int id, long name, long value)
+  {
+
+  }
 
   public static int IMAQdxGetAttributeMaximumU32(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30875,7 +31392,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMaximumU32(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMaximumU32(int id, long name, long value)
+  {
+
+  }
 
   public static long IMAQdxGetAttributeMaximumI64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30898,7 +31418,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMaximumI64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMaximumI64(int id, long name, long value)
+  {
+
+  }
 
   public static double IMAQdxGetAttributeMaximumF64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30921,7 +31444,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeMaximumF64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeMaximumF64(int id, long name, long value)
+  {
+
+  }
 
   public static int IMAQdxGetAttributeIncrementU32(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30944,7 +31470,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeIncrementU32(int id, long name, long value);
+  private static void _IMAQdxGetAttributeIncrementU32(int id, long name, long value)
+  {
+
+  }
 
   public static long IMAQdxGetAttributeIncrementI64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30967,7 +31496,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeIncrementI64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeIncrementI64(int id, long name, long value)
+  {
+
+  }
 
   public static double IMAQdxGetAttributeIncrementF64(int id, String name) {
     ByteBuffer name_buf = null;
@@ -30990,7 +31522,10 @@ public class NIVision {
     return value;
   }
 
-  private static native void _IMAQdxGetAttributeIncrementF64(int id, long name, long value);
+  private static void _IMAQdxGetAttributeIncrementF64(int id, long name, long value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeU32(int id, String name, int value) {
     ByteBuffer name_buf = null;
@@ -31008,7 +31543,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeU32(int id, long name, int value);
+  private static void _IMAQdxSetAttributeU32(int id, long name, int value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeI64(int id, String name, long value) {
     ByteBuffer name_buf = null;
@@ -31026,7 +31564,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeI64(int id, long name, long value);
+  private static void _IMAQdxSetAttributeI64(int id, long name, long value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeF64(int id, String name, double value) {
     ByteBuffer name_buf = null;
@@ -31044,7 +31585,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeF64(int id, long name, double value);
+  private static void _IMAQdxSetAttributeF64(int id, long name, double value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeString(int id, String name, String value) {
     ByteBuffer name_buf = null;
@@ -31074,7 +31618,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeString(int id, long name, long value);
+  private static void _IMAQdxSetAttributeString(int id, long name, long value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeEnum(int id, String name, IMAQdxEnumItem value) {
     ByteBuffer name_buf = null;
@@ -31093,7 +31640,10 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeEnum(int id, long name, long value);
+  private static void _IMAQdxSetAttributeEnum(int id, long name, long value)
+  {
+
+  }
 
   public static void IMAQdxSetAttributeBool(int id, String name, int value) {
     ByteBuffer name_buf = null;
@@ -31111,5 +31661,8 @@ public class NIVision {
 
   }
 
-  private static native void _IMAQdxSetAttributeBool(int id, long name, int value);
+  private static void _IMAQdxSetAttributeBool(int id, long name, int value)
+  {
+
+  }
 }
