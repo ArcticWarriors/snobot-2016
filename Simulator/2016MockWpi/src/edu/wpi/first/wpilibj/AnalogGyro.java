@@ -30,7 +30,7 @@ public class AnalogGyro extends GyroBase implements Gyro, PIDSource, LiveWindowS
   static final int kOversampleBits = 10;
   static final int kAverageBits = 0;
   static final double kSamplesPerSecond = 50.0;
-  static final double kCalibrationSampleTime = 5.0;
+  static final double kCalibrationSampleTime = .0001;
   static final double kDefaultVoltsPerDegreePerSecond = 0.007;
   protected AnalogInput m_analog;
   double m_voltsPerDegreePerSecond;

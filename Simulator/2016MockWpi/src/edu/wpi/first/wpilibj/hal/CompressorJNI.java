@@ -7,32 +7,72 @@
 
 package edu.wpi.first.wpilibj.hal;
 
-public class CompressorJNI extends JNIWrapper {
-  public static native long initializeCompressor(byte module);
+public class CompressorJNI extends JNIWrapper
+{
+    public static long initializeCompressor(byte module)
+    {
+        return 0;
+    }
 
-  public static native boolean checkCompressorModule(byte module);
+    public static boolean checkCompressorModule(byte module)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressor(long pcm_pointer);
+    public static boolean getCompressor(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native void setClosedLoopControl(long pcm_pointer, boolean value);
+    public static void setClosedLoopControl(long pcm_pointer, boolean value)
+    {
 
-  public static native boolean getClosedLoopControl(long pcm_pointer);
+    }
 
-  public static native boolean getPressureSwitch(long pcm_pointer);
+    public static boolean getClosedLoopControl(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native float getCompressorCurrent(long pcm_pointer);
+    public static boolean getPressureSwitch(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressorCurrentTooHighFault(long pcm_pointer);
+    public static native float getCompressorCurrent(long pcm_pointer);
 
-  public static native boolean getCompressorCurrentTooHighStickyFault(long pcm_pointer);
+    public static boolean getCompressorCurrentTooHighFault(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressorShortedStickyFault(long pcm_pointer);
+    public static boolean getCompressorCurrentTooHighStickyFault(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressorShortedFault(long pcm_pointer);
+    public static boolean getCompressorShortedStickyFault(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressorNotConnectedStickyFault(long pcm_pointer);
+    public static boolean getCompressorShortedFault(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native boolean getCompressorNotConnectedFault(long pcm_pointer);
+    public static boolean getCompressorNotConnectedStickyFault(long pcm_pointer)
+    {
+        return false;
+    }
 
-  public static native void clearAllPCMStickyFaults(long pcm_pointer);
+    public static boolean getCompressorNotConnectedFault(long pcm_pointer)
+    {
+        return false;
+    }
+
+    public static void clearAllPCMStickyFaults(long pcm_pointer)
+    {
+
+    }
 }

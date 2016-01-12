@@ -10,12 +10,10 @@ package edu.wpi.first.wpilibj;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.jar.Manifest;
-import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tInstances;
@@ -24,7 +22,6 @@ import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.internal.HardwareHLUsageReporting;
 import edu.wpi.first.wpilibj.internal.HardwareTimer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.Utility;
 
 /**
  * Implement a Robot Program framework. The RobotBase class is intended to be
@@ -60,7 +57,6 @@ public abstract class RobotBase {
     // Resource.RestartProgram();
 
     NetworkTable.setNetworkIdentity("Robot");
-    NetworkTable.setPersistentFilename("/home/lvuser/networktables.ini");
     NetworkTable.setServerMode();// must be before b
     m_ds = DriverStation.getInstance();
     NetworkTable.getTable(""); // forces network tables to initialize

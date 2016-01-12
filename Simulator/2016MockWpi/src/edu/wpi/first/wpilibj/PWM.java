@@ -9,13 +9,12 @@ package edu.wpi.first.wpilibj;
 
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
-import edu.wpi.first.wpilibj.hal.PWMJNI;
 import edu.wpi.first.wpilibj.hal.DIOJNI;
+import edu.wpi.first.wpilibj.hal.PWMJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 import edu.wpi.first.wpilibj.util.AllocationException;
-import edu.wpi.first.wpilibj.util.CheckedAllocationException;
 
 /**
  * Class implements the PWM generation in the FPGA.
@@ -283,20 +282,26 @@ public class PWM extends SensorBase implements LiveWindowSendable {
       speed = 1.0;
     }
 
-    // calculate the desired output pwm value by scaling the speed appropriately
-    int rawValue;
-    if (speed == 0.0) {
-      rawValue = getCenterPwm();
-    } else if (speed > 0.0) {
-      rawValue =
-          (int) (speed * ((double) getPositiveScaleFactor()) + ((double) getMinPositivePwm()) + 0.5);
-    } else {
-      rawValue =
-          (int) (speed * ((double) getNegativeScaleFactor()) + ((double) getMaxNegativePwm()) + 0.5);
-    }
+        // // calculate the desired output pwm value by scaling the speed
+        // appropriately
+        // int rawValue;
+        // if (speed == 0.0) {
+        // rawValue = getCenterPwm();
+        // } else if (speed > 0.0) {
+        // rawValue =
+        // (int) (speed * ((double) getPositiveScaleFactor()) + ((double)
+        // getMinPositivePwm()) + 0.5);
+        // } else {
+        // rawValue =
+        // (int) (speed * ((double) getNegativeScaleFactor()) + ((double)
+        // getMaxNegativePwm()) + 0.5);
+        // }
+        //
+        // // send the computed pwm value to the FPGA
+        // setRaw(rawValue);
 
-    // send the computed pwm value to the FPGA
-    setRaw(rawValue);
+        // The above is too complicated to simulate, just fake it
+        PWMJNI.__setPWM(m_port, speed);
   }
 
   /**
@@ -312,18 +317,23 @@ public class PWM extends SensorBase implements LiveWindowSendable {
    * @return The most recently set speed between -1.0 and 1.0.
    */
   public double getSpeed() {
-    int value = getRaw();
-    if (value > getMaxPositivePwm()) {
-      return 1.0;
-    } else if (value < getMinNegativePwm()) {
-      return -1.0;
-    } else if (value > getMinPositivePwm()) {
-      return (double) (value - getMinPositivePwm()) / (double) getPositiveScaleFactor();
-    } else if (value < getMaxNegativePwm()) {
-      return (double) (value - getMaxNegativePwm()) / (double) getNegativeScaleFactor();
-    } else {
-      return 0.0;
-    }
+        // int value = getRaw();
+        // if (value > getMaxPositivePwm()) {
+        // return 1.0;
+        // } else if (value < getMinNegativePwm()) {
+        // return -1.0;
+        // } else if (value > getMinPositivePwm()) {
+        // return (double) (value - getMinPositivePwm()) / (double)
+        // getPositiveScaleFactor();
+        // } else if (value < getMaxNegativePwm()) {
+        // return (double) (value - getMaxNegativePwm()) / (double)
+        // getNegativeScaleFactor();
+        // } else {
+        // return 0.0;
+        // }
+
+        // The above is too complicated to simulate, just fake it
+        return PWMJNI.__getPWM(m_port);
   }
 
   /**

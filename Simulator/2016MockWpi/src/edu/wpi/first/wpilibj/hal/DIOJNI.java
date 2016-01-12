@@ -7,26 +7,73 @@
 
 package edu.wpi.first.wpilibj.hal;
 
-public class DIOJNI extends JNIWrapper {
-  public static native long initializeDigitalPort(long port_pointer);
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.DigitalSourceWrapper;
 
-  public static native void freeDigitalPort(long port_pointer);
+public class DIOJNI extends JNIWrapper
+{
+    private static DigitalSourceWrapper getWrapperFromBuffer(long digital_port_pointer)
+    {
+        int port = (int) digital_port_pointer;
+        return SensorActuatorRegistry.get().getDigitalSources().get(port);
+    }
 
-  public static native boolean allocateDIO(long digital_port_pointer, boolean input);
+    public static long initializeDigitalPort(long port_pointer)
+    {
+        return port_pointer;
+    }
 
-  public static native void freeDIO(long digital_port_pointer);
+    public static void freeDigitalPort(long port_pointer)
+    {
 
-  public static native void setDIO(long digital_port_pointer, short value);
+    }
 
-  public static native boolean getDIO(long digital_port_pointer);
+    public static boolean allocateDIO(long digital_port_pointer, boolean input)
+    {
+        int pin = (int) digital_port_pointer;
+        DigitalSourceWrapper wrapper = new DigitalSourceWrapper(pin);
+        SensorActuatorRegistry.get().register(wrapper, pin);
 
-  public static native boolean getDIODirection(long digital_port_pointer);
+        return false;
+    }
 
-  public static native void pulse(long digital_port_pointer, double pulseLength);
+    public static void freeDIO(long digital_port_pointer)
+    {
 
-  public static native boolean isPulsing(long digital_port_pointer);
+    }
 
-  public static native boolean isAnyPulsing();
+    public static void setDIO(long digital_port_pointer, short value)
+    {
+        getWrapperFromBuffer(digital_port_pointer).set(value == 1);
+    }
 
-  public static native short getLoopTiming();
+    public static boolean getDIO(long digital_port_pointer)
+    {
+        return getWrapperFromBuffer(digital_port_pointer).get();
+    }
+
+    public static boolean getDIODirection(long digital_port_pointer)
+    {
+        return false;
+    }
+
+    public static void pulse(long digital_port_pointer, double pulseLength)
+    {
+
+    }
+
+    public static boolean isPulsing(long digital_port_pointer)
+    {
+        return false;
+    }
+
+    public static boolean isAnyPulsing()
+    {
+        return false;
+    }
+
+    public static short getLoopTiming()
+    {
+        return (short) (HALUtil.getCycleTime() * 1e3);
+    }
 }
