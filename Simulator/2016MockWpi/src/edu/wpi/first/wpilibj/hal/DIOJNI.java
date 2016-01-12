@@ -12,6 +12,12 @@ import com.snobot.simulator.module_wrapper.DigitalSourceWrapper;
 
 public class DIOJNI extends JNIWrapper
 {
+    private static DigitalSourceWrapper getWrapperFromBuffer(long digital_port_pointer)
+    {
+        int port = (int) digital_port_pointer;
+        return SensorActuatorRegistry.get().getDigitalSources().get(port);
+    }
+
     public static long initializeDigitalPort(long port_pointer)
     {
         return port_pointer;
@@ -38,12 +44,12 @@ public class DIOJNI extends JNIWrapper
 
     public static void setDIO(long digital_port_pointer, short value)
     {
-
+        getWrapperFromBuffer(digital_port_pointer).set(value == 1);
     }
 
     public static boolean getDIO(long digital_port_pointer)
     {
-        return false;
+        return getWrapperFromBuffer(digital_port_pointer).get();
     }
 
     public static boolean getDIODirection(long digital_port_pointer)
