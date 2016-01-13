@@ -1,5 +1,6 @@
 package com.snobot.simulator.gui.module_widget;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -15,11 +16,14 @@ public class EncoderGraphicDisplay extends BaseWidgetDisplay<EncoderPair, Encode
     private class EncoderWrapperDisplay extends JPanel
     {
 
+        private JTextField mRawField;
         private JTextField mDistanceField;
 
         public EncoderWrapperDisplay()
         {
-            mDistanceField = new JTextField(15);
+            mRawField = new JTextField(6);
+            mDistanceField = new JTextField(6);
+            add(mRawField);
             add(mDistanceField);
         }
 
@@ -27,10 +31,13 @@ public class EncoderGraphicDisplay extends BaseWidgetDisplay<EncoderPair, Encode
         {
             if(aValue.isHookedUp())
             {
-                mDistanceField.setText("" + aValue.getRaw());
+                DecimalFormat df = new DecimalFormat("#.###");
+                mRawField.setText("" + aValue.getRaw());
+                mDistanceField.setText(df.format(aValue.getDistance()));
             }
             else
             {
+                mRawField.setText("Not Hooked Up");
                 mDistanceField.setText("Not Hooked Up");
             }
         }
