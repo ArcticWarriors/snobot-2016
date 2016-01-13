@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -83,6 +84,8 @@ public class ExampleRobot extends IterativeRobot
         {
             mTestMotor1.set(0);
         }
+
+        SmartDashboard.putNumber("Motor 1", mTestMotor1.get());
     }
 
     /**
