@@ -5,5 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/2016MockWpi"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ExampleRobot"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/snobot2016"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -81,14 +81,24 @@ public class Simulator
 
                 try
                 {
+                    boolean simulatorLoaded = false;
                     if (mSimulatorClassName != null && !mSimulatorClassName.isEmpty())
                     {
                         // Even though we don't store it, it will still get
                         // created and hook itself up
-                        Class.forName(mSimulatorClassName).newInstance();
-                        System.out.println("Creating simulator : " + mSimulatorClassName);
+                        try
+                        {
+                            Class.forName(mSimulatorClassName).newInstance();
+                            System.out.println("Creating simulator : " + mSimulatorClassName);
+                            simulatorLoaded = true;
+                        }
+                        catch (ClassNotFoundException e)
+                        {
+                            System.err.println("Could not find simulator class " + mSimulatorClassName);
+                        }
                     }
-                    else
+
+                    if (!simulatorLoaded)
                     {
                         System.out.println("**********************************************************************************");
                         System.out.println("WARNING: Simulator class name was not set up.  Will use default, simple simulation");
