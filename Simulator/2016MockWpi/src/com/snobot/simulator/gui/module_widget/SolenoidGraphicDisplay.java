@@ -66,13 +66,20 @@ public class SolenoidGraphicDisplay extends BaseWidgetDisplay<Integer, SolenoidW
     {
         for (Entry<Integer, SolenoidWrapper> pair : aMap.entrySet())
         {
-            ((SolenoidDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            if (pair.getValue().isReal())
+            {
+                ((SolenoidDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            }
         }
     }
 
     @Override
     protected SolenoidDisplay createWidget(Entry<Integer, SolenoidWrapper> pair)
     {
+        if (!pair.getValue().isReal())
+        {
+            return null;
+        }
         return new SolenoidDisplay();
     }
 }

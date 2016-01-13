@@ -8,6 +8,7 @@ public class SolenoidWrapper extends ASensorWrapper
     private boolean mState;
     private double mOnTransitionPressureDrop;
     private double mOffTransitionPressureDrop;
+    private boolean mIsReal;
 
     public SolenoidWrapper(int aIndex)
     {
@@ -16,6 +17,7 @@ public class SolenoidWrapper extends ASensorWrapper
         mState = false;
         mOnTransitionPressureDrop = 10;
         mOffTransitionPressureDrop = 10;
+        mIsReal = false;
     }
 
     public boolean get()
@@ -43,5 +45,15 @@ public class SolenoidWrapper extends ASensorWrapper
     public void setTransitionPressure(double aPressure)
     {
         mOnTransitionPressureDrop = mOffTransitionPressureDrop = aPressure;
+    }
+
+    public void setIsReal(boolean aIsReal)
+    {
+        mIsReal = aIsReal;
+    }
+
+    public boolean isReal()
+    {
+        return mIsReal;
     }
 }

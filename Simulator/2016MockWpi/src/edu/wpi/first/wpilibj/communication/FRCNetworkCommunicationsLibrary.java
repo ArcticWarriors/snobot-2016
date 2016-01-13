@@ -10,6 +10,7 @@ package edu.wpi.first.wpilibj.communication;
 import java.nio.ByteBuffer;
 
 import com.snobot.simulator.RobotStateSingleton;
+import com.snobot.simulator.SensorActuatorRegistry;
 import com.snobot.simulator.joysticks.JoystickFactory;
 
 import edu.wpi.first.wpilibj.hal.JNIWrapper;
@@ -182,6 +183,11 @@ public class FRCNetworkCommunicationsLibrary extends JNIWrapper
      */
     public static int FRCNetworkCommunicationUsageReportingReport(byte resource, byte instanceNumber, byte context, String feature)
     {
+        if (resource == tResourceType.kResourceType_Solenoid)
+        {
+            int port = (int) instanceNumber;
+            SensorActuatorRegistry.get().getSolenoids().get(port).setIsReal(true);
+        }
         return 0;
     }
 
