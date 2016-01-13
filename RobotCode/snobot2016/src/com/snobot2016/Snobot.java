@@ -1,4 +1,4 @@
-package com.snobot;
+package com.snobot2016;
 
 import com.snobot.xlib.ASnobot;
 
