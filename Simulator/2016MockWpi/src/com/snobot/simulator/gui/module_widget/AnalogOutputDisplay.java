@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 import com.snobot.simulator.gui.Util;
 import com.snobot.simulator.module_wrapper.AnalogWrapper;
 
-public class AnalogOutputDisplay extends BaseWidgetDisplay<AnalogWrapper>
+public class AnalogOutputDisplay extends BaseWidgetDisplay<Integer, AnalogWrapper>
 {
 
     private class AnalogDisplay extends JPanel

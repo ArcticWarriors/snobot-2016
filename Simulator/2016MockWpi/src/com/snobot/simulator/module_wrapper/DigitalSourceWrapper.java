@@ -4,6 +4,7 @@ public class DigitalSourceWrapper extends ASensorWrapper
 {
 
     private boolean mState;
+    private boolean mIsEncoder;
 
     public DigitalSourceWrapper(int index)
     {
@@ -20,4 +21,15 @@ public class DigitalSourceWrapper extends ASensorWrapper
     {
         mState = aState;
     }
+
+    public boolean isEncoder()
+    {
+        return mIsEncoder;
+    }
+
+    public void setIsEncoder(boolean aIsEncoder)
+    {
+        this.mIsEncoder = aIsEncoder;
+    }
+
 }

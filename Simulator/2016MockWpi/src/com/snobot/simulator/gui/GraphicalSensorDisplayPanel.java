@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import com.snobot.simulator.SensorActuatorRegistry;
 import com.snobot.simulator.gui.module_widget.AnalogOutputDisplay;
 import com.snobot.simulator.gui.module_widget.DigitalSourceGraphicDisplay;
+import com.snobot.simulator.gui.module_widget.EncoderGraphicDisplay;
 import com.snobot.simulator.gui.module_widget.RelayGraphicDisplay;
 import com.snobot.simulator.gui.module_widget.SolenoidGraphicDisplay;
 import com.snobot.simulator.gui.module_widget.SpeedControllerGraphicDisplay;
@@ -22,6 +23,7 @@ public class GraphicalSensorDisplayPanel extends JPanel
     private DigitalSourceGraphicDisplay mDigitalSourcePanel;
     private RelayGraphicDisplay mRelayPanel;
     private AnalogOutputDisplay mAnalogPanel;
+    private EncoderGraphicDisplay mEncoderPanel;
 
     public void create()
     {
@@ -32,6 +34,7 @@ public class GraphicalSensorDisplayPanel extends JPanel
         mDigitalSourcePanel = new DigitalSourceGraphicDisplay(reg.getDigitalSources());
         mRelayPanel = new RelayGraphicDisplay(reg.getRelays());
         mAnalogPanel = new AnalogOutputDisplay(reg.getAnalog());
+        mEncoderPanel = new EncoderGraphicDisplay(reg.getEncoders());
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -55,6 +58,10 @@ public class GraphicalSensorDisplayPanel extends JPanel
         {
             add(mAnalogPanel);
         }
+        if (!mEncoderPanel.isEmpty())
+        {
+            add(mEncoderPanel);
+        }
     }
 
     public void update()
@@ -66,5 +73,6 @@ public class GraphicalSensorDisplayPanel extends JPanel
         mDigitalSourcePanel.update(reg.getDigitalSources());
         mRelayPanel.update(reg.getRelays());
         mAnalogPanel.update(reg.getAnalog());
+        mEncoderPanel.update(reg.getEncoders());
     }
 }

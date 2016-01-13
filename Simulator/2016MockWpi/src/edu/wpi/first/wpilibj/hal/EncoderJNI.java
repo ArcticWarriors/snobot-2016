@@ -25,6 +25,9 @@ public class EncoderJNI extends JNIWrapper
         EncoderPair ports = new EncoderPair(port_a_pin, port_b_pin);
         SensorActuatorRegistry.get().register(wrapper, ports);
 
+        SensorActuatorRegistry.get().getDigitalSources().get(port_a_pin).setIsEncoder(true);
+        SensorActuatorRegistry.get().getDigitalSources().get(port_b_pin).setIsEncoder(true);
+
         return output;
     }
 

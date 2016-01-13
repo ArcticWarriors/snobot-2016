@@ -12,37 +12,40 @@ import javax.swing.JPanel;
 
 import com.snobot.simulator.module_wrapper.ASensorWrapper;
 
-public abstract class BaseWidgetDisplay<ItemType extends ASensorWrapper> extends JPanel
+public abstract class BaseWidgetDisplay<KeyType, ItemType extends ASensorWrapper> extends JPanel
 {
 
-    protected Map<Integer, Container> mWidgetMap = new HashMap<>();
+    protected Map<KeyType, Container> mWidgetMap = new HashMap<>();
 
-    public BaseWidgetDisplay(Map<Integer, ItemType> aMap)
+    public BaseWidgetDisplay(Map<KeyType, ItemType> aMap)
     {
     	setLayout(new GridBagLayout());
 
     	int i = 0;
-        for (Entry<Integer, ItemType> pair : aMap.entrySet())
+        for (Entry<KeyType, ItemType> pair : aMap.entrySet())
         {
         	GridBagConstraints gc = new GridBagConstraints();
         	gc.gridy = i;
         	
             Container panelPair = createWidget(pair);
-            mWidgetMap.put(pair.getKey(), panelPair);
-            
-            gc.gridx = 0;
-            add(new JLabel("" + pair.getValue().getName()), gc);
+            if (panelPair != null)
+            {
+                mWidgetMap.put(pair.getKey(), panelPair);
 
-            gc.gridx = 1;
-            add(panelPair, gc);
+                gc.gridx = 0;
+                add(new JLabel("" + pair.getValue().getName()), gc);
 
-            ++i;
+                gc.gridx = 1;
+                add(panelPair, gc);
+
+                ++i;
+            }
         }
     }
 
-    protected abstract Container createWidget(Entry<Integer, ItemType> pair);
+    protected abstract Container createWidget(Entry<KeyType, ItemType> pair);
 
-    public abstract void update(Map<Integer, ItemType> aMap);
+    public abstract void update(Map<KeyType, ItemType> aMap);
 
     public boolean isEmpty()
     {

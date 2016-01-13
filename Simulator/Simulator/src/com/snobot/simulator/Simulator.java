@@ -50,17 +50,6 @@ public class Simulator
     private void createSimulator() throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
         mRobot = (RobotBase) Class.forName(mClassName).newInstance();
-
-        if (mSimulatorClassName != null && !mSimulatorClassName.isEmpty())
-        {
-            System.out.println("Creating simulator : " + mSimulatorClassName);
-        }
-        else
-        {
-            System.out.println("**********************************************************************************");
-            System.out.println("WARNING: Simulator class name was not set up.  Will use default, simple simulation");
-            System.out.println("**********************************************************************************");
-        }
     }
 
     public void startSimulation() throws InstantiationException, IllegalAccessException, ClassNotFoundException
@@ -92,6 +81,20 @@ public class Simulator
 
                 try
                 {
+                    if (mSimulatorClassName != null && !mSimulatorClassName.isEmpty())
+                    {
+                        // Even though we don't store it, it will still get
+                        // created and hook itself up
+                        Class.forName(mSimulatorClassName).newInstance();
+                        System.out.println("Creating simulator : " + mSimulatorClassName);
+                    }
+                    else
+                    {
+                        System.out.println("**********************************************************************************");
+                        System.out.println("WARNING: Simulator class name was not set up.  Will use default, simple simulation");
+                        System.out.println("**********************************************************************************");
+                    }
+
                     SimulatorFrame frame = new SimulatorFrame();
                     frame.pack();
                     frame.setVisible(true);

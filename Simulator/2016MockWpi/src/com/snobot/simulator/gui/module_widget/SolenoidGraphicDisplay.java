@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 
 import com.snobot.simulator.module_wrapper.SolenoidWrapper;
 
-public class SolenoidGraphicDisplay extends BaseWidgetDisplay<SolenoidWrapper>
+public class SolenoidGraphicDisplay extends BaseWidgetDisplay<Integer, SolenoidWrapper>
 {
     private class SolenoidDisplay extends JPanel
     {

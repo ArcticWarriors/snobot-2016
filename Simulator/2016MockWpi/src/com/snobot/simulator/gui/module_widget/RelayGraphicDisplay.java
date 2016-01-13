@@ -13,7 +13,7 @@ import com.snobot.simulator.module_wrapper.RelayWrapper;
 
 import edu.wpi.first.wpilibj.Relay.Value;
 
-public class RelayGraphicDisplay extends BaseWidgetDisplay<RelayWrapper>
+public class RelayGraphicDisplay extends BaseWidgetDisplay<Integer, RelayWrapper>
 {
     private class RelayDisplay extends JPanel
     {

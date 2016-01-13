@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 import com.snobot.simulator.gui.Util;
 import com.snobot.simulator.module_wrapper.SpeedControllerWrapper;
 
-public class SpeedControllerGraphicDisplay extends BaseWidgetDisplay<SpeedControllerWrapper>
+public class SpeedControllerGraphicDisplay extends BaseWidgetDisplay<Integer, SpeedControllerWrapper>
 {
     private class MotorDisplay extends JPanel
     {

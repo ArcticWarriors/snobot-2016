@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 
 import com.snobot.simulator.module_wrapper.DigitalSourceWrapper;
 
-public class DigitalSourceGraphicDisplay extends BaseWidgetDisplay<DigitalSourceWrapper>
+public class DigitalSourceGraphicDisplay extends BaseWidgetDisplay<Integer, DigitalSourceWrapper>
 {
     private class DigitalSourceWrapperDisplay extends JPanel
     {
@@ -50,13 +50,20 @@ public class DigitalSourceGraphicDisplay extends BaseWidgetDisplay<DigitalSource
     {
         for (Entry<Integer, DigitalSourceWrapper> pair : aMap.entrySet())
         {
-            ((DigitalSourceWrapperDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            if (!pair.getValue().isEncoder())
+            {
+                ((DigitalSourceWrapperDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            }
         }
     }
 
     @Override
     protected DigitalSourceWrapperDisplay createWidget(Entry<Integer, DigitalSourceWrapper> pair)
     {
+        if (pair.getValue().isEncoder())
+        {
+            return null;
+        }
         return new DigitalSourceWrapperDisplay();
     }
 }

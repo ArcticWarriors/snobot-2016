@@ -145,6 +145,11 @@ public class SensorActuatorRegistry
         return mAnalogMap;
     }
 
+    public Map<EncoderPair, EncoderWrapper> getEncoders()
+    {
+        return mEncoderMap;
+    }
+
     public EncoderWrapper getEncoder(int aPortA, int aPortB)
     {
         return mEncoderMap.get(new EncoderPair(aPortA, aPortB));
