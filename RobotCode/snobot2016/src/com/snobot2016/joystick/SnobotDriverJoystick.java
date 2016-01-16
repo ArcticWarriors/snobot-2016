@@ -1,7 +1,17 @@
 package com.snobot2016.joystick;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 public class SnobotDriverJoystick implements IDriverJoystick
 {
+    private Joystick mJoystick;
+    private double mLeftSpeed;
+    private double mRightSpeed;
+
+    public SnobotDriverJoystick(Joystick aJoystick)
+    {
+        mJoystick = aJoystick;
+    }
 
     @Override
     public void init()
@@ -13,14 +23,13 @@ public class SnobotDriverJoystick implements IDriverJoystick
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
-
+        mLeftSpeed = mJoystick.getRawAxis(0);
+        mRightSpeed = mJoystick.getRawAxis(1);
     }
 
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -48,22 +57,19 @@ public class SnobotDriverJoystick implements IDriverJoystick
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public double getRightSpeed()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mRightSpeed;
     }
 
     @Override
     public double getLeftSpeed()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mLeftSpeed;
     }
 
 }

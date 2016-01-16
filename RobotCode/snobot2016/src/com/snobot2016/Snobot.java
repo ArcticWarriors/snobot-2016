@@ -7,6 +7,7 @@ import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -26,6 +27,7 @@ public class Snobot extends ASnobot
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
     private IDriverJoystick mDriverJoystick;
+    private Joystick mRawDriverJoystick;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -41,12 +43,15 @@ public class Snobot extends ASnobot
         mLeftDriveEncoder = new Encoder(0, 1);
         mRightDriveEncoder = new Encoder(2, 3);
 
+        // UI
+        mRawDriverJoystick = new Joystick(0);
+
+        mDriverJoystick = new SnobotDriverJoystick(mRawDriverJoystick);
+
         // Modules
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder);
-
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
+        mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-
-        mDriverJoystick = new SnobotDriverJoystick();
 
         mSubsystems.add(mDriverJoystick);
     }
