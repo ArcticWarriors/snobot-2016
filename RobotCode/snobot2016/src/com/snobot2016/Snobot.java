@@ -7,6 +7,7 @@ import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -26,6 +27,7 @@ public class Snobot extends ASnobot
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
     private IDriverJoystick mDriverJoystick;
+    private Joystick mRawDriverJoystick;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,19 +36,23 @@ public class Snobot extends ASnobot
     public void robotInit()
     {
         // Motors
-        mDriveLeftMotor = new Talon(0);
-        mDriveRightMotor = new Talon(1);
+        mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
+        mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
 
         // Digital
-        mLeftDriveEncoder = new Encoder(0, 1);
-        mRightDriveEncoder = new Encoder(2, 3);
+        mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+
+        // UI
+        mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
+
+        mDriverJoystick = new SnobotDriverJoystick(mRawDriverJoystick);
 
         // Modules
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder);
-
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
+        mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-
-        mDriverJoystick = new SnobotDriverJoystick();
 
         mSubsystems.add(mDriverJoystick);
     }
@@ -63,22 +69,6 @@ public class Snobot extends ASnobot
      * SendableChooser make sure to add them to the chooser code above as well.
      */
     public void autonomousInit()
-    {
-
-    }
-
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic()
-    {
-
-    }
-
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic()
     {
 
     }

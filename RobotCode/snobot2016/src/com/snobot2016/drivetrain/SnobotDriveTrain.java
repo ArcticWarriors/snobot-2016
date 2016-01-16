@@ -1,5 +1,7 @@
 package com.snobot2016.drivetrain;
 
+import com.snobot2016.joystick.IDriverJoystick;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -7,17 +9,19 @@ public class SnobotDriveTrain implements IDriveTrain
 {
     private SpeedController mLeftMotor;
     private SpeedController mRightMotor;
+    private IDriverJoystick mJoystick;
 
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
 
-    public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder)
+    public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
+            IDriverJoystick aJoyStick)
     {
         mLeftMotor = aLeftMotor;
         mRightMotor = aRightMotor;
         mLeftEncoder = aLeftEncoder;
         mRightEncoder = aRightEncoder;
-
+        mJoystick = aJoyStick;
     }
 
     @Override
@@ -37,8 +41,7 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
-
+        setLeftRightSpeed(mJoystick.getLeftSpeed(), mJoystick.getRightSpeed());
     }
 
     @Override
@@ -65,15 +68,15 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
+        setLeftRightSpeed(0, 0);
 
     }
 
     @Override
     public void setLeftRightSpeed(double left, double right)
     {
-        // TODO Auto-generated method stub
-
+        mLeftMotor.set(left);
+        mRightMotor.set(right);
     }
 
     @Override

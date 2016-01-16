@@ -107,7 +107,6 @@ public class PropertyManager
     {
         if (sPropertyAdded)
         {
-            Preferences.getInstance().save();
             System.out.println("-------------------------------------------");
             System.out.println("Config file updated, saving it");
             System.out.println("-------------------------------------------");
