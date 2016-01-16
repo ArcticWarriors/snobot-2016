@@ -1,6 +1,7 @@
 package com.snobot.example;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
@@ -26,6 +27,7 @@ public class ExampleRobot extends IterativeRobot
     private SpeedController mTestMotor2;
     private DigitalOutput mDigitalOutput;
     private Solenoid mSolenoid;
+    private Encoder mEncoder;
 
     // Inputs
     private Relay mRelay;
@@ -44,6 +46,7 @@ public class ExampleRobot extends IterativeRobot
         mTestMotor2 = new Jaguar(1);
         mSolenoid = new Solenoid(0);
         mRelay = new Relay(0);
+        mEncoder = new Encoder(4, 5);
         mDigitalOutput = new DigitalOutput(0);
         mJoystick1 = new Joystick(0);
         mTimer = new Timer();
