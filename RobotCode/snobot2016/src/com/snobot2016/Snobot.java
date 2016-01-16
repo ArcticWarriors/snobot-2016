@@ -1,6 +1,14 @@
 package com.snobot2016;
 
 import com.snobot.xlib.ASnobot;
+import com.snobot2016.drivetrain.IDriveTrain;
+import com.snobot2016.drivetrain.SnobotDriveTrain;
+import com.snobot2016.joystick.IDriverJoystick;
+import com.snobot2016.joystick.SnobotDriverJoystick;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -11,6 +19,13 @@ import com.snobot.xlib.ASnobot;
  */
 public class Snobot extends ASnobot
 {
+    // Drivetrain
+    private SpeedController mDriveLeftMotor;
+    private SpeedController mDriveRightMotor;
+    private Encoder mLeftDriveEncoder;
+    private Encoder mRightDriveEncoder;
+    private IDriveTrain mDrivetrain;
+    private IDriverJoystick mDriverJoystick;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -18,7 +33,22 @@ public class Snobot extends ASnobot
      */
     public void robotInit()
     {
+        // Motors
+        mDriveLeftMotor = new Talon(0);
+        mDriveRightMotor = new Talon(1);
 
+        // Digital
+        mLeftDriveEncoder = new Encoder(0, 1);
+        mRightDriveEncoder = new Encoder(2, 3);
+
+        // Modules
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder);
+
+        mSubsystems.add(mDrivetrain);
+
+        mDriverJoystick = new SnobotDriverJoystick();
+
+        mSubsystems.add(mDriverJoystick);
     }
 
     /**
