@@ -4,8 +4,6 @@ import com.snobot.simulator.SensorActuatorRegistry;
 import com.snobot.simulator.module_wrapper.EncoderWrapper;
 import com.snobot.simulator.module_wrapper.SpeedControllerWrapper;
 
-import edu.wpi.first.wpilibj.Encoder;
-
 public class ExampleRobotSimulator
 {
 
@@ -14,7 +12,7 @@ public class ExampleRobotSimulator
         EncoderWrapper enc = SensorActuatorRegistry.get().getEncoder(4, 5);
         SpeedControllerWrapper sc = SensorActuatorRegistry.get().getSpeedControllers().get(0);
         
-        sc.setMotorParameters(100);
+        sc.setMotorParameters(7000);
         enc.setSpeedController(sc);
         
     }

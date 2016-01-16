@@ -59,7 +59,7 @@ public class Simulator
 
         // Do all of the stuff that
         NetworkTable.setPersistentFilename(mClassName + ".preferences.ini");
-        HALUtil.setWaitTime(.01);
+        HALUtil.setWaitTime(.02);
 
         createSimulator();
 
