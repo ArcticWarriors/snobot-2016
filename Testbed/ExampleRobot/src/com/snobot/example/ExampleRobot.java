@@ -84,28 +84,8 @@ public class ExampleRobot extends IterativeRobot
         {
             mTestMotor1.set(0);
         }
-        
-        if (mJoystick1.getRawButton(2))
-        {
-            mTestMotor2.set(-.5);
-        }
-        else
-        {
-            mTestMotor2.set(0);
-        }
-        
-        if (mJoystick1.getRawButton(3))
-        {
-            mSolenoid.set(true);
-        }
-        else
-        {
-            mSolenoid.set(false);
-        }
-        
+
         SmartDashboard.putNumber("Motor 1", mTestMotor1.get());
-        SmartDashboard.putNumber("Motor 2", mTestMotor2.get());
-        SmartDashboard.putBoolean("Solenoid 1", mSolenoid.get());
     }
 
     /**
