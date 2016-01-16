@@ -3,6 +3,8 @@ package com.snobot2016.drivetrain;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IDriverJoystick;
 
+import com.snobot2016.joystick.IDriverJoystick;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
