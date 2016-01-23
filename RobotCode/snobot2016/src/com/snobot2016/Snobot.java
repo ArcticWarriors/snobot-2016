@@ -2,8 +2,9 @@ package com.snobot2016;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
+import com.snobot2016.autonomous.CommandParser;
 import com.snobot2016.autonomous.IPositioner;
 import com.snobot2016.autonomous.Positioner;
 import com.snobot2016.camera.Camera;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -38,14 +40,21 @@ public class Snobot extends ASnobot
     private IDriveTrain mDrivetrain;
     private IDriverJoystick mDriverJoystick;
     private Joystick mRawDriverJoystick;
+
+    // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-    
+
+    // Autonomous
+    private ACommandParser mCommandParser;
+    private CommandGroup mCommandGroup;
+
     private AxisCamera mAxisCamera;
     private Camera mCamera;
+    
     private Logger mLogger;
     private SimpleDateFormat mLogDateFormat;
-    
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -74,8 +83,12 @@ public class Snobot extends ASnobot
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-        
+
         mSubsystems.add(mDriverJoystick);
+        
+        // Autonomous
+        mCommandParser = new CommandParser(this);
+        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
         
     	mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
     	mSubsystems.add(mSnobotPositioner);
@@ -88,6 +101,8 @@ public class Snobot extends ASnobot
         mLogDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmssSSS");
         String headerDate = mLogDateFormat.format(new Date());
         mLogger = new Logger(headerDate);
+        
+        this.init();
     }
 
     /**
@@ -103,13 +118,18 @@ public class Snobot extends ASnobot
      */
     public void autonomousInit()
     {
-
+        mCommandGroup.start();
     }
 
     @Override
     public void updateLog()
     {
 
+    }
+
+    public IDriveTrain getDriveTrain()
+    {
+        return this.mDrivetrain;
     }
 
 }
