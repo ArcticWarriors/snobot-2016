@@ -1,10 +1,10 @@
 package com.snobot2016;
 
+import com.snobot.positioner.IPositioner;
+import com.snobot.positioner.Positioner;
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
-import com.snobot2016.autonomous.IPositioner;
-import com.snobot2016.autonomous.Positioner;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
@@ -75,19 +75,17 @@ public class Snobot extends ASnobot
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-
         mSubsystems.add(mDriverJoystick);
-
-        // Autonomous
-        mCommandParser = new CommandParser(this);
-        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
-
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
 
         // Camera
         mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
         mCamera = new Camera(mAxisCamera);
+
+        // Autonomous
+        mCommandParser = new CommandParser(this);
+        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
 
         this.init();
     }
@@ -118,6 +116,11 @@ public class Snobot extends ASnobot
     public IDriveTrain getDriveTrain()
     {
         return this.mDrivetrain;
+    }
+
+    public IPositioner getPositioner()
+    {
+        return this.mSnobotPositioner;
     }
 
 }
