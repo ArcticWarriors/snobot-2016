@@ -1,6 +1,8 @@
 package com.snobot2016;
 
+import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
+import com.snobot2016.autonomous.CommandParser;
 import com.snobot2016.autonomous.IPositioner;
 import com.snobot2016.autonomous.Positioner;
 import com.snobot2016.drivetrain.IDriveTrain;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
@@ -32,9 +35,14 @@ public class Snobot extends ASnobot
     private IDriveTrain mDrivetrain;
     private IDriverJoystick mDriverJoystick;
     private Joystick mRawDriverJoystick;
+
+    // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-    
+
+    // Autonomous
+    private ACommandParser mCommandParser;
+    private CommandGroup mCommandGroup;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -42,17 +50,15 @@ public class Snobot extends ASnobot
      */
     public void robotInit()
     {
-    	
-    	
+
         // Motors
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
 
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
-                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
-        //Analog
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        // Analog
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
 
         // UI
@@ -64,13 +70,17 @@ public class Snobot extends ASnobot
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-        
+
         mSubsystems.add(mDriverJoystick);
-        
-    	mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
-    	mSubsystems.add(mSnobotPositioner);
-    	
-    	this.init();
+
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSubsystems.add(mSnobotPositioner);
+
+        // Autonomous
+        mCommandParser = new CommandParser(this);
+        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
+
+        this.init();
     }
 
     /**
@@ -84,15 +94,21 @@ public class Snobot extends ASnobot
      * switch structure below with additional strings. If using the
      * SendableChooser make sure to add them to the chooser code above as well.
      */
+
     public void autonomousInit()
     {
-
+        mCommandGroup.start();
     }
 
     @Override
     public void updateLog()
     {
 
+    }
+
+    public IDriveTrain getDriveTrain()
+    {
+        return this.mDrivetrain;
     }
 
 }
