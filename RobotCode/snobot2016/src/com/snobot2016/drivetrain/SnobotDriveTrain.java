@@ -31,10 +31,7 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
-
     }
-
     @Override
     public void update()
     {
@@ -92,15 +89,13 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public double getRightEncoderDistance()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mRightEncoder.getDistance();
     }
 
     @Override
     public double getLeftEncoderDistance()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mLeftEncoder.getDistance();
     }
 
 }
