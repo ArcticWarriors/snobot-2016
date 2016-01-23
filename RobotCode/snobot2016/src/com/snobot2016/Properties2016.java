@@ -23,5 +23,9 @@ public class Properties2016
     
     //Camera
     public static final StringProperty sCAMERA_HOST_IP = new StringProperty("CameraHostIP", "10.1.74.11");
+    
+    //Logger
+    public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
+    public static final StringProperty sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
 
 }
