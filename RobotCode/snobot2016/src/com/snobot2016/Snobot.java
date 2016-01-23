@@ -1,15 +1,19 @@
 package com.snobot2016;
 
 import com.snobot.xlib.ASnobot;
+import com.snobot2016.autonomous.IPositioner;
+import com.snobot2016.autonomous.Positioner;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +32,9 @@ public class Snobot extends ASnobot
     private IDriveTrain mDrivetrain;
     private IDriverJoystick mDriverJoystick;
     private Joystick mRawDriverJoystick;
+    private IPositioner mSnobotPositioner;
+    private Gyro mGyro;
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,6 +42,8 @@ public class Snobot extends ASnobot
      */
     public void robotInit()
     {
+    	
+    	
         // Motors
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
@@ -43,6 +52,8 @@ public class Snobot extends ASnobot
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
         mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
                 Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        //Analog
+        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
 
         // UI
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
@@ -53,8 +64,13 @@ public class Snobot extends ASnobot
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-
+        
         mSubsystems.add(mDriverJoystick);
+        
+    	mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+    	mSubsystems.add(mSnobotPositioner);
+    	
+    	this.init();
     }
 
     /**
