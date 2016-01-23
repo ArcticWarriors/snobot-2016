@@ -5,6 +5,7 @@ import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
 import com.snobot2016.autonomous.IPositioner;
 import com.snobot2016.autonomous.Positioner;
+import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +45,9 @@ public class Snobot extends ASnobot
     // Autonomous
     private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
+
+    private AxisCamera mAxisCamera;
+    private Camera mCamera;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -73,12 +78,16 @@ public class Snobot extends ASnobot
 
         mSubsystems.add(mDriverJoystick);
 
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
-        mSubsystems.add(mSnobotPositioner);
-
         // Autonomous
         mCommandParser = new CommandParser(this);
         mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
+
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSubsystems.add(mSnobotPositioner);
+
+        // Camera
+        mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
+        mCamera = new Camera(mAxisCamera);
 
         this.init();
     }
