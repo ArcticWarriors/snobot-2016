@@ -18,4 +18,11 @@ public class SmartDashBoardNames
     
     public static final String sSPEED = "Robot's Current Speed";
 
+    //Camera
+    public static final String sUpdateImageSuccess = "Image Update Success";
+    
+    //Shooter
+    
+    //Acquisition
+    
 }

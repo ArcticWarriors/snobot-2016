@@ -1,8 +1,10 @@
 package com.snobot2016;
 
 import com.snobot.xlib.ASnobot;
+
 import com.snobot2016.autonomous.IPositioner;
 import com.snobot2016.autonomous.Positioner;
+import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
@@ -14,6 +16,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,7 +38,9 @@ public class Snobot extends ASnobot
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
     
-
+    private AxisCamera mAxisCamera;
+    private Camera mCamera;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -70,6 +75,10 @@ public class Snobot extends ASnobot
     	mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
     	mSubsystems.add(mSnobotPositioner);
     	
+        //Camera
+        mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
+        mCamera = new Camera(mAxisCamera);
+
     	this.init();
     }
 

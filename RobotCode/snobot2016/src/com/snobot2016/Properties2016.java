@@ -1,6 +1,7 @@
 package com.snobot2016;
 
 import com.snobot.xlib.PropertyManager.IntegerProperty;
+import com.snobot.xlib.PropertyManager.StringProperty;
 
 public class Properties2016
 {
@@ -19,4 +20,8 @@ public class Properties2016
 
     //Gyro
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
+    
+    //Camera
+    public static final StringProperty sCAMERA_HOST_IP = new StringProperty("CameraHostIP", "10.1.74.11");
+
 }
