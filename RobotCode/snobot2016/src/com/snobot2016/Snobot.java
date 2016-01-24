@@ -80,14 +80,22 @@ public class Snobot extends ASnobot
 
         // Autonomous
         mCommandParser = new CommandParser(this);
-        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
+        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestAuton");
 
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
 
         // Camera
-        mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
-        mCamera = new Camera(mAxisCamera);
+        if (Properties2016.sENABLE_CAMERA.getValue())
+        {
+            System.out.println("Enabling camera");
+            mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
+            mCamera = new Camera(mAxisCamera);
+        }
+        else
+        {
+            System.out.println("Not enabling camera");
+        }
 
         this.init();
     }
