@@ -1,6 +1,7 @@
-package com.snobot.positioner;
+package com.snobot2016.positioner;
 
 import com.snobot.xlib.ISubsystem;
+import com.snobot.xlib.Utilities;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
 
@@ -13,7 +14,6 @@ public class Positioner implements ISubsystem, IPositioner
     private double mXPosition;
     private double mYPosition;
     private double mOrientation;
-    private double mLastOrientation;
     private double mTotalDistance;
     private double mChangeInDistance;
     private double mLastDistance;
@@ -30,7 +30,6 @@ public class Positioner implements ISubsystem, IPositioner
         mXPosition = 0;
         mYPosition = 0;
         mOrientation = 0;
-        mLastOrientation = 0;
         mTotalDistance = 0;
         mChangeInDistance = 0;
         mLastDistance = 0;
@@ -52,16 +51,7 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         // Orientation
-        mOrientation += mGyro.getAngle() - mLastOrientation;
-
-        if (mOrientation > 360)
-        {
-            mOrientation -= 360;
-        }
-        else if (mOrientation < 0)
-        {
-            mOrientation += 360;
-        }
+        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle());
 
         // ChangeInDistance and X/Y
         // TODO Need to account for slips when driving over defenses
@@ -73,7 +63,6 @@ public class Positioner implements ISubsystem, IPositioner
         // Update
         mSpeed = (mChangeInDistance) / (mTimer.get() - mLastTime);
         mLastTime = mTimer.get();
-        mLastOrientation = mOrientation;
         mLastDistance = mTotalDistance;
     }
 

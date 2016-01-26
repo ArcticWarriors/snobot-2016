@@ -1,7 +1,5 @@
 package com.snobot2016;
 
-import com.snobot.positioner.IPositioner;
-import com.snobot.positioner.Positioner;
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
@@ -10,6 +8,8 @@ import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.positioner.IPositioner;
+import com.snobot2016.positioner.Positioner;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;

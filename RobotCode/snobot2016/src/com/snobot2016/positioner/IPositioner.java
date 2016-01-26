@@ -1,4 +1,4 @@
-package com.snobot.positioner;
+package com.snobot2016.positioner;
 
 import com.snobot.xlib.ISubsystem;
 
