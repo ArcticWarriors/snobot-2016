@@ -109,7 +109,22 @@ public class Snobot extends ASnobot
     @Override
     public void updateLog()
     {
+        String logDate = mLogDateFormat.format(new Date());
+        if (mLogger.logNow())
+        {
+            mLogger.startLogEntry(logDate);
 
+            mLogger.updateLogger(mDrivetrain.getLeftEncoderDistance());
+            mLogger.updateLogger(mDrivetrain.getRightEncoderDistance());
+           
+
+//            for (ISubsystem iSubsystem : mSubsystems)
+//            {
+//                iSubsystem.updateLog();
+//            }
+
+            mLogger.endLogger();
+        }
     }
 
 }
