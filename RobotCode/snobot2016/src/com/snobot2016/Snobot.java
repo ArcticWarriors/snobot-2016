@@ -10,10 +10,12 @@ import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.light.Light;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,6 +31,7 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
  */
 public class Snobot extends ASnobot
 {
+    private static final Relay Relay = null;
     // Drivetrain
     private SpeedController mDriveLeftMotor;
     private SpeedController mDriveRightMotor;
@@ -48,6 +51,10 @@ public class Snobot extends ASnobot
 
     private AxisCamera mAxisCamera;
     private Camera mCamera;
+
+    // Light
+    private Light mLight;
+    private Relay mRelay;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -84,6 +91,11 @@ public class Snobot extends ASnobot
 
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
+
+        // Light
+        mRelay = new Relay(Properties2016.sRELAY_PORT.getValue());
+        mLight = new Light(mRelay);
+        mSubsystems.add(mLight);
 
         // Camera
         if (Properties2016.sENABLE_CAMERA.getValue())

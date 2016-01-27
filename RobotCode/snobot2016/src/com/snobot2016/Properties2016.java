@@ -21,10 +21,13 @@ public class Properties2016
     public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_A = new IntegerProperty("RightDriveEncoderA", 2);
     public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_B = new IntegerProperty("RightDriveEncoderB", 3);
 
-    //Gyro
+    // Gyro
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
-    
-    //Camera
+
+    // Light
+    public static final IntegerProperty sRELAY_PORT = new IntegerProperty("RelayPort", 1);
+
+    // Camera
     public static final StringProperty sCAMERA_HOST_IP = new StringProperty("CameraHostIP", "10.1.74.11");
     public static final BooleanProperty sENABLE_CAMERA;
 

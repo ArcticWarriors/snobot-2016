@@ -25,4 +25,7 @@ public class SmartDashBoardNames
 
     // Acquisition
 
+    // Sensors
+    public static final String sSNOBOT_LIGHT = "Light";
+
 }
