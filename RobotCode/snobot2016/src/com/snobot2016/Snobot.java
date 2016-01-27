@@ -62,7 +62,8 @@ public class Snobot extends ASnobot
 
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
         // Analog
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
 
@@ -78,10 +79,10 @@ public class Snobot extends ASnobot
         mSubsystems.add(mDriverJoystick);
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
-        
+
         // Autonomous
         mCommandParser = new CommandParser(this);
-        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestAuton");
+        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestSingleAutonomous/TestTurnWithDegrees");
 
         // Camera
         if (Properties2016.sENABLE_CAMERA.getValue())

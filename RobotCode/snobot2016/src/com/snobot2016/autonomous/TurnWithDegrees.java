@@ -12,7 +12,7 @@ public class TurnWithDegrees extends Command
     private double mTurnDegrees;
     private double mFinalAngle;
     private double mSpeed;
-    private double mStartingAngle;
+    boolean finished;
 
     public TurnWithDegrees(IDriveTrain aDriveTrain, IPositioner aPositioner, double aTurnDegrees, double aSpeed)
     {
@@ -25,25 +25,35 @@ public class TurnWithDegrees extends Command
     @Override
     protected void initialize()
     {
-        mStartingAngle = mPositioner.getOrientationDegrees();
-        mFinalAngle = mTurnDegrees + mStartingAngle;
+        mFinalAngle = mTurnDegrees + mPositioner.getOrientationDegrees();
+        finished = false;
 
     }
 
     @Override
     protected void execute()
     {
-        if (mTurnDegrees > 0)
+
+        double error = mPositioner.getOrientationDegrees() - mFinalAngle;
+        System.out.println("Error: " + error);
+        double deaband = 5;
+        if (error > deaband)
         {
+            System.out.println("  left");
+            // turn left
             mDriveTrain.setLeftRightSpeed(-mSpeed, mSpeed);
         }
-        else if (mTurnDegrees < 0)
+        else if (error < -deaband)
         {
+            System.out.println("  right");
+            // turn right
             mDriveTrain.setLeftRightSpeed(mSpeed, -mSpeed);
         }
         else
         {
+            System.out.println("three");
             mDriveTrain.stop();
+            finished = true;
         }
 
     }
@@ -51,22 +61,7 @@ public class TurnWithDegrees extends Command
     @Override
     protected boolean isFinished()
     {
-        if (mTurnDegrees == 0)
-        {
-            return true;
-        }
-        else if (mFinalAngle >= mPositioner.getOrientationDegrees() && mTurnDegrees < 0 && mPositioner.getOrientationDegrees() < mStartingAngle)
-        {
-            return true;
-        }
-        else if (mFinalAngle <= mPositioner.getOrientationDegrees() && mTurnDegrees < 0 && mPositioner.getOrientationDegrees() > mStartingAngle)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return finished;
 
     }
 
