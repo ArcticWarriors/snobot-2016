@@ -47,4 +47,9 @@ public class Properties2016
         }
     }
 
+    //Logger
+    public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
+    public static final StringProperty sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
+
+
 }
