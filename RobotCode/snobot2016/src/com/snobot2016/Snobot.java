@@ -111,9 +111,20 @@ public class Snobot extends ASnobot
         String headerDate = mLogDateFormat.format(new Date());
         mLogger = new Logger(headerDate);
         
+        
         this.init();
+        
     }
 
+    public void init()
+    {
+        mLogger.init();
+        mLogger.addHeader("LeftEncoderInput");
+        mLogger.addHeader("RightEncoderInput");
+        super.init();
+        mLogger.endHeader();
+    }
+    
     /**
      * This autonomous (along with the chooser code above) shows how to select
      * between different autonomous modes using the dashboard. The sendable
@@ -141,7 +152,7 @@ public class Snobot extends ASnobot
             mLogger.updateLogger(mDrivetrain.getLeftEncoderDistance());
             mLogger.updateLogger(mDrivetrain.getRightEncoderDistance());
            
-
+//Add this back in when subsystems are set up
 //            for (ISubsystem iSubsystem : mSubsystems)
 //            {
 //                iSubsystem.updateLog();

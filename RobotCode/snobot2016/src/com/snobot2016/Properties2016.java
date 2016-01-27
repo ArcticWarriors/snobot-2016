@@ -30,6 +30,10 @@ public class Properties2016
 
     // Autonomous
     public static final StringProperty sAUTON_DIRECTORY;
+    
+    //Logger
+    public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
+    public static final StringProperty sLOG_FILE_PATH;
 
     static
     {
@@ -38,18 +42,18 @@ public class Properties2016
             System.out.println("Using simulation constants");
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", false);
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/");
+            sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
         }
         else
         {
             System.out.println("Using tactical constants");
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", true);
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
+            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); //TODO CHECK IF THIS IS ACTUALLY USB DRIVE ON ROBORIO 
         }
     }
 
-    //Logger
-    public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
-    public static final StringProperty sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
+
 
 
 }
