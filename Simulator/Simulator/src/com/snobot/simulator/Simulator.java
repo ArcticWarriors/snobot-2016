@@ -22,6 +22,7 @@ public class Simulator
     private String mSimulatorClassName; // The name of the class that represents the simulator
 
     private RobotBase mRobot; // The robot code to run
+    private ISimulatorUpdater mSimulator; // The robot code to run
 
     private void loadConfig(String aFile)
     {
@@ -88,8 +89,19 @@ public class Simulator
                         // created and hook itself up
                         try
                         {
-                            Class.forName(mSimulatorClassName).newInstance();
+                            mSimulator = (ISimulatorUpdater) Class.forName(mSimulatorClassName).newInstance();
                             System.out.println("Creating simulator : " + mSimulatorClassName);
+
+                            RobotStateSingleton.get().addLoopListener(new RobotStateSingleton.LoopListener()
+                            {
+
+                                @Override
+                                public void looped()
+                                {
+                                    mSimulator.update();
+                                }
+                            });
+
                             simulatorLoaded = true;
                         }
                         catch (ClassNotFoundException e)
