@@ -21,6 +21,8 @@ public class AnalogJNI extends JNIWrapper
         return SensorActuatorRegistry.get().getAnalog().get(port);
     }
 
+    private static double sAnalogSampleRate;
+
     /**
      * <i>native declaration :
      * AthenaJava\target\native\include\HAL\Analog.h:58</i><br>
@@ -103,12 +105,12 @@ public class AnalogJNI extends JNIWrapper
 
     public static void setAnalogSampleRate(double samplesPerSecond)
     {
-
+        sAnalogSampleRate = samplesPerSecond;
     }
 
     public static double getAnalogSampleRate()
     {
-        return 100000;
+        return sAnalogSampleRate;
     }
 
     public static void setAnalogAverageBits(long analog_port_pointer, int bits)
@@ -118,7 +120,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static int getAnalogAverageBits(long analog_port_pointer)
     {
-        return 0;
+        return 1;
     }
 
     public static void setAnalogOversampleBits(long analog_port_pointer, int bits)
@@ -158,7 +160,7 @@ public class AnalogJNI extends JNIWrapper
 
     public static int getAnalogLSBWeight(long analog_port_pointer)
     {
-        return 0;
+        return 256;
     }
 
     public static int getAnalogOffset(long analog_port_pointer)

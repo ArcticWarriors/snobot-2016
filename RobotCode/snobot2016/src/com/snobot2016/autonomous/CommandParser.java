@@ -50,7 +50,9 @@ public class CommandParser extends ACommandParser
     @Override
     protected void publishParsingResults(String fileContents)
     {
+        System.out.println("\n\nAuton file contents:");
         System.out.println(fileContents);
+        System.out.println("\n\n");
     }
 
 }

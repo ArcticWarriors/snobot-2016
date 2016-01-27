@@ -2,5 +2,6 @@
 
 /logs/
 *.preferences.ini
+*.preferences.ini.bak
 joystick_config.properties
 simulator_config.properties

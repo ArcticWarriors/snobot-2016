@@ -103,6 +103,33 @@ public class PropertyManager
         }
     }
 
+    public static class BooleanProperty extends IProperty<Boolean>
+    {
+
+        public BooleanProperty(String aKey)
+        {
+            this(aKey, false);
+        }
+
+        public BooleanProperty(String aKey, boolean aDefault)
+        {
+            super(aKey, aDefault);
+        }
+
+        @Override
+        public Boolean getValue()
+        {
+            if (Preferences.getInstance().containsKey(mKey))
+            {
+                return Preferences.getInstance().getBoolean(mKey, mDefault);
+            }
+
+            sPropertyAdded = true;
+            Preferences.getInstance().putBoolean(mKey, mDefault);
+            return mDefault;
+        }
+    }
+
     public static void saveIfUpdated()
     {
         if (sPropertyAdded)
