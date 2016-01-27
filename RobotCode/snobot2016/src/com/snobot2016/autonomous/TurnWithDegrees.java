@@ -1,5 +1,6 @@
 package com.snobot2016.autonomous;
 
+import com.snobot.xlib.Utilities;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.positioner.IPositioner;
 
@@ -32,7 +33,7 @@ public class TurnWithDegrees extends Command
     @Override
     protected void initialize()
     {
-        mEndAngle = mAngleToTurn + mPositioner.getOrientationDegrees();
+        mEndAngle = Utilities.boundAngle0to360Degrees(mAngleToTurn + mPositioner.getOrientationDegrees());
         mFinished = false;
     }
 
