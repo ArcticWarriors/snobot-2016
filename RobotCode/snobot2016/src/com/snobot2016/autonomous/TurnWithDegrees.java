@@ -10,6 +10,7 @@ public class TurnWithDegrees extends Command
     private IDriveTrain mDriveTrain;
     private IPositioner mPositioner;
     private double mTurnDegrees;
+    private double mFinalAngle;
     private double mSpeed;
     private double mStartingAngle;
 
@@ -25,6 +26,7 @@ public class TurnWithDegrees extends Command
     protected void initialize()
     {
         mStartingAngle = mPositioner.getOrientationDegrees();
+        mFinalAngle = mTurnDegrees + mStartingAngle;
 
     }
 
@@ -49,32 +51,29 @@ public class TurnWithDegrees extends Command
     @Override
     protected boolean isFinished()
     {
-        if (mTurnDegrees < 0)
-        {
-            if (mStartingAngle + (mTurnDegrees + 360) >= mPositioner.getOrientationDegrees())
-            {
-                return true;
-            }
-        }
-        else if (mTurnDegrees >= 360)
-        {
-            if (mStartingAngle + (mTurnDegrees - 360) >= mPositioner.getOrientationDegrees())
-            {
-                return true;
-            }
-        }
-        else if (mStartingAngle + mTurnDegrees >= mPositioner.getOrientationDegrees())
+        if (mTurnDegrees == 0)
         {
             return true;
         }
-        return false;
+        else if (mFinalAngle >= mPositioner.getOrientationDegrees() && mTurnDegrees < 0 && mPositioner.getOrientationDegrees() < mStartingAngle)
+        {
+            return true;
+        }
+        else if (mFinalAngle <= mPositioner.getOrientationDegrees() && mTurnDegrees < 0 && mPositioner.getOrientationDegrees() > mStartingAngle)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 
     @Override
     protected void end()
     {
-        // TODO Auto-generated method stub
+        mDriveTrain.setLeftRightSpeed(0, 0);
 
     }
 

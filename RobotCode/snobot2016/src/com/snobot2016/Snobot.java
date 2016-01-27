@@ -85,7 +85,8 @@ public class Snobot extends ASnobot
 
         // Autonomous
         mCommandParser = new CommandParser(this);
-        mCommandGroup = mCommandParser.readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestAuton");
+        mCommandGroup = mCommandParser
+                .readFile("C:/Users/Alec/Documents/GitHub/snobot-2016/RobotCode/snobot2016/resources/TestSingleAutonomous/TestTurnWithDegrees");
 
         this.init();
     }

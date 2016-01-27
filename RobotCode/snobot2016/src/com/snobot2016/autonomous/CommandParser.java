@@ -38,6 +38,11 @@ public class CommandParser extends ACommandParser
             case "StupidTurn":
                 newCommand = new StupidTurn(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
+
+            case "TurnWithDegrees":
+                newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)));
+                break;
             }
         }
         catch (IndexOutOfBoundsException e)
