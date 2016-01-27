@@ -7,53 +7,54 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnWithDegrees extends Command
 {
-    private IDriveTrain mDriveTrain;
-    private IPositioner mPositioner;
-    private double mTurnDegrees;
-    private double mFinalAngle;
-    private double mSpeed;
-    boolean finished;
+    private final IDriveTrain mDriveTrain;
+    private final IPositioner mPositioner;
+    private final double mAngleToTurn;
+    private final double mSpeed;
+    private final double mDeadband;
+    private double mEndAngle;
+    private boolean mFinished;
 
     public TurnWithDegrees(IDriveTrain aDriveTrain, IPositioner aPositioner, double aTurnDegrees, double aSpeed)
     {
+        this(aDriveTrain, aPositioner, aTurnDegrees, aSpeed, 5);
+    }
+
+    public TurnWithDegrees(IDriveTrain aDriveTrain, IPositioner aPositioner, double aTurnDegrees, double aSpeed, double aDeadband)
+    {
         mDriveTrain = aDriveTrain;
         mPositioner = aPositioner;
-        mTurnDegrees = aTurnDegrees;
+        mAngleToTurn = aTurnDegrees;
         mSpeed = aSpeed;
+        mDeadband = aDeadband;
     }
 
     @Override
     protected void initialize()
     {
-        mFinalAngle = mTurnDegrees + mPositioner.getOrientationDegrees();
-        finished = false;
-
+        mEndAngle = mAngleToTurn + mPositioner.getOrientationDegrees();
+        mFinished = false;
     }
 
     @Override
     protected void execute()
     {
+        double error = mPositioner.getOrientationDegrees() - mEndAngle;
 
-        double error = mPositioner.getOrientationDegrees() - mFinalAngle;
-        System.out.println("Error: " + error);
-        double deaband = 5;
-        if (error > deaband)
+        // turn left
+        if (error > mDeadband)
         {
-            System.out.println("  left");
-            // turn left
             mDriveTrain.setLeftRightSpeed(-mSpeed, mSpeed);
         }
-        else if (error < -deaband)
+        // turn right
+        else if (error < -mDeadband)
         {
-            System.out.println("  right");
-            // turn right
             mDriveTrain.setLeftRightSpeed(mSpeed, -mSpeed);
         }
         else
         {
-            System.out.println("three");
             mDriveTrain.stop();
-            finished = true;
+            mFinished = true;
         }
 
     }
@@ -61,21 +62,18 @@ public class TurnWithDegrees extends Command
     @Override
     protected boolean isFinished()
     {
-        return finished;
-
+        return mFinished;
     }
 
     @Override
     protected void end()
     {
         mDriveTrain.setLeftRightSpeed(0, 0);
-
     }
 
     @Override
     protected void interrupted()
     {
-        // TODO Auto-generated method stub
 
     }
 
