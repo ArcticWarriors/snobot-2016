@@ -1,5 +1,8 @@
 package com.snobot2016;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
@@ -11,6 +14,7 @@ import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 import com.snobot2016.light.Light;
+import com.snobot2016.logger.Logger;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -56,6 +60,9 @@ public class Snobot extends ASnobot
     private Light mLight;
     private Relay mRelay;
 
+    private Logger mLogger;
+    private SimpleDateFormat mLogDateFormat;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -87,6 +94,7 @@ public class Snobot extends ASnobot
 
         // Autonomous
         mCommandParser = new CommandParser(this);
+
         mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestAuton");
 
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
@@ -109,7 +117,22 @@ public class Snobot extends ASnobot
             System.out.println("Not enabling camera");
         }
 
+        // Logger
+        mLogDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmssSSS");
+        String headerDate = mLogDateFormat.format(new Date());
+        mLogger = new Logger(headerDate);
+
         this.init();
+
+    }
+
+    public void init()
+    {
+        mLogger.init();
+        mLogger.addHeader("LeftEncoderInput");
+        mLogger.addHeader("RightEncoderInput");
+        super.init();
+        mLogger.endHeader();
     }
 
     /**
@@ -123,7 +146,6 @@ public class Snobot extends ASnobot
      * switch structure below with additional strings. If using the
      * SendableChooser make sure to add them to the chooser code above as well.
      */
-
     public void autonomousInit()
     {
         mCommandGroup.start();
@@ -132,7 +154,22 @@ public class Snobot extends ASnobot
     @Override
     public void updateLog()
     {
+        String logDate = mLogDateFormat.format(new Date());
+        if (mLogger.logNow())
+        {
+            mLogger.startLogEntry(logDate);
 
+            mLogger.updateLogger(mDrivetrain.getLeftEncoderDistance());
+            mLogger.updateLogger(mDrivetrain.getRightEncoderDistance());
+
+            // Add this back in when subsystems are set up
+            // for (ISubsystem iSubsystem : mSubsystems)
+            // {
+            // iSubsystem.updateLog();
+            // }
+
+            mLogger.endLogger();
+        }
     }
 
     public IDriveTrain getDriveTrain()
