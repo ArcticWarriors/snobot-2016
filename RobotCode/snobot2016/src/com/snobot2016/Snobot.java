@@ -1,5 +1,8 @@
 package com.snobot2016;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
@@ -8,12 +11,15 @@ import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.light.Light;
+import com.snobot2016.logger.Logger;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,6 +35,7 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
  */
 public class Snobot extends ASnobot
 {
+    private static final Relay Relay = null;
     // Drivetrain
     private SpeedController mDriveLeftMotor;
     private SpeedController mDriveRightMotor;
@@ -49,6 +56,13 @@ public class Snobot extends ASnobot
     private AxisCamera mAxisCamera;
     private Camera mCamera;
 
+    // Light
+    private Light mLight;
+    private Relay mRelay;
+
+    private Logger mLogger;
+    private SimpleDateFormat mLogDateFormat;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -62,8 +76,8 @@ public class Snobot extends ASnobot
 
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
-                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+
         // Analog
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
 
@@ -77,11 +91,17 @@ public class Snobot extends ASnobot
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
         mSubsystems.add(mDriverJoystick);
+
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
         mCommandParser = new CommandParser(this);
+
+        // Light
+        mRelay = new Relay(Properties2016.sRELAY_PORT.getValue());
+        mLight = new Light(mRelay);
+        mSubsystems.add(mLight);
 
         // Camera
         if (Properties2016.sENABLE_CAMERA.getValue())
@@ -95,7 +115,22 @@ public class Snobot extends ASnobot
             System.out.println("Not enabling camera");
         }
 
+        // Logger
+        mLogDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmssSSS");
+        String headerDate = mLogDateFormat.format(new Date());
+        mLogger = new Logger(headerDate);
+
         this.init();
+
+    }
+
+    public void init()
+    {
+        mLogger.init();
+        mLogger.addHeader("LeftEncoderInput");
+        mLogger.addHeader("RightEncoderInput");
+        super.init();
+        mLogger.endHeader();
     }
 
     /**
@@ -126,6 +161,22 @@ public class Snobot extends ASnobot
     @Override
     public void updateLog()
     {
+        String logDate = mLogDateFormat.format(new Date());
+        if (mLogger.logNow())
+        {
+            mLogger.startLogEntry(logDate);
+
+            mLogger.updateLogger(mDrivetrain.getLeftEncoderDistance());
+            mLogger.updateLogger(mDrivetrain.getRightEncoderDistance());
+
+            // Add this back in when subsystems are set up
+            // for (ISubsystem iSubsystem : mSubsystems)
+            // {
+            // iSubsystem.updateLog();
+            // }
+
+            mLogger.endLogger();
+        }
 
     }
 
