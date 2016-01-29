@@ -27,12 +27,26 @@ public class CommandParser extends ACommandParser
             switch (commandName)
             {
             case "StupidDriveStraight":
-                System.out.println(mSnobot);
-                System.out.println(mSnobot.getDriveTrain());
-                System.out.println("Args 1 " + args.get(1));
-                System.out.println("Args 1 " + args.get(2));
                 newCommand = new StupidDriveStraight(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
+
+            case "DriveStraightADistance":
+                newCommand = new DriveStraightADistance(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)));
+                break;
+
+            case "StupidTurn":
+                newCommand = new StupidTurn(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
+                break;
+
+            case "TurnWithDegrees":
+                newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)));
+                break;
+
+            case "GoToXY":
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
             }
         }
         catch (IndexOutOfBoundsException e)

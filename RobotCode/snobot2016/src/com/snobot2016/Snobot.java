@@ -6,8 +6,6 @@ import java.util.Date;
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.CommandParser;
-import com.snobot2016.autonomous.IPositioner;
-import com.snobot2016.autonomous.Positioner;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
@@ -15,6 +13,8 @@ import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 import com.snobot2016.light.Light;
 import com.snobot2016.logger.Logger;
+import com.snobot2016.positioner.IPositioner;
+import com.snobot2016.positioner.Positioner;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -77,6 +77,7 @@ public class Snobot extends ASnobot
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
         mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+
         // Analog
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
 
@@ -89,16 +90,13 @@ public class Snobot extends ASnobot
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
-
         mSubsystems.add(mDriverJoystick);
-
-        // Autonomous
-        mCommandParser = new CommandParser(this);
-
-        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestAuton");
 
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
+
+        // Autonomous
+        mCommandParser = new CommandParser(this);
 
         // Light
         mRelay = new Relay(Properties2016.sRELAY_PORT.getValue());
@@ -146,9 +144,37 @@ public class Snobot extends ASnobot
      * switch structure below with additional strings. If using the
      * SendableChooser make sure to add them to the chooser code above as well.
      */
+
     public void autonomousInit()
     {
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // +
+        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Backwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Forwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Backwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // + "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Fowards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Left");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Right");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // + "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Left");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Right");
+        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestGoToXY");
         mCommandGroup.start();
+        System.out.println(mCommandGroup.isCanceled());
     }
 
     @Override
@@ -170,11 +196,17 @@ public class Snobot extends ASnobot
 
             mLogger.endLogger();
         }
+
     }
 
     public IDriveTrain getDriveTrain()
     {
         return this.mDrivetrain;
+    }
+
+    public IPositioner getPositioner()
+    {
+        return this.mSnobotPositioner;
     }
 
 }
