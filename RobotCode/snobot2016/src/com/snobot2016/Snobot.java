@@ -12,9 +12,13 @@ import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
+import com.snobot2016.joystick.IOperatorJoystick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
 import com.snobot2016.logger.Logger;
+import com.snobot2016.scaling.IScaling;
+import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -45,6 +49,12 @@ public class Snobot extends ASnobot
     private IDriverJoystick mDriverJoystick;
     private Joystick mRawDriverJoystick;
 
+    // Scaling
+    private SpeedController mScaleMotor;
+    private IOperatorJoystick mOperatorJoystick;
+    private Joystick mRawOperatorJoystick;
+    private IScaling mScaling;
+    
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
@@ -73,7 +83,8 @@ public class Snobot extends ASnobot
         // Motors
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-
+        mScaleMotor = new Talon(Properties2016.sSCALE_MOTOR_PORT.getValue());
+        
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
         mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
@@ -82,15 +93,21 @@ public class Snobot extends ASnobot
 
         // UI
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
-
+        mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
+        
         mDriverJoystick = new SnobotDriverJoystick(mRawDriverJoystick);
-
+        mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
+        
         // Modules
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
+        mScaling = new Scaling(mScaleMotor, mOperatorJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
 
         mSubsystems.add(mDriverJoystick);
+        mSubsystems.add(mOperatorJoystick);
+        
+        mSubsystems.add(mScaling);
 
         // Autonomous
         mCommandParser = new CommandParser(this);
