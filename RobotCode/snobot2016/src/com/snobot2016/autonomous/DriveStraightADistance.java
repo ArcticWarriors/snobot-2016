@@ -37,7 +37,19 @@ public class DriveStraightADistance extends Command
     @Override
     protected boolean isFinished()
     {
-        return (mStartDistance + mDistance) <= mPositioner.getTotalDistance();
+        if (mDistance > 0)
+        {
+            return ((mStartDistance + mDistance) <= mPositioner.getTotalDistance());
+        }
+        else if (mDistance < 0)
+        {
+            return ((mStartDistance + mDistance) >= mPositioner.getTotalDistance());
+        }
+        else
+        {
+            return true;
+        }
+
     }
 
     @Override

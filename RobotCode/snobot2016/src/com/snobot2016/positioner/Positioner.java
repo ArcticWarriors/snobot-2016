@@ -52,13 +52,14 @@ public class Positioner implements ISubsystem, IPositioner
     {
         // Orientation
         mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle());
+        double orientationRadians = Math.toRadians(mOrientation);
 
         // ChangeInDistance and X/Y
         // TODO Need to account for slips when driving over defenses
         mTotalDistance = (mDriveTrain.getRightEncoderDistance() + mDriveTrain.getLeftEncoderDistance()) / 2;
         mChangeInDistance = mTotalDistance - mLastDistance;
-        mXPosition += mChangeInDistance * Math.sin(mOrientation);
-        mYPosition += mChangeInDistance * Math.cos(mOrientation);
+        mXPosition += mChangeInDistance * Math.sin(orientationRadians);
+        mYPosition += mChangeInDistance * Math.cos(orientationRadians);
 
         // Update
         mSpeed = (mChangeInDistance) / (mTimer.get() - mLastTime);

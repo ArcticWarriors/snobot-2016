@@ -147,15 +147,34 @@ public class Snobot extends ASnobot
 
     public void autonomousInit()
     {
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Backwards");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Forwards");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Backwards");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Fowards");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestStupidTurn_Left");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestStupidTurn_Right");
-//        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Left");
-        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Right");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // +
+        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Backwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Forwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Backwards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // + "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Fowards");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Left");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Right");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
+        // + "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Left");
+        // mCommandGroup =
+        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Right");
+        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestGoToXY");
         mCommandGroup.start();
+        System.out.println(mCommandGroup.isCanceled());
     }
 
     @Override
