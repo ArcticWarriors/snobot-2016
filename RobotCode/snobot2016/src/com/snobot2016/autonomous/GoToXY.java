@@ -39,7 +39,7 @@ public class GoToXY extends Command
         mCurrentX = mPositioner.getXPosition();
         mCurrentY = mPositioner.getYPosition();
         mDriveDistance = Math.sqrt((Math.pow((mFinalXCoor - mCurrentX), 2)) + (Math.pow((mFinalYCoor - mCurrentY), 2)));
-        mTurnDegrees = Math.toDegrees(Math.atan((mFinalXCoor - mCurrentX) / (mFinalYCoor - mCurrentY)));
+        mTurnDegrees = Math.toDegrees(Math.atan2((mFinalXCoor - mCurrentX), (mFinalYCoor - mCurrentY)));
         mTurnWithDegrees = new TurnWithDegrees(mDriveTrain, mPositioner, mTurnDegrees, mSpeed);
         System.out.println(mTurnDegrees);
         mDriveStraightADistance = new DriveStraightADistance(mDriveTrain, mPositioner, mDriveDistance, mSpeed);

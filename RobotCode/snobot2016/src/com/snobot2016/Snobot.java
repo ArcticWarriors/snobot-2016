@@ -76,7 +76,8 @@ public class Snobot extends ASnobot
 
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
 
         // Analog
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
@@ -148,22 +149,37 @@ public class Snobot extends ASnobot
     public void autonomousInit()
     {
         String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Forwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Fowards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_000Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_045Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_090Degrees");
-        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_135Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_180Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_225Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Forwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Fowards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_000Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_045Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_090Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_135Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_180Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_225Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_270Degrees");
+        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
         mCommandGroup.start();
         System.out.println(mCommandGroup.isCanceled());
     }
