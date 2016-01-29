@@ -147,32 +147,23 @@ public class Snobot extends ASnobot
 
     public void autonomousInit()
     {
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
-        // +
-        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Backwards");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/TestDriveStraightADistance_Forwards");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Backwards");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
-        // + "Autonomous/TestSingleAutonomous/TestStupidDriveStraight_Fowards");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Left");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/TestStupidTurn_Right");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue()
-        // + "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Left");
-        // mCommandGroup =
-        // mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/TestTurnWithDegrees_Right");
-        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/TestGoToXY");
+        String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Backwards");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Forwards");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Backwards");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Fowards");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Left");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Right");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Left");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Right");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_000Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_045Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_090Degrees");
+        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_135Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_180Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_225Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
+//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
         mCommandGroup.start();
         System.out.println(mCommandGroup.isCanceled());
     }
