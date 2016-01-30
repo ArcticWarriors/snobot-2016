@@ -1,7 +1,6 @@
 package com.snobot2016;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
@@ -17,7 +16,6 @@ import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
-import com.snobot2016.logger.Logger;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
@@ -42,7 +40,6 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
  */
 public class Snobot extends ASnobot
 {
-    private static final Relay Relay = null;
     // Drivetrain
     private SpeedController mDriveLeftMotor;
     private SpeedController mDriveRightMotor;
@@ -77,70 +74,56 @@ public class Snobot extends ASnobot
     private Camera mCamera;
 
     // Light
-    private Light mLight;
-    private Relay mRelay;
+    private Light mCameraLight;
+    private Relay mCameraRelay;
 
-    private Logger mLogger;
-    private SimpleDateFormat mLogDateFormat;
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit()
+    public Snobot()
     {
+        super(new SimpleDateFormat("yyyyMMdd_hhmmssSSS"));
 
-        // Motors
-        mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
-        mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-        mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
-        mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
-        mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        
-        // Digital
-        mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
-                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
-
-        // Analog
-        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-
-        // UI
+        // Raw Joysticks
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
-        mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
 
+        // Our Joysticks
         mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
+        mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
         mDriverFlightStick = new SnobotDriveFlightStick();
-        
-        // Modules
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
-        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
-        
-        mSubsystems.add(mDrivetrain);
-        mSubsystems.add(mOperatorJoystick);  
-        mSubsystems.add(mScaling);
         mSubsystems.add(mDriverXbox);
+        mSubsystems.add(mOperatorJoystick);
         mSubsystems.add(mDriverFlightStick);
+
+        // Drive train
+        mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
+        mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
+        mSubsystems.add(mDrivetrain);
+
+        // Scaling
+        mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
+        mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
+        mSubsystems.add(mScaling);
+
+        // Harvester
+        mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
+        mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
         mSubsystems.add(mHarvester);
 
-        // Autonomous
-        mCommandParser = new CommandParser(this);
-
+        // Positioner
+        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
 
-        // Autonomous
-        mCommandParser = new CommandParser(this);
-
-        // Light
-        mRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
-        mLight = new Light(mRelay);
-        mSubsystems.add(mLight);
-
         // Camera
+        mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
+        mCameraLight = new Light(mCameraRelay);
+        mSubsystems.add(mCameraLight);
+
         if (Properties2016.sENABLE_CAMERA.getValue())
         {
             System.out.println("Enabling camera");
@@ -152,22 +135,8 @@ public class Snobot extends ASnobot
             System.out.println("Not enabling camera");
         }
 
-        // Logger
-        mLogDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmssSSS");
-        String headerDate = mLogDateFormat.format(new Date());
-        mLogger = new Logger(headerDate);
-
-        this.init();
-
-    }
-
-    public void init()
-    {
-        mLogger.init();
-        mLogger.addHeader("LeftEncoderInput");
-        mLogger.addHeader("RightEncoderInput");
-        super.init();
-        mLogger.endHeader();
+        // Autonomous
+        mCommandParser = new CommandParser(this);
     }
 
     /**
@@ -202,29 +171,6 @@ public class Snobot extends ASnobot
 //        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
         mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
         mCommandGroup.start();
-        System.out.println(mCommandGroup.isCanceled());
-    }
-
-    @Override
-    public void updateLog()
-    {
-        String logDate = mLogDateFormat.format(new Date());
-        if (mLogger.logNow())
-        {
-            mLogger.startLogEntry(logDate);
-
-            mLogger.updateLogger(mDrivetrain.getLeftEncoderDistance());
-            mLogger.updateLogger(mDrivetrain.getRightEncoderDistance());
-
-            // Add this back in when subsystems are set up
-            // for (ISubsystem iSubsystem : mSubsystems)
-            // {
-            // iSubsystem.updateLog();
-            // }
-
-            mLogger.endLogger();
-        }
-
     }
 
     public IDriveTrain getDriveTrain()
@@ -236,28 +182,6 @@ public class Snobot extends ASnobot
     {
         return this.mSnobotPositioner;
     }
-    
-    public SpeedController getmScaleTiltMotor()
-    {
-        return mScaleTiltMotor;
-    }
-
-    public void setmScaleTiltMotor(SpeedController mScaleTiltMotor)
-    {
-        this.mScaleTiltMotor = mScaleTiltMotor;
-    }
-
-    public SpeedController getmScaleMoveMotor()
-    {
-        return mScaleMoveMotor;
-    }
-
-    public void setmScaleMoveMotor(SpeedController mScaleMoveMotor)
-    {
-        this.mScaleMoveMotor = mScaleMoveMotor;
-    }
-
-    
 }
 
 

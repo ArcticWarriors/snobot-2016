@@ -74,7 +74,7 @@ public class RelayGraphicDisplay extends BaseWidgetDisplay<Integer, RelayWrapper
     {
         for (Entry<Integer, RelayWrapper> pair : aMap.entrySet())
         {
-//            ((RelayDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            ((RelayDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
         }
     }
 

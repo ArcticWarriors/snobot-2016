@@ -1,4 +1,4 @@
-package com.snobot2016.logger;
+package com.snobot.xlib;
 
 import java.io.File;
 import java.io.FileWriter;
