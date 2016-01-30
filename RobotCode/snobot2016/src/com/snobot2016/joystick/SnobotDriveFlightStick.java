@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
-import com.snobot.xlib.FlightStickButtonMap;
+import com.snobot.xlib.FlightSticksButtonMap;
 
 public class SnobotDriveFlightStick implements IDriverJoystick {
 
