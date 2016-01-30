@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class SnobotOperatorJoystick implements IOperatorJoystick
 {
     private Joystick mJoystick;
-    private double mMotorSpeed;
-    
+    private double mMotorTiltSpeed;
+    private double mMotorMoveSpeed;
     
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
@@ -26,8 +26,9 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
-        mMotorSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS); 
+        mMotorTiltSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);         
+        mMotorMoveSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+    
     }
 
     @Override
@@ -64,12 +65,20 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         // TODO Auto-generated method stub
         
     }
-
+    
     @Override
-    public double getScaleMotorSpeed()
+    public double getScaleMoveSpeed()
     {
         // TODO Auto-generated method stub
-        return mMotorSpeed;
+        return mMotorMoveSpeed;
+    }
+
+
+    @Override
+    public double getScaleTiltSpeed()
+    {
+        // TODO Auto-generated method stub
+        return mMotorTiltSpeed;
     }
     
 }

@@ -50,7 +50,8 @@ public class Snobot extends ASnobot
     private Joystick mRawDriverJoystick;
 
     // Scaling
-    private SpeedController mScaleMotor;
+    private SpeedController mScaleMoveMotor;
+    private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
     private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
@@ -83,7 +84,8 @@ public class Snobot extends ASnobot
         // Motors
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-        mScaleMotor = new Talon(Properties2016.sSCALE_MOTOR_PORT.getValue());
+        mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
+        mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
         
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
@@ -100,12 +102,13 @@ public class Snobot extends ASnobot
         
         // Modules
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
-        mScaling = new Scaling(mScaleMotor, mOperatorJoystick);
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
 
         mSubsystems.add(mDriverJoystick);
         mSubsystems.add(mOperatorJoystick);
+        
         
         mSubsystems.add(mScaling);
 
@@ -192,6 +195,26 @@ public class Snobot extends ASnobot
     public IDriveTrain getDriveTrain()
     {
         return this.mDrivetrain;
+    }
+
+    public SpeedController getmScaleTiltMotor()
+    {
+        return mScaleTiltMotor;
+    }
+
+    public void setmScaleTiltMotor(SpeedController mScaleTiltMotor)
+    {
+        this.mScaleTiltMotor = mScaleTiltMotor;
+    }
+
+    public SpeedController getmScaleMoveMotor()
+    {
+        return mScaleMoveMotor;
+    }
+
+    public void setmScaleMoveMotor(SpeedController mScaleMoveMotor)
+    {
+        this.mScaleMoveMotor = mScaleMoveMotor;
     }
 
 }

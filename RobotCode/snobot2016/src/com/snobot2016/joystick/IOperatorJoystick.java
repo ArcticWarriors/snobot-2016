@@ -5,5 +5,6 @@ import com.snobot.xlib.ISubsystem;
 public interface IOperatorJoystick extends ISubsystem
 
 {
-    double getScaleMotorSpeed();
+    double getScaleTiltSpeed();
+    double getScaleMoveSpeed();       
 }

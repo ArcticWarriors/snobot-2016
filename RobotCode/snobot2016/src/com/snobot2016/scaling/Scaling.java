@@ -7,14 +7,16 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class Scaling implements IScaling
 {
-    SpeedController mScaleMotor;
+    SpeedController mScaleMoveMotor;
+    SpeedController mScaleTiltMotor;
     IOperatorJoystick mJoystick;
     
     
-    public Scaling(SpeedController aScaleMotor, IOperatorJoystick mOperatorJoystick)
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick mOperatorJoystick)
     {
-        mScaleMotor = aScaleMotor;
-        mJoystick = mOperatorJoystick;
+        mScaleMoveMotor = aScaleMoveMotor;
+        mScaleTiltMotor = aScaleTiltMotor;
+        mJoystick = mOperatorJoystick;  
     }
     
     
@@ -36,7 +38,8 @@ public class Scaling implements IScaling
     public void control()
     {
         // TODO Auto-generated method stub
-        setScaleSpeed(mJoystick.getScaleMotorSpeed());
+        setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
+        setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
     }
 
     @Override
@@ -88,9 +91,13 @@ public class Scaling implements IScaling
         return false;
     }
     
-    public void setScaleSpeed(double aSpeed)
+    public void setScaleSpeedMove(double aSpeedMove)
     {
-        mScaleMotor.set(aSpeed);
+        mScaleMoveMotor.set(aSpeedMove);
     }
 
+    public void setScaleSpeedTilt(double aSpeedTilt)
+    {
+        mScaleTiltMotor.set(aSpeedTilt);
+    }
 }
