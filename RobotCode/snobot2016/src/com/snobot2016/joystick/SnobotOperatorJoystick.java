@@ -87,7 +87,6 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public double getScaleTiltSpeed()
     {
-      
         return mMotorTiltSpeed;
     }
 
@@ -95,29 +94,24 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public boolean getHarvesterPivotSpeedUp()
     {
-        // TODO Auto-generated method stub
         return mMotorPivotSpeedUp;
     }
 
     @Override
     public boolean getHarvesterPivotSpeedDown()
     {
-        // TODO Auto-generated method stub
         return mMotorPivotSpeedDown;
     }
 
     @Override
     public boolean getHarvesterRollerSpeedForward()
     {
-        // TODO Auto-generated method stub
         return mMotorRollerSpeedForward;
     }
     
     @Override
     public boolean getHarvesterRollerSpeedReverse()
     {
-        // TODO Auto-generated method stub
         return mMotorRollerSpeedReverse;
-    } 
-    
+    }
 }
