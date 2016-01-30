@@ -25,6 +25,7 @@ public class RelayGraphicDisplay extends BaseWidgetDisplay<Integer, RelayWrapper
         public RelayDisplay()
         {
             setPreferredSize(new Dimension(sWIDTH, sHEIGHT));
+            mValue = Value.kOff;
         }
 
         public void updateDisplay(Value value)
@@ -73,7 +74,7 @@ public class RelayGraphicDisplay extends BaseWidgetDisplay<Integer, RelayWrapper
     {
         for (Entry<Integer, RelayWrapper> pair : aMap.entrySet())
         {
-//            ((RelayDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
+            ((RelayDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue().get());
         }
     }
 
