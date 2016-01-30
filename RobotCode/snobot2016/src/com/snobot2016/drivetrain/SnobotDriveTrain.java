@@ -11,19 +11,23 @@ public class SnobotDriveTrain implements IDriveTrain
 {
     private SpeedController mLeftMotor;
     private SpeedController mRightMotor;
-    private IDriverJoystick mJoystick;
-
+    private IDriverJoystick mXbaxJoystick;
+    private IDriverJoystick mFlightStick;
+    
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
 
+    private boolean mXbax = true;
+    
     public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
-            IDriverJoystick aJoyStick)
+            IDriverJoystick aJoyStick, IDriverJoystick aFlightStick)
     {
         mLeftMotor = aLeftMotor;
         mRightMotor = aRightMotor;
         mLeftEncoder = aLeftEncoder;
         mRightEncoder = aRightEncoder;
-        mJoystick = aJoyStick;
+        mXbaxJoystick = aJoyStick;
+        mFlightStick = aFlightStick;
     }
 
     @Override
@@ -34,14 +38,22 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
+    	mXbax = SmartDashboard.getBoolean(SmartDashBoardNames.sSNOBOT_FLIGHTSTICKS, true);
 
     }
 
     @Override
     public void control()
     {
-        setLeftRightSpeed(mJoystick.getLeftSpeed(), mJoystick.getRightSpeed());
+    	if (mXbax)
+    	{
+    		setLeftRightSpeed(mXbaxJoystick.getLeftSpeed(), mXbaxJoystick.getRightSpeed());
+    	}
+    	else
+    	{
+    		setLeftRightSpeed(mFlightStick.getLeftSpeed(), mFlightStick.getRightSpeed());
+    	}
+    	
     }
 
     @Override
@@ -62,6 +74,8 @@ public class SnobotDriveTrain implements IDriveTrain
         SmartDashboard.putNumber(SmartDashBoardNames.sLEFT_DRIVE_MOTOR_SPEED, mLeftMotor.get());
 
         SmartDashboard.putNumber(SmartDashBoardNames.sRIGHT_DRIVE_MOTOR_SPEED, mRightMotor.get());
+        
+        SmartDashboard.putBoolean(SmartDashBoardNames.sSNOBOT_FLIGHTSTICKS, mXbax);
     }
 
     @Override

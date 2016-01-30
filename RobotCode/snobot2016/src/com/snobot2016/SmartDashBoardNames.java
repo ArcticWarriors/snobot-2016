@@ -27,5 +27,10 @@ public class SmartDashBoardNames
 
     // Sensors
     public static final String sSNOBOT_LIGHT = "Light";
+    
+    //JoySticks
+    public static final String sSNOBOT_FLIGHTSTICKS = "FlightSticks";
+
+	
 
 }
