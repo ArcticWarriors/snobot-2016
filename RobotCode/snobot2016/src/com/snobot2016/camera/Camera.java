@@ -65,7 +65,7 @@ public boolean getUpdateImage()
 {
     // TODO Auto-generated method stub
     mUpdateImageSuccess = mCamera.getImage(mNewImage);
-    SmartDashboard.putBoolean(SmartDashBoardNames.sUpdateImageSuccess, mUpdateImageSuccess);
+    SmartDashboard.putBoolean(SmartDashBoardNames.sUPDATE_IMAGE_SUCCESS, mUpdateImageSuccess);
     return mUpdateImageSuccess;
 }
 

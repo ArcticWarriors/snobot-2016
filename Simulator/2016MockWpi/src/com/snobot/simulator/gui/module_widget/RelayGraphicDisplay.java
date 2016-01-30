@@ -25,6 +25,7 @@ public class RelayGraphicDisplay extends BaseWidgetDisplay<Integer, RelayWrapper
         public RelayDisplay()
         {
             setPreferredSize(new Dimension(sWIDTH, sHEIGHT));
+            mValue = Value.kOff;
         }
 
         public void updateDisplay(Value value)
