@@ -12,6 +12,7 @@ import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
 import com.snobot2016.joystick.IDriverJoystick;
+import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
 import com.snobot2016.light.Light;
 import com.snobot2016.logger.Logger;
@@ -42,13 +43,14 @@ public class Snobot extends ASnobot
     private Encoder mLeftDriveEncoder;
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
-    private IDriverJoystick mDriverJoystick;
+    private IDriverJoystick mDriverXbox;
+    private IDriverJoystick mDriverFlightStick;
     private Joystick mRawDriverJoystick;
-
+    
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-
+    
     // Autonomous
     private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
@@ -83,14 +85,21 @@ public class Snobot extends ASnobot
         // UI
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
 
-        mDriverJoystick = new SnobotDriverJoystick(mRawDriverJoystick);
-
+        mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
+        
+        mDriverFlightStick = new SnobotDriveFlightStick();
+        
+        
         // Modules
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
         mDrivetrain.control();
         mSubsystems.add(mDrivetrain);
 
-        mSubsystems.add(mDriverJoystick);
+        mSubsystems.add(mDriverXbox);
+        
+        mSubsystems.add(mDriverFlightStick);
+        
+        
 
         // Autonomous
         mCommandParser = new CommandParser(this);
@@ -178,3 +187,13 @@ public class Snobot extends ASnobot
     }
 
 }
+
+
+
+
+
+
+
+
+
+
