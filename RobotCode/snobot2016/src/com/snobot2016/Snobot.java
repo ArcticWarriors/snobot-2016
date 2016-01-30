@@ -103,6 +103,7 @@ public class Snobot extends ASnobot
         // Autonomous
         mCommandParser = new CommandParser(this);
         mSelectStartPosition = new SelectStartPosition();
+        mDefenseInFront = new DefenseInFront();
         mSelectStartPosition.putOnDash();
         mDefenseInFront.putOnDash();
 
