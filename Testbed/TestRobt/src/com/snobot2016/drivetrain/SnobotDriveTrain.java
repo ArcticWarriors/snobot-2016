@@ -1,9 +1,13 @@
 package com.snobot2016.drivetrain;
 
+import com.snobot.xlib.XboxButtonMap;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IDriverJoystick;
 
+import com.snobot2016.joystick.IDriverJoystick;
+
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,49 +15,41 @@ public class SnobotDriveTrain implements IDriveTrain
 {
     private SpeedController mLeftMotor;
     private SpeedController mRightMotor;
-    private IDriverJoystick mXbaxJoystick;
-    private IDriverJoystick mFlightStick;
-    
+    private IDriverJoystick mDriverJoystick;
+
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
+    private RobotDrive mRobotDrive;
 
-    private boolean mXbax = true;
-    
     public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
-            IDriverJoystick aJoyStick, IDriverJoystick aFlightStick)
+            IDriverJoystick aJoyStick)
     {
         mLeftMotor = aLeftMotor;
         mRightMotor = aRightMotor;
         mLeftEncoder = aLeftEncoder;
         mRightEncoder = aRightEncoder;
-        mXbaxJoystick = aJoyStick;
-        mFlightStick = aFlightStick;
+        mDriverJoystick = aJoyStick;
+        mRobotDrive = new RobotDrive(mLeftMotor, mRightMotor);
     }
 
     @Override
     public void init()
     {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void update()
     {
-    	mXbax = SmartDashboard.getBoolean(SmartDashBoardNames.sSNOBOT_FLIGHTSTICKS, true);
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void control()
     {
-    	if (mXbax)
-    	{
-    		setLeftRightSpeed(mXbaxJoystick.getLeftSpeed(), mXbaxJoystick.getRightSpeed());
-    	}
-    	else
-    	{
-    		setLeftRightSpeed(mFlightStick.getLeftSpeed(), mFlightStick.getRightSpeed());
-    	}
-    	
+        setLeftRightSpeed(mDriverJoystick.getLeftSpeed(), mDriverJoystick.getRightSpeed());
     }
 
     @Override
@@ -74,8 +70,6 @@ public class SnobotDriveTrain implements IDriveTrain
         SmartDashboard.putNumber(SmartDashBoardNames.sLEFT_DRIVE_MOTOR_SPEED, mLeftMotor.get());
 
         SmartDashboard.putNumber(SmartDashBoardNames.sRIGHT_DRIVE_MOTOR_SPEED, mRightMotor.get());
-        
-        SmartDashboard.putBoolean(SmartDashBoardNames.sSNOBOT_FLIGHTSTICKS, mXbax);
     }
 
     @Override
@@ -95,20 +89,39 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void setLeftRightSpeed(double left, double right)
     {
+//    	double max = 0.25;
+//    	if (left > 0.1)
+//    	{
+//    		left = max;
+//    	}
+//    	else if (left < -0.1)
+//    	{
+//    		left = -max;
+//    	}
+//    	
+//    	if (right > 0.1)
+//    	{
+//    		right = max;
+//    	}
+//    	else if (right < -0.1)
+//    	{
+//    		right = -max;
+//    	}
         mLeftMotor.set(left);
-        mRightMotor.set(right);
+        mRightMotor.set(-right);
     }
 
     @Override
     public double getRightEncoderDistance()
     {
-        return mRightEncoder.getDistance();
+        // TODO Auto-generated method stub
+        return 0;
     }
 
     @Override
     public double getLeftEncoderDistance()
     {
-        return mLeftEncoder.getDistance();
+        // TODO Auto-generated method stub
+        return 0;
     }
-
 }

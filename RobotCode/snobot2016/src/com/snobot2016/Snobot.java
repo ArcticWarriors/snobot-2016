@@ -9,12 +9,19 @@ import com.snobot2016.autonomous.CommandParser;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
+import com.snobot2016.harvester.Harvester;
+import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.IDriverJoystick;
+import com.snobot2016.joystick.IOperatorJoystick;
+import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
 import com.snobot2016.logger.Logger;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
+import com.snobot2016.scaling.IScaling;
+import com.snobot2016.scaling.Scaling;
 import com.snobot2016.smartdashboard.DefenseInFront;
 import com.snobot2016.smartdashboard.SelectStartPosition;
 
@@ -44,13 +51,26 @@ public class Snobot extends ASnobot
     private Encoder mLeftDriveEncoder;
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
-    private IDriverJoystick mDriverJoystick;
+    private IDriverJoystick mDriverXbox;
+    private IDriverJoystick mDriverFlightStick;
     private Joystick mRawDriverJoystick;
-
+    
+    // Scaling
+    private SpeedController mScaleMoveMotor;
+    private SpeedController mScaleTiltMotor;
+    private IOperatorJoystick mOperatorJoystick;
+    private Joystick mRawOperatorJoystick;
+    private IScaling mScaling;
+    
+    // Harvester
+    private SpeedController mHarvesterPivotMotor;
+    private SpeedController mHarvesterRollerMotor;
+    private IHarvester mHarvester;
+    
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-
+    
     // Autonomous
     private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
@@ -77,7 +97,11 @@ public class Snobot extends ASnobot
         // Motors
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-
+        mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
+        mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
+        mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
+        mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
+        
         // Digital
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
         mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
@@ -88,14 +112,28 @@ public class Snobot extends ASnobot
 
         // UI
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
+        mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
+        mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
 
-        mDriverJoystick = new SnobotDriverJoystick(mRawDriverJoystick);
-
+        mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
+        mDriverFlightStick = new SnobotDriveFlightStick();
+        
         // Modules
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverJoystick);
-        mDrivetrain.control();
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
+        
         mSubsystems.add(mDrivetrain);
-        mSubsystems.add(mDriverJoystick);
+        mSubsystems.add(mOperatorJoystick);  
+        mSubsystems.add(mScaling);
+        mSubsystems.add(mDriverXbox);
+        mSubsystems.add(mDriverFlightStick);
+        mSubsystems.add(mHarvester);
+
+        // Autonomous
+        mCommandParser = new CommandParser(this);
+
+        mCommandGroup = mCommandParser.readFile(Properties2016.sAUTON_DIRECTORY.getValue() + "TestAuton");
 
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
@@ -208,5 +246,36 @@ public class Snobot extends ASnobot
     {
         return this.mSnobotPositioner;
     }
+    
+    public SpeedController getmScaleTiltMotor()
+    {
+        return mScaleTiltMotor;
+    }
 
+    public void setmScaleTiltMotor(SpeedController mScaleTiltMotor)
+    {
+        this.mScaleTiltMotor = mScaleTiltMotor;
+    }
+
+    public SpeedController getmScaleMoveMotor()
+    {
+        return mScaleMoveMotor;
+    }
+
+    public void setmScaleMoveMotor(SpeedController mScaleMoveMotor)
+    {
+        this.mScaleMoveMotor = mScaleMoveMotor;
+    }
+
+    
 }
+
+
+
+
+
+
+
+
+
+
