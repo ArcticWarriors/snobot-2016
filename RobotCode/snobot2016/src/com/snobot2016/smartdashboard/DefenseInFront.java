@@ -7,13 +7,14 @@ public class DefenseInFront
 {
     private SendableChooser mDefenseInFront;
 
+    enum Defenses
+    {
+        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN
+    }
+
     public DefenseInFront()
     {
         mDefenseInFront = new SendableChooser();
-    }
-
-    private void Defenses()
-    {
         mDefenseInFront.addDefault("Low Bar", Defenses.LOW_BAR);
         mDefenseInFront.addObject("Portcullis", Defenses.PORTCULLIS);
         mDefenseInFront.addObject("Chival de Frise", Defenses.CHIVAL_DE_FRISE);
@@ -32,6 +33,6 @@ public class DefenseInFront
 
     public Defenses getSelected()
     {
-        return (com.snobot2016.smartdashboard.Defenses) mDefenseInFront.getSelected();
+        return (Defenses) mDefenseInFront.getSelected();
     }
 }
