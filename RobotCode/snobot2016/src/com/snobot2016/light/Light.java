@@ -20,7 +20,6 @@ public class Light implements ILight
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -47,7 +46,6 @@ public class Light implements ILight
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -60,28 +58,18 @@ public class Light implements ILight
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void setLight(boolean aOn)
+    public boolean isLightOn()
     {
-        // TODO Auto-generated method stub
-        mLight = (aOn);
-    }
-
-    @Override
-    public boolean getLight()
-    {
-        // TODO Auto-generated method stub
         return mLight;
     }
 

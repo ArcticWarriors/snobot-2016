@@ -92,7 +92,7 @@ public boolean getUpdateImage()
         return mUpdateImageSuccess;
     }
 
-    SmartDashboard.putBoolean(SmartDashBoardNames.sUpdateImageSuccess, mUpdateImageSuccess);
+    SmartDashboard.putBoolean(SmartDashBoardNames.sUPDATE_IMAGE_SUCCESS, mUpdateImageSuccess);
     return mUpdateImageSuccess;
 }
 

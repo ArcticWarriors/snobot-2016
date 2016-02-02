@@ -1,8 +1,6 @@
 package com.snobot.xlib;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -13,25 +11,9 @@ public abstract class ASnobot extends IterativeRobot implements ISubsystem
 
     protected List<ISubsystem> mSubsystems;
 
-    private Logger mLogger;
-    private SimpleDateFormat mLogDateFormat;
-
-    public ASnobot(SimpleDateFormat aLogFormat)
+    public ASnobot()
     {
         mSubsystems = new ArrayList<>();
-        mLogDateFormat = aLogFormat;
-
-        String headerDate = mLogDateFormat.format(new Date());
-        mLogger = new Logger(headerDate);
-    }
-
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit()
-    {
-        this.init();
     }
 
     /**
@@ -67,17 +49,6 @@ public abstract class ASnobot extends IterativeRobot implements ISubsystem
     }
 
     @Override
-    public void init()
-    {
-        mLogger.init();
-        for (ISubsystem iSubsystem : mSubsystems)
-        {
-            iSubsystem.init();
-        }
-        mLogger.endHeader();
-    }
-
-    @Override
     public void update()
     {
         for (ISubsystem iSubsystem : mSubsystems)
@@ -97,29 +68,20 @@ public abstract class ASnobot extends IterativeRobot implements ISubsystem
     }
 
     @Override
-    public void updateLog()
-    {
-        String logDate = mLogDateFormat.format(new Date());
-        if (mLogger.logNow())
-        {
-            mLogger.startLogEntry(logDate);
-
-            for (ISubsystem iSubsystem : mSubsystems)
-            {
-                iSubsystem.updateLog();
-            }
-
-            mLogger.endLogger();
-        }
-
-    }
-
-    @Override
     public void updateSmartDashboard()
     {
         for (ISubsystem iSubsystem : mSubsystems)
         {
             iSubsystem.updateSmartDashboard();
+        }
+    }
+
+    @Override
+    public void init()
+    {
+        for (ISubsystem iSubsystem : mSubsystems)
+        {
+            iSubsystem.init();
         }
     }
 
