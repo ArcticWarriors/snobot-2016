@@ -20,6 +20,7 @@ public class Camera implements ICamera
    private AxisCamera mCamera;
    private HSLImage mNewImage;
    private boolean mUpdateImageSuccess;
+   private double mImageWidth;
    
    public Camera(AxisCamera aCamera)
    {
@@ -31,8 +32,24 @@ public class Camera implements ICamera
 @Override
 public double getYaw()
 {
+    if(this.getUpdateImage() == true)
+    {
+        try
+        {
+            mImageWidth = mNewImage.getWidth();
+        }
+        catch (NIVisionException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
     // TODO Auto-generated method stub
     return 0;
+    
 }
 
 @Override
@@ -63,8 +80,18 @@ public HSLImage getImage()
 @Override
 public boolean getUpdateImage()
 {
-    // TODO Auto-generated method stub
-    mUpdateImageSuccess = mCamera.getImage(mNewImage);
+    // TODO Someone with greater knowledge check this out please
+    if(mCamera.isFreshImage())
+    {
+        mUpdateImageSuccess = mCamera.getImage(mNewImage);
+        
+    }
+    else
+    {
+        mUpdateImageSuccess = false;
+        return mUpdateImageSuccess;
+    }
+
     SmartDashboard.putBoolean(SmartDashBoardNames.sUpdateImageSuccess, mUpdateImageSuccess);
     return mUpdateImageSuccess;
 }
