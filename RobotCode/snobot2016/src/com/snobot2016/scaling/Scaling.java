@@ -12,11 +12,11 @@ public class Scaling implements IScaling
     IOperatorJoystick mJoystick;
     
     
-    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick mOperatorJoystick)
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
-        mJoystick = mOperatorJoystick;  
+        mJoystick = aOperatorJoystick;  
     }
     
     
@@ -37,7 +37,6 @@ public class Scaling implements IScaling
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
         setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
     }

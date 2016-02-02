@@ -10,6 +10,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     private double mMotorTiltSpeed;
     private double mMotorMoveSpeed;
     
+    private boolean mMotorRollerSpeedForward;
+    private boolean mMotorRollerSpeedReverse;
+    private boolean mMotorPivotSpeedUp;
+    private boolean mMotorPivotSpeedDown;
+    
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;
@@ -28,7 +33,12 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     {
         mMotorTiltSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);         
         mMotorMoveSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
-    
+        
+        mMotorRollerSpeedForward = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
+        mMotorRollerSpeedReverse = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
+        mMotorPivotSpeedUp = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
+        mMotorPivotSpeedDown = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
+        
     }
 
     @Override
@@ -77,8 +87,37 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public double getScaleTiltSpeed()
     {
-        // TODO Auto-generated method stub
+      
         return mMotorTiltSpeed;
     }
+
+
+    @Override
+    public boolean getHarvesterPivotSpeedUp()
+    {
+        // TODO Auto-generated method stub
+        return mMotorPivotSpeedUp;
+    }
+
+    @Override
+    public boolean getHarvesterPivotSpeedDown()
+    {
+        // TODO Auto-generated method stub
+        return mMotorPivotSpeedDown;
+    }
+
+    @Override
+    public boolean getHarvesterRollerSpeedForward()
+    {
+        // TODO Auto-generated method stub
+        return mMotorRollerSpeedForward;
+    }
+    
+    @Override
+    public boolean getHarvesterRollerSpeedReverse()
+    {
+        // TODO Auto-generated method stub
+        return mMotorRollerSpeedReverse;
+    } 
     
 }
