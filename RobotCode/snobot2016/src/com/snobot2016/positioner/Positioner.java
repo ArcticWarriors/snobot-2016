@@ -97,7 +97,7 @@ public class Positioner implements ISubsystem, IPositioner
         mXPosition = inputX;
     }
 
-    public void setYposition(double inputY)
+    public void setYPosition(double inputY)
     {
         mYPosition = inputY;
     }

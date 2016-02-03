@@ -21,6 +21,7 @@ import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 import com.snobot2016.smartdashboard.DefenseInFront;
+import com.snobot2016.smartdashboard.SelectAutonomous;
 import com.snobot2016.smartdashboard.SelectStartPosition;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -51,28 +52,29 @@ public class Snobot extends ASnobot
     private IDriverJoystick mDriverXbox;
     private IDriverJoystick mDriverFlightStick;
     private Joystick mRawDriverJoystick;
-    
+
     // Scaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
     private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
-    
+
     // Harvester
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
     private IHarvester mHarvester;
-    
+
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-    
+
     // Autonomous
     private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
     private SelectStartPosition mSelectStartPosition;
     private DefenseInFront mDefenseInFront;
+    private SelectAutonomous mSelectAutonomous;
 
     private AxisCamera mAxisCamera;
     private Camera mCamera;
@@ -80,7 +82,6 @@ public class Snobot extends ASnobot
     // Light
     private Light mCameraLight;
     private Relay mCameraRelay;
-
 
     public Snobot()
     {
@@ -124,11 +125,6 @@ public class Snobot extends ASnobot
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
-        mCommandParser = new CommandParser(this);
-        mSelectStartPosition = new SelectStartPosition();
-        mDefenseInFront = new DefenseInFront();
-        mSelectStartPosition.putOnDash();
-        mDefenseInFront.putOnDash();
 
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
@@ -165,23 +161,40 @@ public class Snobot extends ASnobot
     public void autonomousInit()
     {
         String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Forwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Fowards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_000Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_045Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_090Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_135Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_180Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_225Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Forwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Fowards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_000Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_045Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_090Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_135Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_180Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_225Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_270Degrees");
         mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
         mCommandGroup.start();
+
+        mSelectStartPosition.setStartPosition();
     }
 
     public IDriveTrain getDriveTrain()
@@ -194,13 +207,3 @@ public class Snobot extends ASnobot
         return this.mSnobotPositioner;
     }
 }
-
-
-
-
-
-
-
-
-
-
