@@ -21,6 +21,7 @@ public class Camera implements ICamera
    private HSLImage mNewImage;
    private boolean mUpdateImageSuccess;
    private double mImageWidth;
+   private double mDistanceToTarget;
    
    public Camera(AxisCamera aCamera)
    {
@@ -55,8 +56,19 @@ public double getYaw()
 @Override
 public double getDistanceToTarget()
 {
-    // TODO Auto-generated method stub
-    return 0;
+    double cameraAngleInRadians = Math.toRadians((67/2));
+    // TODO Check if this math is correct
+    try
+    {
+        
+        mDistanceToTarget =  ((mNewImage.getWidth()/2)/Math.tan(cameraAngleInRadians));
+    }
+    catch (NIVisionException e)
+    {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    return mImageWidth;
 }
 
 
