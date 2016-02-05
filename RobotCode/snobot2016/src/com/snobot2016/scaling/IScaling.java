@@ -6,6 +6,5 @@ public interface IScaling extends ISubsystem
 {
 	boolean extendUpWall();
 	boolean pullUpWall();
-	boolean lowerDownWall();
-	
+	boolean lowerDownWall();	
 }
