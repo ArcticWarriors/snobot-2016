@@ -1,15 +1,12 @@
 package com.snobot2016.smartdashboard;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import com.snobot2016.Properties2016;
 import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SelectStartPosition implements ActionListener
+public class SelectStartPosition
 {
     private SendableChooser mPickPoint;
 
@@ -61,15 +58,6 @@ public class SelectStartPosition implements ActionListener
     public void setStartPosition()
     {
         mPositioner.setXPosition(this.getSelected().mX);
-        System.out.println(mPositioner.getXPosition());
         mPositioner.setYPosition(this.getSelected().mY);
-        System.out.println(mPositioner.getYPosition());
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0)
-    {
-        // TODO Auto-generated method stub
-
     }
 }

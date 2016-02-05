@@ -12,7 +12,8 @@ public class Properties2016
     // Joysticks
     public static final IntegerProperty sDRIVER_JOYSTICK_PORT = new IntegerProperty("DriverJoystickPort", 0);
     public static final IntegerProperty sOPERATOR_JOYSTICK_PORT = new IntegerProperty("OperatorJoystickPort", 1);
-    
+    public static final IntegerProperty sDRIVER_JOYSTICK_PORT2 = new IntegerProperty("DriverJoystickPort2", 2);
+
     // Speed Controller
     public static final IntegerProperty sDRIVER_LEFT_MOTOR_PORT = new IntegerProperty("DriverLeftMotor", 0);
     public static final IntegerProperty sDRIVER_RIGHT_MOTOR_PORT = new IntegerProperty("DriverRightMotor", 1);

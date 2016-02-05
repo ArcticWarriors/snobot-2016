@@ -3,9 +3,12 @@ package com.snobot2016.autonomous;
 import java.util.List;
 
 import com.snobot.xlib.ACommandParser;
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
 
 public class CommandParser extends ACommandParser
 {
@@ -45,8 +48,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
-                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
+                        .get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -69,11 +72,18 @@ public class CommandParser extends ACommandParser
     }
 
     @Override
-    protected void publishParsingResults(String fileContents)
+    protected void publishParsingResults(String aCommandString)
     {
-        System.out.println("\n\nAuton file contents:");
-        System.out.println(fileContents);
-        System.out.println("\n\n");
+        if (!mErrorText.isEmpty())
+        {
+            aCommandString += "\n\n# There was an error parsing the commands...\n#\n";
+            aCommandString += mErrorText;
+        }
+
+        ITable table = NetworkTable.getTable("SmartDashboard");
+
+        table.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
+        table.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
     }
 
 }

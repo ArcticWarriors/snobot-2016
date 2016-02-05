@@ -9,7 +9,7 @@ public class DefenseInFront
 
     public enum Defenses
     {
-        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS
+        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS, DO_NOTHING
     }
 
     public DefenseInFront()
@@ -25,6 +25,7 @@ public class DefenseInFront
         mDefenseInFront.addObject("Rock Wall", Defenses.ROCK_WALL);
         mDefenseInFront.addObject("Rough Terrain", Defenses.ROUGH_TERRAIN);
         mDefenseInFront.addObject("Just Reach Outer Works", Defenses.OUTER_WORKS);
+        mDefenseInFront.addObject("Do Nothing", Defenses.DO_NOTHING);
     }
 
     public void putOnDash()

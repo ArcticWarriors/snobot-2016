@@ -13,12 +13,12 @@ public class SnobotDriveTrain implements IDriveTrain
     private SpeedController mRightMotor;
     private IDriverJoystick mXboxJoystick;
     private IDriverJoystick mFlightStick;
-    
+
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
 
     private boolean mUseXboxController = true;
-    
+
     public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
             IDriverJoystick aXboxJoyStick, IDriverJoystick aFlightStick)
     {
@@ -45,14 +45,14 @@ public class SnobotDriveTrain implements IDriveTrain
     public void control()
     {
         if (mUseXboxController)
-    	{
-    		setLeftRightSpeed(mXboxJoystick.getLeftSpeed(), mXboxJoystick.getRightSpeed());
-    	}
-    	else
-    	{
-    		setLeftRightSpeed(mFlightStick.getLeftSpeed(), mFlightStick.getRightSpeed());
-    	}
-    	
+        {
+            setLeftRightSpeed(mXboxJoystick.getLeftSpeed(), mXboxJoystick.getRightSpeed());
+        }
+        else
+        {
+            setLeftRightSpeed(mFlightStick.getLeftSpeed(), mFlightStick.getRightSpeed());
+        }
+
     }
 
     @Override

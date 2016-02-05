@@ -2,71 +2,78 @@ package com.snobot2016.joystick;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class SnobotDriveFlightStick implements IDriverJoystick {
+public class SnobotDriveFlightStick implements IDriverJoystick
+{
 
-	private Joystick mLeft;
-	private Joystick mRight;
-	private double mRightSpeed;
-	private double mLeftSpeed;
-	
-	public void init() {
-		
-		mLeft = new Joystick(1);
-		mRight = new Joystick(2);
-	}
+    private Joystick mLeft;
+    private Joystick mRight;
+    private double mRightSpeed;
+    private double mLeftSpeed;
 
-	@Override
-	public void update() 
-	{
-		
-		mLeftSpeed = mLeft.getY();
+    public SnobotDriveFlightStick(Joystick aLeft, Joystick aRight)
+    {
+        mLeft = aLeft;
+        mRight = aRight;
+    }
+
+    public void init()
+    {
+
+    }
+
+    @Override
+    public void update()
+    {
+
+        mLeftSpeed = mLeft.getY();
         mRightSpeed = mRight.getY();
-          
-	}
 
-	@Override
-	public void control() {
-		
-	}
+    }
 
-	@Override
-	public void rereadPreferences() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void control()
+    {
 
-	@Override
-	public void updateSmartDashboard() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void updateLog() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void rereadPreferences()
+    {
 
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public double getRightSpeed() {
-		
-		return mRightSpeed;
-	
-	}
+    @Override
+    public void updateSmartDashboard()
+    {
 
-	@Override
-	public double getLeftSpeed() {
-		
-		return mLeftSpeed;
-	
-	}
-	
+    }
 
-	
+    @Override
+    public void updateLog()
+    {
+
+    }
+
+    @Override
+    public void stop()
+    {
+
+    }
+
+    @Override
+    public double getRightSpeed()
+    {
+
+        return mRightSpeed;
+
+    }
+
+    @Override
+    public double getLeftSpeed()
+    {
+
+        return mLeftSpeed;
+
+    }
+
 }

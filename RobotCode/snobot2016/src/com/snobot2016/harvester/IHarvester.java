@@ -12,7 +12,10 @@ import com.snobot.xlib.ISubsystem;
 public interface IHarvester extends ISubsystem
 {
     boolean lowerHarvester();
+
     boolean raiseHarvester();
+
     boolean rollIn();
+
     boolean rollOut();
 }
