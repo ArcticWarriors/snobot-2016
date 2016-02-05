@@ -4,7 +4,9 @@ import com.snobot.xlib.ISubsystem;
 
 public interface IScaling extends ISubsystem
 {
-	boolean extendUpWall();
-	boolean pullUpWall();
-	boolean lowerDownWall();	
+    boolean extendUpWall();
+
+    boolean pullUpWall();
+
+    boolean lowerDownWall();
 }

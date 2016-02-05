@@ -121,11 +121,9 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorRollerSpeedReverse;
     }
 
-
 	@Override
 	public boolean getFinalCountDown() {
-		// TODO Auto-generated method stub
-		return mFinalCountDown;
-	} 
-    
+        // TODO Auto-generated method stub
+        return mFinalCountDown;
+    }
 }

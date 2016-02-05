@@ -1,33 +1,21 @@
 package com.snobot2016.scaling;
 
-import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
 
 public class Scaling implements IScaling
 {
     SpeedController mScaleMoveMotor;
     SpeedController mScaleTiltMotor;
     IOperatorJoystick mJoystick;
-    private double mMoveSpeed;
-    private double mTiltSpeed;
-    private boolean mFinalCountDown;
-    private boolean mAmIClimbing;
-    private Timer mTimer;
-    
-    
+
+
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
-        mJoystick = aOperatorJoystick; 
-        mTimer = new Timer();
+        mJoystick = aOperatorJoystick;  
     }
     
     
@@ -41,34 +29,15 @@ public class Scaling implements IScaling
     @Override
     public void update()
     {
-    	
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
     public void control()
     {
         setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
-        mMoveSpeed = mJoystick.getScaleMoveSpeed();
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
-        mTiltSpeed = mJoystick.getScaleTiltSpeed();
-    
-        if (mJoystick.getFinalCountDown())
-        {
-        	mAmIClimbing = true;
-        	mTimer.start();
-        }
-        if (mAmIClimbing)
-        {
-        	setScaleSpeedMove (1);
-        	mTimer.get();
-        }
-        if (mTimer.get() >10)
-       {
-    	   mTimer.stop();
-    	   setScaleSpeedMove (0);
-    	   mAmIClimbing = false;
-       }
-        
     }
 
     @Override
@@ -81,9 +50,8 @@ public class Scaling implements IScaling
     @Override
     public void updateSmartDashboard()
     {
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mMoveSpeed);  
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mTiltSpeed);
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
@@ -129,5 +97,5 @@ public class Scaling implements IScaling
     public void setScaleSpeedTilt(double aSpeedTilt)
     {
         mScaleTiltMotor.set(aSpeedTilt);
-	}
+    }
 }

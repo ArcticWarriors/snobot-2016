@@ -4,8 +4,6 @@ import com.snobot2016.joystick.IOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-
-
 public class Harvester implements IHarvester
 {
     private SpeedController mPivotMotor;
@@ -138,7 +136,7 @@ public class Harvester implements IHarvester
 
     private void setPivotMotorSpeed(double aPivotSpeed)
     {
-        mPivotMotor.set(aPivotSpeed);  
+        mPivotMotor.set(aPivotSpeed);
     }
 
 }
