@@ -2,9 +2,8 @@ package com.snobot2016;
 
 import java.text.SimpleDateFormat;
 
-import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
-import com.snobot2016.autonomous.CommandParser;
+import com.snobot2016.autonomous.AutonFactory;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
@@ -49,26 +48,27 @@ public class Snobot extends ASnobot
     private IDriverJoystick mDriverXbox;
     private IDriverJoystick mDriverFlightStick;
     private Joystick mRawDriverJoystick;
-    
+
     // Scaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
     private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
-    
+
     // Harvester
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
     private IHarvester mHarvester;
-    
+
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-    
+
     // Autonomous
-    private ACommandParser mCommandParser;
+    // private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
+    private AutonFactory mAutonFactory;
 
     private AxisCamera mAxisCamera;
     private Camera mCamera;
@@ -76,7 +76,6 @@ public class Snobot extends ASnobot
     // Light
     private Light mCameraLight;
     private Relay mCameraRelay;
-
 
     public Snobot()
     {
@@ -119,6 +118,9 @@ public class Snobot extends ASnobot
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
         mSubsystems.add(mSnobotPositioner);
 
+        // Autonomous
+        mAutonFactory = new AutonFactory(this.getPositioner(), this);
+
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
         mCameraLight = new Light(mCameraRelay);
@@ -136,7 +138,7 @@ public class Snobot extends ASnobot
         }
 
         // Autonomous
-        mCommandParser = new CommandParser(this);
+        // mCommandParser = new CommandParser(this);
     }
 
     /**
@@ -153,24 +155,43 @@ public class Snobot extends ASnobot
 
     public void autonomousInit()
     {
-        String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Forwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Fowards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_000Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_045Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_090Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_135Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_180Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_225Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
-        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
+        mCommandGroup = mAutonFactory.buildAnAuton();
         mCommandGroup.start();
+        // String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/";
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestDriveStraightADistance_Forwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Backwards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidDriveStraight_Fowards");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestStupidTurn_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Left");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestTurnWithDegrees_Right");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_000Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_045Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_090Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_135Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_180Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_225Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_270Degrees");
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_315Degrees");
+
     }
 
     public IDriveTrain getDriveTrain()
@@ -182,14 +203,9 @@ public class Snobot extends ASnobot
     {
         return this.mSnobotPositioner;
     }
+
+    public IHarvester getHarvester()
+    {
+        return this.mHarvester;
+    }
 }
-
-
-
-
-
-
-
-
-
-
