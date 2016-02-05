@@ -87,7 +87,7 @@ public class Snobot extends ASnobot
 
         // Raw Joysticks
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
-        mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
+        mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT2.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
 
         // Our Joysticks
