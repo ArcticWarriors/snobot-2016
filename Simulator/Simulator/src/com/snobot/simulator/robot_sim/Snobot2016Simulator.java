@@ -32,7 +32,7 @@ public class Snobot2016Simulator extends ASimulator
 
         // Set Parameters
         leftDriveMotor.setMotorParameters(12);
-        rightDriveMotor.setMotorParameters(12);
+        rightDriveMotor.setMotorParameters(-12);
         
         TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
         mSimulatorComponenets.add(gyroSim);

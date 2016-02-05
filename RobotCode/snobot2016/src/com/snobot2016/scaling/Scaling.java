@@ -22,12 +22,12 @@ public class Scaling implements IScaling
     private Timer mTimer;
     
     
-    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick, Timer aTimer)
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
         mJoystick = aOperatorJoystick; 
-        mTimer = aTimer;
+        mTimer = new Timer();
     }
     
     
