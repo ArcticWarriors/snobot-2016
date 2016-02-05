@@ -17,7 +17,7 @@ public interface IPositioner extends ISubsystem
 
     public void setXPosition(double inputX);
 
-    public void setYposition(double inputY);
+    public void setYPosition(double inputY);
 
     public void setOrientationRadians(double inputRadians);
 

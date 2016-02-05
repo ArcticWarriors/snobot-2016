@@ -1,6 +1,7 @@
 package com.snobot2016;
 
 import com.snobot.xlib.PropertyManager.BooleanProperty;
+import com.snobot.xlib.PropertyManager.DoubleProperty;
 import com.snobot.xlib.PropertyManager.IntegerProperty;
 import com.snobot.xlib.PropertyManager.StringProperty;
 
@@ -38,8 +39,9 @@ public class Properties2016
 
     // Autonomous
     public static final StringProperty sAUTON_DIRECTORY;
-    
-    //Logger
+    public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
+
+    // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
     public static final StringProperty sLOG_FILE_PATH;
 
@@ -57,11 +59,17 @@ public class Properties2016
             System.out.println("Using tactical constants");
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", true);
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
-            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); //TODO CHECK IF THIS IS ACTUALLY USB DRIVE ON ROBORIO 
+            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); // TODO
+                                                                            // CHECK
+                                                                            // IF
+                                                                            // THIS
+                                                                            // IS
+                                                                            // ACTUALLY
+                                                                            // USB
+                                                                            // DRIVE
+                                                                            // ON
+                                                                            // ROBORIO
         }
     }
-
-
-
 
 }
