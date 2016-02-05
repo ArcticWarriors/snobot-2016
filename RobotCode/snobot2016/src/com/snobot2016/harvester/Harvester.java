@@ -9,33 +9,34 @@ public class Harvester implements IHarvester
     private SpeedController mPivotMotor;
     private SpeedController mRollerMotor;
     IOperatorJoystick mJoystick;
-
-    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick)
+    
+    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor,IOperatorJoystick aOperatorJoystick)
     {
         mRollerMotor = aHarvesterRollerMotor;
         mPivotMotor = aHarvesterPivotMotor;
-        mJoystick = aOperatorJoystick;
-
+        mJoystick = aOperatorJoystick; 
+        
     }
+    
 
     @Override
     public void init()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void update()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void control()
     {
-        if (mJoystick.getHarvesterRollerSpeedForward() && mJoystick.getHarvesterRollerSpeedReverse())
+        if (mJoystick.getHarvesterRollerSpeedForward()&& mJoystick.getHarvesterRollerSpeedReverse())
         {
             setRollerMotorSpeed(0);
         }
@@ -51,8 +52,9 @@ public class Harvester implements IHarvester
         {
             setRollerMotorSpeed(0);
         }
-
-        if (mJoystick.getHarvesterPivotSpeedUp() && mJoystick.getHarvesterPivotSpeedDown())
+        
+        
+        if (mJoystick.getHarvesterPivotSpeedUp()&& mJoystick.getHarvesterPivotSpeedDown())
         {
             setPivotMotorSpeed(0);
         }
@@ -75,58 +77,58 @@ public class Harvester implements IHarvester
     public void rereadPreferences()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void updateSmartDashboard()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void updateLog()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void stop()
     {
-        mPivotMotor.set(0);
-        mRollerMotor.set(0);
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
     public boolean raiseHarvester()
     {
-        mPivotMotor.set(1);
+        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean rollIn()
     {
-        mRollerMotor.set(-1);
+        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean rollOut()
     {
-        mRollerMotor.set(1);
+        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean lowerHarvester()
     {
-        mPivotMotor.set(-1);
+        // TODO Auto-generated method stub
         return false;
     }
-
+    
     private void setRollerMotorSpeed(double aRollerSpeed)
     {
         mRollerMotor.set(aRollerSpeed);

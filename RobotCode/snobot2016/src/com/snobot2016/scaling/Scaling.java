@@ -1,7 +1,6 @@
 package com.snobot2016.scaling;
 
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -10,8 +9,8 @@ public class Scaling implements IScaling
     SpeedController mScaleMoveMotor;
     SpeedController mScaleTiltMotor;
     IOperatorJoystick mJoystick;
-    
-    
+
+
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
     {
         mScaleMoveMotor = aScaleMoveMotor;
