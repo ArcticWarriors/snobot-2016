@@ -13,7 +13,7 @@ public class SelectStartPosition implements ActionListener
 {
     private SendableChooser mPickPoint;
 
-    enum StartPositions
+    public enum StartPositions
     {
         FIRST_POSITION(30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 26.25, 90), SECOND_POSITION(30 - Properties2016.sAUTON_SETUP_OVERHANG
                 .getValue(), 79.125, 90), THIRD_POSITION(30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 132, 90), FOURTH_POSITION(

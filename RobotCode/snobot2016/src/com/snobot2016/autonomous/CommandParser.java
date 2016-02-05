@@ -31,8 +31,12 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "DriveStraightADistance":
+                System.out.println(args);
+                System.out.println(mSnobot);
+
                 newCommand = new DriveStraightADistance(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
+
                 break;
 
             case "StupidTurn":
@@ -45,8 +49,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
-                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
+                        .get(2)), Double.parseDouble(args.get(3)));
             }
         }
         catch (IndexOutOfBoundsException e)

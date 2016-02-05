@@ -20,7 +20,8 @@ public class SelectAutonomous
     public SelectAutonomous()
     {
         mAutonCrawler = new SnobotAutonCrawler("");
-        mSendableChooser = this.loadAutonFiles(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous", "");
+        mSendableChooser = this
+                .loadAutonFiles(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo", "");
 
     }
 
@@ -48,6 +49,11 @@ public class SelectAutonomous
         }
 
         return output;
+    }
+
+    public String getSelected()
+    {
+        return (String) mSendableChooser.getSelected();
     }
 
     public void putOnDash()

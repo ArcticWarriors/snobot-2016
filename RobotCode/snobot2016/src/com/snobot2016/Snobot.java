@@ -2,9 +2,8 @@ package com.snobot2016;
 
 import java.text.SimpleDateFormat;
 
-import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
-import com.snobot2016.autonomous.CommandParser;
+import com.snobot2016.autonomous.AutonFactory;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
@@ -20,9 +19,6 @@ import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
-import com.snobot2016.smartdashboard.DefenseInFront;
-import com.snobot2016.smartdashboard.SelectAutonomous;
-import com.snobot2016.smartdashboard.SelectStartPosition;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -70,11 +66,9 @@ public class Snobot extends ASnobot
     private Gyro mGyro;
 
     // Autonomous
-    private ACommandParser mCommandParser;
+    // private ACommandParser mCommandParser;
     private CommandGroup mCommandGroup;
-    private SelectStartPosition mSelectStartPosition;
-    private DefenseInFront mDefenseInFront;
-    private SelectAutonomous mSelectAutonomous;
+    private AutonFactory mAutonFactory;
 
     private AxisCamera mAxisCamera;
     private Camera mCamera;
@@ -125,6 +119,7 @@ public class Snobot extends ASnobot
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
+        mAutonFactory = new AutonFactory(this.getPositioner(), this);
 
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
@@ -143,7 +138,7 @@ public class Snobot extends ASnobot
         }
 
         // Autonomous
-        mCommandParser = new CommandParser(this);
+        // mCommandParser = new CommandParser(this);
     }
 
     /**
@@ -160,7 +155,10 @@ public class Snobot extends ASnobot
 
     public void autonomousInit()
     {
-        String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
+        mCommandGroup = mAutonFactory.buildAnAuton();
+        mCommandGroup.start();
+        // String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() +
+        // "Autonomous/TestSingleAutonomous/";
         // mCommandGroup = mCommandParser.readFile(testSingleDir +
         // "TestDriveStraightADistance_Backwards");
         // mCommandGroup = mCommandParser.readFile(testSingleDir +
@@ -191,10 +189,9 @@ public class Snobot extends ASnobot
         // "TestGoToXY_225Degrees");
         // mCommandGroup = mCommandParser.readFile(testSingleDir +
         // "TestGoToXY_270Degrees");
-        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
-        mCommandGroup.start();
+        // mCommandGroup = mCommandParser.readFile(testSingleDir +
+        // "TestGoToXY_315Degrees");
 
-        mSelectStartPosition.setStartPosition();
     }
 
     public IDriveTrain getDriveTrain()
