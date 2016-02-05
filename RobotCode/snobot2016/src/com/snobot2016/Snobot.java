@@ -22,12 +22,14 @@ import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -81,6 +83,9 @@ public class Snobot extends ASnobot
 
     private Logger mLogger;
     private SimpleDateFormat mLogDateFormat;
+    
+    //Timer
+    private Timer mTimer;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -115,10 +120,10 @@ public class Snobot extends ASnobot
         
         // Modules
 
-        
+        mTimer = new Timer();
         mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
 
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mTimer);
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
         mDrivetrain.control();
         
