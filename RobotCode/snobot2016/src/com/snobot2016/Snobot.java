@@ -146,7 +146,7 @@ public class Snobot extends ASnobot
     @Override
     public void robotInit()
     {
-        // init();
+        init();
     }
 
     @Override

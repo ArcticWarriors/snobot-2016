@@ -58,8 +58,6 @@ public class SelectStartPosition
     public void setStartPosition()
     {
         mPositioner.setXPosition(this.getSelected().mX);
-        System.out.println(mPositioner.getXPosition());
         mPositioner.setYPosition(this.getSelected().mY);
-        System.out.println(mPositioner.getYPosition());
     }
 }

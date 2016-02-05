@@ -50,7 +50,7 @@ public class AutonFactory
 
         if (goingThroughDefense)
         {
-            cobbledCommandGroup.addSequential(mCommandParser.readFile(mDefensesAutonsPath + mDefenseInFront.getSelected()));
+            cobbledCommandGroup.addSequential(mCommandParser.readFile(mDefensesAutonsPath + mDefenseInFront.getSelected() + ".txt"));
         }
         cobbledCommandGroup.addSequential(mCommandParser.readFile(mSelectAutonomous.getSelected()));
         return cobbledCommandGroup;
