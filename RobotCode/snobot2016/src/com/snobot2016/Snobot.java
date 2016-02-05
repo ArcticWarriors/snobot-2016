@@ -203,4 +203,9 @@ public class Snobot extends ASnobot
     {
         return this.mSnobotPositioner;
     }
+
+    public IHarvester getHarvester()
+    {
+        return this.mHarvester;
+    }
 }
