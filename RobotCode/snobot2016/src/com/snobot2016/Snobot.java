@@ -39,21 +39,26 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
  */
 public class Snobot extends ASnobot
 {
+    // Raw Joysticks
+    private Joystick mRawDriverJoystick;
+    private Joystick mRawDriverJoystick2;
+    private Joystick mRawOperatorJoystick;
+
+    // Our Joysticks
+    private IDriverJoystick mDriverXbox;
+    private IDriverJoystick mDriverFlightStick;
+
     // Drivetrain
     private SpeedController mDriveLeftMotor;
     private SpeedController mDriveRightMotor;
     private Encoder mLeftDriveEncoder;
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
-    private IDriverJoystick mDriverXbox;
-    private IDriverJoystick mDriverFlightStick;
-    private Joystick mRawDriverJoystick;
 
     // Scaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
-    private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
 
     // Harvester
@@ -66,8 +71,7 @@ public class Snobot extends ASnobot
     private Gyro mGyro;
 
     // Autonomous
-    // private ACommandParser mCommandParser;
-    private CommandGroup mCommandGroup;
+    private CommandGroup mAutonCommand;
     private AutonFactory mAutonFactory;
 
     private AxisCamera mAxisCamera;
@@ -83,12 +87,13 @@ public class Snobot extends ASnobot
 
         // Raw Joysticks
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
+        mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
 
         // Our Joysticks
         mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
         mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
-        mDriverFlightStick = new SnobotDriveFlightStick();
+        mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
         mSubsystems.add(mDriverFlightStick);
@@ -136,62 +141,19 @@ public class Snobot extends ASnobot
         {
             System.out.println("Not enabling camera");
         }
-
-        // Autonomous
-        // mCommandParser = new CommandParser(this);
     }
 
-    /**
-     * This autonomous (along with the chooser code above) shows how to select
-     * between different autonomous modes using the dashboard. The sendable
-     * chooser code works with the Java SmartDashboard. If you prefer the
-     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-     * getString line to get the auto name from the text box below the Gyro
-     *
-     * You can add additional auto modes by adding additional comparisons to the
-     * switch structure below with additional strings. If using the
-     * SendableChooser make sure to add them to the chooser code above as well.
-     */
+    @Override
+    public void robotInit()
+    {
+        // init();
+    }
 
+    @Override
     public void autonomousInit()
     {
-        mCommandGroup = mAutonFactory.buildAnAuton();
-        mCommandGroup.start();
-        // String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() +
-        // "Autonomous/TestSingleAutonomous/";
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestDriveStraightADistance_Backwards");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestDriveStraightADistance_Forwards");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestStupidDriveStraight_Backwards");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestStupidDriveStraight_Fowards");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestStupidTurn_Left");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestStupidTurn_Right");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestTurnWithDegrees_Left");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestTurnWithDegrees_Right");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_000Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_045Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_090Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_135Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_180Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_225Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_270Degrees");
-        // mCommandGroup = mCommandParser.readFile(testSingleDir +
-        // "TestGoToXY_315Degrees");
-
+        mAutonCommand = mAutonFactory.buildAnAuton();
+        mAutonCommand.start();
     }
 
     public IDriveTrain getDriveTrain()

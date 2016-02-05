@@ -10,27 +10,25 @@ public class Scaling implements IScaling
     SpeedController mScaleTiltMotor;
     IOperatorJoystick mJoystick;
 
-
-    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
-        mJoystick = aOperatorJoystick;  
+        mJoystick = aOperatorJoystick;
     }
-    
-    
+
     @Override
     public void init()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void update()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -44,28 +42,28 @@ public class Scaling implements IScaling
     public void rereadPreferences()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void updateSmartDashboard()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void updateLog()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void stop()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -88,7 +86,7 @@ public class Scaling implements IScaling
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     public void setScaleSpeedMove(double aSpeedMove)
     {
         mScaleMoveMotor.set(aSpeedMove);

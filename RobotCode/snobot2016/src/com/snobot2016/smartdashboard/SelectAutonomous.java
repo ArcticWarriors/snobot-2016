@@ -15,11 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SelectAutonomous
 {
     private SendableChooser mSendableChooser;
-    private SnobotAutonCrawler mAutonCrawler;
 
     public SelectAutonomous()
     {
-        mAutonCrawler = new SnobotAutonCrawler("");
         mSendableChooser = this
                 .loadAutonFiles(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo", "");
 
