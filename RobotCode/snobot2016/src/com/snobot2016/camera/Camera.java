@@ -27,9 +27,6 @@ public class Camera implements ICamera
     public Camera(AxisCamera aCamera)
     {
         mCamera = aCamera;
-        // mNewImage = aNewImage;, HSLImage aNewImage, boolean
-        // aUpdateImageSuccess
-        // mUpdateImageSuccess = aUpdateImageSuccess;
     }
 
     @Override
@@ -43,14 +40,12 @@ public class Camera implements ICamera
             }
             catch (NIVisionException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-        // TODO Auto-generated method stub
+        // TODO Finish Implementing the yaw
         return 0;
-
     }
 
 
@@ -66,7 +61,6 @@ public double getDistanceToTarget()
     }
     catch (NIVisionException e)
     {
-        // TODO Auto-generated catch block
         e.printStackTrace();
     }
     return mDistanceToTarget;
@@ -75,7 +69,6 @@ public double getDistanceToTarget()
 
 public HSLImage getImage()
 {
-    // TODO Auto-generated method stub
     mNewImage = null;
     try
     {
@@ -83,7 +76,6 @@ public HSLImage getImage()
     }
     catch (NIVisionException e)
     {
-        // TODO Auto-generated catch block
         e.printStackTrace();
     }
    
