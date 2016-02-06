@@ -4,6 +4,7 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IDriverJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,23 +12,22 @@ public class SnobotDriveTrain implements IDriveTrain
 {
     private SpeedController mLeftMotor;
     private SpeedController mRightMotor;
-    private IDriverJoystick mXboxJoystick;
-    private IDriverJoystick mFlightStick;
+    private IDriverJoystick mDriveJoystick;
+    private RobotDrive mRobotDrive;
 
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
 
-    private boolean mUseXboxController = true;
-
     public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
-            IDriverJoystick aXboxJoyStick, IDriverJoystick aFlightStick)
+            IDriverJoystick aDriverJoyStick)
     {
         mLeftMotor = aLeftMotor;
         mRightMotor = aRightMotor;
         mLeftEncoder = aLeftEncoder;
         mRightEncoder = aRightEncoder;
-        mXboxJoystick = aXboxJoyStick;
-        mFlightStick = aFlightStick;
+        mDriveJoystick = aDriverJoyStick;
+        
+        mRobotDrive = new RobotDrive(aLeftMotor, aRightMotor);
     }
 
     @Override
@@ -38,19 +38,19 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void update()
     {
-        mUseXboxController = SmartDashboard.getBoolean(SmartDashBoardNames.sUSE_XBOX_CONTROLLER, true);
+
     }
 
     @Override
     public void control()
     {
-        if (mUseXboxController)
+        if (mDriveJoystick.isArcadeMode())
         {
-            setLeftRightSpeed(mXboxJoystick.getLeftSpeed(), mXboxJoystick.getRightSpeed());
+            mRobotDrive.arcadeDrive(mDriveJoystick.getArcadePower(), mDriveJoystick.getArcadeTurn());
         }
         else
         {
-            setLeftRightSpeed(mFlightStick.getLeftSpeed(), mFlightStick.getRightSpeed());
+            mRobotDrive.tankDrive(mDriveJoystick.getLeftSpeed(), mDriveJoystick.getRightSpeed());
         }
 
     }
@@ -68,7 +68,6 @@ public class SnobotDriveTrain implements IDriveTrain
         SmartDashboard.putNumber(SmartDashBoardNames.sRIGHT_DRIVE_MOTOR_ENCODER, mRightEncoder.getDistance());
         SmartDashboard.putNumber(SmartDashBoardNames.sLEFT_DRIVE_MOTOR_SPEED, mLeftMotor.get());
         SmartDashboard.putNumber(SmartDashBoardNames.sRIGHT_DRIVE_MOTOR_SPEED, mRightMotor.get());
-        SmartDashboard.putBoolean(SmartDashBoardNames.sUSE_XBOX_CONTROLLER, mUseXboxController);
     }
 
     @Override
