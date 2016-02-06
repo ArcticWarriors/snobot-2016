@@ -92,7 +92,7 @@ public class Snobot extends ASnobot
         mSubsystems.add(mDrivetrain);
         mSubsystems.add(mDriverJoystick);
 
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous

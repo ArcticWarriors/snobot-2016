@@ -4,6 +4,7 @@ import com.snobot.xlib.ISubsystem;
 import com.snobot.xlib.Utilities;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
+import com.snobot2016.logger.Logger;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -29,6 +30,7 @@ public class Positioner implements ISubsystem, IPositioner
     private Gyro mGyro;
     private IDriveTrain mDriveTrain;
     private double mSpeed;
+    public Logger mLogger;
 
     // private
 
@@ -36,11 +38,13 @@ public class Positioner implements ISubsystem, IPositioner
      * Creates a new Positioner object.
      * 
      * @param aGyro
-     *            The gyro sensor to use.
+     *            The gGyro to use.
      * @param aDriveTrain
-     *            The drivetrain to use.
+     *            The DriveTrain to use.
+     * @param aLogger
+     *            The robot's Logger.
      */
-    public Positioner(Gyro aGyro, IDriveTrain aDriveTrain)
+    public Positioner(Gyro aGyro, IDriveTrain aDriveTrain, Logger aLogger)
     {
         mXPosition = 0;
         mYPosition = 0;
@@ -53,7 +57,7 @@ public class Positioner implements ISubsystem, IPositioner
         mGyro = aGyro;
         mDriveTrain = aDriveTrain;
         mTimer = new Timer();
-        // mAcceleration = 0;
+        mLogger = aLogger;
     }
 
     /**
@@ -63,6 +67,11 @@ public class Positioner implements ISubsystem, IPositioner
     public void init()
     {
         mTimer.start();
+
+        mLogger.addHeader("X-coordinate");
+        mLogger.addHeader("Y-coordinate");
+        mLogger.addHeader("Orientation");
+        mLogger.addHeader("Speed");
     }
 
     /**
@@ -205,8 +214,10 @@ public class Positioner implements ISubsystem, IPositioner
     @Override
     public void updateLog()
     {
-        // TODO Update logger
-
+        mLogger.updateLogger(mXPosition);
+        mLogger.updateLogger(mYPosition);
+        mLogger.updateLogger(mOrientation);
+        mLogger.updateLogger(mSpeed);
     }
 
     @Override

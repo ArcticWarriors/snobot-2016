@@ -6,6 +6,12 @@ import com.snobot2016.positioner.IPositioner;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/**
+ * Directs the robot towards the given X/Y-coordinate.
+ * 
+ * @author Alec/Andrew
+ *
+ */
 public class GoToXY extends Command
 {
     private IDriveTrain mDriveTrain;
@@ -21,6 +27,20 @@ public class GoToXY extends Command
     private Command mDriveStraightADistance;
     private CommandGroup mCommandGroup;
 
+    /**
+     * Creates a GoToXY Command.
+     * 
+     * @param aDriveTrain
+     *            The robot's DriveTrain.
+     * @param aPositioner
+     *            The robot's Positioner.
+     * @param aXCoor
+     *            The desired final X-coordinate.
+     * @param aYCoor
+     *            The desired final Y-coordinate.
+     * @param aSpeed
+     *            The desired speed (-1 - 1).
+     */
     public GoToXY(IDriveTrain aDriveTrain, IPositioner aPositioner, double aXCoor, double aYCoor, double aSpeed)
     {
         mDriveTrain = aDriveTrain;
@@ -31,6 +51,11 @@ public class GoToXY extends Command
 
     }
 
+    /**
+     * Calculates distance to travel and proper orientation then creates
+     * DriveStraightADistance and TurnWithDegrees Commands, adds them to a
+     * CommandGroup, then starts the CommandGroup.
+     */
     @Override
     protected void initialize()
     {
@@ -55,6 +80,9 @@ public class GoToXY extends Command
 
     }
 
+    /**
+     * Checks if the CommandGroup is finished running.
+     */
     @Override
     protected boolean isFinished()
     {
@@ -68,16 +96,19 @@ public class GoToXY extends Command
         }
     }
 
+    /**
+     * Stops the CommandGroup and the robot.
+     */
     @Override
     protected void end()
     {
+        mCommandGroup.cancel();
         mDriveTrain.setLeftRightSpeed(0, 0);
     }
 
     @Override
     protected void interrupted()
     {
-        // TODO Auto-generated method stub
 
     }
 
