@@ -15,13 +15,10 @@ public class SmartDashBoardNames
     public static final String sSPEED = "Robot's Current Speed";
     
     public static final String sROLLER_MOTOR = "Robot's Current Roller Speed";
-    
     public static final String sPIVOT_MOTOR = "Robot's Current Pivot Speed";
     
     public static final String sSCALE_MOVE_MOTOR = "Robot's Current Scale Move Speed";
-    
     public static final String sSCALE_TILT_MOTOR = "Robot's Current Scale Tilt Speed";
-    
     public static final String sTIMER = "Final Countdown";
     
 

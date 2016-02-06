@@ -1,8 +1,10 @@
 package com.snobot2016.harvester;
 
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -10,13 +12,15 @@ public class Harvester implements IHarvester
 {
     private SpeedController mPivotMotor;
     private SpeedController mRollerMotor;
-    IOperatorJoystick mJoystick;
+    private double mRoller;
+    private double mPivot;
+    private IOperatorJoystick mOperatorJoystick;
     
     public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor,IOperatorJoystick aOperatorJoystick)
     {
         mRollerMotor = aHarvesterRollerMotor;
         mPivotMotor = aHarvesterPivotMotor;
-        mJoystick = aOperatorJoystick; 
+        mOperatorJoystick = aOperatorJoystick; 
         
     }
     
@@ -38,15 +42,15 @@ public class Harvester implements IHarvester
     @Override
     public void control()
     {
-        if (mJoystick.getHarvesterRollerSpeedForward()&& mJoystick.getHarvesterRollerSpeedReverse())
+        if (mOperatorJoystick.getHarvesterRollerSpeedForward()&& mOperatorJoystick.getHarvesterRollerSpeedReverse())
         {
             setRollerMotorSpeed(0);
         }
-        else if (mJoystick.getHarvesterRollerSpeedForward())
+        else if (mOperatorJoystick.getHarvesterRollerSpeedForward())
         {
             setRollerMotorSpeed(1);
         }
-        else if (mJoystick.getHarvesterRollerSpeedReverse())
+        else if (mOperatorJoystick.getHarvesterRollerSpeedReverse())
         {
             setRollerMotorSpeed(-1);
         }
@@ -56,15 +60,15 @@ public class Harvester implements IHarvester
         }
         
         
-        if (mJoystick.getHarvesterPivotSpeedUp()&& mJoystick.getHarvesterPivotSpeedDown())
+        if (mOperatorJoystick.getHarvesterPivotSpeedUp()&& mOperatorJoystick.getHarvesterPivotSpeedDown())
         {
             setPivotMotorSpeed(0);
         }
-        else if (mJoystick.getHarvesterPivotSpeedUp())
+        else if (mOperatorJoystick.getHarvesterPivotSpeedUp())
         {
             setPivotMotorSpeed(1);
         }
-        else if (mJoystick.getHarvesterPivotSpeedDown())
+        else if (mOperatorJoystick.getHarvesterPivotSpeedDown())
         {
             setPivotMotorSpeed(-1);
         }
@@ -85,7 +89,8 @@ public class Harvester implements IHarvester
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
+        SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);  
+        SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
         
     }
 

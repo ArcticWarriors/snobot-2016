@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Scaling implements IScaling
 {
-    SpeedController mScaleMoveMotor;
-    SpeedController mScaleTiltMotor;
-    IOperatorJoystick mJoystick;
+    private SpeedController mScaleMoveMotor;
+    private SpeedController mScaleTiltMotor;
+    private IOperatorJoystick mJoystick;
     private double mMoveSpeed;
     private double mTiltSpeed;
     private boolean mFinalCountDown;
@@ -34,8 +34,7 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
-        
+ 
     }
 
     @Override
@@ -74,7 +73,6 @@ public class Scaling implements IScaling
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
         
     }
 
@@ -103,21 +101,18 @@ public class Scaling implements IScaling
     @Override
     public boolean extendUpWall()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean pullUpWall()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean lowerDownWall()
     {
-        // TODO Auto-generated method stub
         return false;
     }
     
