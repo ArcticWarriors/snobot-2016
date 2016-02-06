@@ -15,16 +15,17 @@ public class StandaloneMain
     private double mClimbTiltAngle;
     private double mIntakeTiltAngle;
 
+    static double height = 0;
+
     private StandaloneMain()
     {
         final RobotDrawer2016 drawerPanel = new RobotDrawer2016();
-        
 
         JFrame frame = new JFrame();
 
         frame.setVisible(true);
         frame.setContentPane(drawerPanel);
-        frame.pack();
+        frame.setSize(1000, 1000);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addKeyListener(new KeyAdapter()
@@ -32,79 +33,107 @@ public class StandaloneMain
             @Override
             public void keyPressed(KeyEvent arg0)
             {
-
-                // Scale Motor
-                if (arg0.getKeyChar() == 'q')
-                {
-                    mScaleMotorSpeed += .05;
-                    drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
-                }
-                else if (arg0.getKeyChar() == 'w')
-                {
-                    mScaleMotorSpeed -= .05;
-                    drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
-                }
-
-                // Intake Motor
-                else if (arg0.getKeyChar() == 'a')
+                // Intake Motor Speed
+                if (arg0.getKeyChar() == 'n')
                 {
                     mInakeMotorSpeed += .05;
                     drawerPanel.setInakeMotorSpeed(mInakeMotorSpeed);
                 }
-                else if (arg0.getKeyChar() == 's')
+                else if (arg0.getKeyChar() == 'm')
                 {
                     mInakeMotorSpeed -= .05;
                     drawerPanel.setInakeMotorSpeed(mInakeMotorSpeed);
                 }
 
-                // Scale Tilt
-                else if (arg0.getKeyChar() == 'z')
-                {
-                    mScaleTiltMotorSpeed += .05;
-                    drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
-                }
-                else if (arg0.getKeyChar() == 'x')
-                {
-                    mScaleTiltMotorSpeed -= .05;
-                    drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
-                }
-
-                // Intake Tilt
-                else if (arg0.getKeyChar() == 'o')
+                // Intake Tilt Speed and Angle
+                else if (arg0.getKeyChar() == 'd')
                 {
                     mInakeTiltMotorSpeed += .05;
                     drawerPanel.setInakeTiltMotorSpeed(mInakeTiltMotorSpeed);
-                }
-                else if (arg0.getKeyChar() == 'p')
-                {
-                    mInakeTiltMotorSpeed -= .05;
-                    drawerPanel.setInakeTiltMotorSpeed(mInakeTiltMotorSpeed);
-                }
 
-                // Scale Tilt Angle
-                else if (arg0.getKeyChar() == 'k')
-                {
-                    mClimbTiltAngle += 5;
-                    drawerPanel.setClimbTiltAngle(mClimbTiltAngle);
-                }
-                else if (arg0.getKeyChar() == 'l')
-                {
-                    mClimbTiltAngle -= 5;
-                    drawerPanel.setClimbTiltAngle(mClimbTiltAngle);
-                }
-
-                // Intake Tilt Angle
-                else if (arg0.getKeyChar() == 'n')
-                {
                     mIntakeTiltAngle += 5;
                     drawerPanel.setIntakeTiltAngle(mIntakeTiltAngle);
                 }
-                else if (arg0.getKeyChar() == 'm')
+                else if (arg0.getKeyChar() == 'a')
                 {
+                    mInakeTiltMotorSpeed -= .05;
+                    drawerPanel.setInakeTiltMotorSpeed(mInakeTiltMotorSpeed);
+
                     mIntakeTiltAngle -= 5;
                     drawerPanel.setIntakeTiltAngle(mIntakeTiltAngle);
                 }
 
+                // Scaling Height
+                else if (arg0.getKeyCode() == KeyEvent.VK_DOWN)
+                {
+                    mScaleMotorSpeed += .05;
+                    drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
+
+                    height += 0.05;
+                    drawerPanel.setExtensionHeight(height);
+                }
+                else if (arg0.getKeyCode() == KeyEvent.VK_UP)
+                {
+                    mScaleMotorSpeed -= .05;
+                    drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
+
+                    height -= 0.05;
+                    drawerPanel.setExtensionHeight(height);
+                }
+
+                // Scale Tilt Speed and Angle
+                else if (arg0.getKeyCode() == KeyEvent.VK_RIGHT)
+                {
+                    mScaleTiltMotorSpeed += .05;
+                    drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
+
+                    mClimbTiltAngle += 5;
+                    drawerPanel.setClimbTiltAngle(mClimbTiltAngle);
+                }
+                else if (arg0.getKeyCode() == KeyEvent.VK_LEFT)
+                {
+                    mScaleTiltMotorSpeed -= .05;
+                    drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
+
+                    mClimbTiltAngle -= 5;
+                    drawerPanel.setClimbTiltAngle(mClimbTiltAngle);
+                }
+
+                // Scale Motor
+                // if (arg0.getKeyChar() == 'q')
+                // {
+                // mScaleMotorSpeed += .05;
+                // drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
+                // }
+                // else if (arg0.getKeyChar() == 'w')
+                // {
+                // mScaleMotorSpeed -= .05;
+                // drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
+                // }
+
+                // Intake Motor
+                // else if (arg0.getKeyChar() == 'a')
+                // {
+                // mInakeMotorSpeed += .05;
+                // drawerPanel.setInakeMotorSpeed(mInakeMotorSpeed);
+                // }
+                // else if (arg0.getKeyChar() == 's')
+                // {
+                // mInakeMotorSpeed -= .05;
+                // drawerPanel.setInakeMotorSpeed(mInakeMotorSpeed);
+                // }
+
+                // Scale Tilt
+                // else if (arg0.getKeyChar() == 'z')
+                // {
+                // mScaleTiltMotorSpeed += .05;
+                // drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
+                // }
+                // else if (arg0.getKeyChar() == 'x')
+                // {
+                // mScaleTiltMotorSpeed -= .05;
+                // drawerPanel.setScaleTiltMotorSpeed(mScaleTiltMotorSpeed);
+                // }
                 System.out.println(drawerPanel);
                 drawerPanel.repaint();
             }
