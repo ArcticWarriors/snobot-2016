@@ -2,8 +2,6 @@ package com.snobot2016.scaling;
 
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotOperatorJoystick;
-
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,7 +49,7 @@ public class Scaling implements IScaling
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
     
-        if (mJoystick.getFinalCountDown())
+        if (mJoystick.isFinalCountDown())
         {
         	mAmIClimbing = true;
         	mTimer.start();

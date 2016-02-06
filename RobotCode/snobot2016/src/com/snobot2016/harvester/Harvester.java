@@ -42,15 +42,15 @@ public class Harvester implements IHarvester
     @Override
     public void control()
     {
-        if (mOperatorJoystick.getHarvesterRollerSpeedForward()&& mOperatorJoystick.getHarvesterRollerSpeedReverse())
+        if (mOperatorJoystick.isHarvesterRollerForward()&& mOperatorJoystick.isHarvesterRollerForward())
         {
             setRollerMotorSpeed(0);
         }
-        else if (mOperatorJoystick.getHarvesterRollerSpeedForward())
+        else if (mOperatorJoystick.isHarvesterRollerForward())
         {
             setRollerMotorSpeed(1);
         }
-        else if (mOperatorJoystick.getHarvesterRollerSpeedReverse())
+        else if (mOperatorJoystick.isHarvesterRollerForward())
         {
             setRollerMotorSpeed(-1);
         }
@@ -60,15 +60,15 @@ public class Harvester implements IHarvester
         }
         
         
-        if (mOperatorJoystick.getHarvesterPivotSpeedUp()&& mOperatorJoystick.getHarvesterPivotSpeedDown())
+        if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
         {
             setPivotMotorSpeed(0);
         }
-        else if (mOperatorJoystick.getHarvesterPivotSpeedUp())
+        else if (mOperatorJoystick.isHarvesterPivotUp())
         {
             setPivotMotorSpeed(1);
         }
-        else if (mOperatorJoystick.getHarvesterPivotSpeedDown())
+        else if (mOperatorJoystick.isHarvesterPivotDown())
         {
             setPivotMotorSpeed(-1);
         }

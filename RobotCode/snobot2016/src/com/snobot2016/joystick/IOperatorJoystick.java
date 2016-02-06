@@ -9,12 +9,12 @@ public interface IOperatorJoystick extends ISubsystem
     double getScaleTiltSpeed();
     double getScaleMoveSpeed();
     
-    boolean getFinalCountDown();
+    boolean isFinalCountDown();
 
     //Harvester
-    boolean getHarvesterPivotSpeedUp();
-    boolean getHarvesterPivotSpeedDown();
+    boolean isHarvesterPivotUp();
+    boolean isHarvesterPivotDown();
     
-    boolean getHarvesterRollerSpeedForward();
-    boolean getHarvesterRollerSpeedReverse();
+    boolean isHarvesterRollerForward();
+    boolean isHarvesterRollerReverse();
 }
