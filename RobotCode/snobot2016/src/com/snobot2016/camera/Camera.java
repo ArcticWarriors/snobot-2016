@@ -68,7 +68,7 @@ public double getDistanceToTarget()
         // TODO Auto-generated catch block
         e.printStackTrace();
     }
-    return mImageWidth;
+    return mDistanceToTarget;
 }
 
 
