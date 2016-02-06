@@ -1,10 +1,16 @@
 package com.snobot2016.scaling;
 
+/**
+ * Author Jeffrey/Michael
+ * interface for scaling class
+ */
 import com.snobot.xlib.ISubsystem;
 
 public interface IScaling extends ISubsystem
 {
-	boolean extendUpWall();
-	boolean pullUpWall();
-	boolean lowerDownWall();	
+    void extendUpWall();
+
+    void pullUpWall();
+
+    void lowerDownWall();
 }

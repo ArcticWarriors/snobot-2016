@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
+import com.snobot.xlib.Logger;
 import com.snobot2016.autonomous.CommandParser;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
@@ -27,7 +28,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -58,6 +58,7 @@ public class Snobot extends ASnobot
     private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
     
+
     // Harvester
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
@@ -77,6 +78,7 @@ public class Snobot extends ASnobot
     // Light
     private Light mCameraLight;
     private Relay mCameraRelay;
+    private Logger mLogger;
 
     public Snobot()
     {
@@ -105,13 +107,13 @@ public class Snobot extends ASnobot
         // Scaling
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger);
         mSubsystems.add(mScaling);
 
         // Harvester
         mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
         mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger);
         mSubsystems.add(mHarvester);
 
         // Positioner
@@ -121,7 +123,7 @@ public class Snobot extends ASnobot
 
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
-        mCameraLight = new Light(mCameraRelay);
+        mCameraLight = new Light(mCameraRelay, mLogger);
         mSubsystems.add(mCameraLight);
 
         if (Properties2016.sENABLE_CAMERA.getValue())

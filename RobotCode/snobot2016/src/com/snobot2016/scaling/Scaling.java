@@ -1,14 +1,20 @@
 package com.snobot2016.scaling;
 
+import com.snobot.xlib.Logger;
+
+/**
+ * Author Jeffrey/Michael
+ * class for scaling arm of the robot
+ * creates auto-climb feature
+ * 
+ */
+
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
 
 public class Scaling implements IScaling
 {
@@ -20,27 +26,27 @@ public class Scaling implements IScaling
     private boolean mFinalCountDown;
     private boolean mAmIClimbing;
     private Timer mTimer;
-    
-    
-    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor,IOperatorJoystick aOperatorJoystick)
+    private Logger mLogger;
+
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
-        mJoystick = aOperatorJoystick; 
+        mJoystick = aOperatorJoystick;
+        mLogger = aLogger;
         mTimer = new Timer();
     }
-    
-    
+
     @Override
     public void init()
     {
- 
+
     }
 
     @Override
     public void update()
     {
-    	
+
     }
 
     @Override
@@ -50,72 +56,74 @@ public class Scaling implements IScaling
         mMoveSpeed = mJoystick.getScaleMoveSpeed();
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
-    
-        if (mJoystick.getFinalCountDown())
+
+        // boolean for auto climb feature
+        if (mJoystick.isFinalCountDown())
         {
-        	mAmIClimbing = true;
-        	mTimer.start();
+            mAmIClimbing = true;
+            mTimer.start();
         }
         if (mAmIClimbing)
         {
-        	setScaleSpeedMove (1);
-        	mTimer.get();
+            setScaleSpeedMove(1);
+            mTimer.get();
         }
-        if (mTimer.get() >10)
-       {
-    	   mTimer.stop();
-    	   setScaleSpeedMove (0);
-    	   mAmIClimbing = false;
-       }
-        
+        if (mTimer.get() > 10)
+        {
+            mTimer.stop();
+            setScaleSpeedMove(0);
+            mAmIClimbing = false;
+        }
+
     }
 
     @Override
     public void rereadPreferences()
     {
-        
+
     }
 
     @Override
     public void updateSmartDashboard()
     {
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mMoveSpeed);  
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mTiltSpeed);
-    	 SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
+        // puts scale motor, tilt motor, and timer on SmartDashboard,
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mMoveSpeed);
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mTiltSpeed);
+        SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
-        
+        mLogger.updateLogger(mMoveSpeed);
+        mLogger.updateLogger(mTiltSpeed);
     }
 
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
-        
+        setScaleSpeedMove(0);
+        setScaleSpeedTilt(0);
     }
 
     @Override
-    public boolean extendUpWall()
+    public void extendUpWall()
     {
-        return false;
+        setScaleSpeedTilt(1);
     }
 
     @Override
-    public boolean pullUpWall()
+    public void pullUpWall()
     {
-        return false;
+        setScaleSpeedMove(1);
     }
 
     @Override
-    public boolean lowerDownWall()
+    public void lowerDownWall()
     {
-        return false;
+        setScaleSpeedMove(-1);
     }
-    
+
     public void setScaleSpeedMove(double aSpeedMove)
     {
         mScaleMoveMotor.set(aSpeedMove);
@@ -124,5 +132,5 @@ public class Scaling implements IScaling
     public void setScaleSpeedTilt(double aSpeedTilt)
     {
         mScaleTiltMotor.set(aSpeedTilt);
-	}
+    }
 }
