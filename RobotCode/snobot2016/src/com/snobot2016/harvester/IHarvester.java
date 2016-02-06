@@ -6,16 +6,15 @@ package com.snobot2016.harvester;
 import com.snobot.xlib.ISubsystem;
 
 /**
- * @author Michael_000
- *
+ * Author Jeffrey/Michael interface for harvester class
  */
 public interface IHarvester extends ISubsystem
 {
-    boolean lowerHarvester();
+    void lowerHarvester();
 
-    boolean raiseHarvester();
+    void raiseHarvester();
 
-    boolean rollIn();
+    void rollIn();
 
-    boolean rollOut();
+    void rollOut();
 }

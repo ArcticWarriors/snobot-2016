@@ -13,7 +13,7 @@ public abstract class ASnobot extends IterativeRobot implements ISubsystem
 
     protected List<ISubsystem> mSubsystems;
 
-    private Logger mLogger;
+    protected Logger mLogger;
     private SimpleDateFormat mLogDateFormat;
 
     public ASnobot(SimpleDateFormat aLogFormat)

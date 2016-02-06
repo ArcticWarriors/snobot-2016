@@ -89,32 +89,35 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     }
 
     @Override
-    public boolean getHarvesterPivotSpeedUp()
+    public boolean isHarvesterPivotUp()
     {
         return mMotorPivotSpeedUp;
     }
 
     @Override
-    public boolean getHarvesterPivotSpeedDown()
+    public boolean isHarvesterPivotDown()
     {
         return mMotorPivotSpeedDown;
     }
 
+
+	@Override
+	public boolean isFinalCountDown() {
+		// TODO Auto-generated method stub
+		return mFinalCountDown;
+	}
+
+
     @Override
-    public boolean getHarvesterRollerSpeedForward()
+    public boolean isHarvesterRollerForward()
     {
         return mMotorRollerSpeedForward;
     }
 
     @Override
-    public boolean getHarvesterRollerSpeedReverse()
+    public boolean isHarvesterRollerReverse()
     {
         return mMotorRollerSpeedReverse;
     }
 
-    @Override
-    public boolean getFinalCountDown()
-    {
-        return mFinalCountDown;
-    }
 }

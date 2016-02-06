@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This class will run the pivot motor to lower the harvester system.
+ * This class will run the roller motor in a direction to collect a ball during
+ * the autonomous period.
  * 
  * @author avdonle
  *
  */
-public class LowerHarvester extends Command
+public class RollerIntake extends Command
 {
     private Timer mTimer;
     private double mTime;
@@ -21,11 +22,11 @@ public class LowerHarvester extends Command
      * Initializes class variables using outside parameters.
      * 
      * @param aTime
-     *            Time that defines when the pivot motor will be turned on.
+     *            Time that defines when the roller will be turned on.
      * @param aHarvester
      *            Takes in IHarvester functionality.
      */
-    public LowerHarvester(double aTime, IHarvester aHarvester)
+    public RollerIntake(double aTime, IHarvester aHarvester)
     {
         mTimer = new Timer();
         mTime = aTime;
@@ -42,21 +43,21 @@ public class LowerHarvester extends Command
     }
 
     /**
-     * Starts the lowering function if within time.
+     * Starts the roll in function if within time.
      */
     @Override
     protected void execute()
     {
         if (mTimer.get() < mTime)
         {
-            mHarvester.lowerHarvester();
+            mHarvester.rollIn();
         }
     }
 
     /**
-     * Returns true or false if the pivot motor is running or not.
+     * Gives a true false as to if the roller is running or not.
      * 
-     * @return Pivot motor running or not.
+     * @return Roller running or not.
      */
     @Override
     protected boolean isFinished()
@@ -69,7 +70,7 @@ public class LowerHarvester extends Command
     }
 
     /**
-     * Stops the pivot motor when called.
+     * Shut off function to stop the roller motors.
      */
     @Override
     protected void end()
@@ -82,4 +83,5 @@ public class LowerHarvester extends Command
     {
 
     }
+
 }
