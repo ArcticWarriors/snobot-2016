@@ -48,14 +48,20 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
-                        .get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
             case "LowerHarvester":
                 newCommand = new LowerHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
+                break;
+            case "RollerIntake":
+                newCommand = new RollerIntake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
+                break;
+            case "RollerOuttake":
+                newCommand = new RollerOuttake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
             }
         }
