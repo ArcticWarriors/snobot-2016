@@ -11,7 +11,6 @@ import com.snobot.xlib.Logger;
 
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
-
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +22,6 @@ public class Scaling implements IScaling
     private IOperatorJoystick mJoystick;
     private double mMoveSpeed;
     private double mTiltSpeed;
-    private boolean mFinalCountDown;
     private boolean mAmIClimbing;
     private Timer mTimer;
     private Logger mLogger;
@@ -40,7 +38,7 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-
+        
     }
 
     @Override
@@ -53,7 +51,6 @@ public class Scaling implements IScaling
     public void control()
     {
         setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
-        mMoveSpeed = mJoystick.getScaleMoveSpeed();
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
 

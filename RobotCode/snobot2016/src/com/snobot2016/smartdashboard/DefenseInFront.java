@@ -1,0 +1,63 @@
+package com.snobot2016.smartdashboard;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/*
+ * @author Andrew/Alec
+ */
+public class DefenseInFront
+{
+    /*
+     * This is the sendable chooser that the class makes.
+     */
+    private SendableChooser mDefenseInFront;
+
+    /*
+     * This enum lists all of the defenses and other options for things to do
+     * before crossing the Outer Works in autonomous. All of these are sent as a
+     * sendableChooser to the smart dashboard; the selected is used in
+     * AutonFactory.
+     */
+    public enum Defenses
+    {
+        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS, DO_NOTHING
+    }
+
+    /*
+     * In the constructor, we new up the chooser and add all of the enum
+     * options.
+     */
+    public DefenseInFront()
+    {
+        mDefenseInFront = new SendableChooser();
+        mDefenseInFront.addDefault("Low Bar", Defenses.LOW_BAR);
+        mDefenseInFront.addObject("Portcullis", Defenses.PORTCULLIS);
+        mDefenseInFront.addObject("Chival de Frise", Defenses.CHIVAL_DE_FRISE);
+        mDefenseInFront.addObject("Moat", Defenses.MOAT);
+        mDefenseInFront.addObject("Ramparts", Defenses.RAMPARTS);
+        mDefenseInFront.addObject("Drawbridge", Defenses.DRAWBRIDGE);
+        mDefenseInFront.addObject("Sally Port", Defenses.SALLY_PORT);
+        mDefenseInFront.addObject("Rock Wall", Defenses.ROCK_WALL);
+        mDefenseInFront.addObject("Rough Terrain", Defenses.ROUGH_TERRAIN);
+        mDefenseInFront.addObject("Just Reach Outer Works", Defenses.OUTER_WORKS);
+        mDefenseInFront.addObject("Do Nothing", Defenses.DO_NOTHING);
+    }
+
+    /*
+     * This method can be called to put the defenses sendable chooser onto the
+     * dashboard.
+     */
+    public void putOnDash()
+    {
+        SmartDashboard.putData("Defense in front of the Robot:", mDefenseInFront);
+    }
+
+    /*
+     * This method is used to get the selected output (defaulting to Low Bar).
+     */
+    public Defenses getSelected()
+    {
+        return (Defenses) mDefenseInFront.getSelected();
+    }
+}

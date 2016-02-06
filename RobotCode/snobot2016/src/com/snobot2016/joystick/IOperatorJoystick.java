@@ -16,3 +16,4 @@ public interface IOperatorJoystick extends ISubsystem
     boolean isHarvesterRollerForward();
     boolean isHarvesterRollerReverse();
 }
+
