@@ -1,49 +1,57 @@
 package com.snobot2016.harvester;
 
+import com.snobot.xlib.Logger;
+/**
+ * Author Jeffrey/Michael
+ * creates harvester for Snobot
+ * 
+ */
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Harvester implements IHarvester
 {
     private SpeedController mPivotMotor;
     private SpeedController mRollerMotor;
-    IOperatorJoystick mJoystick;
+    private double mRoller;
+    private double mPivot;
+    private IOperatorJoystick mOperatorJoystick;
+    private Logger mLogger;
 
-    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick)
+    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger)
     {
         mRollerMotor = aHarvesterRollerMotor;
         mPivotMotor = aHarvesterPivotMotor;
-        mJoystick = aOperatorJoystick;
-
+        mOperatorJoystick = aOperatorJoystick;
+        mLogger = aLogger;
     }
 
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void control()
     {
-        if (mJoystick.getHarvesterRollerSpeedForward() && mJoystick.getHarvesterRollerSpeedReverse())
+        // button setup for harvester roller
+        if (mOperatorJoystick.isHarvesterRollerForward() && mOperatorJoystick.isHarvesterRollerReverse())
         {
             setRollerMotorSpeed(0);
         }
-        else if (mJoystick.getHarvesterRollerSpeedForward())
+        else if (mOperatorJoystick.isHarvesterRollerForward())
         {
             setRollerMotorSpeed(1);
         }
-        else if (mJoystick.getHarvesterRollerSpeedReverse())
+        else if (mOperatorJoystick.isHarvesterRollerReverse())
         {
             setRollerMotorSpeed(-1);
         }
@@ -52,15 +60,16 @@ public class Harvester implements IHarvester
             setRollerMotorSpeed(0);
         }
 
-        if (mJoystick.getHarvesterPivotSpeedUp() && mJoystick.getHarvesterPivotSpeedDown())
+        // button setup for harvester pivot
+        if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
         {
             setPivotMotorSpeed(0);
         }
-        else if (mJoystick.getHarvesterPivotSpeedUp())
+        else if (mOperatorJoystick.isHarvesterPivotUp())
         {
             setPivotMotorSpeed(1);
         }
-        else if (mJoystick.getHarvesterPivotSpeedDown())
+        else if (mOperatorJoystick.isHarvesterPivotDown())
         {
             setPivotMotorSpeed(-1);
         }
@@ -81,50 +90,47 @@ public class Harvester implements IHarvester
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
-
+        // displays pivot and roller motor on SmartDashboard
+        SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
+        SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
-
+        mLogger.updateLogger(mPivot);
+        mLogger.updateLogger(mRoller);
     }
 
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
-
+        setRollerMotorSpeed(0);
+        setPivotMotorSpeed(0);
     }
 
     @Override
-    public boolean raiseHarvester()
+    public void raiseHarvester()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setPivotMotorSpeed(-1);
     }
 
     @Override
-    public boolean rollIn()
+    public void lowerHarvester()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setPivotMotorSpeed(1);
     }
 
     @Override
-    public boolean rollOut()
+    public void rollIn()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setRollerMotorSpeed(1);
     }
 
     @Override
-    public boolean lowerHarvester()
+    public void rollOut()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setRollerMotorSpeed(-1);
     }
 
     private void setRollerMotorSpeed(double aRollerSpeed)
