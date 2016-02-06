@@ -13,4 +13,8 @@ public interface IScaling extends ISubsystem
     void pullUpWall();
 
     void lowerDownWall();
+
+    void tiltLower();
+
+    void tiltRaise();
 }
