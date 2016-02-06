@@ -21,7 +21,7 @@ public class AutonPanel extends JPanel
 
     public AutonPanel()
     {
-        setPreferredSize(new Dimension(300, 150));
+        setPreferredSize(new Dimension(150, 150));
         setLayout(new BorderLayout());
 
         mTextArea = new JTextArea("No auton received");
