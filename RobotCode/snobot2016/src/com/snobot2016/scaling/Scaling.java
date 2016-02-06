@@ -1,33 +1,50 @@
 package com.snobot2016.scaling;
 
+import com.snobot.xlib.Logger;
+
+/**
+ * Author Jeffrey/Michael
+ * class for scaling arm of the robot
+ * creates auto-climb feature
+ * 
+ */
+
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Scaling implements IScaling
 {
-    SpeedController mScaleMoveMotor;
-    SpeedController mScaleTiltMotor;
-    IOperatorJoystick mJoystick;
+    private SpeedController mScaleMoveMotor;
+    private SpeedController mScaleTiltMotor;
+    private IOperatorJoystick mJoystick;
+    private double mMoveSpeed;
+    private double mTiltSpeed;
+    private boolean mAmIClimbing;
+    private Timer mTimer;
+    private Logger mLogger;
 
-    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick)
+    public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
         mJoystick = aOperatorJoystick;
+        mLogger = aLogger;
+        mTimer = new Timer();
     }
 
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -36,55 +53,73 @@ public class Scaling implements IScaling
     {
         setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
         setScaleSpeedTilt(mJoystick.getScaleTiltSpeed());
+        mTiltSpeed = mJoystick.getScaleTiltSpeed();
+
+        // boolean for auto climb feature
+        if (mJoystick.isFinalCountDown())
+        {
+            mAmIClimbing = true;
+            mTimer.start();
+        }
+        if (mAmIClimbing)
+        {
+            setScaleSpeedMove(1);
+            mTimer.get();
+        }
+        if (mTimer.get() > 10)
+        {
+            mTimer.stop();
+            setScaleSpeedMove(0);
+            mAmIClimbing = false;
+        }
+
     }
 
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
-
+        // puts scale motor, tilt motor, and timer on SmartDashboard,
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mMoveSpeed);
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mTiltSpeed);
+        SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
-
+        mLogger.updateLogger(mMoveSpeed);
+        mLogger.updateLogger(mTiltSpeed);
     }
 
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
-
+        setScaleSpeedMove(0);
+        setScaleSpeedTilt(0);
     }
 
     @Override
-    public boolean extendUpWall()
+    public void extendUpWall()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setScaleSpeedTilt(1);
     }
 
     @Override
-    public boolean pullUpWall()
+    public void pullUpWall()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setScaleSpeedMove(1);
     }
 
     @Override
-    public boolean lowerDownWall()
+    public void lowerDownWall()
     {
-        // TODO Auto-generated method stub
-        return false;
+        setScaleSpeedMove(-1);
     }
 
     public void setScaleSpeedMove(double aSpeedMove)
@@ -95,5 +130,17 @@ public class Scaling implements IScaling
     public void setScaleSpeedTilt(double aSpeedTilt)
     {
         mScaleTiltMotor.set(aSpeedTilt);
+    }
+
+    @Override
+    public void tiltLower()
+    {
+        mScaleTiltMotor.set(1);
+    }
+
+    @Override
+    public void tiltRaise()
+    {
+        mScaleTiltMotor.set(-1);
     }
 }

@@ -5,6 +5,13 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * A command that causes the robot to drive straight for a given distance and
+ * speed but doesn't account for veering off course.
+ * 
+ * @author Alec/Andrew
+ *
+ */
 public class DriveStraightADistance extends Command
 {
     private IDriveTrain mDriveTrain;
@@ -13,6 +20,18 @@ public class DriveStraightADistance extends Command
     private double mSpeed;
     private double mStartDistance;
 
+    /**
+     * Creates a new DriveStraightADistance Command.
+     * 
+     * @param aDriveTrain
+     *            The robot's DriveTrain.
+     * @param aPositioner
+     *            The robot's Positioner.
+     * @param aDistance
+     *            The requested distance.
+     * @param aSpeed
+     *            The requested speed (-1 - 1).
+     */
     public DriveStraightADistance(IDriveTrain aDriveTrain, IPositioner aPositioner, double aDistance, double aSpeed)
     {
         mDriveTrain = aDriveTrain;
@@ -21,12 +40,19 @@ public class DriveStraightADistance extends Command
         mSpeed = aSpeed;
     }
 
+    /**
+     * Sets mStartDistance equal to the total distance the robot has already
+     * traveled.
+     */
     @Override
     protected void initialize()
     {
         mStartDistance = mPositioner.getTotalDistance();
     }
 
+    /**
+     * Sets the robot's motor speed.
+     */
     @Override
     protected void execute()
     {
@@ -34,6 +60,9 @@ public class DriveStraightADistance extends Command
 
     }
 
+    /**
+     * Checks if the robot has gone the distance requested.
+     */
     @Override
     protected boolean isFinished()
     {
@@ -52,6 +81,9 @@ public class DriveStraightADistance extends Command
 
     }
 
+    /**
+     * Stops the robot.
+     */
     @Override
     protected void end()
     {
@@ -61,7 +93,6 @@ public class DriveStraightADistance extends Command
     @Override
     protected void interrupted()
     {
-        // TODO Auto-generated method stub
 
     }
 

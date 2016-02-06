@@ -100,7 +100,8 @@ public class Snobot extends ASnobot
 
         // Drive train
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
@@ -109,18 +110,18 @@ public class Snobot extends ASnobot
         // Scaling
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick);
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger);
         mSubsystems.add(mScaling);
 
         // Harvester
         mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
         mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick);
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger);
         mSubsystems.add(mHarvester);
 
         // Positioner
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
@@ -128,14 +129,16 @@ public class Snobot extends ASnobot
 
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
-        mCameraLight = new Light(mCameraRelay);
+        mCameraLight = new Light(mCameraRelay, mLogger);
         mSubsystems.add(mCameraLight);
 
         if (Properties2016.sENABLE_CAMERA.getValue())
         {
             System.out.println("Enabling camera");
             mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
+            mAxisCamera.writeBrightness(10);
             mCamera = new Camera(mAxisCamera);
+            
         }
         else
         {
@@ -169,5 +172,10 @@ public class Snobot extends ASnobot
     public IHarvester getHarvester()
     {
         return this.mHarvester;
+    }
+
+    public IScaling getScaling()
+    {
+        return this.mScaling;
     }
 }
