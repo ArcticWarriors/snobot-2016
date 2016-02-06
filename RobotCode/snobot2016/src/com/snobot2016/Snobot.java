@@ -1,11 +1,9 @@
 package com.snobot2016;
 
 import java.text.SimpleDateFormat;
-
-import com.snobot.xlib.ACommandParser;
 import com.snobot.xlib.ASnobot;
 import com.snobot.xlib.Logger;
-import com.snobot2016.autonomous.CommandParser;
+import com.snobot2016.autonomous.AutonFactory;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.drivetrain.SnobotDriveTrain;
@@ -41,36 +39,40 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
  */
 public class Snobot extends ASnobot
 {
+    // Raw Joysticks
+    private Joystick mRawDriverJoystick;
+    private Joystick mRawDriverJoystick2;
+    private Joystick mRawOperatorJoystick;
+
+    // Our Joysticks
+    private IDriverJoystick mDriverXbox;
+    private IDriverJoystick mDriverFlightStick;
+
     // Drivetrain
     private SpeedController mDriveLeftMotor;
     private SpeedController mDriveRightMotor;
     private Encoder mLeftDriveEncoder;
     private Encoder mRightDriveEncoder;
     private IDriveTrain mDrivetrain;
-    private IDriverJoystick mDriverXbox;
-    private IDriverJoystick mDriverFlightStick;
-    private Joystick mRawDriverJoystick;
-    
+
     // Scaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
-    private Joystick mRawOperatorJoystick;
     private IScaling mScaling;
-    
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
     private IHarvester mHarvester;
-    
+
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
-    
+
     // Autonomous
-    private ACommandParser mCommandParser;
-    private CommandGroup mCommandGroup;
+    private CommandGroup mAutonCommand;
+    private AutonFactory mAutonFactory;
 
     private AxisCamera mAxisCamera;
     private Camera mCamera;
@@ -86,12 +88,13 @@ public class Snobot extends ASnobot
 
         // Raw Joysticks
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
+        mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT2.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
 
         // Our Joysticks
         mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
         mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
-        mDriverFlightStick = new SnobotDriveFlightStick();
+        mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
         mSubsystems.add(mDriverFlightStick);
@@ -118,8 +121,11 @@ public class Snobot extends ASnobot
 
         // Positioner
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
+
+        // Autonomous
+        mAutonFactory = new AutonFactory(this.getPositioner(), this);
 
         // Camera
         mCameraRelay = new Relay(Properties2016.sLIGHT_RELAY.getValue());
@@ -136,43 +142,19 @@ public class Snobot extends ASnobot
         {
             System.out.println("Not enabling camera");
         }
-
-        // Autonomous
-        mCommandParser = new CommandParser(this);
     }
 
-    /**
-     * This autonomous (along with the chooser code above) shows how to select
-     * between different autonomous modes using the dashboard. The sendable
-     * chooser code works with the Java SmartDashboard. If you prefer the
-     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-     * getString line to get the auto name from the text box below the Gyro
-     *
-     * You can add additional auto modes by adding additional comparisons to the
-     * switch structure below with additional strings. If using the
-     * SendableChooser make sure to add them to the chooser code above as well.
-     */
+    @Override
+    public void robotInit()
+    {
+        init();
+    }
 
+    @Override
     public void autonomousInit()
     {
-        String testSingleDir = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/TestSingleAutonomous/";
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestDriveStraightADistance_Forwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Backwards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidDriveStraight_Fowards");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestStupidTurn_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Left");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestTurnWithDegrees_Right");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_000Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_045Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_090Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_135Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_180Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_225Degrees");
-//        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_270Degrees");
-        mCommandGroup = mCommandParser.readFile(testSingleDir + "TestGoToXY_315Degrees");
-        mCommandGroup.start();
+        mAutonCommand = mAutonFactory.buildAnAuton();
+        mAutonCommand.start();
     }
 
     public IDriveTrain getDriveTrain()
@@ -184,15 +166,9 @@ public class Snobot extends ASnobot
     {
         return this.mSnobotPositioner;
     }
-    
+
+    public IHarvester getHarvester()
+    {
+        return this.mHarvester;
+    }
 }
-
-
-
-
-
-
-
-
-
-

@@ -27,19 +27,16 @@ public class Harvester implements IHarvester
         mPivotMotor = aHarvesterPivotMotor;
         mOperatorJoystick = aOperatorJoystick;
         mLogger = aLogger;
-
     }
 
     @Override
     public void init()
     {
-
     }
 
     @Override
     public void update()
     {
-
     }
 
     @Override
@@ -96,7 +93,6 @@ public class Harvester implements IHarvester
         // displays pivot and roller motor on SmartDashboard
         SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
         SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
-
     }
 
     @Override
@@ -111,7 +107,6 @@ public class Harvester implements IHarvester
     {
         setRollerMotorSpeed(0);
         setPivotMotorSpeed(0);
-
     }
 
     @Override
