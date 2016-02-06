@@ -81,6 +81,11 @@ public class CommandParser extends ACommandParser
             case "RollerOuttake":
                 newCommand = new RollerOuttake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
+            case "TiltLowerScaler":
+                newCommand = new TiltLowerScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
+            case "TiltRaiseScaler":
+                newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
+
             }
         }
         catch (IndexOutOfBoundsException e)
