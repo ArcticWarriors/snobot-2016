@@ -11,6 +11,7 @@ import com.snobot.xlib.Logger;
 
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,7 +39,7 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-        
+
     }
 
     @Override

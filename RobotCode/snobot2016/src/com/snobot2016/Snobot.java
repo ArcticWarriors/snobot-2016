@@ -1,8 +1,8 @@
 package com.snobot2016;
 
 import java.text.SimpleDateFormat;
+
 import com.snobot.xlib.ASnobot;
-import com.snobot.xlib.Logger;
 import com.snobot2016.autonomous.AutonFactory;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
@@ -80,7 +80,6 @@ public class Snobot extends ASnobot
     // Light
     private Light mCameraLight;
     private Relay mCameraRelay;
-    private Logger mLogger;
 
     public Snobot()
     {
@@ -101,7 +100,8 @@ public class Snobot extends ASnobot
 
         // Drive train
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
         mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
@@ -172,5 +172,10 @@ public class Snobot extends ASnobot
     public IHarvester getHarvester()
     {
         return this.mHarvester;
+    }
+
+    public IScaling getScaling()
+    {
+        return this.mScaling;
     }
 }
