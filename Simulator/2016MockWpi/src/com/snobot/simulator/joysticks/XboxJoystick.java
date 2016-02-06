@@ -42,6 +42,6 @@ public class XboxJoystick extends SpecificGamepadJoystick
 
     public XboxJoystick()
     {
-        super("Controller (XBOX 360 For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Controller (XBOX One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
     }
 }

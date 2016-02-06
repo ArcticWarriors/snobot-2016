@@ -1,10 +1,10 @@
 package com.snobot2016.positioner;
 
 import com.snobot.xlib.ISubsystem;
+import com.snobot.xlib.Logger;
 import com.snobot.xlib.Utilities;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
-import com.snobot2016.logger.Logger;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;

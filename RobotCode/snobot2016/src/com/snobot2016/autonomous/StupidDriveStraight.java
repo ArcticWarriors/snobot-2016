@@ -83,7 +83,6 @@ public class StupidDriveStraight extends Command
     @Override
     protected void interrupted()
     {
-
     }
 
 }

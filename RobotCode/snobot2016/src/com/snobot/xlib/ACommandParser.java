@@ -1,22 +1,13 @@
 package com.snobot.xlib;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public abstract class ACommandParser
 {
@@ -184,68 +175,6 @@ public abstract class ACommandParser
      *            The string used to ignore certain files/folders
      * @return A sendable chooser containing all of the applicable modes
      */
-    public SendableChooser loadAutonFiles(String aDir, String aIgnoreString)
-    {
-        SendableChooser output = new SendableChooser();
-        File autonDr = new File(aDir);
-
-        System.out.println("Reading auton files from directory " + autonDr.getAbsolutePath());
-        System.out.println(" Using filter : \"" + aIgnoreString + "\"");
-
-        try
-        {
-            SnobotAutonCrawler fileProcessor = new SnobotAutonCrawler(aIgnoreString);
-            Files.walkFileTree(Paths.get(autonDr.toURI()), fileProcessor);
-
-            for (Path p : fileProcessor.mPaths)
-            {
-                output.addObject(p.getFileName().toString(), p.toString());
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return output;
-    }
-
-    private static final class SnobotAutonCrawler extends SimpleFileVisitor<Path>
-    {
-        private List<Path> mPaths;
-        private String mIgnoreString;
-
-        public SnobotAutonCrawler(String aIgnoreString)
-        {
-            mPaths = new ArrayList<Path>();
-            mIgnoreString = aIgnoreString;
-        }
-
-        @Override
-        public FileVisitResult visitFile(Path aFile, BasicFileAttributes aAttrs) throws IOException
-        {
-            System.out.println("  Keeping file " + aFile);
-            mPaths.add(aFile);
-
-            return FileVisitResult.CONTINUE;
-        }
-
-        @Override
-        public FileVisitResult preVisitDirectory(Path aDir, BasicFileAttributes aAttrs) throws IOException
-        {
-            Path dirName = aDir.getFileName();
-            if (dirName.startsWith(mIgnoreString))
-            {
-                System.out.println(" Skipping directory: " + dirName);
-                return FileVisitResult.SKIP_SUBTREE;
-            }
-            else
-            {
-                System.out.println(" Processing directory: " + dirName);
-                return FileVisitResult.CONTINUE;
-            }
-        }
-    }
 
     protected abstract Command parseCommand(List<String> args);
 

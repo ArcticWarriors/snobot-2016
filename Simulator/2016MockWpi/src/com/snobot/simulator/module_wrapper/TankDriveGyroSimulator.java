@@ -35,6 +35,11 @@ public class TankDriveGyroSimulator implements ISimulatorUpdater
         }
     }
 
+    public void setTurnKp(double aKp)
+    {
+        mKP = aKp;
+    }
+
     public void setIsReverse(boolean isLeftReversed, boolean isRightReversed)
     {
         mIsLeftReversed = isLeftReversed;

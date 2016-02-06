@@ -1,0 +1,79 @@
+package com.snobot2016.joystick;
+
+import edu.wpi.first.wpilibj.Joystick;
+
+public class SnobotDriveFlightStick implements IDriverJoystick
+{
+
+    private Joystick mLeft;
+    private Joystick mRight;
+    private double mRightSpeed;
+    private double mLeftSpeed;
+
+    public SnobotDriveFlightStick(Joystick aLeft, Joystick aRight)
+    {
+        mLeft = aLeft;
+        mRight = aRight;
+    }
+
+    public void init()
+    {
+
+    }
+
+    @Override
+    public void update()
+    {
+
+        mLeftSpeed = mLeft.getY();
+        mRightSpeed = mRight.getY();
+
+    }
+
+    @Override
+    public void control()
+    {
+
+    }
+
+    @Override
+    public void rereadPreferences()
+    {
+
+    }
+
+    @Override
+    public void updateSmartDashboard()
+    {
+
+    }
+
+    @Override
+    public void updateLog()
+    {
+
+    }
+
+    @Override
+    public void stop()
+    {
+
+    }
+
+    @Override
+    public double getRightSpeed()
+    {
+
+        return mRightSpeed;
+
+    }
+
+    @Override
+    public double getLeftSpeed()
+    {
+
+        return mLeftSpeed;
+
+    }
+
+}
