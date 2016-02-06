@@ -130,4 +130,16 @@ public class Scaling implements IScaling
     {
         mScaleTiltMotor.set(aSpeedTilt);
     }
+
+    @Override
+    public void tiltLower()
+    {
+        mScaleTiltMotor.set(1);
+    }
+
+    @Override
+    public void tiltRaise()
+    {
+        mScaleTiltMotor.set(-1);
+    }
 }
