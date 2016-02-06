@@ -11,6 +11,7 @@ import com.snobot.xlib.Logger;
 
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -104,12 +105,6 @@ public class Scaling implements IScaling
     }
 
     @Override
-    public void extendUpWall()
-    {
-        setScaleSpeedTilt(1);
-    }
-
-    @Override
     public void pullUpWall()
     {
         setScaleSpeedMove(1);
@@ -130,4 +125,17 @@ public class Scaling implements IScaling
     {
         mScaleTiltMotor.set(aSpeedTilt);
     }
+
+    @Override
+    public void tiltRaise()
+    {
+        mScaleTiltMotor.set(1);
+    }
+
+    @Override
+    public void tiltLower()
+    {
+        mScaleTiltMotor.set(-1);
+    }
+
 }

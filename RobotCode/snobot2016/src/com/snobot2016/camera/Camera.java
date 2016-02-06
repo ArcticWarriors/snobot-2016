@@ -5,7 +5,7 @@ import com.snobot2016.SmartDashBoardNames;
 import edu.wpi.first.wpilibj.image.HSLImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.*;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 /**
  * Main implementation for the Axis Camera
@@ -16,54 +16,87 @@ import edu.wpi.first.wpilibj.vision.*;
 
 public class Camera implements ICamera
 {
-    private AxisCamera mCamera;
-    private HSLImage mNewImage;
-    private boolean mUpdateImageSuccess;
+
+   private AxisCamera mCamera;
+   private HSLImage mNewImage;
+   private boolean mUpdateImageSuccess;
+   private double mImageWidth;
+   private double mDistanceToTarget;
+   
 
     public Camera(AxisCamera aCamera)
     {
         mCamera = aCamera;
-        // mNewImage = aNewImage;, HSLImage aNewImage, boolean
-        // aUpdateImageSuccess
-        // mUpdateImageSuccess = aUpdateImageSuccess;
     }
 
     @Override
     public double getYaw()
     {
-        // TODO Auto-generated method stub
+        if (this.getUpdateImage() == true)
+        {
+            try
+            {
+                mImageWidth = mNewImage.getWidth();
+            }
+            catch (NIVisionException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        // TODO Finish Implementing the yaw
         return 0;
     }
 
-    @Override
-    public double getDistanceToTarget()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
-    public HSLImage getImage()
+@Override
+public double getDistanceToTarget()
+{
+    double cameraAngleInRadians = Math.toRadians((67/2));
+    // TODO Check if this math is correct
+    try
     {
-        // TODO Auto-generated method stub
-        mNewImage = null;
-        try
-        {
-            mNewImage = mCamera.getImage();
-        }
-        catch (NIVisionException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return mNewImage;
+        
+        mDistanceToTarget =  ((mNewImage.getWidth()/2)/Math.tan(cameraAngleInRadians));
     }
+    catch (NIVisionException e)
+    {
+        e.printStackTrace();
+    }
+    return mDistanceToTarget;
+}
+
+
+public HSLImage getImage()
+{
+    mNewImage = null;
+    try
+    {
+        mNewImage = mCamera.getImage();
+    }
+    catch (NIVisionException e)
+    {
+        e.printStackTrace();
+    }
+   
+    return mNewImage;
+}
 
     @Override
     public boolean getUpdateImage()
     {
-        // TODO Auto-generated method stub
-        mUpdateImageSuccess = mCamera.getImage(mNewImage);
+        // TODO Someone with greater knowledge check this out please
+        if (mCamera.isFreshImage())
+        {
+            mUpdateImageSuccess = mCamera.getImage(mNewImage);
+
+        }
+        else
+        {
+            mUpdateImageSuccess = false;
+            return mUpdateImageSuccess;
+        }
+
         SmartDashboard.putBoolean(SmartDashBoardNames.sUPDATE_IMAGE_SUCCESS, mUpdateImageSuccess);
         return mUpdateImageSuccess;
     }
