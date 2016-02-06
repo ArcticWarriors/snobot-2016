@@ -10,16 +10,34 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
+/**
+ * Creates commands from a file path and adds them to a CommandGroup.
+ * 
+ * @author Alec/Andrew
+ *
+ */
 public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
 
+    /**
+     * Creates a CommandParser object.
+     * 
+     * @param aSnobot
+     *            The robot using the CommandParser.
+     */
     public CommandParser(Snobot aSnobot)
     {
         super(" ", "#");
         mSnobot = aSnobot;
     }
 
+    /**
+     * Takes a list of Strings and creates a Command.
+     * 
+     * @param args
+     *            The command's name and parameters.
+     */
     @Override
     protected Command parseCommand(List<String> args)
     {
@@ -77,6 +95,13 @@ public class CommandParser extends ACommandParser
         return newCommand;
     }
 
+    /**
+     * Puts the command's text file contents and parsing results on the
+     * SmartDashboard.
+     * 
+     * @param aCommandString
+     *            Contents of the command's text file.
+     */
     @Override
     protected void publishParsingResults(String aCommandString)
     {
@@ -91,5 +116,4 @@ public class CommandParser extends ACommandParser
         table.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
         table.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
     }
-
 }

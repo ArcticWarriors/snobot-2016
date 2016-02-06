@@ -120,7 +120,7 @@ public class Snobot extends ASnobot
 
         // Positioner
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain);
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous

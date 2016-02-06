@@ -6,6 +6,12 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Tells the robot to turn to a specified orientation.
+ * 
+ * @author Alec/Andrew
+ *
+ */
 public class TurnWithDegrees extends Command
 {
     private final IDriveTrain mDriveTrain;
@@ -16,11 +22,37 @@ public class TurnWithDegrees extends Command
     private double mEndAngle;
     private boolean mFinished;
 
+    /**
+     * Creates a new TurnWithDegrees Command with a default deadband.
+     * 
+     * @param aDriveTrain
+     *            The robot's DriveTrain.
+     * @param aPositioner
+     *            The robot's Positioner
+     * @param aTurnDegrees
+     *            The desired final orientation (-180 - 180).
+     * @param aSpeed
+     *            The desired speed (-1 - 1).
+     */
     public TurnWithDegrees(IDriveTrain aDriveTrain, IPositioner aPositioner, double aTurnDegrees, double aSpeed)
     {
         this(aDriveTrain, aPositioner, aTurnDegrees, aSpeed, 5);
     }
 
+    /**
+     * Creates a new TurnWithDegrees Command.
+     * 
+     * @param aDriveTrain
+     *            The robot's DriveTrain.
+     * @param aPositioner
+     *            The robot's Positioner
+     * @param aTurnDegrees
+     *            The desired final orientation.
+     * @param aSpeed
+     *            The desired speed (-1 - 1).
+     * @param aDeadband
+     *            Defines the stop-zone of the robot (>0).
+     */
     public TurnWithDegrees(IDriveTrain aDriveTrain, IPositioner aPositioner, double aTurnDegrees, double aSpeed, double aDeadband)
     {
         mDriveTrain = aDriveTrain;
@@ -30,6 +62,9 @@ public class TurnWithDegrees extends Command
         mDeadband = aDeadband;
     }
 
+    /**
+     * Calculates the robot's final orientation.
+     */
     @Override
     protected void initialize()
     {
@@ -37,6 +72,9 @@ public class TurnWithDegrees extends Command
         mFinished = false;
     }
 
+    /**
+     * Turns the robot towards the desired orientation.
+     */
     @Override
     protected void execute()
     {
@@ -60,12 +98,18 @@ public class TurnWithDegrees extends Command
 
     }
 
+    /**
+     * Checks if the robot is finished turning.
+     */
     @Override
     protected boolean isFinished()
     {
         return mFinished;
     }
 
+    /**
+     * Stops the robot.
+     */
     @Override
     protected void end()
     {
