@@ -4,41 +4,38 @@ import com.snobot2016.joystick.IOperatorJoystick;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-
-
 public class Harvester implements IHarvester
 {
     private SpeedController mPivotMotor;
     private SpeedController mRollerMotor;
     IOperatorJoystick mJoystick;
-    
-    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor,IOperatorJoystick aOperatorJoystick)
+
+    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick)
     {
         mRollerMotor = aHarvesterRollerMotor;
         mPivotMotor = aHarvesterPivotMotor;
-        mJoystick = aOperatorJoystick; 
-        
+        mJoystick = aOperatorJoystick;
+
     }
-    
 
     @Override
     public void init()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void update()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void control()
     {
-        if (mJoystick.getHarvesterRollerSpeedForward()&& mJoystick.getHarvesterRollerSpeedReverse())
+        if (mJoystick.getHarvesterRollerSpeedForward() && mJoystick.getHarvesterRollerSpeedReverse())
         {
             setRollerMotorSpeed(0);
         }
@@ -54,9 +51,8 @@ public class Harvester implements IHarvester
         {
             setRollerMotorSpeed(0);
         }
-        
-        
-        if (mJoystick.getHarvesterPivotSpeedUp()&& mJoystick.getHarvesterPivotSpeedDown())
+
+        if (mJoystick.getHarvesterPivotSpeedUp() && mJoystick.getHarvesterPivotSpeedDown())
         {
             setPivotMotorSpeed(0);
         }
@@ -79,28 +75,28 @@ public class Harvester implements IHarvester
     public void rereadPreferences()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void updateSmartDashboard()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void updateLog()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void stop()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -130,7 +126,7 @@ public class Harvester implements IHarvester
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     private void setRollerMotorSpeed(double aRollerSpeed)
     {
         mRollerMotor.set(aRollerSpeed);
@@ -138,7 +134,7 @@ public class Harvester implements IHarvester
 
     private void setPivotMotorSpeed(double aPivotSpeed)
     {
-        mPivotMotor.set(aPivotSpeed);  
+        mPivotMotor.set(aPivotSpeed);
     }
 
 }

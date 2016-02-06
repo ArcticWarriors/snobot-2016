@@ -5,14 +5,19 @@ import com.snobot.xlib.ISubsystem;
 public interface IOperatorJoystick extends ISubsystem
 
 {
-   // Scaling
+    // Scaling
     double getScaleTiltSpeed();
-    double getScaleMoveSpeed();       
 
-    //Harvester
+    double getScaleMoveSpeed();
+
+    boolean getFinalCountDown();
+
+    // Harvester
     boolean getHarvesterPivotSpeedUp();
+
     boolean getHarvesterPivotSpeedDown();
-    
+
     boolean getHarvesterRollerSpeedForward();
+
     boolean getHarvesterRollerSpeedReverse();
 }
