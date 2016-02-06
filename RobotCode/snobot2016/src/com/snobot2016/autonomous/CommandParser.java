@@ -7,7 +7,6 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
@@ -19,6 +18,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
+    private ITable mAutonTable;
 
     /**
      * Creates a CommandParser object.
@@ -26,10 +26,11 @@ public class CommandParser extends ACommandParser
      * @param aSnobot
      *            The robot using the CommandParser.
      */
-    public CommandParser(Snobot aSnobot)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable)
     {
         super(" ", "#");
         mSnobot = aSnobot;
+        mAutonTable = aAutonTable;
     }
 
     /**
@@ -66,8 +67,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
-                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
+                        .get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -117,9 +118,7 @@ public class CommandParser extends ACommandParser
             aCommandString += mErrorText;
         }
 
-        ITable table = NetworkTable.getTable("SmartDashboard");
-
-        table.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
-        table.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
+        mAutonTable.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
+        mAutonTable.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
     }
 }

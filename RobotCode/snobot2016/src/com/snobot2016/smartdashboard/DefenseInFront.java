@@ -1,5 +1,7 @@
 package com.snobot2016.smartdashboard;
 
+import com.snobot2016.Properties2016;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,7 +23,7 @@ public class DefenseInFront
      */
     public enum Defenses
     {
-        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS, DO_NOTHING
+        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS, DO_NOTHING;
     }
 
     /*
@@ -56,8 +58,9 @@ public class DefenseInFront
     /*
      * This method is used to get the selected output (defaulting to Low Bar).
      */
-    public Defenses getSelected()
+    public String getDefensePath()
     {
-        return (Defenses) mDefenseInFront.getSelected();
+        return Properties2016.sDEFENSE_AUTON_DIRECTORY.getValue() + "/" + mDefenseInFront.getSelected().toString() + ".txt";
     }
+
 }

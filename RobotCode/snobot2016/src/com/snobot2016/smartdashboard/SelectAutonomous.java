@@ -12,27 +12,27 @@ import com.snobot2016.Properties2016;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/*
+/**
  * @author Andrew/Alec
  */
 public class SelectAutonomous
 {
-    /*
+    /**
      * The sendable chooser this class makes
      */
     private SendableChooser mSendableChooser;
 
-    /*
+    /**
      * The constructor uses the loadAutonFiles method below it to create the
      * Sendable Chooser from all of the auton modes in our specified folder.
      */
     public SelectAutonomous()
     {
-        mSendableChooser = loadAutonFiles(Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo", "");
+        mSendableChooser = loadAutonFiles(Properties2016.sPOST_DEFENSE_AUTON_DIRECTORY.getValue() + "/", "");
 
     }
 
-    /*
+    /**
      * This is just part of the auton crawler wee lifted from last year. It
      * makes a chooser out of all the files in a specified folder.
      */
@@ -62,7 +62,7 @@ public class SelectAutonomous
         return output;
     }
 
-    /*
+    /**
      * Returns the selected filepath as a String.
      */
     public String getSelected()
@@ -70,7 +70,7 @@ public class SelectAutonomous
         return (String) mSendableChooser.getSelected();
     }
 
-    /*
+    /**
      * Puts the chooser on the smart dashboard when called.
      */
     public void putOnDash()
