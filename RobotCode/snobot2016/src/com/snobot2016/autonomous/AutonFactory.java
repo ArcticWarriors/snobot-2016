@@ -9,25 +9,34 @@ import com.snobot2016.smartdashboard.SelectStartPosition;
 import com.snobot2016.smartdashboard.SelectStartPosition.StartPositions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
 
 public class AutonFactory
 {
     private DefenseInFront mDefenseInFront;
     private SelectStartPosition mSelectStartPosition;
     private SelectAutonomous mSelectAutonomous;
-    private CommandParser mCommandParser;
-    private String mDefensesAutonsPath;
+
+    private ITable mDefenseTable;
+    private ITable mPostDefenseTable;
+
+    private CommandParser mDefenseCommandParser;
+    private CommandParser mPostDefenseCommandParser;
 
     public AutonFactory(IPositioner aPositioner, Snobot aSnobot)
     {
         mSelectStartPosition = new SelectStartPosition(aPositioner);
         mDefenseInFront = new DefenseInFront();
         mSelectAutonomous = new SelectAutonomous();
-        mCommandParser = new CommandParser(aSnobot);
+
+        mDefenseTable = NetworkTable.getTable(Properties2016.sDEFENSE_AUTON_TABLE);
+        mPostDefenseTable = NetworkTable.getTable(Properties2016.sPOST_DEFENSE_AUTON_TABLE);
+
+        mDefenseCommandParser = new CommandParser(aSnobot, mDefenseTable);
+        mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable);
 
         this.putOnDash();
-
-        mDefensesAutonsPath = Properties2016.sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons/";
     }
 
     public void putOnDash()
@@ -50,9 +59,9 @@ public class AutonFactory
 
         if (goingThroughDefense)
         {
-            cobbledCommandGroup.addSequential(mCommandParser.readFile(mDefensesAutonsPath + mDefenseInFront.getSelected() + ".txt"));
+            cobbledCommandGroup.addSequential(mDefenseCommandParser.readFile(mDefenseInFront.getDefensePath()));
         }
-        cobbledCommandGroup.addSequential(mCommandParser.readFile(mSelectAutonomous.getSelected()));
+        cobbledCommandGroup.addSequential(mPostDefenseCommandParser.readFile(mSelectAutonomous.getSelected()));
         return cobbledCommandGroup;
     }
 }
