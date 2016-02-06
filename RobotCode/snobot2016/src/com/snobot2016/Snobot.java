@@ -136,7 +136,9 @@ public class Snobot extends ASnobot
         {
             System.out.println("Enabling camera");
             mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
+            mAxisCamera.writeBrightness(10);
             mCamera = new Camera(mAxisCamera);
+            
         }
         else
         {

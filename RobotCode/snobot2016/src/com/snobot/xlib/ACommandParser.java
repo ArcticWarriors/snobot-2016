@@ -166,16 +166,6 @@ public abstract class ACommandParser
         return output;
     }
 
-    /**
-     * Loads the autonomous files in the given directory
-     * 
-     * @param aDir
-     *            The directory to search for auton files in
-     * @param aIgnoreString
-     *            The string used to ignore certain files/folders
-     * @return A sendable chooser containing all of the applicable modes
-     */
-
     protected abstract Command parseCommand(List<String> args);
 
     protected abstract void publishParsingResults(String fileContents);
