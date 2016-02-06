@@ -83,9 +83,10 @@ public class CommandParser extends ACommandParser
                 break;
             case "TiltLowerScaler":
                 newCommand = new TiltLowerScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
+                break;
             case "TiltRaiseScaler":
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
-
+                break;
             }
         }
         catch (IndexOutOfBoundsException e)

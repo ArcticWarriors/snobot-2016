@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This class controls the tilt of the scaling mechanism during autonomous. IN
- * ITS CURRENT STATE THIS CLASS DOES NOT HAVE ANY FUNCTION DUE TO METHODS
- * MISSING FROM THE "SCALING" CLASS!
+ * This class controls the tilt of the scaling mechanism during autonomous.
  * 
  * @author avdonle
  *
@@ -44,8 +42,7 @@ public class TiltLowerScaler extends Command
     }
 
     /**
-     * Calls the "TiltLower"<--(DOES NOT EXIST) method if within the time given.
-     * NEEDS WORK!!! NO TILT LOWERING METHOD.
+     * Calls the "TiltLower" method if within the time given.
      */
     @Override
     protected void execute()
