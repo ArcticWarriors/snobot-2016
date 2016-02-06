@@ -64,7 +64,7 @@ public class Harvester implements IHarvester
         }
 
         // button setup for harvester pivot
-        if (mOperatorJoystick.isHarvesterPivotUp() && mOperatorJoystick.isHarvesterPivotDown())
+        if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
         {
             setPivotMotorSpeed(0);
         }

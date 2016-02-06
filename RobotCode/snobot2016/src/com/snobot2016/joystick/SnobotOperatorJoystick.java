@@ -104,6 +104,14 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorPivotSpeedDown;
     }
 
+
+	@Override
+	public boolean isFinalCountDown() {
+		// TODO Auto-generated method stub
+		return mFinalCountDown;
+	}
+
+
     @Override
     public boolean isHarvesterRollerForward()
     {
@@ -118,11 +126,5 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorRollerSpeedReverse;
     }
 
-    @Override
-    public boolean isFinalCountDown()
-    {
-        // TODO Auto-generated method stub
-        return mFinalCountDown;
-    }
 
 }
