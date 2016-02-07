@@ -11,15 +11,19 @@ public class PathConfig
     /** The maximum acceleration to drive with (ft/s/s, deg/s/s) */
     public double mMaxAcceleration;
 
+    /** The expected time between loops */
+    public double mExpectedDt;
+
     public PathConfig()
     {
-        this(0, 0, 0);
+        this(0, 0, 0, 0);
     }
 
-    public PathConfig(double aEndpoint, double aMaxVel, double aMaxAccel)
+    public PathConfig(double aEndpoint, double aMaxVel, double aMaxAccel, double aDt)
     {
         mEndpoint = aEndpoint;
         mMaxVelocity = aMaxVel;
         mMaxAcceleration = aMaxAccel;
+        mExpectedDt = aDt;
     }
 }

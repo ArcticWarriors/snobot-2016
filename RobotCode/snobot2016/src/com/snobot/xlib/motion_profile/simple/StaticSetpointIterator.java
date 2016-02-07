@@ -27,7 +27,7 @@ public class StaticSetpointIterator implements ISetpointIterator
     }
 
     @Override
-    public PathSetpoint getNextSetpoint(double aPosition, double aVelocity)
+    public PathSetpoint getNextSetpoint(double aPosition, double aVelocity, double aDt)
     {
         if (mPathIndex >= mListPoints.size())
         {
@@ -44,5 +44,11 @@ public class StaticSetpointIterator implements ISetpointIterator
     public boolean isFinished()
     {
         return (mPathIndex >= mListPoints.size());
+    }
+
+    @Override
+    public List<PathSetpoint> getIdealPath()
+    {
+        return mListPoints;
     }
 }

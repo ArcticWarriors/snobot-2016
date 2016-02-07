@@ -33,4 +33,9 @@ public class SmartDashBoardNames
     public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
     public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
 
+    // Path Plotting
+    public static final String sPATH_NAMESPACE = "PathPlotting";
+    public static final String sSIMPLE_PLANNED_PATH = "PlanedPath";
+    public static final String sPATH_POINT = "PathPoint";
+
 }

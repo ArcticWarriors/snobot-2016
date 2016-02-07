@@ -39,4 +39,9 @@ public class SmartDashBoardNames
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
 
+    // Path Plotting
+    public static final String sPATH_NAMESPACE = "PathPlotting"; //Namespace that driving motion profiling paths will go into
+    public static final String sSIMPLE_PLANNED_PATH = "PlanedPath"; //The name for the planned path (the auto-generated one)
+    public static final String sPATH_POINT = "PathPoint"; //The name for the real point for a motion profile
+
 }

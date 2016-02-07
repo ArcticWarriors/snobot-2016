@@ -1,9 +1,8 @@
-package com.snobot.xlib.motion_profile.simple;
+package com.snobot.sd2016.path_plotter;
 
 public class PathSetpoint
 {
 
-    /** Lists the segments that are acheived during a trapezoidal motion profile */
     public enum TrapezoidSegment
     {
         Acceleration, ConstantVelocity, Deceleration
@@ -33,4 +32,5 @@ public class PathSetpoint
         mVelocity = aVelocity;
         mAcceleration = aAccel;
     }
+
 }

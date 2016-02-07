@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.snobot.xlib.motion_profile.simple.PathSetpoint.TrapezoidSegment;
 
+/**
+ * Class to generate a path, based on a {@link PathConfig}
+ * 
+ * @author PJ
+ *
+ */
 public class PathGenerator
 {
     public PathGenerator()
@@ -12,7 +18,20 @@ public class PathGenerator
 
     }
 
-    public List<PathSetpoint> generate(double aMaxVelocity, double aMaxAccel, double aPosition, double aDt)
+    /**
+     * Generates a list of setpoints for the given path config
+     * 
+     * @param aConfig
+     *            The config to use to generate the path
+     * 
+     * @return The path to run
+     */
+    public List<PathSetpoint> generate(PathConfig aConfig)
+    {
+        return generate(aConfig.mMaxVelocity, aConfig.mMaxVelocity, aConfig.mEndpoint, aConfig.mExpectedDt);
+    }
+
+    private List<PathSetpoint> generate(double aMaxVelocity, double aMaxAccel, double aPosition, double aDt)
     {
         ArrayList<PathSetpoint> output = new ArrayList<>();
 
