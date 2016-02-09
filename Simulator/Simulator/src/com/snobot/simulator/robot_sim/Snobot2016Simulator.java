@@ -45,8 +45,9 @@ public class Snobot2016Simulator extends ASimulator
         gyro.setName("Gyro");
 
         // Set Parameters
-        leftDriveMotor.setMotorParameters(12);
-        rightDriveMotor.setMotorParameters(-12);
+        double drivetrainSpeed = 3.8 * 12;
+        leftDriveMotor.setMotorParameters(drivetrainSpeed);
+        rightDriveMotor.setMotorParameters(-drivetrainSpeed);
         
         TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
         mSimulatorComponenets.add(gyroSim);
