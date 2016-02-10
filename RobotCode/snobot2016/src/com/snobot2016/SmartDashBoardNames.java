@@ -29,6 +29,7 @@ public class SmartDashBoardNames
     // Shooter
 
     // Acquisition
+    public static final String sPOT_PERCENTAGE = "Pot Percentage";
 
     // JoySticks
     public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";

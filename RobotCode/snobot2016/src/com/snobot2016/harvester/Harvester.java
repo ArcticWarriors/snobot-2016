@@ -1,6 +1,7 @@
 package com.snobot2016.harvester;
 
 import com.snobot.xlib.Logger;
+import com.snobot2016.Properties2016;
 /**
  * Author Jeffrey/Michael
  * creates harvester for Snobot
@@ -9,6 +10,7 @@ import com.snobot.xlib.Logger;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,13 +22,17 @@ public class Harvester implements IHarvester
     private double mPivot;
     private IOperatorJoystick mOperatorJoystick;
     private Logger mLogger;
+    private AnalogInput mHarvesterPot;
+    private double mVoltage;
 
-    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger)
+    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger, AnalogInput aHarvesterPot)
     {
         mRollerMotor = aHarvesterRollerMotor;
         mPivotMotor = aHarvesterPivotMotor;
         mOperatorJoystick = aOperatorJoystick;
         mLogger = aLogger;
+        mHarvesterPot = aHarvesterPot;
+        
     }
 
     @Override
@@ -37,6 +43,7 @@ public class Harvester implements IHarvester
     @Override
     public void update()
     {
+        mVoltage = mHarvesterPot.getVoltage();
     }
 
     @Override
@@ -93,6 +100,7 @@ public class Harvester implements IHarvester
         // displays pivot and roller motor on SmartDashboard
         SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
         SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
+        SmartDashboard.putNumber(SmartDashBoardNames.sPOT_PERCENTAGE, this.percentageLowered());
     }
 
     @Override
@@ -100,6 +108,8 @@ public class Harvester implements IHarvester
     {
         mLogger.updateLogger(mPivot);
         mLogger.updateLogger(mRoller);
+        mLogger.updateLogger(mVoltage);
+        mLogger.updateLogger(this.percentageLowered());
     }
 
     @Override
@@ -112,13 +122,19 @@ public class Harvester implements IHarvester
     @Override
     public void raiseHarvester()
     {
-        setPivotMotorSpeed(-1);
+        if(this.goodToLowerVoltage())
+        {
+            setPivotMotorSpeed(-1);
+        }
     }
 
     @Override
     public void lowerHarvester()
     {
-        setPivotMotorSpeed(1);
+        if(this.goodToRaiseVoltage())
+        {
+            setPivotMotorSpeed(1);
+        }
     }
 
     @Override
@@ -142,5 +158,52 @@ public class Harvester implements IHarvester
     {
         mPivotMotor.set(aPivotSpeed);
     }
+    
+    private boolean goodToLowerVoltage()
+    {
+        return (mVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());  
+    }
+    
+    private boolean goodToRaiseVoltage()
+    {
+        return (mVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
+    }
+    
+    private double percentageLowered()
+    {
+        return ((mVoltage / Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue()) *100);
+    }
+//    
+//    public void raiseOrLowerUntilLimit(double aPivotSpeed)
+//    {
+//        
+//        if(mHarvesterPot.getVoltage() > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
+//        {
+//            if(aPivotSpeed >0)
+//            {
+//                mPivotMotor.set(-aPivotSpeed);
+//            }
+//            else
+//            {
+//                mPivotMotor.set(aPivotSpeed);
+//            }
+//            
+//        }
+//        else if(mHarvesterPot.getVoltage() < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue())
+//        {
+//            if(aPivotSpeed >0)
+//            {
+//                mPivotMotor.set(aPivotSpeed);
+//            }
+//            else
+//            {
+//                mPivotMotor.set(-aPivotSpeed);
+//            }
+//        }
+//        else
+//        {
+//            mPivotMotor.set(0);
+//        }
+//    }
 
 }
