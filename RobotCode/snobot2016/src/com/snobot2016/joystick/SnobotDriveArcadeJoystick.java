@@ -3,30 +3,32 @@ package com.snobot2016.joystick;
 import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedController;
 
-public class SnobotDriverJoystick implements IDriverJoystick
+public class SnobotDriveArcadeJoystick implements IDriverJoystick
 {
+    private double mArcadePower;
+    private double mArcadeTurn;
     private Joystick mJoystick;
-    private double mLeftSpeed;
-    private double mRightSpeed;
-
-    public SnobotDriverJoystick(Joystick aJoystick)
+    
+    
+    public SnobotDriveArcadeJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;
     }
-
+    
     @Override
     public void init()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void update()
     {
-        mLeftSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
-        mRightSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
+        mArcadePower = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+        mArcadeTurn = mJoystick.getRawAxis(XboxButtonMap.RIGHT_X_AXIS);
     }
 
     @Override
@@ -38,40 +40,56 @@ public class SnobotDriverJoystick implements IDriverJoystick
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void updateSmartDashboard()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void updateLog()
     {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void stop()
     {
-
     }
 
     @Override
     public double getRightSpeed()
     {
-        return mRightSpeed;
+        return 0;
     }
 
     @Override
     public double getLeftSpeed()
     {
-        return mLeftSpeed;
+        return 0;
+    }
+
+    @Override
+    public double getArcadePower()
+    {
+        return mArcadePower;
+    }
+
+    @Override
+    public double getArcadeTurn()
+    {
+        return mArcadeTurn;
+    }
+
+    @Override
+    public boolean isArcadeMode()
+    {
+        return true;
     }
 
 }

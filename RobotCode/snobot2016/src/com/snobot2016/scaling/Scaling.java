@@ -159,12 +159,6 @@ public class Scaling implements IScaling
     }
 
     @Override
-    public void extendUpWall()
-    {
-        setScaleSpeedTilt(1);
-    }
-
-    @Override
     public void pullUpWall()
     {
         setScaleSpeedMove(1);
@@ -208,13 +202,13 @@ public class Scaling implements IScaling
     }
 
     @Override
-    public void tiltLower()
+    public void tiltRaise()
     {
         mScaleTiltMotor.set(1);
     }
 
     @Override
-    public void tiltRaise()
+    public void tiltLower()
     {
         mScaleTiltMotor.set(-1);
     }
