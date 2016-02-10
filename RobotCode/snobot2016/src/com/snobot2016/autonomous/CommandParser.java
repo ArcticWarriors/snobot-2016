@@ -10,6 +10,7 @@ import com.snobot.xlib.motion_profile.simple.PathSetpoint;
 import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
+import com.snobot2016.autonomous.path.DriveStraightPath;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -24,6 +25,8 @@ public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
     private ITable mAutonTable;
+    
+    private static final double sEXPECTED_DT = .02;
 
     /**
      * Creates a CommandParser object.
@@ -95,12 +98,16 @@ public class CommandParser extends ACommandParser
                 break;
             case "DriveStraightProfile":
             {
-                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)),
-                        Double.parseDouble(args.get(3)), .02);
+                PathConfig dudePathConfig = new PathConfig(
+                        Double.parseDouble(args.get(1)), //Endpoint
+                        Double.parseDouble(args.get(2)), //Max Velocity
+                        Double.parseDouble(args.get(3)), //Max Acceleration
+                        sEXPECTED_DT);
+                
                 PathGenerator dudePathGenerator = new PathGenerator();
                 List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
                 ISetpointIterator dudeSetpointIterator = new StaticSetpointIterator(dudeList);
-                newCommand = new DriveStraightProfile(mSnobot.getDriveTrain(), dudeSetpointIterator, 0, 0, 0, 0, 0, 0, 0);
+                newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), dudeSetpointIterator);
                 break;
             }
 

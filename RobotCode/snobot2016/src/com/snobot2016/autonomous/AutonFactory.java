@@ -1,6 +1,6 @@
 package com.snobot2016.autonomous;
 
-import com.snobot2016.Properties2016;
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.smartdashboard.DefenseInFront;
@@ -30,8 +30,8 @@ public class AutonFactory
         mDefenseInFront = new DefenseInFront();
         mSelectAutonomous = new SelectAutonomous();
 
-        mDefenseTable = NetworkTable.getTable(Properties2016.sDEFENSE_AUTON_TABLE);
-        mPostDefenseTable = NetworkTable.getTable(Properties2016.sPOST_DEFENSE_AUTON_TABLE);
+        mDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sDEFENSE_AUTON_TABLE);
+        mPostDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sPOST_DEFENSE_AUTON_TABLE);
 
         mDefenseCommandParser = new CommandParser(aSnobot, mDefenseTable);
         mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable);
