@@ -28,7 +28,7 @@ public class SelectAutonomous
      */
     public SelectAutonomous()
     {
-        mSendableChooser = loadAutonFiles(Properties2016.sPOST_DEFENSE_AUTON_DIRECTORY.getValue() + "/", "");
+        mSendableChooser = loadAutonFiles(Properties2016.sAUTON_POST_DEFENSE_DIRECTORY.getValue() + "/", "");
 
     }
 

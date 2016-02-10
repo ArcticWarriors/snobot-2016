@@ -31,6 +31,18 @@ public class SmartDashBoardNames
     public static final String sSUCCESFULLY_PARSED_AUTON = "Parsed Command";
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
+    public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
+    public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
+
+    // Path Plotting
+    public static final String sPATH_NAMESPACE = "PathPlotting"; //Namespace that driving motion profiling paths will go into
+    public static final String sPATH_IDEAL_POINTS = "PlanedPath"; //The name for the planned path (the auto-generated one)
+    public static final String sPATH_POINT = "PathPoint"; //The name for the real point for a path motion profile
+
+    // Spline Plotting
+    public static final String sSPLINE_NAMESPACE = "SplinePlotting"; //Namespace that driving motion profiling splines will go into
+    public static final String sSPLINE_IDEAL_POINTS = "PlanedSpline"; //The name for the planned splines (the auto-generated one)
+    public static final String sSPLINE_REAL_POINT = "SplinePoint"; //The name for the real point for a spline motion profile
 
     // Scaling
     public static final String sSCALNG_CURRENT_ANGLE = "Angle of scaler";
