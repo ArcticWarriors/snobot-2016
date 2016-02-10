@@ -7,31 +7,28 @@ public class PotentiometerSimulator implements ISimulatorUpdater
     private AnalogWrapper mWrapper;
     private SpeedControllerWrapper mSpeedController;
 
-    private double mThrow;
-    private double mMaxVoltage;
+    private double mPositionThrow;
     private double mMinVoltage;
+    private double mMaxVoltage;
 
     public PotentiometerSimulator(AnalogWrapper aWrapper, SpeedControllerWrapper aSpeedController)
     {
         mWrapper = aWrapper;
         mSpeedController = aSpeedController;
 
-        mThrow = mMaxVoltage = mMinVoltage = 1;
+        mPositionThrow = mMaxVoltage = mMinVoltage = 1;
     }
 
-    public void setParameters(double aThrow, double aMaxVoltage, double aMinVoltage)
+    public void setParameters(double aThrow, double aMinVoltage, double aMaxVoltage)
     {
-        mThrow = aThrow;
+        mPositionThrow = aThrow;
         mMaxVoltage = aMaxVoltage;
         mMinVoltage = aMinVoltage;
     }
 
     public void update()
     {
-        double voltage_diff = mMinVoltage - mMaxVoltage;
-        double ipv = mThrow / voltage_diff;
-        double voltage = mMaxVoltage - (mSpeedController.getPosition() - mThrow) / ipv;
-
+        double voltage = mMinVoltage + (mMaxVoltage - mMinVoltage) / mPositionThrow * mSpeedController.getPosition();
         mWrapper.setVoltage(voltage);
     }
 

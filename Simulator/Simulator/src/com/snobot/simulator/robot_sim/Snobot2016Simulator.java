@@ -58,13 +58,18 @@ public class Snobot2016Simulator extends ASimulator
         // Set Parameters
         leftDriveMotor.setMotorParameters(12);
         rightDriveMotor.setMotorParameters(-12);
+        scaleTiltMotor.setMotorParameters(30); // Degrees / second
 
         TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
         mSimulatorComponenets.add(gyroSim);
 
         PotentiometerSimulator scalePotSim = new PotentiometerSimulator(scalePot, scaleTiltMotor);
         mSimulatorComponenets.add(scalePotSim);
-        scalePotSim.setParameters(90, 4, 1);
+
+        double scalePotThrow = Properties2016.sSCALE_HIGH_ANGLE.getValue() - Properties2016.sSCALE_LOW_ANGLE.getValue();
+        double scalePotMinVoltage = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
+        double scalePotMaxVoltage = Properties2016.sSCALE_HIGH_VOLTAGE.getValue();
+        scalePotSim.setParameters(scalePotThrow, scalePotMinVoltage, scalePotMaxVoltage);
     }
 
 }

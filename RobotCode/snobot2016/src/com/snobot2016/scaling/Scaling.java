@@ -2,14 +2,12 @@ package com.snobot2016.scaling;
 
 import com.snobot.xlib.Logger;
 import com.snobot2016.Properties2016;
-
 /**
  * Author Jeffrey/Michael
  * class for scaling arm of the robot
  * creates auto-climb feature
  * 
  */
-
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
@@ -20,15 +18,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Scaling implements IScaling
 {
+    private Logger mLogger;
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mJoystick;
+    private AnalogInput mPot; // Tilt Motor Potentiometer
+    private Timer mTimer;
     private double mMoveSpeed;
     private double mTiltSpeed;
     private boolean mAmIClimbing;
-    private Timer mTimer;
-    private Logger mLogger;
-    private AnalogInput mPot; // Potentiometer
     private double mAngle; // Current Potentiometer Angle
     private boolean mIsUp; // Is scaling up
     private boolean mIsDown; // Is scaling down
@@ -56,6 +54,7 @@ public class Scaling implements IScaling
         double high_angle = Properties2016.sSCALE_HIGH_ANGLE.getValue();
         double low_angle = Properties2016.sSCALE_LOW_ANGLE.getValue();
         calculateAngle(mPot.getVoltage());
+
         if (mAngle == high_angle)
         {
             mIsUp = true;
@@ -76,43 +75,56 @@ public class Scaling implements IScaling
     @Override
     public void control()
     {
-        setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
-        double tiltspeed = mJoystick.getScaleTiltSpeed();
-        if (mIsDown = true && tiltspeed < 0)
-        {
-            setScaleSpeedTilt(0);
-            // Ensures motor will not go lower than lowest possible angle
-        }
-        else if (mIsUp = true && tiltspeed > 0)
-        {
-            setScaleSpeedTilt(0);
-            // Ensures motor will not go higher than highest possible angle
-        }
-        else
-        {
-            setScaleSpeedTilt(tiltspeed);
-        }
+        controlTilt();
+        controlClimber();
+    }
 
+    private void controlTilt()
+    {
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
 
-        // boolean for auto climb feature
+        // Ensures motor will not go lower than lowest possible angle
+        if (mIsDown && mTiltSpeed < 0)
+        {
+            mTiltSpeed = 0;
+        }
+        // Ensures motor will not go higher than highest possible angle
+        else if (mIsUp && mTiltSpeed > 0)
+        {
+            mTiltSpeed = 0;
+        }
+
+        setScaleSpeedTilt(mTiltSpeed);
+    }
+
+    private void controlClimber()
+    {
+        double joystickSpeed = mJoystick.getScaleMoveSpeed();
+
+        // Check to see if they want to auto-scale
         if (mJoystick.isFinalCountDown())
         {
             mAmIClimbing = true;
             mTimer.start();
         }
+
+        // If we are scaling, set the motor speed to the climbing speed
         if (mAmIClimbing)
         {
-            setScaleSpeedMove(1);
-            mTimer.get();
-        }
-        if (mTimer.get() > 10)
-        {
-            mTimer.stop();
-            setScaleSpeedMove(0);
-            mAmIClimbing = false;
+            joystickSpeed = 1;
         }
 
+        // This means that we were climbing and have finished. Stop the motor,
+        // reset all of the tracking variables
+        if (mAmIClimbing && mTimer.get() > 10)
+        {
+            mTimer.stop();
+            mTimer.reset();
+            mAmIClimbing = false;
+            joystickSpeed = 0;
+        }
+
+        setScaleSpeedMove(joystickSpeed);
     }
 
     @Override
@@ -126,10 +138,10 @@ public class Scaling implements IScaling
     {
         // puts scale motor, tilt motor, current angle and timer on
         // SmartDashboard
-        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mMoveSpeed);
-        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mTiltSpeed);
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mScaleMoveMotor.get());
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mScaleTiltMotor.get());
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, getAngle());
         SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
-        SmartDashboard.putNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, mAngle);
     }
 
     @Override
@@ -180,15 +192,19 @@ public class Scaling implements IScaling
         double low_angle = Properties2016.sSCALE_LOW_ANGLE.getValue();
         double high_volts = Properties2016.sSCALE_HIGH_VOLTAGE.getValue();
         double low_volts = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
-        mAngle = ((high_angle - low_angle) / (high_volts - low_volts)) * mPot.getVoltage();
+
+        mAngle = ((high_angle - low_angle) / (high_volts - low_volts)) * (voltage - low_volts);
+
+        System.out.println("Voltage: " + voltage + ", Angle: " + mAngle);
+
         // Grabs properties of minimum and maximum configs for potentiometer,
         // Obtains the angle of the scaling arm, given the voltage of
         // a configured potentiometer
     }
 
-    public void getAngle(double mAngle)
+    public double getAngle()
     {
-
+        return mAngle;
     }
 
     @Override
