@@ -101,10 +101,12 @@ public class Snobot extends ASnobot
         mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
         mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
         mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
-        mJoystickFactory = new SnobotDriveJoystickFactory(mArcadeJoystick, mDriverFlightStick, mDriverXbox, mLogger);
+        mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox, mDriverFlightStick, mArcadeJoystick, mLogger);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
         mSubsystems.add(mDriverFlightStick);
+        mSubsystems.add(mArcadeJoystick);
+        mSubsystems.add(mJoystickFactory);
 
         // Drive train
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());

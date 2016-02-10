@@ -86,8 +86,7 @@ public class SnobotDriveTrain implements IDriveTrain
     @Override
     public void setLeftRightSpeed(double left, double right)
     {
-        mLeftMotor.set(left);
-        mRightMotor.set(-right);
+    	mRobotDrive.setLeftRightMotorOutputs(left, right);
     }
 
     @Override
