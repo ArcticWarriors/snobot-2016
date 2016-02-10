@@ -109,6 +109,7 @@ public class Harvester implements IHarvester
         mLogger.updateLogger(mPivot);
         mLogger.updateLogger(mRoller);
         mLogger.updateLogger(mVoltage);
+        mLogger.updateLogger(this.percentageLowered());
     }
 
     @Override
