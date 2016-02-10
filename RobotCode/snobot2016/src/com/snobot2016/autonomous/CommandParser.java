@@ -88,6 +88,9 @@ public class CommandParser extends ACommandParser
             case "TiltRaiseScaler":
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
+            case "SmartHarvester":
+                newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
+                break;
             }
         }
         catch (IndexOutOfBoundsException e)
