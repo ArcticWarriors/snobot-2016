@@ -100,6 +100,7 @@ public class Harvester implements IHarvester
         // displays pivot and roller motor on SmartDashboard
         SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
         SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
+        SmartDashboard.putNumber(SmartDashBoardNames.sPOT_PERCENTAGE, this.percentageLowered());
     }
 
     @Override
