@@ -21,6 +21,7 @@ import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
@@ -65,6 +66,7 @@ public class Snobot extends ASnobot
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
     private IHarvester mHarvester;
+    private AnalogInput mHarvesterPot;
 
     // Positioner
     private IPositioner mSnobotPositioner;
@@ -116,7 +118,7 @@ public class Snobot extends ASnobot
         // Harvester
         mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
         mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger);
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger, mHarvesterPot);
         mSubsystems.add(mHarvester);
 
         // Positioner
