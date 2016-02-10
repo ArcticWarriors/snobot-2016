@@ -1,21 +1,21 @@
 package com.snobot2016.joystick;
 
+import com.snobot.xlib.XboxButtonMap;
+
 import edu.wpi.first.wpilibj.Joystick;
 
-public class SnobotDriveFlightStick implements IDriverJoystick
+public class SnobotDriveXboxJoystick implements IDriverJoystick
 {
-
-    private Joystick mLeft;
-    private Joystick mRight;
-    private double mRightSpeed;
+    private Joystick mJoystick;
     private double mLeftSpeed;
+    private double mRightSpeed;
 
-    public SnobotDriveFlightStick(Joystick aLeft, Joystick aRight)
+    public SnobotDriveXboxJoystick(Joystick aJoystick)
     {
-        mLeft = aLeft;
-        mRight = aRight;
+        mJoystick = aJoystick;
     }
 
+    @Override
     public void init()
     {
 
@@ -24,10 +24,8 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public void update()
     {
-
-        mLeftSpeed = mLeft.getY();
-        mRightSpeed = mRight.getY();
-
+        mLeftSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+        mRightSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
     }
 
     @Override
@@ -39,18 +37,21 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public void rereadPreferences()
     {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateLog()
     {
+        // TODO Auto-generated method stub
 
     }
 
@@ -63,17 +64,13 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public double getRightSpeed()
     {
-
         return mRightSpeed;
-
     }
 
     @Override
     public double getLeftSpeed()
     {
-
         return mLeftSpeed;
-
     }
 
     @Override

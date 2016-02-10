@@ -8,13 +8,15 @@ import com.snobot.xlib.ISubsystem;
 
 public interface IScaling extends ISubsystem
 {
-    void extendUpWall();
-
     void pullUpWall();
+    // moves robot up wall
 
     void lowerDownWall();
+    // lowers robot down wall
 
     void tiltLower();
+    // raises tilting arm
 
     void tiltRaise();
+    // lowers tilting arm
 }
