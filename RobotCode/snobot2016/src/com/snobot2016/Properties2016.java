@@ -41,6 +41,12 @@ public class Properties2016
     // Autonomous
     public static final StringProperty sAUTON_DIRECTORY;
     public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
+    public static final StringProperty sDEFENSE_AUTON_DIRECTORY = new StringProperty("DefenseAutonDir",
+            "../../RobotCode/snobot2016/resources/Autonomous/RealAutonomousModes/DefenseAutons");
+    public static final StringProperty sPOST_DEFENSE_AUTON_DIRECTORY = new StringProperty("AutonThingsToDoDir",
+            "../../RobotCode/snobot2016/resources/Autonomous/RealAutonomousModes/AutonomousThingsToDo");
+    public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
+    public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);

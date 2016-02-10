@@ -11,7 +11,7 @@ import com.snobot.sd2016.config.SmartDashBoardNames;
 
 import edu.wpi.first.smartdashboard.gui.StaticWidget;
 import edu.wpi.first.smartdashboard.properties.Property;
-import edu.wpi.first.smartdashboard.robot.Robot;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
@@ -19,31 +19,48 @@ public class AutonWidget extends StaticWidget
 {
     public static final String NAME = "2016 Auton Widget";
 
-    private AutonPanel mPanel;
+    private AutonPanel mDefensePanel;
+    private AutonPanel mPostDefensePanel;
+
+    private ITable mDefenseTable;
+    private ITable mPostDefenseTable;
 
     public AutonWidget()
     {
-        mPanel = new AutonPanel();
+        mDefensePanel = new AutonPanel();
+        mPostDefensePanel = new AutonPanel();
 
         setLayout(new BorderLayout());
-        add(mPanel, BorderLayout.CENTER);
+        add(mDefensePanel, BorderLayout.WEST);
+        add(mPostDefensePanel, BorderLayout.EAST);
 
-        mPanel.addSaveListener(new ActionListener()
+        mDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sDEFENSE_AUTON_TABLE);
+        mPostDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sPOST_DEFENSE_AUTON_TABLE);
+
+        addListener(mDefensePanel, mDefenseTable);
+        addListener(mPostDefensePanel, mPostDefenseTable);
+
+        this.setVisible(true);
+    }
+
+    private void addListener(AutonPanel aAutonPanel, ITable aAutonTable)
+    {
+        aAutonPanel.addSaveListener(new ActionListener()
         {
 
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Robot.getTable().putString(SmartDashBoardNames.sSD_COMMAND_TEXT, mPanel.getTextArea().getText());
-                Robot.getTable().putBoolean(SmartDashBoardNames.sSAVE_AUTON, true);
+                aAutonTable.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aAutonPanel.getTextArea().getText());
+                aAutonTable.putBoolean(SmartDashBoardNames.sSAVE_AUTON, true);
             }
         });
 
-        mPanel.addTextChangedListener(new DocumentListener()
+        aAutonPanel.addTextChangedListener(new DocumentListener()
         {
             private void onChange()
             {
-                Robot.getTable().putBoolean(SmartDashBoardNames.sSAVE_AUTON, false);
+                aAutonTable.putBoolean(SmartDashBoardNames.sSAVE_AUTON, false);
             }
 
             @Override
@@ -70,8 +87,11 @@ public class AutonWidget extends StaticWidget
             @Override
             public void valueChanged(ITable arg0, String arg1, Object arg2, boolean arg3)
             {
-                Robot.getTable().putBoolean(SmartDashBoardNames.sSAVE_AUTON, false);
-                mPanel.getTextArea().setText(Robot.getTable().getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "Nothing Received"));
+                String auto_text = aAutonTable.getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "Nothing Received");
+                aAutonTable.putBoolean(SmartDashBoardNames.sSAVE_AUTON, false);
+                aAutonPanel.getTextArea().setText(auto_text);
+
+                System.out.println("Getting auto command" + auto_text);
 
             }
         };
@@ -81,8 +101,8 @@ public class AutonWidget extends StaticWidget
             @Override
             public void valueChanged(ITable arg0, String arg1, Object arg2, boolean arg3)
             {
-                boolean parseSuccess = Robot.getTable().getBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, false);
-                mPanel.setParseSuccess(parseSuccess);
+                boolean parseSuccess = aAutonTable.getBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, false);
+                aAutonPanel.setParseSuccess(parseSuccess);
             }
         };
 
@@ -91,15 +111,13 @@ public class AutonWidget extends StaticWidget
             @Override
             public void valueChanged(ITable arg0, String arg1, Object arg2, boolean arg3)
             {
-                String filename = Robot.getTable().getString(SmartDashBoardNames.sAUTON_FILENAME, "NothingReceived.txt");
+                String filename = aAutonTable.getString(SmartDashBoardNames.sAUTON_FILENAME, "NothingReceived.txt");
             }
         };
 
-        Robot.getTable().addTableListener(SmartDashBoardNames.sROBOT_COMMAND_TEXT, textUpdatedListener, true);
-        Robot.getTable().addTableListener(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, errorListener, true);
-        Robot.getTable().addTableListener(SmartDashBoardNames.sAUTON_FILENAME, filenameListener, true);
-
-        this.setVisible(true);
+        aAutonTable.addTableListener(SmartDashBoardNames.sROBOT_COMMAND_TEXT, textUpdatedListener, true);
+        aAutonTable.addTableListener(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, errorListener, true);
+        aAutonTable.addTableListener(SmartDashBoardNames.sAUTON_FILENAME, filenameListener, true);
     }
 
     @Override

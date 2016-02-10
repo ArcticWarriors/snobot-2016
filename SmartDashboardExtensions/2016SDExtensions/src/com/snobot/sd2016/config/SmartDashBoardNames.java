@@ -25,12 +25,12 @@ public class SmartDashBoardNames
     // JoySticks
     public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";
 
-
     // Auton Widget stuff
     public static final String sROBOT_COMMAND_TEXT = "Robot Command text";
-    public static final String sSD_COMMAND_TEXT = "SD Command text";
     public static final String sSUCCESFULLY_PARSED_AUTON = "Parsed Command";
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
+    public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
+    public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
 
 }

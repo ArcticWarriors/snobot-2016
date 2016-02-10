@@ -39,7 +39,7 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-        
+
     }
 
     @Override
