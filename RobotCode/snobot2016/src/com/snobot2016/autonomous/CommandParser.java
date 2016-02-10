@@ -3,6 +3,11 @@ package com.snobot2016.autonomous;
 import java.util.List;
 
 import com.snobot.xlib.ACommandParser;
+import com.snobot.xlib.motion_profile.simple.ISetpointIterator;
+import com.snobot.xlib.motion_profile.simple.PathConfig;
+import com.snobot.xlib.motion_profile.simple.PathGenerator;
+import com.snobot.xlib.motion_profile.simple.PathSetpoint;
+import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 
@@ -67,8 +72,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
-                        .get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -88,6 +93,17 @@ public class CommandParser extends ACommandParser
             case "TiltRaiseScaler":
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
+            case "DriveStraightProfile":
+            {
+                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)),
+                        Double.parseDouble(args.get(3)), .02);
+                PathGenerator dudePathGenerator = new PathGenerator();
+                List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
+                ISetpointIterator dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+                newCommand = new DriveStraightProfile(mSnobot.getDriveTrain(), dudeSetpointIterator, 0, 0, 0, 0, 0, 0, 0);
+                break;
+            }
+
             }
         }
         catch (IndexOutOfBoundsException e)
