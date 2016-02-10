@@ -11,6 +11,7 @@ import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
+import com.snobot2016.autonomous.path.DriveTurnPath;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -96,6 +97,7 @@ public class CommandParser extends ACommandParser
             case "TiltRaiseScaler":
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
+
             case "DriveStraightPath":
             {
                 PathConfig dudePathConfig = new PathConfig(
@@ -104,10 +106,39 @@ public class CommandParser extends ACommandParser
                         Double.parseDouble(args.get(3)), //Max Acceleration
                         sEXPECTED_DT);
                 
-                PathGenerator dudePathGenerator = new PathGenerator();
-                List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
-                ISetpointIterator dudeSetpointIterator = new StaticSetpointIterator(dudeList);
-                newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), dudeSetpointIterator);
+                ISetpointIterator dudeSetpointIterator;
+
+                // TODO create dynamic iterator, way to switch
+                if (true)
+                {
+                    PathGenerator dudePathGenerator = new PathGenerator();
+                    List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
+                    dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+                }
+
+                newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+                break;
+            }
+
+            case "DriveTurnPath":
+            {
+                PathConfig dudePathConfig = new PathConfig(
+                        Double.parseDouble(args.get(1)), //Endpoint
+                        Double.parseDouble(args.get(2)), //Max Velocity
+                        Double.parseDouble(args.get(3)), //Max Acceleration
+                        sEXPECTED_DT);
+                
+                ISetpointIterator dudeSetpointIterator;
+
+                // TODO create dynamic iterator, way to switch
+                if (true)
+                {
+                    PathGenerator dudePathGenerator = new PathGenerator();
+                    List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
+                    dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+                }
+
+                newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
             }
 

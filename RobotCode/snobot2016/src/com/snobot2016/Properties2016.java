@@ -52,13 +52,13 @@ public class Properties2016
     public static final DoubleProperty sDRIVE_PATH_KP = new DoubleProperty("DrivePathKP", 0.0174);
     public static final DoubleProperty sDRIVE_PATH_KD = new DoubleProperty("DrivePathKD", 0);
     public static final DoubleProperty sDRIVE_PATH_KV = new DoubleProperty("DrivePathKVel", .009);
-    public static final DoubleProperty sDRIVE_PATH_KA = new DoubleProperty("DrivePathKAccel", 0.0037);
+    public static final DoubleProperty sDRIVE_PATH_KA = new DoubleProperty("DrivePathKAccel", 0);
 
     // Turn Path
     public static final DoubleProperty sTURN_PATH_KP = new DoubleProperty("TurnPathKP", 0.005);
     public static final DoubleProperty sTURN_PATH_KD = new DoubleProperty("TurnPathKD", 0);
     public static final DoubleProperty sTURN_PATH_KV = new DoubleProperty("TurnPathKVel", 0.0053);
-    public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0.00174);
+    public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0);
 
     static
     {

@@ -18,6 +18,9 @@ public class PathFollower
     private int mPathPoint;
     private ITable mTable;
 
+    private double mLastError;
+    private double mLastPosition;
+
     public PathFollower(ISetpointIterator aSetpointIterator, double aKV, double aKA, double aKP)
     {
         mSetpointIterator = aSetpointIterator;
@@ -42,23 +45,25 @@ public class PathFollower
         else
         {
             double dt = .02;
-            double velocity = 0; // TODO get
+            double velocity = (aCurrPosition - mLastPosition) / dt;
 
 
             PathSetpoint setpoint = mSetpointIterator.getNextSetpoint(0, 0, .02);
             PathSetpoint realPoint = new PathSetpoint(setpoint.mSegment, dt, aCurrPosition, velocity, 0);
 
             double error = setpoint.mPosition - aCurrPosition;
-            double mVelocityTerm = mKv * setpoint.mVelocity;
-            double mAccelerationTerm = mKa * setpoint.mAcceleration;
-            double mPositionTerm = kKp * error;
+            double p_term = kKp * error;
+            double v_term = mKv * setpoint.mVelocity;
+            double a_term = mKa * setpoint.mAcceleration;
 
-            double output = mVelocityTerm + mAccelerationTerm + mPositionTerm;
+            double output = v_term + a_term + p_term;
 
             // Update smart dashbaord
             String point_info = mPathPoint + "," + IdealPlotSerializer.serializePathPoint(realPoint);
             mTable.putString(SmartDashBoardNames.sPATH_POINT, point_info);
 
+            mLastError = error;
+            mLastPosition = aCurrPosition;
             ++mPathPoint;
 
             return output;

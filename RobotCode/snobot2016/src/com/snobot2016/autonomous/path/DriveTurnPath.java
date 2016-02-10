@@ -3,17 +3,22 @@ package com.snobot2016.autonomous.path;
 import com.snobot.xlib.motion_profile.simple.ISetpointIterator;
 import com.snobot2016.Properties2016;
 import com.snobot2016.drivetrain.IDriveTrain;
+import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveTurnPath extends Command
 {
     private IDriveTrain mDriveTrain;
+    private IPositioner mPositioner;
     private PathFollower mPathFollower;
 
-    public DriveTurnPath(IDriveTrain aDriveTrain, ISetpointIterator aSetpointIterator)
+    double mStartAngle;
+
+    public DriveTurnPath(IDriveTrain aDriveTrain, IPositioner aPositioner, ISetpointIterator aSetpointIterator)
     {
         mDriveTrain = aDriveTrain;
+        mPositioner = aPositioner;
 
         double kP = Properties2016.sTURN_PATH_KP.getValue();
         // double kD = Properties2016.sTURN_PATH_KD.getValue();
@@ -26,13 +31,14 @@ public class DriveTurnPath extends Command
     @Override
     protected void initialize()
     {
-
+        mStartAngle = mPositioner.getOrientationDegrees();
+        mPathFollower.init();
     }
 
     @Override
     protected void execute()
     {
-        double curAngle = 0;
+        double curAngle = mPositioner.getOrientationDegrees() - mStartAngle;
         double motorSpeed = mPathFollower.calcMotorSpeed(curAngle);
         mDriveTrain.setLeftRightSpeed(motorSpeed, -motorSpeed);
     }
