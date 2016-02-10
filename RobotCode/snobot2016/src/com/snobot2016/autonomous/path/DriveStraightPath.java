@@ -26,13 +26,14 @@ public class DriveStraightPath extends Command
     @Override
     protected void initialize()
     {
-
+        mPathFollower.init();
     }
 
     @Override
     protected void execute()
     {
-        double motorSpeed = mPathFollower.calcMotorSpeed();
+        double currentPosition = 0; // TODO get
+        double motorSpeed = mPathFollower.calcMotorSpeed(currentPosition);
         mDriveTrain.setLeftRightSpeed(motorSpeed, motorSpeed);
     }
 

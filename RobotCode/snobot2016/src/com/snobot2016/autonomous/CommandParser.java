@@ -96,7 +96,7 @@ public class CommandParser extends ACommandParser
             case "TiltRaiseScaler":
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case "DriveStraightProfile":
+            case "DriveStraightPath":
             {
                 PathConfig dudePathConfig = new PathConfig(
                         Double.parseDouble(args.get(1)), //Endpoint

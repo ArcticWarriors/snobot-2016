@@ -88,11 +88,11 @@ public class Properties2016
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
         }
 
-        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir", 
-                sAUTON_DIRECTORY + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");
+        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses",
+                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
-                sAUTON_DIRECTORY + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");
+                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }

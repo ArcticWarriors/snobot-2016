@@ -32,7 +32,8 @@ public class DriveTurnPath extends Command
     @Override
     protected void execute()
     {
-        double motorSpeed = mPathFollower.calcMotorSpeed();
+        double curAngle = 0;
+        double motorSpeed = mPathFollower.calcMotorSpeed(curAngle);
         mDriveTrain.setLeftRightSpeed(motorSpeed, -motorSpeed);
     }
 
