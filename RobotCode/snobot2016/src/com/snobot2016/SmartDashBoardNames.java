@@ -14,9 +14,6 @@ public class SmartDashBoardNames
     public static final String sORIENTATION = "Robot's Orientation";
     public static final String sSPEED = "Robot's Current Speed";
 
-    public static final String sROLLER_MOTOR = "Robot's Current Roller Speed";
-    public static final String sPIVOT_MOTOR = "Robot's Current Pivot Speed";
-
     public static final String sSCALE_MOVE_MOTOR = "Robot's Current Scale Move Speed";
     public static final String sSCALE_TILT_MOTOR = "Robot's Current Scale Tilt Speed";
 
@@ -29,7 +26,8 @@ public class SmartDashBoardNames
     // Shooter
 
     // Acquisition
-
+    public static final String sROLLER_MOTOR = "Robot's Current Roller Speed";
+    public static final String sPIVOT_MOTOR = "Robot's Current Pivot Speed";
     // JoySticks
     public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";
 
@@ -38,5 +36,7 @@ public class SmartDashBoardNames
     public static final String sSUCCESFULLY_PARSED_AUTON = "Parsed Command";
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
+    // Scaling
+    public static final String sSCALNG_CURRENT_ANGLE = "Angle of scaler";
 
 }

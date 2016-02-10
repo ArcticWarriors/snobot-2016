@@ -21,6 +21,7 @@ import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
@@ -60,6 +61,7 @@ public class Snobot extends ASnobot
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
+    private AnalogInput mScalePot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
@@ -110,7 +112,8 @@ public class Snobot extends ASnobot
         // Scaling
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger);
+        mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
         mSubsystems.add(mScaling);
 
         // Harvester
@@ -138,7 +141,7 @@ public class Snobot extends ASnobot
             mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
             mAxisCamera.writeBrightness(10);
             mCamera = new Camera(mAxisCamera);
-            
+
         }
         else
         {

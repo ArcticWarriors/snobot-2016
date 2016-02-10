@@ -30,7 +30,7 @@ public class Properties2016
 
     // Analog
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
-
+    public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("Scaling Potentiometer", 2);
     // Relay
     public static final IntegerProperty sLIGHT_RELAY = new IntegerProperty("LightRelay", 1);
 
@@ -51,6 +51,12 @@ public class Properties2016
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
     public static final StringProperty sLOG_FILE_PATH;
+
+    // Scaler Pot
+    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 90);
+    public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("Minimum Angle", 0);
+    public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
+    public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
 
     static
     {
