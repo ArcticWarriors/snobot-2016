@@ -118,6 +118,7 @@ public class Snobot extends ASnobot
         // Harvester
         mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
         mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
+        mHarvesterPot = new AnalogInput(Properties2016.sHARVESTER_POT_PORT.getValue());
         mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger, mHarvesterPot);
         mSubsystems.add(mHarvester);
 
