@@ -1,6 +1,7 @@
 package com.snobot2016.joystick;
 
 import com.snobot.xlib.Logger;
+import com.snobot2016.SmartDashBoardNames;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,10 +31,10 @@ public class SnobotDriveJoystickFactory implements IDriverJoystick
         mDriveMode = DriveMode.Xbox;
         
         mDriveModeSelector = new SendableChooser();
-        mDriveModeSelector.addObject("Xbox", DriveMode.Xbox);
+        mDriveModeSelector.addDefault("Xbox", DriveMode.Xbox);
         mDriveModeSelector.addObject("Fligthstick", DriveMode.Flightsticks);
         mDriveModeSelector.addObject("Arcade", DriveMode.Arcade);
-        SmartDashboard.putData("DriveMode", mDriveModeSelector);
+        SmartDashboard.putData(SmartDashBoardNames.sDRIVER_JOSTICK_MODE, mDriveModeSelector);
         
     }
 
@@ -53,15 +54,13 @@ public class SnobotDriveJoystickFactory implements IDriverJoystick
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -80,8 +79,7 @@ public class SnobotDriveJoystickFactory implements IDriverJoystick
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override

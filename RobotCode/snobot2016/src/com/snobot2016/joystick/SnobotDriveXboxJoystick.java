@@ -37,21 +37,18 @@ public class SnobotDriveXboxJoystick implements IDriverJoystick
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
 
     }
 
