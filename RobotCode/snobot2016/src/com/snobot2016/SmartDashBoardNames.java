@@ -29,9 +29,11 @@ public class SmartDashBoardNames
     // Shooter
 
     // Acquisition
+    public static final String sPOT_PERCENTAGE = "Pot Percentage";
 
     // JoySticks
     public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";
+    public static final String s_USE_HALO_SCHEMATICS = "Use Halo Scheme";
 
     // Auton Widget stuff
     public static final String sROBOT_COMMAND_TEXT = "Robot Command text";
