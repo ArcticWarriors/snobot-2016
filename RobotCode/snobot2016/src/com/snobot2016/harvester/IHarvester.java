@@ -11,10 +11,15 @@ import com.snobot.xlib.ISubsystem;
 public interface IHarvester extends ISubsystem
 {
     void lowerHarvester();
+    // lowers harvester
 
     void raiseHarvester();
+    // raises harvester
 
     void rollIn();
+    // rotates Harvester inwards
 
     void rollOut();
+    // rotates Harvester outwards
+
 }

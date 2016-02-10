@@ -7,4 +7,10 @@ public interface IDriverJoystick extends ISubsystem
     double getRightSpeed();
 
     double getLeftSpeed();
+    
+    double getArcadePower();
+    
+    double getArcadeTurn();
+    
+    boolean isArcadeMode();
 }
