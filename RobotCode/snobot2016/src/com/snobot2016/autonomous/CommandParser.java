@@ -133,9 +133,7 @@ public class CommandParser extends ACommandParser
                 // TODO create dynamic iterator, way to switch
                 if (true)
                 {
-                    PathGenerator dudePathGenerator = new PathGenerator();
-                    List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
-                    dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+                    dudeSetpointIterator = new StaticSetpointIterator(dudePathConfig);
                 }
 
                 newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);

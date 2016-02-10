@@ -20,6 +20,11 @@ public class StaticSetpointIterator implements ISetpointIterator
      */
     private int mPathIndex = 0;
 
+    public StaticSetpointIterator(PathConfig aConfig)
+    {
+        this(new PathGenerator().generate(aConfig));
+    }
+
     public StaticSetpointIterator(List<PathSetpoint> aPath)
     {
         mListPoints = aPath;

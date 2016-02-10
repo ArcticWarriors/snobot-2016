@@ -28,7 +28,7 @@ public class PathGenerator
      */
     public List<PathSetpoint> generate(PathConfig aConfig)
     {
-        return generate(aConfig.mMaxVelocity, aConfig.mMaxVelocity, aConfig.mEndpoint, aConfig.mExpectedDt);
+        return generate(aConfig.mMaxVelocity, aConfig.mMaxAcceleration, aConfig.mEndpoint, aConfig.mExpectedDt);
     }
 
     private List<PathSetpoint> generate(double aMaxVelocity, double aMaxAccel, double aPosition, double aDt)
