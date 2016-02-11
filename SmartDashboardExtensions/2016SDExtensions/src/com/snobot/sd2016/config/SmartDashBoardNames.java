@@ -14,6 +14,14 @@ public class SmartDashBoardNames
     public static final String sORIENTATION = "Robot's Orientation";
     public static final String sSPEED = "Robot's Current Speed";
 
+    public static final String sROLLER_MOTOR = "Robot's Current Roller Speed";
+    public static final String sPIVOT_MOTOR = "Robot's Current Pivot Speed";
+
+    public static final String sSCALE_MOVE_MOTOR = "Robot's Current Scale Move Speed";
+    public static final String sSCALE_TILT_MOTOR = "Robot's Current Scale Tilt Speed";
+
+    public static final String sTIMER = "Final Countdown";
+
     // Camera
     public static final String sUPDATE_IMAGE_SUCCESS = "Image Update Success";
     public static final String sSNOBOT_LIGHT = "Light";
@@ -21,6 +29,7 @@ public class SmartDashBoardNames
     // Shooter
 
     // Acquisition
+    public static final String sPOT_PERCENTAGE = "Pot Percentage";
 
     // JoySticks
     public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";
