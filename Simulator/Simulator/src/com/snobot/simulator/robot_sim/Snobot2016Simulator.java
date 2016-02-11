@@ -4,6 +4,7 @@ import com.snobot.simulator.ASimulator;
 import com.snobot.simulator.SensorActuatorRegistry;
 import com.snobot.simulator.module_wrapper.AnalogWrapper;
 import com.snobot.simulator.module_wrapper.EncoderWrapper;
+import com.snobot.simulator.module_wrapper.PotentiometerSimulator;
 import com.snobot.simulator.module_wrapper.RelayWrapper;
 import com.snobot.simulator.module_wrapper.SpeedControllerWrapper;
 import com.snobot.simulator.module_wrapper.TankDriveGyroSimulator;
@@ -27,7 +28,7 @@ public class Snobot2016Simulator extends ASimulator
         scaleTiltMotor.setName("Scale (Tilt)");
         intakeMotor.setName("Intake (Roller)");
         intakeTiltMotor.setName("Intake (Tilt)");
-        
+
         // Encoders
         EncoderWrapper leftDriveEncoder  = SensorActuatorRegistry.get().getEncoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(),  Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
         EncoderWrapper rightDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
@@ -42,14 +43,26 @@ public class Snobot2016Simulator extends ASimulator
 
         // Analaog
         AnalogWrapper gyro = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sGYRO_SENSOR_PORT.getValue());
+        AnalogWrapper scalePot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sSCALE_POT_PORT.getValue());
         gyro.setName("Gyro");
+        scalePot.setName("Scale Pot");
 
         // Set Parameters
-        leftDriveMotor.setMotorParameters(12);
-        rightDriveMotor.setMotorParameters(-12);
-        
+        double drivetrainSpeed = 3.8 * 12;
+        leftDriveMotor.setMotorParameters(drivetrainSpeed);
+        rightDriveMotor.setMotorParameters(-drivetrainSpeed);
+        scaleTiltMotor.setMotorParameters(30); // Degrees / second
+
         TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
         mSimulatorComponenets.add(gyroSim);
+
+        PotentiometerSimulator scalePotSim = new PotentiometerSimulator(scalePot, scaleTiltMotor);
+        mSimulatorComponenets.add(scalePotSim);
+
+        double scalePotThrow = Properties2016.sSCALE_HIGH_ANGLE.getValue() - Properties2016.sSCALE_LOW_ANGLE.getValue();
+        double scalePotMinVoltage = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
+        double scalePotMaxVoltage = Properties2016.sSCALE_HIGH_VOLTAGE.getValue();
+        scalePotSim.setParameters(scalePotThrow, scalePotMinVoltage, scalePotMaxVoltage);
     }
 
 }

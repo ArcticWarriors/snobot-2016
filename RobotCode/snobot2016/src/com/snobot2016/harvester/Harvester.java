@@ -52,37 +52,37 @@ public class Harvester implements IHarvester
         // button setup for harvester roller
         if (mOperatorJoystick.isHarvesterRollerForward() && mOperatorJoystick.isHarvesterRollerReverse())
         {
-            setRollerMotorSpeed(0);
+            stopRoller();
         }
         else if (mOperatorJoystick.isHarvesterRollerForward())
         {
-            setRollerMotorSpeed(1);
+            rollIn();
         }
         else if (mOperatorJoystick.isHarvesterRollerReverse())
         {
-            setRollerMotorSpeed(-1);
+            rollOut();
         }
         else
         {
-            setRollerMotorSpeed(0);
+            stopRoller();
         }
 
         // button setup for harvester pivot
         if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
         {
-            setPivotMotorSpeed(0);
+            stopHarvester();
         }
         else if (mOperatorJoystick.isHarvesterPivotUp())
         {
-            setPivotMotorSpeed(1);
+            raiseHarvester();
         }
         else if (mOperatorJoystick.isHarvesterPivotDown())
         {
-            setPivotMotorSpeed(-1);
+            lowerHarvester();
         }
         else
         {
-            setPivotMotorSpeed(0);
+            stopHarvester();
         }
 
     }
@@ -109,20 +109,20 @@ public class Harvester implements IHarvester
         mLogger.updateLogger(mPivot);
         mLogger.updateLogger(mRoller);
         mLogger.updateLogger(mVoltage);
-        mLogger.updateLogger(this.percentageLowered());
+        mLogger.updateLogger(percentageLowered());
     }
 
     @Override
     public void stop()
     {
-        setRollerMotorSpeed(0);
-        setPivotMotorSpeed(0);
+        stopRoller();
+        stopHarvester();
     }
 
     @Override
     public void raiseHarvester()
     {
-        if(this.goodToLowerVoltage())
+        if(goodToLowerVoltage())
         {
             setPivotMotorSpeed(-1);
         }
@@ -131,7 +131,7 @@ public class Harvester implements IHarvester
     @Override
     public void lowerHarvester()
     {
-        if(this.goodToRaiseVoltage())
+        if(goodToRaiseVoltage())
         {
             setPivotMotorSpeed(1);
         }
@@ -173,37 +173,15 @@ public class Harvester implements IHarvester
     {
         return ((mVoltage / Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue()) *100);
     }
-//    
-//    public void raiseOrLowerUntilLimit(double aPivotSpeed)
-//    {
-//        
-//        if(mHarvesterPot.getVoltage() > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
-//        {
-//            if(aPivotSpeed >0)
-//            {
-//                mPivotMotor.set(-aPivotSpeed);
-//            }
-//            else
-//            {
-//                mPivotMotor.set(aPivotSpeed);
-//            }
-//            
-//        }
-//        else if(mHarvesterPot.getVoltage() < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue())
-//        {
-//            if(aPivotSpeed >0)
-//            {
-//                mPivotMotor.set(aPivotSpeed);
-//            }
-//            else
-//            {
-//                mPivotMotor.set(-aPivotSpeed);
-//            }
-//        }
-//        else
-//        {
-//            mPivotMotor.set(0);
-//        }
-//    }
+    
+    private void stopHarvester()
+    {
+        setPivotMotorSpeed(0);
+    }
+    
+    private void stopRoller()
+    {
+        setRollerMotorSpeed(0);
+    }
 
 }
