@@ -60,7 +60,7 @@ public class DefenseInFront
      */
     public String getDefensePath()
     {
-        return Properties2016.sDEFENSE_AUTON_DIRECTORY.getValue() + "/" + mDefenseInFront.getSelected().toString() + ".txt";
+        return Properties2016.sAUTON_DEFENSE_DIRECTORY.getValue() + "/" + mDefenseInFront.getSelected().toString() + ".txt";
     }
 
 }

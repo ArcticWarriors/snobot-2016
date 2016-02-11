@@ -14,31 +14,40 @@ public class SmartDashBoardNames
     public static final String sORIENTATION = "Robot's Orientation";
     public static final String sSPEED = "Robot's Current Speed";
 
-    public static final String sROLLER_MOTOR = "Robot's Current Roller Speed";
-    public static final String sPIVOT_MOTOR = "Robot's Current Pivot Speed";
-
-    public static final String sSCALE_MOVE_MOTOR = "Robot's Current Scale Move Speed";
-    public static final String sSCALE_TILT_MOTOR = "Robot's Current Scale Tilt Speed";
-
-    public static final String sTIMER = "Final Countdown";
-
     // Camera
     public static final String sUPDATE_IMAGE_SUCCESS = "Image Update Success";
     public static final String sSNOBOT_LIGHT = "Light";
 
-    // Shooter
-
     // Acquisition
     public static final String sPOT_PERCENTAGE = "Pot Percentage";
+    public static final String sROLLER_MOTOR = "Harv. Intake Motor";
+    public static final String sPIVOT_MOTOR = "Harv. Tilt Motor";
 
     // JoySticks
-    public static final String sUSE_XBOX_CONTROLLER = "Use Xbox Controller";
-    public static final String s_USE_HALO_SCHEMATICS = "Use Halo Scheme";
+    public static final String sDRIVER_JOSTICK_MODE = "Driver Joystick Mode";
 
     // Auton Widget stuff
     public static final String sROBOT_COMMAND_TEXT = "Robot Command text";
     public static final String sSUCCESFULLY_PARSED_AUTON = "Parsed Command";
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
+    public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
+    public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
+
+    // Path Plotting
+    public static final String sPATH_NAMESPACE = "PathPlotting"; //Namespace that driving motion profiling paths will go into
+    public static final String sPATH_IDEAL_POINTS = "PlanedPath"; //The name for the planned path (the auto-generated one)
+    public static final String sPATH_POINT = "PathPoint"; //The name for the real point for a path motion profile
+
+    // Spline Plotting
+    public static final String sSPLINE_NAMESPACE = "SplinePlotting"; //Namespace that driving motion profiling splines will go into
+    public static final String sSPLINE_IDEAL_POINTS = "PlanedSpline"; //The name for the planned splines (the auto-generated one)
+    public static final String sSPLINE_REAL_POINT = "SplinePoint"; //The name for the real point for a spline motion profile
+
+    // Scaling
+    public static final String sSCALNG_CURRENT_ANGLE = "Angle of scaler";
+    public static final String sSCALE_MOVE_MOTOR = "Scale Move Motor";
+    public static final String sSCALE_TILT_MOTOR = "Scale Tilt Motor";
+    public static final String sTIMER = "Final Countdown";
 
 }

@@ -3,8 +3,15 @@ package com.snobot2016.autonomous;
 import java.util.List;
 
 import com.snobot.xlib.ACommandParser;
+import com.snobot.xlib.motion_profile.simple.ISetpointIterator;
+import com.snobot.xlib.motion_profile.simple.PathConfig;
+import com.snobot.xlib.motion_profile.simple.PathGenerator;
+import com.snobot.xlib.motion_profile.simple.PathSetpoint;
+import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
+import com.snobot2016.autonomous.path.DriveStraightPath;
+import com.snobot2016.autonomous.path.DriveTurnPath;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -19,6 +26,8 @@ public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
     private ITable mAutonTable;
+    
+    private static final double sEXPECTED_DT = .02;
 
     /**
      * Creates a CommandParser object.
@@ -67,8 +76,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
-                        .get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -91,6 +100,47 @@ public class CommandParser extends ACommandParser
             case "SmartHarvester":
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
+            case "DriveStraightPath":
+            {
+                PathConfig dudePathConfig = new PathConfig(
+                        Double.parseDouble(args.get(1)), //Endpoint
+                        Double.parseDouble(args.get(2)), //Max Velocity
+                        Double.parseDouble(args.get(3)), //Max Acceleration
+                        sEXPECTED_DT);
+                
+                ISetpointIterator dudeSetpointIterator;
+
+                // TODO create dynamic iterator, way to switch
+                if (true)
+                {
+                    PathGenerator dudePathGenerator = new PathGenerator();
+                    List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
+                    dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+                }
+
+                newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+                break;
+            }
+
+            case "DriveTurnPath":
+            {
+                PathConfig dudePathConfig = new PathConfig(
+                        Double.parseDouble(args.get(1)), //Endpoint
+                        Double.parseDouble(args.get(2)), //Max Velocity
+                        Double.parseDouble(args.get(3)), //Max Acceleration
+                        sEXPECTED_DT);
+                
+                ISetpointIterator dudeSetpointIterator;
+
+                // TODO create dynamic iterator, way to switch
+                if (true)
+                {
+                    dudeSetpointIterator = new StaticSetpointIterator(dudePathConfig);
+                }
+
+                newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+                break;
+            }
             }
         }
         catch (IndexOutOfBoundsException e)

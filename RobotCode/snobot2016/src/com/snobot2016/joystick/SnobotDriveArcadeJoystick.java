@@ -3,7 +3,6 @@ package com.snobot2016.joystick;
 import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
 
 public class SnobotDriveArcadeJoystick implements IDriverJoystick
 {
@@ -20,8 +19,7 @@ public class SnobotDriveArcadeJoystick implements IDriverJoystick
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -46,15 +44,13 @@ public class SnobotDriveArcadeJoystick implements IDriverJoystick
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override

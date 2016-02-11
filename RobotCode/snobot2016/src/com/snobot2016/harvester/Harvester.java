@@ -151,11 +151,13 @@ public class Harvester implements IHarvester
 
     public void setRollerMotorSpeed(double aRollerSpeed)
     {
+        mRoller = aRollerSpeed;
         mRollerMotor.set(aRollerSpeed);
     }
 
     public void setPivotMotorSpeed(double aPivotSpeed)
     {
+        mPivot = aPivotSpeed;
         mPivotMotor.set(aPivotSpeed);
     }
     
