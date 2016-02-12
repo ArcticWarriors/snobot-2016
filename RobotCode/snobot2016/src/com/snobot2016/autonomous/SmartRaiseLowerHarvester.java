@@ -14,12 +14,13 @@ public class SmartRaiseLowerHarvester extends Command
     public SmartRaiseLowerHarvester(IHarvester aHarvester, String aRaiseOrLower)
     {
         mRaise = aRaiseOrLower.equalsIgnoreCase("Raise");
+        mHarvester = aHarvester;
         mFinished = false;
         
         
-        if(!aRaiseOrLower.equals("Raise") || !aRaiseOrLower.equals("Lower"))
+        if (!aRaiseOrLower.equals("Raise") && !aRaiseOrLower.equals("Lower"))
         {
-            throw new UnsupportedOperationException("Has to equal Raise or Lower.");
+            throw new UnsupportedOperationException(aRaiseOrLower + " is not equal to Raise or Lower.");
         }
     }
     
