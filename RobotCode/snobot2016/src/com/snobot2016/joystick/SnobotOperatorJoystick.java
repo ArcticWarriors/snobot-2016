@@ -24,7 +24,6 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -44,28 +43,24 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -102,8 +97,8 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
 
 	@Override
-	public boolean isFinalCountDown() {
-		// TODO Auto-generated method stub
+    public boolean isFinalCountDown()
+    {
 		return mFinalCountDown;
 	}
 

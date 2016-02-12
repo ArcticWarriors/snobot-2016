@@ -1,21 +1,22 @@
 package com.snobot2016.joystick;
 
+import com.snobot.xlib.XboxButtonMap;
+
 import edu.wpi.first.wpilibj.Joystick;
 
-public class SnobotDriveFlightStick implements IDriverJoystick
+public class SnobotDriveArcadeJoystick implements IDriverJoystick
 {
-
-    private Joystick mLeft;
-    private Joystick mRight;
-    private double mRightSpeed;
-    private double mLeftSpeed;
-
-    public SnobotDriveFlightStick(Joystick aLeft, Joystick aRight)
+    private double mArcadePower;
+    private double mArcadeTurn;
+    private Joystick mJoystick;
+    
+    
+    public SnobotDriveArcadeJoystick(Joystick aJoystick)
     {
-        mLeft = aLeft;
-        mRight = aRight;
+        mJoystick = aJoystick;
     }
-
+    
+    @Override
     public void init()
     {
 
@@ -24,10 +25,8 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public void update()
     {
-
-        mLeftSpeed = mLeft.getY();
-        mRightSpeed = mRight.getY();
-
+        mArcadePower = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+        mArcadeTurn = mJoystick.getRawAxis(XboxButtonMap.RIGHT_X_AXIS);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public void rereadPreferences()
     {
-
+        
     }
 
     @Override
@@ -57,41 +56,36 @@ public class SnobotDriveFlightStick implements IDriverJoystick
     @Override
     public void stop()
     {
-
     }
 
     @Override
     public double getRightSpeed()
     {
-
-        return mRightSpeed;
-
+        return 0;
     }
 
     @Override
     public double getLeftSpeed()
     {
-
-        return mLeftSpeed;
-
+        return 0;
     }
 
     @Override
     public double getArcadePower()
     {
-        return 0;
+        return mArcadePower;
     }
 
     @Override
     public double getArcadeTurn()
     {
-        return 0;
+        return mArcadeTurn;
     }
 
     @Override
     public boolean isArcadeMode()
     {
-        return false;
+        return true;
     }
 
 }

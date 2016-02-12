@@ -4,13 +4,13 @@ import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class SnobotDriverJoystick implements IDriverJoystick
+public class SnobotDriveXboxJoystick implements IDriverJoystick
 {
     private Joystick mJoystick;
     private double mLeftSpeed;
     private double mRightSpeed;
 
-    public SnobotDriverJoystick(Joystick aJoystick)
+    public SnobotDriveXboxJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;
     }
@@ -18,7 +18,6 @@ public class SnobotDriverJoystick implements IDriverJoystick
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -38,21 +37,18 @@ public class SnobotDriverJoystick implements IDriverJoystick
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -72,6 +68,24 @@ public class SnobotDriverJoystick implements IDriverJoystick
     public double getLeftSpeed()
     {
         return mLeftSpeed;
+    }
+
+    @Override
+    public double getArcadePower()
+    {
+        return 0;
+    }
+
+    @Override
+    public double getArcadeTurn()
+    {
+        return 0;
+    }
+
+    @Override
+    public boolean isArcadeMode()
+    {
+        return false;
     }
 
 }
