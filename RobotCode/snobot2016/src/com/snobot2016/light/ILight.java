@@ -9,6 +9,9 @@ import com.snobot.xlib.ISubsystem;
 
 public interface ILight extends ISubsystem
 {
-    // boolean for light class
+    /**
+     * Tells you if the LIght is on
+     * @return true if light is on
+     */
     boolean isLightOn();
 }

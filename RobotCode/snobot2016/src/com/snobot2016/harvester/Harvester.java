@@ -49,7 +49,6 @@ public class Harvester implements IHarvester
     @Override
     public void control()
     {
-        // button setup for harvester roller
         if (mOperatorJoystick.isHarvesterRollerForward() && mOperatorJoystick.isHarvesterRollerReverse())
         {
             stopRoller();
@@ -67,7 +66,6 @@ public class Harvester implements IHarvester
             stopRoller();
         }
 
-        // button setup for harvester pivot
         if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
         {
             stopHarvester();
@@ -97,7 +95,6 @@ public class Harvester implements IHarvester
     @Override
     public void updateSmartDashboard()
     {
-        // displays pivot and roller motor on SmartDashboard
         SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
         SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
         SmartDashboard.putNumber(SmartDashBoardNames.sPOT_PERCENTAGE, this.percentageLowered());
