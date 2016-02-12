@@ -1,5 +1,8 @@
 package com.snobot2016.autonomous;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 import com.snobot.xlib.ACommandParser;
@@ -173,5 +176,26 @@ public class CommandParser extends ACommandParser
 
         mAutonTable.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
         mAutonTable.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
+    }
+
+    public void saveAutonMode()
+    {
+        String new_text = mAutonTable.getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "");
+        String filename = mAutonTable.getString(SmartDashBoardNames.sAUTON_FILENAME, "auton_file.txt");
+
+        System.out.println("*****************************************");
+        System.out.println("Saving auton mode");
+        System.out.println("*****************************************");
+
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filename)));
+            bw.write(new_text);
+            bw.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /*
  * @author Andrew/Alec
@@ -86,5 +87,10 @@ public class SelectStartPosition
         mPositioner.setXPosition(this.getSelected().mX);
         mPositioner.setYPosition(this.getSelected().mY);
         mPositioner.setOrientationDegrees(this.getSelected().mOrientation);
+    }
+
+    public void addChangeListener(ITableListener aListener)
+    {
+        mPickPoint.getTable().addTableListener(aListener);
     }
 }

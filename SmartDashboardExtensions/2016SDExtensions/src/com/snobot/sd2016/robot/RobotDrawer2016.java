@@ -88,11 +88,12 @@ public class RobotDrawer2016 extends JPanel
 
         mScaleFactor = minScaleFactor;
 
-        System.out.println(this);
-
-        System.out.println("Scale Factor: " + mScaleFactor);
-        System.out.println("  Horizontal factor : " + horizontalScaleFactor + ", width : " + getWidth() + ", " + sROBOT_WIDTH);
-        System.out.println("  Vertical factor : " + verticalScaleFactor + ", height : " + getHeight() + ", " + sROBOT_HEIGHT);
+        // System.out.println(this);
+        // System.out.println("Scale Factor: " + mScaleFactor);
+        // System.out.println("  Horizontal factor : " + horizontalScaleFactor +
+        // ", width : " + getWidth() + ", " + sROBOT_WIDTH);
+        // System.out.println("  Vertical factor : " + verticalScaleFactor +
+        // ", height : " + getHeight() + ", " + sROBOT_HEIGHT);
 
         repaint();
     }

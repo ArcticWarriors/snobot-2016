@@ -31,8 +31,11 @@ public class SmartDashBoardNames
     public static final String sSUCCESFULLY_PARSED_AUTON = "Parsed Command";
     public static final String sAUTON_FILENAME = "Auton Filename";
     public static final String sSAVE_AUTON = "Save Auton";
+
     public static final String sDEFENSE_AUTON_TABLE = "DefenseAutonTable";
     public static final String sPOST_DEFENSE_AUTON_TABLE = "PostDefenseAutonTable";
+    public static final String sDEFENSE_SENDER_NAME = "Defense Sender";
+    public static final String sPOST_DEFENSE_SENDER_NAME = "Post Defense Sender";
 
     // Path Plotting
     public static final String sPATH_NAMESPACE = "PathPlotting"; //Namespace that driving motion profiling paths will go into
