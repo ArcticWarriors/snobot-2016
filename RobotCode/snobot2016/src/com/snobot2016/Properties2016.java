@@ -62,6 +62,7 @@ public class Properties2016
     public static final String sTILT_RAISE_SCALER = "TiltRaiseScaler";
     public static final String sDRIVE_STRAIGHT_PATH = "DriveStraightPath";
     public static final String sDRIVE_TURN_PATH = "DriveTurnPath";
+    public static final String sSMART_HARVESTOR = "SmartHarvester";
 
     
 

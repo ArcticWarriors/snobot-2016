@@ -98,7 +98,9 @@ public class CommandParser extends ACommandParser
             case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-
+            case Properties2016.sSMART_HARVESTOR:
+                newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
+                break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
             {
                 PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
@@ -139,7 +141,6 @@ public class CommandParser extends ACommandParser
                 newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
             }
-
             }
         }
         catch (IndexOutOfBoundsException e)
