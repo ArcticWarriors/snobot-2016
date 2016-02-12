@@ -8,9 +8,11 @@ import java.nio.file.Paths;
 
 import com.snobot.xlib.SnobotAutonCrawler;
 import com.snobot2016.Properties2016;
+import com.snobot2016.SmartDashBoardNames;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
  * @author Andrew/Alec
@@ -75,6 +77,11 @@ public class SelectAutonomous
      */
     public void putOnDash()
     {
-        SmartDashboard.putData("Select Autonomous Goal", mSendableChooser);
+        SmartDashboard.putData(SmartDashBoardNames.sPOST_DEFENSE_SENDER_NAME, mSendableChooser);
+    }
+
+    public void addChangeListener(ITableListener aListener)
+    {
+        mSendableChooser.getTable().addTableListener(aListener);
     }
 }

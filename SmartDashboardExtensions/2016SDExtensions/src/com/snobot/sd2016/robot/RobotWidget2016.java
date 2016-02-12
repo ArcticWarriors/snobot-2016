@@ -53,7 +53,6 @@ public class RobotWidget2016 extends AutoUpdateWidget
         mDrawer.setClimbTiltAngle(-scale_pot_angle);
 
         repaint();
-        System.out.println("Polling: " + mDrawer);
     }
 
     @Override

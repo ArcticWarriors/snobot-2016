@@ -1,9 +1,11 @@
 package com.snobot2016.smartdashboard;
 
 import com.snobot2016.Properties2016;
+import com.snobot2016.SmartDashBoardNames;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /*
  * @author Andrew/Alec
@@ -52,7 +54,7 @@ public class DefenseInFront
      */
     public void putOnDash()
     {
-        SmartDashboard.putData("Defense in front of the Robot:", mDefenseInFront);
+        SmartDashboard.putData(SmartDashBoardNames.sDEFENSE_SENDER_NAME, mDefenseInFront);
     }
 
     /*
@@ -63,4 +65,8 @@ public class DefenseInFront
         return Properties2016.sAUTON_DEFENSE_DIRECTORY.getValue() + "/" + mDefenseInFront.getSelected().toString() + ".txt";
     }
 
+    public void addChangeListener(ITableListener aListener)
+    {
+        mDefenseInFront.getTable().addTableListener(aListener);
+    }
 }

@@ -43,7 +43,6 @@ public class SnobotDriveTrain implements IDriveTrain
     public void update()
     {
 
-    	System.out.println("Left Raw: " + mLeftEncoder.get() + ", " + mLeftEncoder.getDistance());
     }
 
     @Override
