@@ -104,10 +104,10 @@ public class CommandParser extends ACommandParser
             case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case Properties2016.sSMART_HARVESTOR:
+            case Properties2016.sSMART_HARVESTER:
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
-            case "SuperSmartHarvester":
+            case Properties2016.sSUPER_SMART_HARVESTER:
                 newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
                 break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
