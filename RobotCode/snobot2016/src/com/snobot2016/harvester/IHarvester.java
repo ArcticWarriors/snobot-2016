@@ -31,12 +31,12 @@ public interface IHarvester extends ISubsystem
     /*
      * Checks if the current potentiometer voltage is higher than the minimum voltage
      */
-    boolean goodToLowerVoltage();
+    boolean goodToRaise();
     
     /*
      * Checks if the current potentiometer voltage is lower than the maximum voltage
      */
-    boolean goodToRaiseVoltage();
+    boolean goodToLower();
     
     /*
      * Converts the the current voltage out of the maximum voltage into a percentage (for widget usage)
@@ -48,4 +48,11 @@ public interface IHarvester extends ISubsystem
     
     // Sets the roller to 0 speed
     void stopRoller();
+    
+    /*
+     * Raises or Lowers the harvester until it hits the limit, if angle is reached, return true
+     */
+    boolean moveToPercentage(double aPotGoal);
+
+    
 }

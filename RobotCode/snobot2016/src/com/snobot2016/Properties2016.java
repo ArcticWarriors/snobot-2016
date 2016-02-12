@@ -71,6 +71,7 @@ public class Properties2016
     // Harvestor Pot
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
+    public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
 
     static
     {

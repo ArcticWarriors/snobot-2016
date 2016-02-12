@@ -7,14 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SmartRaiseLowerHarvester extends Command
 {
 
-    private IHarvester mHarvester;
-    private String mRaiseOrLower; 
+    private IHarvester mHarvester; 
     private boolean mFinished;
+    private boolean mRaise;
     
     public SmartRaiseLowerHarvester(IHarvester aHarvester, String aRaiseOrLower)
     {
-        mRaiseOrLower = aRaiseOrLower;
+        mRaise = aRaiseOrLower.equalsIgnoreCase("Raise");
         mFinished = false;
+        
+        
+        if(!aRaiseOrLower.equals("Raise") || !aRaiseOrLower.equals("Lower"))
+        {
+            throw new UnsupportedOperationException("Has to equal Raise or Lower.");
+        }
     }
     
     @Override
@@ -26,26 +32,21 @@ public class SmartRaiseLowerHarvester extends Command
     @Override
     protected void execute()
     {
-       if(mRaiseOrLower.equalsIgnoreCase("Raise"))
+       if(mRaise)
        {
            mHarvester.raiseHarvester();
-           if(!mHarvester.goodToLowerVoltage())
-           {
-               mFinished = true;
-           }
-       }
-       else if(mRaiseOrLower.equalsIgnoreCase("Lower"))
-       {
-           mHarvester.lowerHarvester();
-           if(!mHarvester.goodToRaiseVoltage())
+           if(!mHarvester.goodToRaise())
            {
                mFinished = true;
            }
        }
        else
        {
-           mHarvester.stopHarvester();
-           mFinished = true;
+           mHarvester.lowerHarvester();
+           if(!mHarvester.goodToLower())
+           {
+               mFinished = true;
+           }
        }
         
     }

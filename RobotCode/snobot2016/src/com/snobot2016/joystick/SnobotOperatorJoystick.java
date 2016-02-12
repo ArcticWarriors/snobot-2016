@@ -15,6 +15,8 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     private boolean mMotorPivotSpeedUp;
     private boolean mMotorPivotSpeedDown;
     private boolean mFinalCountDown;
+    private boolean mHarvesterUp;
+    private boolean mHarvesterDown;
 
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
@@ -35,8 +37,8 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
         mMotorRollerSpeedForward = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
         mMotorRollerSpeedReverse = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
-        mMotorPivotSpeedUp = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
-        mMotorPivotSpeedDown = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
+        mHarvesterDown = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
+        mHarvesterUp = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
         mFinalCountDown = mJoystick.getRawButton(XboxButtonMap.START_BUTTON);
     }
 
@@ -83,17 +85,17 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorTiltSpeed;
     }
 
-    @Override
-    public boolean isHarvesterPivotUp()
-    {
-        return mMotorPivotSpeedUp;
-    }
-
-    @Override
-    public boolean isHarvesterPivotDown()
-    {
-        return mMotorPivotSpeedDown;
-    }
+//    @Override
+//    public boolean isHarvesterPivotUp()
+//    {
+//        return mMotorPivotSpeedUp;
+//    }
+//
+//    @Override
+//    public boolean isHarvesterPivotDown()
+//    {
+//        return mMotorPivotSpeedDown;
+//    }
 
 
 	@Override
@@ -113,6 +115,18 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     public boolean isHarvesterRollerReverse()
     {
         return mMotorRollerSpeedReverse;
+    }
+
+    @Override
+    public boolean isHarvesterUp()
+    {
+        return mHarvesterUp;
+    }
+
+    @Override
+    public boolean isHarvesterDown()
+    {
+        return mHarvesterDown;
     }
 
 }

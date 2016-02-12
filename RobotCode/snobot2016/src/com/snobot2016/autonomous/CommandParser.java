@@ -26,7 +26,7 @@ public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
     private ITable mAutonTable;
-    
+
     private static final double sEXPECTED_DT = .02;
 
     /**
@@ -76,8 +76,8 @@ public class CommandParser extends ACommandParser
                 break;
 
             case "GoToXY":
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
-                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
+                        .get(2)), Double.parseDouble(args.get(3)));
                 break;
             case "RaiseHarvester":
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -100,14 +100,16 @@ public class CommandParser extends ACommandParser
             case "SmartHarvester":
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
+            case "SuperSmartHarvester":
+                newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
+                break;
             case "DriveStraightPath":
             {
-                PathConfig dudePathConfig = new PathConfig(
-                        Double.parseDouble(args.get(1)), //Endpoint
-                        Double.parseDouble(args.get(2)), //Max Velocity
-                        Double.parseDouble(args.get(3)), //Max Acceleration
+                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                        Double.parseDouble(args.get(2)), // Max Velocity
+                        Double.parseDouble(args.get(3)), // Max Acceleration
                         sEXPECTED_DT);
-                
+
                 ISetpointIterator dudeSetpointIterator;
 
                 // TODO create dynamic iterator, way to switch
@@ -124,12 +126,11 @@ public class CommandParser extends ACommandParser
 
             case "DriveTurnPath":
             {
-                PathConfig dudePathConfig = new PathConfig(
-                        Double.parseDouble(args.get(1)), //Endpoint
-                        Double.parseDouble(args.get(2)), //Max Velocity
-                        Double.parseDouble(args.get(3)), //Max Acceleration
+                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                        Double.parseDouble(args.get(2)), // Max Velocity
+                        Double.parseDouble(args.get(3)), // Max Acceleration
                         sEXPECTED_DT);
-                
+
                 ISetpointIterator dudeSetpointIterator;
 
                 // TODO create dynamic iterator, way to switch
