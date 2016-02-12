@@ -5,6 +5,7 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /*
  * @author Andrew/Alec
@@ -31,7 +32,8 @@ public class SelectStartPosition
         THIRD_POSITION(132, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
         FOURTH_POSITION(184.875, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
         FIFTH_POSITION(237.75, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        SPY_POSITION(11.5, 306, 180);
+        SPY_POSITION(11.5, 306, 180), 
+        ZERO_ZERO_ZERO_POSITION(0, 0, 0);
 
         final double mX;
         final double mY;
@@ -58,6 +60,7 @@ public class SelectStartPosition
         mPickPoint.addObject("Position 4", StartPositions.FOURTH_POSITION);
         mPickPoint.addObject("Position 5", StartPositions.FIFTH_POSITION);
         mPickPoint.addObject("Spy Bot", StartPositions.SPY_POSITION);
+        mPickPoint.addObject("TEST (0, 0, 0)", StartPositions.ZERO_ZERO_ZERO_POSITION);
 
         mPositioner = aPositioner;
     }
@@ -86,5 +89,10 @@ public class SelectStartPosition
         mPositioner.setXPosition(this.getSelected().mX);
         mPositioner.setYPosition(this.getSelected().mY);
         mPositioner.setOrientationDegrees(this.getSelected().mOrientation);
+    }
+
+    public void addChangeListener(ITableListener aListener)
+    {
+        mPickPoint.getTable().addTableListener(aListener);
     }
 }

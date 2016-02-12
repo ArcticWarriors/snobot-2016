@@ -1,5 +1,8 @@
 package com.snobot2016.autonomous;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 import com.snobot.xlib.ACommandParser;
@@ -8,12 +11,14 @@ import com.snobot.xlib.motion_profile.simple.PathConfig;
 import com.snobot.xlib.motion_profile.simple.PathGenerator;
 import com.snobot.xlib.motion_profile.simple.PathSetpoint;
 import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
+import com.snobot2016.Properties2016;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
@@ -24,10 +29,12 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class CommandParser extends ACommandParser
 {
-    protected Snobot mSnobot;
-    private ITable mAutonTable;
 
     private static final double sEXPECTED_DT = .02;
+
+    protected Snobot mSnobot;
+    protected ITable mAutonTable;
+    protected String mParserName;
 
     /**
      * Creates a CommandParser object.
@@ -35,11 +42,12 @@ public class CommandParser extends ACommandParser
      * @param aSnobot
      *            The robot using the CommandParser.
      */
-    public CommandParser(Snobot aSnobot, ITable aAutonTable)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
     {
         super(" ", "#");
         mSnobot = aSnobot;
         mAutonTable = aAutonTable;
+        mParserName = aParserName;
     }
 
     /**
@@ -57,53 +65,53 @@ public class CommandParser extends ACommandParser
         {
             switch (commandName)
             {
-            case "StupidDriveStraight":
+            case Properties2016.sSTUPID_DRIVE_STRAIGHT:
                 newCommand = new StupidDriveStraight(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
 
-            case "DriveStraightADistance":
+            case Properties2016.sDRIVE_STRAIGHT_A_DISTANCE:
                 newCommand = new DriveStraightADistance(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
 
-            case "StupidTurn":
+            case Properties2016.sSTUPID_TURN:
                 newCommand = new StupidTurn(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
 
-            case "TurnWithDegrees":
+            case Properties2016.sTURN_WITH_DEGREES:
                 newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
-
-            case "GoToXY":
+            case Properties2016.sGO_TO_XY:
                 newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
                         .get(2)), Double.parseDouble(args.get(3)));
                 break;
-            case "RaiseHarvester":
+            case Properties2016.sRAISE_HARVESTER:
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "LowerHarvester":
+            case Properties2016.sLOWER_HARVESTER:
                 newCommand = new LowerHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "RollerIntake":
+            case Properties2016.sROLLER_INTAKE:
                 newCommand = new RollerIntake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "RollerOuttake":
+            case Properties2016.sROLLER_OUTTAKE:
                 newCommand = new RollerOuttake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "TiltLowerScaler":
+            case Properties2016.sTILT_LOWER_SCALER:
                 newCommand = new TiltLowerScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case "TiltRaiseScaler":
+            case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case "SmartHarvester":
+            case Properties2016.sSMART_HARVESTOR:
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
             case "SuperSmartHarvester":
                 newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
                 break;
-            case "DriveStraightPath":
+            case Properties2016.sDRIVE_STRAIGHT_PATH:
+
             {
                 PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
                         Double.parseDouble(args.get(2)), // Max Velocity
@@ -122,9 +130,10 @@ public class CommandParser extends ACommandParser
 
                 newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
+
             }
 
-            case "DriveTurnPath":
+            case Properties2016.sDRIVE_TURN_PATH:
             {
                 PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
                         Double.parseDouble(args.get(2)), // Max Velocity
@@ -174,5 +183,33 @@ public class CommandParser extends ACommandParser
 
         mAutonTable.putString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, aCommandString);
         mAutonTable.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
+    }
+
+    @Override
+    public CommandGroup readFile(String aFilePath)
+    {
+        mAutonTable.putString(SmartDashBoardNames.sAUTON_FILENAME, aFilePath);
+        return super.readFile(aFilePath);
+    }
+
+    public void saveAutonMode()
+    {
+        String new_text = mAutonTable.getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "");
+        String filename = mAutonTable.getString(SmartDashBoardNames.sAUTON_FILENAME, "auton_file.txt");
+
+        System.out.println("*****************************************");
+        System.out.println("(\"" + mParserName + "\") - Saving auton mode to " + filename);
+        System.out.println("*****************************************");
+
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filename)));
+            bw.write(new_text);
+            bw.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

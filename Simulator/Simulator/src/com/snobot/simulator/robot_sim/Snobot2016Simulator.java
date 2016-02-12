@@ -36,6 +36,8 @@ public class Snobot2016Simulator extends ASimulator
         rightDriveEncoder.setName("Right Drive");
         leftDriveEncoder.setSpeedController(leftDriveMotor);
         rightDriveEncoder.setSpeedController(rightDriveMotor);
+        leftDriveEncoder.setDistancePerTick(Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue());
+        rightDriveEncoder.setDistancePerTick(Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue());
 
         // Relay
         RelayWrapper lightRelay = SensorActuatorRegistry.get().getRelays().get(Properties2016.sLIGHT_RELAY.getValue());

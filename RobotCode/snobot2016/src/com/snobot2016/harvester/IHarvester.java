@@ -6,20 +6,31 @@ package com.snobot2016.harvester;
 import com.snobot.xlib.ISubsystem;
 
 /**
- * Author Jeffrey/Michael interface for harvester class
+ * Author Jeffrey/Michael 
+ *
+ * interface for harvester class
+ *
  */
 public interface IHarvester extends ISubsystem
 {   
-    // lowers harvester
+    /**
+     * Lowers the Harvester in a position able to acquire BOULDERS
+     */
     void lowerHarvester();
-    
-    // raises harvester
+
+    /**
+     * Raises the Harvester for the beginning of the match
+     */
     void raiseHarvester();
-    
-    // rotates Harvester inwards
+
+    /**
+     * Turns the roller on so that the robot can acquire BOULDERS
+     */
     void rollIn();
-   
-    // rotates Harvester outwards
+
+    /**
+     * Reverses the roller so that the BOULDERS can be scored
+     */
     void rollOut();
     
     // sets roller motor speed

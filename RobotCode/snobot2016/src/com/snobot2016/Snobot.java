@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -171,6 +172,16 @@ public class Snobot extends ASnobot
     {
         mAutonCommand = mAutonFactory.buildAnAuton();
         mAutonCommand.start();
+    }
+
+    @Override
+    public void teleopInit()
+    {
+    	if(mAutonCommand != null)
+    	{
+    		mAutonCommand.cancel();
+            Scheduler.getInstance().run();
+    	}
     }
 
     public IDriveTrain getDriveTrain()

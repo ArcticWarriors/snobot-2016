@@ -18,6 +18,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     private boolean mHarvesterUp;
     private boolean mHarvesterDown;
 
+    private boolean mGroundAngle;
+    private boolean mMoveForIntakeAngle;
+    private boolean mVerticalAngle;
+    private boolean mHookAngle;
+
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;
@@ -40,6 +45,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         mHarvesterDown = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
         mHarvesterUp = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
         mFinalCountDown = mJoystick.getRawButton(XboxButtonMap.START_BUTTON);
+
+        mGroundAngle = mJoystick.getRawButton(XboxButtonMap.LEFT_TRIGGER);
+        mMoveForIntakeAngle = mJoystick.getRawButton(XboxButtonMap.RIGHT_TRIGGER);
+        mVerticalAngle = mJoystick.getRawButton(XboxButtonMap.L3_BUTTON);
+        mHookAngle = mJoystick.getRawButton(XboxButtonMap.R3_BUTTON);
     }
 
     @Override
@@ -85,25 +95,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorTiltSpeed;
     }
 
-//    @Override
-//    public boolean isHarvesterPivotUp()
-//    {
-//        return mMotorPivotSpeedUp;
-//    }
-//
-//    @Override
-//    public boolean isHarvesterPivotDown()
-//    {
-//        return mMotorPivotSpeedDown;
-//    }
-
-
-	@Override
+    @Override
     public boolean isFinalCountDown()
     {
-		return mFinalCountDown;
-	}
-
+        return mFinalCountDown;
+    }
 
     @Override
     public boolean isHarvesterRollerForward()
@@ -127,6 +123,33 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     public boolean isHarvesterDown()
     {
         return mHarvesterDown;
+    }
+
+    public boolean isScaleGoToGroundPressed()
+    {
+        // TODO Auto-generated method stub
+        return mGroundAngle;
+    }
+
+    @Override
+    public boolean isScaleGoToVerticalPressed()
+    {
+        // TODO Auto-generated method stub
+        return mVerticalAngle;
+    }
+
+    @Override
+    public boolean isScaleMoveForIntakePressed()
+    {
+        // TODO Auto-generated method stub
+        return mMoveForIntakeAngle;
+    }
+
+    @Override
+    public boolean isScaleGoToHookPositionPressed()
+    {
+        // TODO Auto-generated method stub
+        return mHookAngle;
     }
 
 }
