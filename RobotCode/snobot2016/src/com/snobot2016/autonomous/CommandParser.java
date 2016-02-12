@@ -8,6 +8,7 @@ import com.snobot.xlib.motion_profile.simple.PathConfig;
 import com.snobot.xlib.motion_profile.simple.PathGenerator;
 import com.snobot.xlib.motion_profile.simple.PathSetpoint;
 import com.snobot.xlib.motion_profile.simple.StaticSetpointIterator;
+import com.snobot2016.Properties2016;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
@@ -26,7 +27,7 @@ public class CommandParser extends ACommandParser
 {
     protected Snobot mSnobot;
     private ITable mAutonTable;
-    
+
     private static final double sEXPECTED_DT = .02;
 
     /**
@@ -57,55 +58,54 @@ public class CommandParser extends ACommandParser
         {
             switch (commandName)
             {
-            case "StupidDriveStraight":
+            case Properties2016.sSTUPID_DRIVE_STRAIGHT:
                 newCommand = new StupidDriveStraight(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
 
-            case "DriveStraightADistance":
+            case Properties2016.sDRIVE_STRAIGHT_A_DISTANCE:
                 newCommand = new DriveStraightADistance(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
 
-            case "StupidTurn":
+            case Properties2016.sSTUPID_TURN:
                 newCommand = new StupidTurn(mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
                 break;
 
-            case "TurnWithDegrees":
+            case Properties2016.sTURN_WITH_DEGREES:
                 newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
 
-            case "GoToXY":
+            case Properties2016.sGO_TO_XY:
                 newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
                 break;
-            case "RaiseHarvester":
+            case Properties2016.sRAISE_HARVESTER:
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "LowerHarvester":
+            case Properties2016.sLOWER_HARVESTER:
                 newCommand = new LowerHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "RollerIntake":
+            case Properties2016.sROLLER_INTAKE:
                 newCommand = new RollerIntake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "RollerOuttake":
+            case Properties2016.sROLLER_OUTTAKE:
                 newCommand = new RollerOuttake(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
-            case "TiltLowerScaler":
+            case Properties2016.sTILT_LOWER_SCALER:
                 newCommand = new TiltLowerScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case "TiltRaiseScaler":
+            case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
 
-            case "DriveStraightPath":
+            case Properties2016.sDRIVE_STRAIGHT_PATH:
             {
-                PathConfig dudePathConfig = new PathConfig(
-                        Double.parseDouble(args.get(1)), //Endpoint
-                        Double.parseDouble(args.get(2)), //Max Velocity
-                        Double.parseDouble(args.get(3)), //Max Acceleration
+                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                        Double.parseDouble(args.get(2)), // Max Velocity
+                        Double.parseDouble(args.get(3)), // Max Acceleration
                         sEXPECTED_DT);
-                
+
                 ISetpointIterator dudeSetpointIterator;
 
                 // TODO create dynamic iterator, way to switch
@@ -118,16 +118,16 @@ public class CommandParser extends ACommandParser
 
                 newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
+
             }
 
-            case "DriveTurnPath":
+            case Properties2016.sDRIVE_TURN_PATH:
             {
-                PathConfig dudePathConfig = new PathConfig(
-                        Double.parseDouble(args.get(1)), //Endpoint
-                        Double.parseDouble(args.get(2)), //Max Velocity
-                        Double.parseDouble(args.get(3)), //Max Acceleration
+                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                        Double.parseDouble(args.get(2)), // Max Velocity
+                        Double.parseDouble(args.get(3)), // Max Acceleration
                         sEXPECTED_DT);
-                
+
                 ISetpointIterator dudeSetpointIterator;
 
                 // TODO create dynamic iterator, way to switch

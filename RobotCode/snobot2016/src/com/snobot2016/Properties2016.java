@@ -45,6 +45,25 @@ public class Properties2016
     public static final StringProperty sAUTON_DEFENSE_DIRECTORY;
     public static final StringProperty sAUTON_POST_DEFENSE_DIRECTORY;
     public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
+    public static final DoubleProperty sK_VELOCITY = new DoubleProperty("KVelocity", 1);//TODO A bunch of testing to find the k values
+    public static final DoubleProperty sK_ACCELERATION = new DoubleProperty("KAcceleration", 1);//TODO A bunch of testing to find the k values
+    public static final DoubleProperty sK_POSITION = new DoubleProperty("KPosition", 1);//TODO A bunch of testing to find the k values
+    //Autonomous modes
+    public static final String sSTUPID_DRIVE_STRAIGHT = "StupidDriveStraight";
+    public static final String sDRIVE_STRAIGHT_A_DISTANCE = "DriveStraightADistance";
+    public static final String sSTUPID_TURN = "StupidTurn";
+    public static final String sTURN_WITH_DEGREES = "TurnWithDegrees";
+    public static final String sGO_TO_XY = "GoToXY";
+    public static final String sRAISE_HARVESTER = "RaiseHarvester";
+    public static final String sLOWER_HARVESTER = "LowerHarvester";
+    public static final String sROLLER_INTAKE = "RollerIntake";
+    public static final String sROLLER_OUTTAKE = "RollerOuttake";
+    public static final String sTILT_LOWER_SCALER = "TiltLowerScaler";
+    public static final String sTILT_RAISE_SCALER = "TiltRaiseScaler";
+    public static final String sDRIVE_STRAIGHT_PATH = "DriveStraightPath";
+    public static final String sDRIVE_TURN_PATH = "DriveTurnPath";
+
+    
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
