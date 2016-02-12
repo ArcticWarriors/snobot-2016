@@ -44,18 +44,22 @@ public class Snobot2016Simulator extends ASimulator
         // Analaog
         AnalogWrapper gyro = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sGYRO_SENSOR_PORT.getValue());
         AnalogWrapper scalePot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sSCALE_POT_PORT.getValue());
+        AnalogWrapper intakePot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sHARVESTER_POT_PORT.getValue());
         gyro.setName("Gyro");
         scalePot.setName("Scale Pot");
+        intakePot.setName("Intake Pot");
 
         // Set Parameters
         double drivetrainSpeed = 3.8 * 12;
         leftDriveMotor.setMotorParameters(drivetrainSpeed);
         rightDriveMotor.setMotorParameters(-drivetrainSpeed);
         scaleTiltMotor.setMotorParameters(30); // Degrees / second
+        intakeTiltMotor.setMotorParameters(120);
 
         TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
         mSimulatorComponenets.add(gyroSim);
 
+        // Scaling Potentiometer
         PotentiometerSimulator scalePotSim = new PotentiometerSimulator(scalePot, scaleTiltMotor);
         mSimulatorComponenets.add(scalePotSim);
 
@@ -63,6 +67,14 @@ public class Snobot2016Simulator extends ASimulator
         double scalePotMinVoltage = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
         double scalePotMaxVoltage = Properties2016.sSCALE_HIGH_VOLTAGE.getValue();
         scalePotSim.setParameters(scalePotThrow, scalePotMinVoltage, scalePotMaxVoltage);
+
+        // Harvester Potentiometer
+        PotentiometerSimulator intakePotSim = new PotentiometerSimulator(intakePot, intakeTiltMotor);
+        mSimulatorComponenets.add(intakePotSim);
+
+        double intakePotMinVoltage = Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue();
+        double intakePotMaxVoltage = Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue();
+        intakePotSim.setParameters(100, intakePotMinVoltage, intakePotMaxVoltage);
     }
 
 }

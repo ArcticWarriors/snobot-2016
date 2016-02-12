@@ -205,9 +205,6 @@ public class Scaling implements IScaling
         double low_volts = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
 
         mAngle = ((high_angle - low_angle) / (high_volts - low_volts)) * (voltage - low_volts);
-
-        System.out.println("Voltage: " + voltage + ", Angle: " + mAngle);
-
         // Grabs properties of minimum and maximum configs for potentiometer,
         // Obtains the angle of the scaling arm, given the voltage of
         // a configured potentiometer
