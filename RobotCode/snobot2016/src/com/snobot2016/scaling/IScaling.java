@@ -12,10 +12,8 @@ public interface IScaling extends ISubsystem
 {
     public enum ScaleAngles
     {
-        Ground(Properties2016.sSCALE_GROUND_ANGLE), 
-        MoveForIntake(Properties2016.sGET_OUT_OF_THE_WAY_OF_INTAKE), 
-        Vertical(Properties2016.sVERTICAL), 
-        Hook(Properties2016.sHOOK_ANGLE);
+        Ground(Properties2016.sSCALE_GROUND_ANGLE), MoveForIntake(Properties2016.sGET_OUT_OF_THE_WAY_OF_INTAKE), Vertical(
+                Properties2016.sVERTICAL), Hook(Properties2016.sHOOK_ANGLE);
 
         private DoubleProperty mAngle;
 
@@ -42,5 +40,5 @@ public interface IScaling extends ISubsystem
     void tiltRaise();
     // lowers tilting arm
 
-    void reachGoalAngle(ScaleAngles goal);
+    boolean reachGoalAngle(ScaleAngles goal);
 }
