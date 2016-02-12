@@ -18,6 +18,7 @@ import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
@@ -28,10 +29,11 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class CommandParser extends ACommandParser
 {
-    protected Snobot mSnobot;
-    private ITable mAutonTable;
-
     private static final double sEXPECTED_DT = .02;
+
+    protected Snobot mSnobot;
+    protected ITable mAutonTable;
+    protected String mParserName;
 
     /**
      * Creates a CommandParser object.
@@ -39,11 +41,12 @@ public class CommandParser extends ACommandParser
      * @param aSnobot
      *            The robot using the CommandParser.
      */
-    public CommandParser(Snobot aSnobot, ITable aAutonTable)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
     {
         super(" ", "#");
         mSnobot = aSnobot;
         mAutonTable = aAutonTable;
+        mParserName = aParserName;
     }
 
     /**
@@ -178,13 +181,20 @@ public class CommandParser extends ACommandParser
         mAutonTable.putBoolean(SmartDashBoardNames.sSUCCESFULLY_PARSED_AUTON, mSuccess);
     }
 
+    @Override
+    public CommandGroup readFile(String aFilePath)
+    {
+        mAutonTable.putString(SmartDashBoardNames.sAUTON_FILENAME, aFilePath);
+        return super.readFile(aFilePath);
+    }
+
     public void saveAutonMode()
     {
         String new_text = mAutonTable.getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "");
         String filename = mAutonTable.getString(SmartDashBoardNames.sAUTON_FILENAME, "auton_file.txt");
 
         System.out.println("*****************************************");
-        System.out.println("Saving auton mode");
+        System.out.println("(\"" + mParserName + "\") - Saving auton mode to " + filename);
         System.out.println("*****************************************");
 
         try

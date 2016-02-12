@@ -1,1 +1,1 @@
-DriveStraightPath 120 45 10
+DriveStraightPath 120 34 10
