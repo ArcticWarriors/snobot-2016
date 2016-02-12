@@ -41,8 +41,7 @@ public class Light implements ILight
     @Override
     public void control()
     {
-        // over ride button on the SmartDashboard
-        if (mLightOn)
+         if (mLightOn)
         {
             mRelay.set(Value.kForward);
         }
@@ -61,7 +60,6 @@ public class Light implements ILight
     @Override
     public void updateSmartDashboard()
     {
-        // puts button on the SmartDashboard
         SmartDashboard.putBoolean(SmartDashBoardNames.sSNOBOT_LIGHT, mLightOn);
     }
 
