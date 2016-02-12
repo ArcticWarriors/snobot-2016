@@ -72,6 +72,10 @@ public class Properties2016
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
 
+    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("LeftDriveEncoderDPP", -0.4);
+    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("RightDriveEncoderDPP", 0.4);
+    
+    
     static
     {
         if (RobotBase.isSimulation())
@@ -80,7 +84,7 @@ public class Properties2016
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", false);
             sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/");
+            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/Autonomous");
         }
         else
         {
@@ -97,14 +101,14 @@ public class Properties2016
                                                                             // ON
                                                                             // ROBORIO
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
+            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/2016Resources/Autonomous/");
         }
 
         sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses",
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");
+                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }
