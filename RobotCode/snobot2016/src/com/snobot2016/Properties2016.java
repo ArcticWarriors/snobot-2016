@@ -70,6 +70,12 @@ public class Properties2016
     public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
     public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
 
+    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("Scale Ground Angle", 0);
+    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("Move for Intake", 30);
+    public static final DoubleProperty sVERTICAL = new DoubleProperty("Vertical Angle", 90);
+    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("Hook Angle", 110);
+    public static final DoubleProperty sK_P_ANGLE = new DoubleProperty("KP Angle", 0.005);
+
     static
     {
         if (RobotBase.isSimulation())
@@ -98,8 +104,7 @@ public class Properties2016
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
         }
 
-        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses",
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
                 sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");

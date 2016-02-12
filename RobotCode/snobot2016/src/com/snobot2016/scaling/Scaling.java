@@ -77,6 +77,23 @@ public class Scaling implements IScaling
     {
         controlTilt();
         controlClimber();
+
+        if (mJoystick.isScaleGoToGroundPressed())
+        {
+            reachGoalAngle(ScaleAngles.Ground);
+        }
+        else if (mJoystick.isScaleGoToHookPositionPressed())
+        {
+            reachGoalAngle(ScaleAngles.Hook);
+        }
+        else if (mJoystick.isScaleMoveForIntakePressed())
+        {
+            reachGoalAngle(ScaleAngles.MoveForIntake);
+        }
+        else if (mJoystick.isScaleGoToVerticalPressed())
+        {
+            reachGoalAngle(ScaleAngles.Vertical);
+        }
     }
 
     private void controlTilt()
@@ -211,6 +228,15 @@ public class Scaling implements IScaling
     public void tiltLower()
     {
         mScaleTiltMotor.set(-1);
+    }
+
+    @Override
+    public void reachGoalAngle(ScaleAngles goal)
+    {
+        double goalAngle = goal.getDesiredAngle();
+        double kP = Properties2016.sK_P_ANGLE.getValue();
+        double error = (mAngle - goalAngle);
+        mScaleMoveMotor.set(error * kP);
     }
 
 }
