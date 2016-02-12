@@ -45,36 +45,7 @@ public class Properties2016
     public static final StringProperty sAUTON_DEFENSE_DIRECTORY;
     public static final StringProperty sAUTON_POST_DEFENSE_DIRECTORY;
     public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
-    public static final DoubleProperty sK_VELOCITY = new DoubleProperty("KVelocity", 1);// TODO
-                                                                                        // A
-                                                                                        // bunch
-                                                                                        // of
-                                                                                        // testing
-                                                                                        // to
-                                                                                        // find
-                                                                                        // the
-                                                                                        // k
-                                                                                        // values
-    public static final DoubleProperty sK_ACCELERATION = new DoubleProperty("KAcceleration", 1);// TODO
-                                                                                                // A
-                                                                                                // bunch
-                                                                                                // of
-                                                                                                // testing
-                                                                                                // to
-                                                                                                // find
-                                                                                                // the
-                                                                                                // k
-                                                                                                // values
-    public static final DoubleProperty sK_POSITION = new DoubleProperty("KPosition", 1);// TODO
-                                                                                        // A
-                                                                                        // bunch
-                                                                                        // of
-                                                                                        // testing
-                                                                                        // to
-                                                                                        // find
-                                                                                        // the
-                                                                                        // k
-                                                                                        // values
+
     // Autonomous modes
     public static final String sSTUPID_DRIVE_STRAIGHT = "StupidDriveStraight";
     public static final String sDRIVE_STRAIGHT_A_DISTANCE = "DriveStraightADistance";
