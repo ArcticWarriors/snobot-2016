@@ -13,7 +13,7 @@ public class PathFollower
     private ISetpointIterator mSetpointIterator;
     private double mKv;
     private double mKa;
-    private double kKp;
+    private double mKp;
 
     private int mPathPoint;
     private ITable mTable;
@@ -26,7 +26,7 @@ public class PathFollower
         mSetpointIterator = aSetpointIterator;
         mKv = aKV;
         mKa = aKA;
-        kKp = aKP;
+        mKp = aKP;
 
         mTable = NetworkTable.getTable(SmartDashBoardNames.sPATH_NAMESPACE);
     }
@@ -47,12 +47,11 @@ public class PathFollower
             double dt = .02;
             double velocity = (aCurrPosition - mLastPosition) / dt;
 
-
             PathSetpoint setpoint = mSetpointIterator.getNextSetpoint(0, 0, .02);
             PathSetpoint realPoint = new PathSetpoint(setpoint.mSegment, dt, aCurrPosition, velocity, 0);
 
             double error = setpoint.mPosition - aCurrPosition;
-            double p_term = kKp * error;
+            double p_term = mKp * error;
             double v_term = mKv * setpoint.mVelocity;
             double a_term = mKa * setpoint.mAcceleration;
 

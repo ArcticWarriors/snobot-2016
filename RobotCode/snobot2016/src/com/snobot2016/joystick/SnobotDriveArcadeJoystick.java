@@ -1,8 +1,13 @@
 package com.snobot2016.joystick;
 
 import com.snobot.xlib.XboxButtonMap;
-
 import edu.wpi.first.wpilibj.Joystick;
+
+/**
+ * 
+ * @author jbnol_000
+ *
+ */
 
 public class SnobotDriveArcadeJoystick implements IDriverJoystick
 {

@@ -149,39 +149,39 @@ public class Harvester implements IHarvester
         setRollerMotorSpeed(-1);
     }
 
-    private void setRollerMotorSpeed(double aRollerSpeed)
+    public void setRollerMotorSpeed(double aRollerSpeed)
     {
         mRoller = aRollerSpeed;
         mRollerMotor.set(aRollerSpeed);
     }
 
-    private void setPivotMotorSpeed(double aPivotSpeed)
+    public void setPivotMotorSpeed(double aPivotSpeed)
     {
         mPivot = aPivotSpeed;
         mPivotMotor.set(aPivotSpeed);
     }
     
-    private boolean goodToLowerVoltage()
+    public boolean goodToLowerVoltage()
     {
         return (mVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());  
     }
     
-    private boolean goodToRaiseVoltage()
+    public boolean goodToRaiseVoltage()
     {
         return (mVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
     }
     
-    private double percentageLowered()
+    public double percentageLowered()
     {
         return ((mVoltage / Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue()) *100);
     }
     
-    private void stopHarvester()
+    public void stopHarvester()
     {
         setPivotMotorSpeed(0);
     }
     
-    private void stopRoller()
+    public void stopRoller()
     {
         setRollerMotorSpeed(0);
     }
