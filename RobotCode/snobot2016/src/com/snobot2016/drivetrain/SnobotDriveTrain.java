@@ -1,5 +1,6 @@
 package com.snobot2016.drivetrain;
 
+import com.snobot2016.Properties2016;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IDriverJoystick;
 
@@ -28,6 +29,9 @@ public class SnobotDriveTrain implements IDriveTrain
         mDriveJoystick = aDriverJoyStick;
         
         mRobotDrive = new RobotDrive(aLeftMotor, aRightMotor);
+
+        mLeftEncoder.setDistancePerPulse(Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue());
+        mRightEncoder.setDistancePerPulse(Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue());
     }
 
     @Override
@@ -39,18 +43,20 @@ public class SnobotDriveTrain implements IDriveTrain
     public void update()
     {
 
+    	System.out.println("Left Raw: " + mLeftEncoder.get() + ", " + mLeftEncoder.getDistance());
     }
 
     @Override
     public void control()
     {
+    	
         if (mDriveJoystick.isArcadeMode())
         {
             mRobotDrive.arcadeDrive(mDriveJoystick.getArcadePower(), mDriveJoystick.getArcadeTurn());
         }
         else
         {
-            mRobotDrive.tankDrive(mDriveJoystick.getLeftSpeed(), mDriveJoystick.getRightSpeed());
+    		mRobotDrive.tankDrive(-mDriveJoystick.getLeftSpeed(), -mDriveJoystick.getRightSpeed());
         }
 
     }
