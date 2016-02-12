@@ -87,10 +87,20 @@ public class Properties2016
     public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
     public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
 
-    // Harvestor Pot
+    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("Scale Ground Angle", 0);
+    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("Move for Intake", 30);
+    public static final DoubleProperty sVERTICAL = new DoubleProperty("Vertical Angle", 90);
+    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("Hook Angle", 110);
+    public static final DoubleProperty sK_P_ANGLE = new DoubleProperty("KP Angle", 0.005);
+
+	// Harvestor Pot
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
-
+    
+    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("LeftDriveEncoderDPP", -0.4);
+    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("RightDriveEncoderDPP", 0.4);
+    
+    
     static
     {
         if (RobotBase.isSimulation())
@@ -99,7 +109,7 @@ public class Properties2016
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", false);
             sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/");
+            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/Autonomous");
         }
         else
         {
@@ -116,14 +126,13 @@ public class Properties2016
                                                                             // ON
                                                                             // ROBORIO
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/snobot2016/auton/");
+            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/2016Resources/Autonomous/");
         }
 
-        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses",
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/AutonomousThingsToDo");
+                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }
