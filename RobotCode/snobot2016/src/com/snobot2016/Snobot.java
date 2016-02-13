@@ -24,6 +24,7 @@ import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.ADXL345_SPI;
+import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -143,10 +144,8 @@ public class Snobot extends ASnobot
         mSubsystems.add(mHarvester);
 
         // Positioner
-//        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-//        mAccelerometer = new BuiltInAccelerometer();
         mGyro = new ADXRS450_Gyro();
-        mAccelerometer = new ADXL345_SPI(SPI.Port.kOnboardCS1, Accelerometer.Range.k4G);        
+        mAccelerometer = new ADXL362(Accelerometer.Range.k2G);        
         mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer, mDrivetrain, mLogger);//(new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 

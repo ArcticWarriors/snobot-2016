@@ -1,5 +1,7 @@
 package com.snobot2016.positioner;
 
+import java.util.ArrayList;
+
 import com.snobot.xlib.ISubsystem;
 import com.snobot.xlib.Logger;
 import com.snobot.xlib.Utilities;
@@ -35,6 +37,12 @@ public class IMUPositioner implements IPositioner, ISubsystem
     public Logger mLogger;
     private double mOffset;
     private double mLastTime;
+    double mErrorX;
+    double mErrorY;
+    double mErrorZ;
+    boolean mbFirstRun = true;
+    
+    static double mGtoIn = 386.0885826772;
 
     /**
      * Creates a new Positioner object.
@@ -51,20 +59,10 @@ public class IMUPositioner implements IPositioner, ISubsystem
     public IMUPositioner(Gyro aGyro, Accelerometer aAccelerometer, IDriveTrain aDriveTrain, Logger aLogger)
     {
         mGyro = aGyro;
-        mOffset = 0;
         mAccelerometer = aAccelerometer;
         mDriveTrain = aDriveTrain;
         mLogger = aLogger;
-        mXPosition = 0;
-        mYPosition = 0;
-        mOrientation = 0;
-        mTotalDistance = 0;
-        mChangeInDistance = 0;
         mTimer = new Timer();
-        mVelocityX = 0;
-        mVelocityY = 0;
-        mSpeed = 0;
-        mLastTime = 0;
     }
 
     /**
@@ -73,7 +71,20 @@ public class IMUPositioner implements IPositioner, ISubsystem
     @Override
     public void init()
     {
-
+        mOffset = 0;
+        mXPosition = 0;
+        mYPosition = 0;
+        mOrientation = 0;
+        mTotalDistance = 0;
+        mChangeInDistance = 0;       
+        mVelocityX = 0;
+        mVelocityY = 0;
+        mSpeed = 0;
+        mLastTime = 0;
+        mErrorX = 0;
+        mErrorY = 0;
+        mErrorZ = 0;
+        
         mTimer.start();
 
         mLogger.addHeader("X-coordinate");
@@ -82,6 +93,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
         mLogger.addHeader("Speed");
 
         mGyro.calibrate();
+        calibrateAccel();
     }
 
     /**
@@ -93,27 +105,41 @@ public class IMUPositioner implements IPositioner, ISubsystem
     {
         // Update time period
         double nowTime = mTimer.get();
-        double orientationRadians = Math.toRadians(mOrientation);
+        
+        // Want to start at equal now/last time if it's the first time.
+        if ( mbFirstRun )
+        {
+            mLastTime = nowTime;
+            mbFirstRun = false;
+        }
         double deltaTime = nowTime - mLastTime;
-        mLastTime = nowTime;
 
         // Update values from sensors
-        double accelX = Math.sin(orientationRadians) * mAccelerometer.getX();
-        double accelY = Math.cos(orientationRadians) * mAccelerometer.getY();
+        double accelX = ( mAccelerometer.getX() * mGtoIn) - mErrorX;
+        double accelY = ( mAccelerometer.getY() * mGtoIn) - mErrorY;
+        mLastTime = nowTime;
+        
+        SmartDashboard.putNumber("Accel Y", accelY);
+        SmartDashboard.putNumber("Accel X", accelX);
+        
         mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
+        double orientationRadians = Math.toRadians(mOrientation);
 
-        // Calculate Distance / Speed
-        double xDistance = (mVelocityX * deltaTime) + (.5 * accelX * Math.pow(deltaTime, 2));
-
-        mXPosition += xDistance;
+        // Calculate Distance
+        double distanceX = calcComponentDistance(accelX, mVelocityX, deltaTime);
         mVelocityX += (accelX * deltaTime);
 
-        double yDistance = (mVelocityY * deltaTime) + (.5 * accelY * Math.pow(deltaTime, 2));
-        mYPosition += yDistance;
+        double distanceY = calcComponentDistance(accelY, mVelocityY, deltaTime);
         mVelocityY += (accelY * deltaTime);
 
-        mTotalDistance += Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-        mSpeed = Math.sqrt(Math.pow(mVelocityX, 2) + Math.pow(mVelocityY, 2));
+        double thisDistance = combineComponentVectors(distanceX, distanceY);
+        mTotalDistance += thisDistance;
+        mSpeed = combineComponentVectors(mVelocityX, mVelocityY);
+        
+        mXPosition += thisDistance * Math.cos(orientationRadians);
+        mYPosition += thisDistance * Math.sin(orientationRadians);
+        
+        SmartDashboard.putNumber("Accel Z", mAccelerometer.getZ());
     }
 
     @Override
@@ -238,7 +264,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
     @Override
     public void setOrientationRadians(double inputRadians)
     {
-        mOrientation = Math.toDegrees(inputRadians);
+        mOffset = Math.toDegrees(inputRadians) - mOrientation;
     }
 
     /**
@@ -250,7 +276,51 @@ public class IMUPositioner implements IPositioner, ISubsystem
     @Override
     public void setOrientationDegrees(double inputDegrees)
     {
-        mOrientation = inputDegrees;
+        mOffset = inputDegrees - mOrientation;
+    }
+    
+    private double calcComponentDistance(double accelComponent, double velocityComponent, double time)
+    {
+        return (velocityComponent * time) + (.5 * accelComponent * Math.pow(time, 2));
+    }
+    
+    private double combineComponentVectors(double x, double y)
+    {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    }
+    /**
+     * Calibrate the accelerometer by taking readings over a 
+     * period of time and averaging the error.
+     * The robot must be stationary during this time period.
+     */
+    private void calibrateAccel()
+    {
+        int samplesTaken = 0;
+        mErrorX = 0;
+        mErrorY = 0;
+        mErrorZ = 0;
+        double startTime = mTimer.get();
+        while(mTimer.get() <= 4 + startTime)
+        {
+            mErrorX += mAccelerometer.getX();
+            mErrorY += mAccelerometer.getY();
+            mErrorZ += mAccelerometer.getZ();
+            samplesTaken++;
+        }
+        // For some reason the X error is not actually 
+        // what we are seeing.  Adding the extra offset
+        // to account for this impossible situation.
+        mErrorX = .002 +  (mErrorX / samplesTaken);
+        mErrorY = mErrorY / samplesTaken;
+        mErrorZ = mErrorZ / samplesTaken;
+        
+        mErrorX *= mGtoIn;
+        mErrorY *= mGtoIn;
+        mErrorZ *= mGtoIn;
+        
+        SmartDashboard.putNumber("AccelError X", mErrorX);
+        SmartDashboard.putNumber("AccelError Y", mErrorY);
+        SmartDashboard.putNumber("AccelError Z", mErrorZ);
     }
 
 }
