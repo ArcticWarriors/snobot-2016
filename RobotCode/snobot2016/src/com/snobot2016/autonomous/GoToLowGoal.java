@@ -44,7 +44,7 @@ public class GoToLowGoal extends Command
         else
         {
             mGoRight = true;
-            mYPosition = -200;
+            mXPosition = -200;
         }
 
         mGoToXYPath = new GoToXYPath(mDriveTrain, mPositioner, mXPosition, mYPosition, mMaxTurnVel, mMaxTurnAccel, mMaxDriveVel, mMaxDriveAccel);
