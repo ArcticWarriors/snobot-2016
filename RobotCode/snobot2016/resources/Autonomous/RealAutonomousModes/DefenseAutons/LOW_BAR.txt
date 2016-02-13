@@ -1,3 +1,3 @@
-DriveStraightADistance 15 .2
 SuperSmartHarvester 100
-TiltLower Scaler 2
+TiltLowerScaler 1
+DriveStraightPath 180 65 30

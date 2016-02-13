@@ -43,4 +43,9 @@ public class SpeedControllerWrapper extends ASensorWrapper
     {
         mPosition = 0;
     }
+
+    public void setPosition(double startPosition)
+    {
+        mPosition = startPosition;
+    }
 }
