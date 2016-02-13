@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class CommandParser extends ACommandParser
 {
+
     private static final double sEXPECTED_DT = .02;
 
     protected Snobot mSnobot;
@@ -81,10 +82,9 @@ public class CommandParser extends ACommandParser
                 newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
-
             case Properties2016.sGO_TO_XY:
-                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
-                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
+                newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args
+                        .get(2)), Double.parseDouble(args.get(3)));
                 break;
             case Properties2016.sRAISE_HARVESTER:
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
@@ -104,10 +104,14 @@ public class CommandParser extends ACommandParser
             case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case Properties2016.sSMART_HARVESTOR:
+            case Properties2016.sSMART_HARVESTER:
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
+            case Properties2016.sSUPER_SMART_HARVESTER:
+                newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
+                break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
+
             {
                 PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
                         Double.parseDouble(args.get(2)), // Max Velocity
