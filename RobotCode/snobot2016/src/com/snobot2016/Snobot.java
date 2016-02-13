@@ -11,8 +11,8 @@ import com.snobot2016.harvester.Harvester;
 import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveArcadeJoystick;
+import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveJoystickFactory;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
@@ -22,7 +22,8 @@ import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.ADXL362;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -67,6 +69,7 @@ public class Snobot extends ASnobot
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
     private AnalogInput mScalePot;
+    private AnalogInput mExtensionPot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
@@ -77,6 +80,7 @@ public class Snobot extends ASnobot
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
+    private Accelerometer mAccelerometer;
 
     // Autonomous
     private CommandGroup mAutonCommand;
@@ -97,7 +101,6 @@ public class Snobot extends ASnobot
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
         mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT2.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
-        
 
         // Our Joysticks
         mDriverXbox = new SnobotDriveXboxJoystick(mRawDriverJoystick);
@@ -124,7 +127,8 @@ public class Snobot extends ASnobot
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
         mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
+        mExtensionPot = new AnalogInput(Properties2016.sEXTENSION_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot, mExtensionPot);
         mSubsystems.add(mScaling);
 
         // Harvester
@@ -135,8 +139,11 @@ public class Snobot extends ASnobot
         mSubsystems.add(mHarvester);
 
         // Positioner
-        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
+        mGyro = new ADXRS450_Gyro();
+        mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
         mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
+        // mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer,
+        // mDrivetrain, mLogger);//(new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
@@ -177,11 +184,11 @@ public class Snobot extends ASnobot
     @Override
     public void teleopInit()
     {
-    	if(mAutonCommand != null)
-    	{
-    		mAutonCommand.cancel();
+        if (mAutonCommand != null)
+        {
+            mAutonCommand.cancel();
             Scheduler.getInstance().run();
-    	}
+        }
     }
 
     public IDriveTrain getDriveTrain()

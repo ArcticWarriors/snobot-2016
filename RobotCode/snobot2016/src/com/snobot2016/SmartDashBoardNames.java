@@ -52,5 +52,6 @@ public class SmartDashBoardNames
     public static final String sSCALE_MOVE_MOTOR = "Scale Move Motor";
     public static final String sSCALE_TILT_MOTOR = "Scale Tilt Motor";
     public static final String sTIMER = "Final Countdown";
+    public static final String sSCALE_CURRENT_POSITION = "Position of Scaler";
 
 }

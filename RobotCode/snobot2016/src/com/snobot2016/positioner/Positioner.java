@@ -39,7 +39,7 @@ public class Positioner implements ISubsystem, IPositioner
      * Creates a new Positioner object.
      * 
      * @param aGyro
-     *            The gGyro to use.
+     *            The Gyro to use.
      * @param aDriveTrain
      *            The DriveTrain to use.
      * @param aLogger
@@ -63,7 +63,7 @@ public class Positioner implements ISubsystem, IPositioner
     }
 
     /**
-     * Starts timer.
+     * Starts timer and adds headers to Logger.
      */
     @Override
     public void init()

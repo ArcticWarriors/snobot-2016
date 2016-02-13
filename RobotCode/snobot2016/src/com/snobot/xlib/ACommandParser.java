@@ -54,7 +54,7 @@ public abstract class ACommandParser
             protected void end()
             {
                 super.end();
-                System.out.println("Command group finished!");
+                System.out.println("Command group '" + aName + "' finished!");
             }
         };
     }

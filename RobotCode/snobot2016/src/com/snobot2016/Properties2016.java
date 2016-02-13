@@ -32,6 +32,7 @@ public class Properties2016
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
     public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 2);
     public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 3);
+    public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 4);
 
     // Relay
     public static final IntegerProperty sLIGHT_RELAY = new IntegerProperty("LightRelay", 1);
@@ -60,8 +61,14 @@ public class Properties2016
     public static final String sTILT_RAISE_SCALER = "TiltRaiseScaler";
     public static final String sDRIVE_STRAIGHT_PATH = "DriveStraightPath";
     public static final String sDRIVE_TURN_PATH = "DriveTurnPath";
+    public static final String sSMART_HARVESTOR = "SmartHarvester";
+    public static final String sFUDGE_THE_POSITION = "FudgeThePosition";
+    public static final String sGO_TO_XY_PATH = "GoToXYPath";
+    public static final String sGO_TO_LOW_GOAL = "GoToLowGoal";
     public static final String sSMART_HARVESTER = "SmartHarvester";
     public static final String sSUPER_SMART_HARVESTER = "SuperSmartHarvester";
+    public static final String sSMART_SCALER = "SmartScaler";
+    public static final String sCROSS_DEFENSE = "CrossDefense";
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
@@ -80,7 +87,7 @@ public class Properties2016
     public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0);
 
     // Scaler Pot
-    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 90);
+    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 110);
     public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("Minimum Angle", 0);
     public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
     public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
@@ -91,7 +98,13 @@ public class Properties2016
     public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("Hook Angle", 110);
     public static final DoubleProperty sK_P_ANGLE = new DoubleProperty("KP Angle", 0.005);
 
-    // Harvestor Pot
+    public static final DoubleProperty sMIN_EXTENSION_POT_VOLTAGE = new DoubleProperty("MinExtensionPotVoltage", 1);
+    public static final DoubleProperty sMAX_EXTENSION_POT_VOLTAGE = new DoubleProperty("MaxExtensionPotVoltage", 4);
+
+    public static final DoubleProperty sSCALE_COMPRESSED = new DoubleProperty("Scale Extension Compressed", 0);
+    public static final DoubleProperty sSCALE_EXTENDED = new DoubleProperty("Scale Extension Extended", 1);
+
+    // Harvester Pot
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
     public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
@@ -129,8 +142,8 @@ public class Properties2016
 
         sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
 
-        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir", sAUTON_DIRECTORY.getValue()
-                + "RealAutonomousModes/AutonomousThingsToDo");
+        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
+                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }
