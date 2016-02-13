@@ -6,6 +6,7 @@ import com.snobot.xlib.Utilities;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -51,6 +52,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
     public IMUPositioner(Gyro aGyro, Accelerometer aAccelerometer, IDriveTrain aDriveTrain, Logger aLogger)
     {
         mGyro = aGyro;
+        mOffset = 0;
         mAccelerometer = aAccelerometer;
         mDriveTrain = aDriveTrain;
         mLogger = aLogger;
@@ -79,6 +81,8 @@ public class IMUPositioner implements IPositioner, ISubsystem
         mLogger.addHeader("Y-coordinate");
         mLogger.addHeader("Orientation");
         mLogger.addHeader("Speed");
+        
+        mGyro.calibrate();
     }
 
     /**
@@ -88,25 +92,30 @@ public class IMUPositioner implements IPositioner, ISubsystem
     @Override
     public void update()
     {
-
-        // Orientation
-        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
-
-        double deltaTime = mTimer.get() - mLastTime;
-
+        // Update time period
+        double nowTime = mTimer.get();
+        double deltaTime = nowTime - mLastTime;
+        mLastTime = nowTime;
+        
+        // Update values from sensors
         double accelX = mAccelerometer.getX();
-        mVelocityX += (accelX * deltaTime);
-        double xDistance = (mVelocityX * deltaTime) + (.5 * accelX * Math.pow(deltaTime, 2));
-        mXPosition += xDistance;
-
         double accelY = mAccelerometer.getY();
-        mVelocityY += (accelY * deltaTime);
+        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
+        
+        // Calculate Distance / Speed
+        // TODO: For this to work we need initial velocity, not now velocity
+        double xDistance = (mVelocityX * deltaTime) + (.5 * accelX * Math.pow(deltaTime, 2));
+        
+        // TODO: This is not giving us what we think.  Need to add vectors. 
+        mXPosition += xDistance;
+        mVelocityX += (accelX * deltaTime);
+        
         double yDistance = (mVelocityY * deltaTime) + (.5 * accelY * Math.pow(deltaTime, 2));
         mYPosition += yDistance;
-
+        mVelocityY += (accelY * deltaTime);
+        
         mTotalDistance += Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
         mSpeed = Math.sqrt(Math.pow(mVelocityX, 2) + Math.pow(mVelocityY, 2));
-        mLastTime = mTimer.get();
     }
 
     @Override
