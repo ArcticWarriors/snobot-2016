@@ -19,7 +19,7 @@ public interface IPositioner extends ISubsystem
 
     public void setYPosition(double inputY);
 
-    public void setOrientationRadians(double inputRadians);
+    public void resetOrientationRadians(double inputRadians);
 
-    public void setOrientationDegrees(double inputDegrees);
+    public void resetOrientationDegrees(double inputDegrees);
 }

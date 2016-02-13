@@ -88,7 +88,7 @@ public class SelectStartPosition
     {
         mPositioner.setXPosition(this.getSelected().mX);
         mPositioner.setYPosition(this.getSelected().mY);
-        mPositioner.setOrientationDegrees(this.getSelected().mOrientation);
+        mPositioner.resetOrientationDegrees(this.getSelected().mOrientation);
     }
 
     public void addChangeListener(ITableListener aListener)

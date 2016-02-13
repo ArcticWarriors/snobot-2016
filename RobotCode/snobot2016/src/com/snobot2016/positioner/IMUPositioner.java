@@ -262,7 +262,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
      *            The new orientation in radians.
      */
     @Override
-    public void setOrientationRadians(double inputRadians)
+    public void resetOrientationRadians(double inputRadians)
     {
         mOffset = Math.toDegrees(inputRadians) - mOrientation;
     }
@@ -274,7 +274,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
      *            The new orientation in degrees.
      */
     @Override
-    public void setOrientationDegrees(double inputDegrees)
+    public void resetOrientationDegrees(double inputDegrees)
     {
         mOffset = inputDegrees - mOrientation;
     }
