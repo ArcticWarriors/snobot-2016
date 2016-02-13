@@ -165,24 +165,24 @@ public class Positioner implements ISubsystem, IPositioner
     /**
      * Assigns a new orientation in radians to the robot.
      * 
-     * @param inputRadians
-     *            The new orientation in radians.
+     * @param offsetRadians
+     *            The offset from north in radians.
      */
-    public void setOrientationRadians(double inputRadians)
+    public void resetOrientationRadians(double offsetRadians)
     {
-    	setOrientationDegrees(Math.toDegrees(inputRadians));
+        resetOrientationDegrees(Math.toDegrees(offsetRadians));
     }
 
     /**
      * Assigns a new orientation in degrees to the robot.
      * 
-     * @param inputDegrees
-     *            The new orientation in degrees.
+     * @param offsetDegrees
+     *            The offset from north in degrees.
      */
-    public void setOrientationDegrees(double inputDegrees)
+    public void resetOrientationDegrees(double offsetDegrees)
     {
-        //mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
-        mOffset = (inputDegrees);
+        // mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
+        mOffset = (offsetDegrees);
 
         mGyro.reset();
     }
