@@ -50,7 +50,7 @@ public interface IScaling extends ISubsystem
      */
     void tiltRaise();
 
-    void percentageScaled();
+    double percentageScaled();
 
     boolean reachGoalAngle(ScaleAngles goal);
 }

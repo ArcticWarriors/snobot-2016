@@ -22,16 +22,19 @@ public class Scaling implements IScaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mJoystick;
-    private AnalogInput mTiltPot; // Tilt Motor Potentiometer
     private Timer mTimer;
     private double mMoveSpeed;
     private double mTiltSpeed;
     private boolean mAmIClimbing;
+    private AnalogInput mTiltPot; // Tilt Motor Potentiometer
     private double mAngle; // Current Potentiometer Angle
     private boolean mIsUp; // Is scaling up
     private boolean mIsDown; // Is scaling down
-    private AnalogInput mExtensionPot;
-    private double mExtended;
+    private AnalogInput mExtensionPot; // Extension Potentiometer
+    private double mExtended; // Current Potentiometer Distance Extended
+    private boolean mIsIn; // Is Scaling Extension Compressed
+    private boolean mIsOut; // Is Scaling Extension Extended
+    private double mVoltage;
 
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
             AnalogInput aTiltPot, AnalogInput aExtensionPot)
@@ -73,6 +76,14 @@ public class Scaling implements IScaling
         {
             mIsDown = false;
             mIsUp = false;
+        }
+
+        {
+            mVoltage = mExtensionPot.getVoltage();
+            mExtended = (((mVoltage - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())
+                    / (Properties2016.sMAX_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())) * 100);
+
+            System.out.println(mVoltage);
         }
     }
 
@@ -170,6 +181,7 @@ public class Scaling implements IScaling
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mScaleTiltMotor.get());
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, getAngle());
         SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_CURRENT_POSITION, percentageScaled());
     }
 
     @Override
@@ -177,6 +189,10 @@ public class Scaling implements IScaling
     {
         mLogger.updateLogger(mMoveSpeed);
         mLogger.updateLogger(mTiltSpeed);
+        mLogger.updateLogger(mIsIn);
+        mLogger.updateLogger(mIsOut);
+        mLogger.updateLogger(mIsUp);
+        mLogger.updateLogger(mIsDown);
     }
 
     @Override
@@ -250,10 +266,9 @@ public class Scaling implements IScaling
     }
 
     @Override
-    public void percentageScaled()
+    public double percentageScaled()
     {
-
-
+        return mExtended;
     }
 
 }
