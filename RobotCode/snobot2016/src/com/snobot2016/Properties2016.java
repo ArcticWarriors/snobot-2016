@@ -64,6 +64,7 @@ public class Properties2016
     public static final String sSMART_HARVESTER = "SmartHarvester";
     public static final String sSUPER_SMART_HARVESTER = "SuperSmartHarvester";
     public static final String sSMART_SCALER = "SmartScaler";
+    public static final String sCROSS_DEFENSE = "CrossDefense";
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
