@@ -86,6 +86,11 @@ public class CommandParser extends ACommandParser
                 newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
                 break;
+            case Properties2016.sGO_TO_XY_PATH:
+                newCommand = new GoToXYPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)),
+                        Double.parseDouble(args.get(5)), Double.parseDouble(args.get(6)));
+                break;
             case Properties2016.sRAISE_HARVESTER:
                 newCommand = new RaiseHarvester(Double.parseDouble(args.get(1)), mSnobot.getHarvester());
                 break;
@@ -147,6 +152,13 @@ public class CommandParser extends ACommandParser
                 newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
             }
+            case Properties2016.sFUDGE_THE_POSITION:
+                newCommand = new FudgeThePosition(mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
+                break;
+            case Properties2016.sGO_TO_LOW_GOAL:
+                newCommand = new GoToLowGoal(mSnobot.getPositioner(), mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)),
+                        Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)));
+                break;
             }
         }
         catch (IndexOutOfBoundsException e)
