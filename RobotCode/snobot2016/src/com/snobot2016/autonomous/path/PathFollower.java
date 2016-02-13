@@ -56,6 +56,14 @@ public class PathFollower
             double a_term = mKa * setpoint.mAcceleration;
 
             double output = v_term + a_term + p_term;
+            
+            System.out.println(
+            		"Current: " + aCurrPosition + 
+    				"Error: " + error + ", " + 
+            		"p: " + p_term + ", " + 
+            		"v: " + v_term + ", " + 
+    				"a: " + a_term + ", " + 
+    				output);
 
             // Update smart dashbaord
             String point_info = mPathPoint + "," + IdealPlotSerializer.serializePathPoint(realPoint);

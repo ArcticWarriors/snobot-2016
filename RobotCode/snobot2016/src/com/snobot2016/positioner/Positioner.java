@@ -84,7 +84,7 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         // Orientation
-        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
+        mOrientation = (mGyro.getAngle() + mOffset);
         double orientationRadians = Math.toRadians(mOrientation);
 
         // ChangeInDistance and X/Y
@@ -170,7 +170,7 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setOrientationRadians(double inputRadians)
     {
-        mOffset = Utilities.boundAngle0to360Degrees(Math.toDegrees(inputRadians));
+    	setOrientationDegrees(Math.toDegrees(inputRadians));
     }
 
     /**
@@ -181,7 +181,10 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setOrientationDegrees(double inputDegrees)
     {
-        mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
+        //mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
+        mOffset = (inputDegrees);
+
+        mGyro.reset();
     }
 
     @Override
@@ -205,7 +208,7 @@ public class Positioner implements ISubsystem, IPositioner
     {
         SmartDashboard.putNumber(SmartDashBoardNames.sX_POSITION, mXPosition);
         SmartDashboard.putNumber(SmartDashBoardNames.sY_POSITION, mYPosition);
-        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, mOrientation);
+        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, mOffset = Utilities.boundAngle0to360Degrees(mOrientation));
         SmartDashboard.putNumber(SmartDashBoardNames.sSPEED, mSpeed);
     }
 
