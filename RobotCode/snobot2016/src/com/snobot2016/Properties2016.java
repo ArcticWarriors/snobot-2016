@@ -45,36 +45,7 @@ public class Properties2016
     public static final StringProperty sAUTON_DEFENSE_DIRECTORY;
     public static final StringProperty sAUTON_POST_DEFENSE_DIRECTORY;
     public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
-    public static final DoubleProperty sK_VELOCITY = new DoubleProperty("KVelocity", 1);// TODO
-                                                                                        // A
-                                                                                        // bunch
-                                                                                        // of
-                                                                                        // testing
-                                                                                        // to
-                                                                                        // find
-                                                                                        // the
-                                                                                        // k
-                                                                                        // values
-    public static final DoubleProperty sK_ACCELERATION = new DoubleProperty("KAcceleration", 1);// TODO
-                                                                                                // A
-                                                                                                // bunch
-                                                                                                // of
-                                                                                                // testing
-                                                                                                // to
-                                                                                                // find
-                                                                                                // the
-                                                                                                // k
-                                                                                                // values
-    public static final DoubleProperty sK_POSITION = new DoubleProperty("KPosition", 1);// TODO
-                                                                                        // A
-                                                                                        // bunch
-                                                                                        // of
-                                                                                        // testing
-                                                                                        // to
-                                                                                        // find
-                                                                                        // the
-                                                                                        // k
-                                                                                        // values
+
     // Autonomous modes
     public static final String sSTUPID_DRIVE_STRAIGHT = "StupidDriveStraight";
     public static final String sDRIVE_STRAIGHT_A_DISTANCE = "DriveStraightADistance";
@@ -93,6 +64,9 @@ public class Properties2016
     public static final String sFUDGE_THE_POSITION = "FudgeThePosition";
     public static final String sGO_TO_XY_PATH = "GoToXYPath";
     public static final String sGO_TO_LOW_GOAL = "GoToLowGoal";
+    public static final String sSMART_HARVESTER = "SmartHarvester";
+    public static final String sSUPER_SMART_HARVESTER = "SuperSmartHarvester";
+    public static final String sCROSS_DEFENSE = "CrossDefense";
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
@@ -125,6 +99,7 @@ public class Properties2016
     // Harvestor Pot
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
+    public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
 
     public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("LeftDriveEncoderDPP", -0.4);
     public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("RightDriveEncoderDPP", 0.4);

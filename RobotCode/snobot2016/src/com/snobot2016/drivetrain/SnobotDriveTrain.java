@@ -32,6 +32,7 @@ public class SnobotDriveTrain implements IDriveTrain
 
         mLeftEncoder.setDistancePerPulse(Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue());
         mRightEncoder.setDistancePerPulse(Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue());
+        mRobotDrive.setSafetyEnabled(false);
     }
 
     @Override

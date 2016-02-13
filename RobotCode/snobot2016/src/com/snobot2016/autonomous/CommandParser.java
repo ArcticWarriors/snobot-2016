@@ -16,6 +16,7 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
+import com.snobot2016.smartdashboard.DefenseInFront;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,11 +30,19 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class CommandParser extends ACommandParser
 {
+
     private static final double sEXPECTED_DT = .02;
 
     protected Snobot mSnobot;
     protected ITable mAutonTable;
     protected String mParserName;
+    protected CommandParser mDefenseParser;
+    protected DefenseInFront mDefenseGetter;
+
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
+    {
+        this(aSnobot, aAutonTable, aParserName, null, null);
+    }
 
     /**
      * Creates a CommandParser object.
@@ -41,12 +50,14 @@ public class CommandParser extends ACommandParser
      * @param aSnobot
      *            The robot using the CommandParser.
      */
-    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName, CommandParser aDefenseParser, DefenseInFront aDefenseGetter)
     {
         super(" ", "#");
         mSnobot = aSnobot;
         mAutonTable = aAutonTable;
         mParserName = aParserName;
+        mDefenseParser = aDefenseParser;
+        mDefenseGetter = aDefenseGetter;
     }
 
     /**
@@ -81,7 +92,6 @@ public class CommandParser extends ACommandParser
                 newCommand = new TurnWithDegrees(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)));
                 break;
-
             case Properties2016.sGO_TO_XY:
                 newCommand = new GoToXY(mSnobot.getDriveTrain(), mSnobot.getPositioner(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)));
@@ -109,10 +119,14 @@ public class CommandParser extends ACommandParser
             case Properties2016.sTILT_RAISE_SCALER:
                 newCommand = new TiltRaiseScaler(Double.parseDouble(args.get(1)), mSnobot.getScaling());
                 break;
-            case Properties2016.sSMART_HARVESTOR:
+            case Properties2016.sSMART_HARVESTER:
                 newCommand = new SmartRaiseLowerHarvester(mSnobot.getHarvester(), args.get(1));
                 break;
+            case Properties2016.sSUPER_SMART_HARVESTER:
+                newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
+                break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
+
             {
                 PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
                         Double.parseDouble(args.get(2)), // Max Velocity
@@ -159,15 +173,29 @@ public class CommandParser extends ACommandParser
                 newCommand = new GoToLowGoal(mSnobot.getPositioner(), mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)));
                 break;
+            case Properties2016.sCROSS_DEFENSE:
+            {
+                if (mDefenseParser != null)
+                {
+                    newCommand = mDefenseParser.readFile(mDefenseGetter.getDefensePath());
+                }
+                else
+                {
+                    addError("Defense parser or defense getter is null");
+                }
+                break;
+            }
+            default:
+                addError("Received unexpected command name '" + commandName + "'");
             }
         }
         catch (IndexOutOfBoundsException e)
         {
-            System.err.println("You have not specified enough aguments for the command: " + commandName + ". " + e.getMessage());
+            addError("You have not specified enough aguments for the command: " + commandName + ". " + e.getMessage());
         }
         catch (Exception e)
         {
-            System.err.println("Failed to parse the command: " + commandName + ". " + e.getMessage());
+            addError("Failed to parse the command: " + commandName + ". " + e.getMessage());
             e.printStackTrace();
         }
         return newCommand;
