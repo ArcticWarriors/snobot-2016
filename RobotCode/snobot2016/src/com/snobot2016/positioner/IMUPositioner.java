@@ -3,12 +3,21 @@ package com.snobot2016.positioner;
 import com.snobot.xlib.ISubsystem;
 import com.snobot.xlib.Logger;
 import com.snobot.xlib.Utilities;
+import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Monitors the robot's X/Y-position, orientation, total distance traveled, and
+ * speed.
+ * 
+ * @author Alec/Andrew
+ *
+ */
 public class IMUPositioner implements IPositioner, ISubsystem
 {
     private double mXPosition;
@@ -20,14 +29,25 @@ public class IMUPositioner implements IPositioner, ISubsystem
     private Gyro mGyro;
     private Accelerometer mAccelerometer;
     private IDriveTrain mDriveTrain;
-    private double mSpeedX;
-    private double mSpeedY;
+    private double mVelocityX;
+    private double mVelocityY;
+    private double mSpeed;
     public Logger mLogger;
     private double mOffset;
-    private double mAccelerationX;
-    private double mAccelerationY;
     private double mLastTime;
 
+    /**
+     * Creates a new Positioner object.
+     * 
+     * @param aGyro
+     *            The Gyro to use.
+     * @param aAccelerometer
+     *            The accelerometer to use.
+     * @param aDriveTrain
+     *            The DriveTrain to use.
+     * @param aLogger
+     *            The robot's Logger.
+     */
     public IMUPositioner(Gyro aGyro, Accelerometer aAccelerometer, IDriveTrain aDriveTrain, Logger aLogger)
     {
         mGyro = aGyro;
@@ -40,13 +60,15 @@ public class IMUPositioner implements IPositioner, ISubsystem
         mTotalDistance = 0;
         mChangeInDistance = 0;
         mTimer = new Timer();
-        mSpeedX = 0;
-        mSpeedY = 0;
-        mAccelerationX = 0;
-        mAccelerationY = 0;
+        mVelocityX = 0;
+        mVelocityY = 0;
+        mSpeed = 0;
         mLastTime = 0;
     }
 
+    /**
+     * Starts timer and adds headers to Logger.
+     */
     @Override
     public void init()
     {
@@ -59,121 +81,169 @@ public class IMUPositioner implements IPositioner, ISubsystem
         mLogger.addHeader("Speed");
     }
 
+    /**
+     * Calculates the robot's current X/Y-position, orientation, distance
+     * traveled, and speed.
+     */
     @Override
     public void update()
     {
 
         // Orientation
         mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
-        double orientationRadians = Math.toRadians(mOrientation);
 
-        mAccelerationX = mAccelerometer.getX();
-        mSpeedX += (mAccelerationX * mLastTime);
+        double deltaTime = mTimer.get() - mLastTime;
 
-        mAccelerationY = mAccelerometer.getX();
-        mSpeedY += (mAccelerationX * mLastTime);
-        // double changeInDistanceX = mSpeedX;
-        // double changeInDistanceY;
-        // mTotalDistance = mSpeed
+        double accelX = mAccelerometer.getX();
+        mVelocityX += (accelX * deltaTime);
+        double xDistance = (mVelocityX * deltaTime) + (.5 * accelX * Math.pow(deltaTime, 2));
+        mXPosition += xDistance;
+
+        double accelY = mAccelerometer.getX();
+        mVelocityY += (accelY * deltaTime);
+        double yDistance = (mVelocityY * deltaTime) + (.5 * accelY * Math.pow(deltaTime, 2));
+        mYPosition += yDistance;
+
+        mTotalDistance += Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        mSpeed = Math.sqrt(Math.pow(mVelocityX, 2) + Math.pow(mVelocityY, 2));
         mLastTime = mTimer.get();
     }
 
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
+    /**
+     * Puts the robot's X/Y-position, orientation, and speed on the
+     * SmartDashboard.
+     */
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
-
+        SmartDashboard.putNumber(SmartDashBoardNames.sX_POSITION, mXPosition);
+        SmartDashboard.putNumber(SmartDashBoardNames.sY_POSITION, mYPosition);
+        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, mOrientation);
+        SmartDashboard.putNumber(SmartDashBoardNames.sSPEED, mSpeed);
     }
 
+    /**
+     * Sends the robot's X/Y-position, orientation, total distance traveled,
+     * change in distance traveled, and speed to the logger.
+     */
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
-
+        mLogger.updateLogger(mXPosition);
+        mLogger.updateLogger(mYPosition);
+        mLogger.updateLogger(mOrientation);
+        mLogger.updateLogger(mSpeed);
     }
 
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
 
     }
 
+    /**
+     * @return The robot's current X-position.
+     */
     @Override
     public double getXPosition()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mXPosition;
     }
 
+    /**
+     * @return The robot's current Y-position.
+     */
     @Override
     public double getYPosition()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mYPosition;
     }
 
+    /**
+     * @return The robot's current orientation in degrees.
+     */
     @Override
     public double getOrientationDegrees()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mOrientation;
     }
 
+    /**
+     * @return the robot's current orientation in radians.
+     */
     @Override
     public double getOrientationRadians()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return Math.toRadians(mOrientation);
     }
 
+    /**
+     * @return The total distance traversed by the robot.
+     */
     @Override
     public double getTotalDistance()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return mTotalDistance;
     }
 
+    /**
+     * Assigns a new X-position to the robot.
+     * 
+     * @param inputX
+     *            The new X-position.
+     */
     @Override
     public void setXPosition(double inputX)
     {
-        // TODO Auto-generated method stub
-
+        mXPosition = inputX;
     }
 
+    /**
+     * Assigns a new Y-position to the robot.
+     * 
+     * @param inputY
+     *            The new Y-position.
+     */
     @Override
     public void setYPosition(double inputY)
     {
-        // TODO Auto-generated method stub
-
+        mYPosition = inputY;
     }
 
+    /**
+     * Assigns a new orientation in radians to the robot.
+     * 
+     * @param inputRadians
+     *            The new orientation in radians.
+     */
     @Override
     public void setOrientationRadians(double inputRadians)
     {
-        // TODO Auto-generated method stub
-
+        mOrientation = Math.toDegrees(inputRadians);
     }
 
+    /**
+     * Assigns a new orientation in degrees to the robot.
+     * 
+     * @param inputDegrees
+     *            The new orientation in degrees.
+     */
     @Override
     public void setOrientationDegrees(double inputDegrees)
     {
-        // TODO Auto-generated method stub
-
+        mOrientation = inputDegrees;
     }
 
 }
