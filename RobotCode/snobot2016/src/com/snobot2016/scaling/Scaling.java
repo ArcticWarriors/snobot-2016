@@ -22,7 +22,7 @@ public class Scaling implements IScaling
     private SpeedController mScaleMoveMotor;
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mJoystick;
-    private AnalogInput mPot; // Tilt Motor Potentiometer
+    private AnalogInput mTiltPot; // Tilt Motor Potentiometer
     private Timer mTimer;
     private double mMoveSpeed;
     private double mTiltSpeed;
@@ -30,16 +30,20 @@ public class Scaling implements IScaling
     private double mAngle; // Current Potentiometer Angle
     private boolean mIsUp; // Is scaling up
     private boolean mIsDown; // Is scaling down
+    private AnalogInput mExtensionPot;
+    private double mExtended;
 
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
-            AnalogInput aPot)
+            AnalogInput aTiltPot, AnalogInput aExtensionPot)
     {
         mScaleMoveMotor = aScaleMoveMotor;
         mScaleTiltMotor = aScaleTiltMotor;
         mJoystick = aOperatorJoystick;
         mLogger = aLogger;
         mTimer = new Timer();
-        mPot = aPot; // Potentiometer
+        mTiltPot = aTiltPot; // Tilt Potentiometer
+        mExtensionPot = aExtensionPot; // Extension Potentiometer
+
     }
 
     @Override
@@ -53,7 +57,7 @@ public class Scaling implements IScaling
     {
         double high_angle = Properties2016.sSCALE_HIGH_ANGLE.getValue();
         double low_angle = Properties2016.sSCALE_LOW_ANGLE.getValue();
-        calculateAngle(mPot.getVoltage());
+        calculateAngle(mTiltPot.getVoltage());
 
         if (mAngle == high_angle)
         {
@@ -243,6 +247,13 @@ public class Scaling implements IScaling
         System.out.println("CHANGING SPEED TO: " + (error * kP));
         mScaleTiltMotor.set(error * kP);
         return (Math.abs(error) < 5);
+    }
+
+    @Override
+    public void percentageScaled()
+    {
+
+
     }
 
 }

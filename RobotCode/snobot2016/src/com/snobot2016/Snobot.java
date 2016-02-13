@@ -11,8 +11,8 @@ import com.snobot2016.harvester.Harvester;
 import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveArcadeJoystick;
+import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveJoystickFactory;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
@@ -67,6 +67,7 @@ public class Snobot extends ASnobot
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
     private AnalogInput mScalePot;
+    private AnalogInput mExtensionPot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
@@ -124,7 +125,8 @@ public class Snobot extends ASnobot
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
         mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
+        mExtensionPot = new AnalogInput(Properties2016.sEXTENSION_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot, mExtensionPot);
         mSubsystems.add(mScaling);
 
         // Harvester
