@@ -6,7 +6,6 @@ import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.smartdashboard.DefenseInFront;
 import com.snobot2016.smartdashboard.SelectAutonomous;
 import com.snobot2016.smartdashboard.SelectStartPosition;
-import com.snobot2016.smartdashboard.SelectStartPosition.StartPositions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -36,7 +35,7 @@ public class AutonFactory
         mPostDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sPOST_DEFENSE_AUTON_TABLE);
 
         mDefenseCommandParser = new CommandParser(aSnobot, mDefenseTable, "Defense");
-        mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable, "PostDefense");
+        mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable, "PostDefense", mDefenseCommandParser, mDefenseInFront);
 
         this.putOnDash();
         addListeners();
@@ -103,17 +102,8 @@ public class AutonFactory
         mSelectStartPosition.setStartPosition();
 
         CommandGroup cobbledCommandGroup = new CommandGroup();
-        boolean goingThroughDefense = true;
-        if (mSelectStartPosition.getSelected() == StartPositions.SPY_POSITION)
-        {
-            goingThroughDefense = false;
-        }
-
-        if (goingThroughDefense)
-        {
-            cobbledCommandGroup.addSequential(mDefenseCommandParser.readFile(mDefenseInFront.getDefensePath()));
-        }
         cobbledCommandGroup.addSequential(mPostDefenseCommandParser.readFile(mSelectAutonomous.getSelected()));
+
         return cobbledCommandGroup;
     }
 }
