@@ -53,4 +53,8 @@ public interface IScaling extends ISubsystem
     double percentageScaled();
 
     boolean reachGoalAngle(ScaleAngles goal);
+
+    boolean safeToRaise();
+
+    boolean safeToLower();
 }
