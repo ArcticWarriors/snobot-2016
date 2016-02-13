@@ -17,10 +17,10 @@ public class Properties2016
     // Speed Controller
     public static final IntegerProperty sDRIVER_LEFT_MOTOR_PORT = new IntegerProperty("DriverLeftMotor", 0);
     public static final IntegerProperty sDRIVER_RIGHT_MOTOR_PORT = new IntegerProperty("DriverRightMotor", 1);
-    public static final IntegerProperty sSCALE_MOVE_MOTOR_PORT = new IntegerProperty("ScaleMoveMotor", 2);
     public static final IntegerProperty sSCALE_TILT_MOTOR_PORT = new IntegerProperty("ScaleTiltMotor", 3);
+    public static final IntegerProperty sSCALE_MOVE_MOTOR_PORT = new IntegerProperty("ScaleMoveMotor", 4);
     public static final IntegerProperty sHARVESTER_ROLLER_MOTOR_PORT = new IntegerProperty("HarvesterRollerMotor", 4);
-    public static final IntegerProperty sHARVESTER_PIVOT_MOTOR_PORT = new IntegerProperty("HarvesterPivotMotor", 5);
+    public static final IntegerProperty sHARVESTER_PIVOT_MOTOR_PORT = new IntegerProperty("HarvesterPivotMotor", 1);
 
     // Digital
     public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_A = new IntegerProperty("LeftDriveEncoderA", 0);
@@ -30,9 +30,9 @@ public class Properties2016
 
     // Analog
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
-    public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 2);
-    public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 3);
-    public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 4);
+    public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 0);
+    public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 2);
+    public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 1);
 
     // Relay
     public static final IntegerProperty sLIGHT_RELAY = new IntegerProperty("LightRelay", 1);

@@ -208,7 +208,7 @@ public class Positioner implements ISubsystem, IPositioner
     {
         SmartDashboard.putNumber(SmartDashBoardNames.sX_POSITION, mXPosition);
         SmartDashboard.putNumber(SmartDashBoardNames.sY_POSITION, mYPosition);
-        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, mOffset = Utilities.boundAngle0to360Degrees(mOrientation));
+        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, Utilities.boundAngle0to360Degrees(mOrientation));
         SmartDashboard.putNumber(SmartDashBoardNames.sSPEED, mSpeed);
     }
 

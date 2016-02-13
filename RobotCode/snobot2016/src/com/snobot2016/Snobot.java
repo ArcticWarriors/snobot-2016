@@ -24,12 +24,15 @@ import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
@@ -96,6 +99,8 @@ public class Snobot extends ASnobot
     public Snobot()
     {
         super(new SimpleDateFormat("yyyyMMdd_hhmmssSSS"));
+        
+        boolean isRealRobot = true;
 
         // Raw Joysticks
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
@@ -105,45 +110,62 @@ public class Snobot extends ASnobot
         // Our Joysticks
         mDriverXbox = new SnobotDriveXboxJoystick(mRawDriverJoystick);
         mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
-        mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
-        mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
-        mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox, mDriverFlightStick, mArcadeJoystick, mLogger);
+//        mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
+//        mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
+//        mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox, mDriverFlightStick, mArcadeJoystick, mLogger);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
-        mSubsystems.add(mDriverFlightStick);
-        mSubsystems.add(mArcadeJoystick);
-        mSubsystems.add(mJoystickFactory);
+//        mSubsystems.add(mDriverFlightStick);
+//        mSubsystems.add(mArcadeJoystick);
+//        mSubsystems.add(mJoystickFactory);
 
         // Drive train
-        mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
-                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
-        mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
-        mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mJoystickFactory);
-        mSubsystems.add(mDrivetrain);
+        if(isRealRobot)
+        {
+            mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
+            mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+            mDriveLeftMotor = new CANTalon(2);
+            SpeedController leftB = new CANTalon(3);
+            mDriveRightMotor = new CANTalon(1);
+            SpeedController rightB = new CANTalon(4);
+            mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, leftB, mDriveRightMotor, rightB, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox);
+            
+            mSubsystems.add(mDrivetrain);
+        }
+        else
+        {
+//            mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
+//            mRightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+//            mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
+//            mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
+//            mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox);
+//            mSubsystems.add(mDrivetrain);
+        }
 
         // Scaling
-        mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
-        mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
+        mScaleMoveMotor = new Talon(4);
+        mScaleTiltMotor = new Talon(3);
         mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
         mExtensionPot = new AnalogInput(Properties2016.sEXTENSION_POT_PORT.getValue());
         mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot, mExtensionPot);
         mSubsystems.add(mScaling);
 
         // Harvester
-        mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
-        mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
+        mHarvesterPivotMotor = new Talon(1);
+        mHarvesterRollerMotor = new Talon(2);
         mHarvesterPot = new AnalogInput(Properties2016.sHARVESTER_POT_PORT.getValue());
         mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger, mHarvesterPot);
         mSubsystems.add(mHarvester);
 
         // Positioner
         mGyro = new ADXRS450_Gyro();
-        mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
+//        mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
         // mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer,
         // mDrivetrain, mLogger);//(new Positioner(mGyro, mDrivetrain, mLogger);
+
+//        mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
+        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
+        
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous
