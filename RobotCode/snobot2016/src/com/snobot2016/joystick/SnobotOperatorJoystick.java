@@ -16,6 +16,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     private boolean mMotorPivotSpeedDown;
     private boolean mFinalCountDown;
 
+    private boolean mGroundAngle;
+    private boolean mMoveForIntakeAngle;
+    private boolean mVerticalAngle;
+    private boolean mHookAngle;
+
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;
@@ -24,7 +29,6 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void init()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -39,33 +43,34 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         mMotorPivotSpeedUp = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
         mMotorPivotSpeedDown = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
         mFinalCountDown = mJoystick.getRawButton(XboxButtonMap.START_BUTTON);
+
+        mGroundAngle = mJoystick.getRawButton(XboxButtonMap.LEFT_TRIGGER);
+        mMoveForIntakeAngle = mJoystick.getRawButton(XboxButtonMap.RIGHT_TRIGGER);
+        mVerticalAngle = mJoystick.getRawButton(XboxButtonMap.L3_BUTTON);
+        mHookAngle = mJoystick.getRawButton(XboxButtonMap.R3_BUTTON);
     }
 
     @Override
     public void control()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void rereadPreferences()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateSmartDashboard()
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void updateLog()
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -100,13 +105,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         return mMotorPivotSpeedDown;
     }
 
-
-	@Override
-	public boolean isFinalCountDown() {
-		// TODO Auto-generated method stub
-		return mFinalCountDown;
-	}
-
+    @Override
+    public boolean isFinalCountDown()
+    {
+        return mFinalCountDown;
+    }
 
     @Override
     public boolean isHarvesterRollerForward()
@@ -118,6 +121,34 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     public boolean isHarvesterRollerReverse()
     {
         return mMotorRollerSpeedReverse;
+    }
+
+    @Override
+    public boolean isScaleGoToGroundPressed()
+    {
+        // TODO Auto-generated method stub
+        return mGroundAngle;
+    }
+
+    @Override
+    public boolean isScaleGoToVerticalPressed()
+    {
+        // TODO Auto-generated method stub
+        return mVerticalAngle;
+    }
+
+    @Override
+    public boolean isScaleMoveForIntakePressed()
+    {
+        // TODO Auto-generated method stub
+        return mMoveForIntakeAngle;
+    }
+
+    @Override
+    public boolean isScaleGoToHookPositionPressed()
+    {
+        // TODO Auto-generated method stub
+        return mHookAngle;
     }
 
 }

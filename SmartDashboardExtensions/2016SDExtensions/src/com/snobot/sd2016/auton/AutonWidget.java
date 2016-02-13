@@ -1,6 +1,6 @@
 package com.snobot.sd2016.auton;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,9 +30,9 @@ public class AutonWidget extends StaticWidget
         mDefensePanel = new AutonPanel();
         mPostDefensePanel = new AutonPanel();
 
-        setLayout(new BorderLayout());
-        add(mDefensePanel, BorderLayout.WEST);
-        add(mPostDefensePanel, BorderLayout.EAST);
+        setLayout(new GridLayout(1, 2));
+        add(mDefensePanel);
+        add(mPostDefensePanel);
 
         mDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sDEFENSE_AUTON_TABLE);
         mPostDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sPOST_DEFENSE_AUTON_TABLE);
@@ -90,8 +90,6 @@ public class AutonWidget extends StaticWidget
                 String auto_text = aAutonTable.getString(SmartDashBoardNames.sROBOT_COMMAND_TEXT, "Nothing Received");
                 aAutonTable.putBoolean(SmartDashBoardNames.sSAVE_AUTON, false);
                 aAutonPanel.getTextArea().setText(auto_text);
-
-                System.out.println("Getting auto command" + auto_text);
 
             }
         };

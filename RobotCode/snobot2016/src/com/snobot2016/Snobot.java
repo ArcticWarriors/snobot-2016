@@ -12,7 +12,9 @@ import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.IOperatorJoystick;
 import com.snobot2016.joystick.SnobotDriveFlightStick;
-import com.snobot2016.joystick.SnobotDriverJoystick;
+import com.snobot2016.joystick.SnobotDriveArcadeJoystick;
+import com.snobot2016.joystick.SnobotDriveJoystickFactory;
+import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
 import com.snobot2016.positioner.IPositioner;
@@ -21,12 +23,14 @@ import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -47,6 +51,8 @@ public class Snobot extends ASnobot
     // Our Joysticks
     private IDriverJoystick mDriverXbox;
     private IDriverJoystick mDriverFlightStick;
+    private IDriverJoystick mArcadeJoystick;
+    private IDriverJoystick mJoystickFactory;
 
     // Drivetrain
     private SpeedController mDriveLeftMotor;
@@ -60,11 +66,13 @@ public class Snobot extends ASnobot
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
+    private AnalogInput mScalePot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
     private SpeedController mHarvesterRollerMotor;
     private IHarvester mHarvester;
+    private AnalogInput mHarvesterPot;
 
     // Positioner
     private IPositioner mSnobotPositioner;
@@ -89,14 +97,19 @@ public class Snobot extends ASnobot
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
         mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT2.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
+        
 
         // Our Joysticks
-        mDriverXbox = new SnobotDriverJoystick(mRawDriverJoystick);
+        mDriverXbox = new SnobotDriveXboxJoystick(mRawDriverJoystick);
         mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
         mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
+        mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
+        mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox, mDriverFlightStick, mArcadeJoystick, mLogger);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
         mSubsystems.add(mDriverFlightStick);
+        mSubsystems.add(mArcadeJoystick);
+        mSubsystems.add(mJoystickFactory);
 
         // Drive train
         mLeftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
@@ -104,19 +117,21 @@ public class Snobot extends ASnobot
                 Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
         mDriveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
         mDriveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mDriverXbox, mDriverFlightStick);
+        mDrivetrain = new SnobotDriveTrain(mDriveLeftMotor, mDriveRightMotor, mLeftDriveEncoder, mRightDriveEncoder, mJoystickFactory);
         mSubsystems.add(mDrivetrain);
 
         // Scaling
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger);
+        mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
         mSubsystems.add(mScaling);
 
         // Harvester
         mHarvesterPivotMotor = new Talon(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
         mHarvesterRollerMotor = new Talon(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger);
+        mHarvesterPot = new AnalogInput(Properties2016.sHARVESTER_POT_PORT.getValue());
+        mHarvester = new Harvester(mHarvesterRollerMotor, mHarvesterPivotMotor, mOperatorJoystick, mLogger, mHarvesterPot);
         mSubsystems.add(mHarvester);
 
         // Positioner
@@ -138,7 +153,7 @@ public class Snobot extends ASnobot
             mAxisCamera = new AxisCamera(Properties2016.sCAMERA_HOST_IP.getValue());
             mAxisCamera.writeBrightness(10);
             mCamera = new Camera(mAxisCamera);
-            
+
         }
         else
         {
@@ -157,6 +172,16 @@ public class Snobot extends ASnobot
     {
         mAutonCommand = mAutonFactory.buildAnAuton();
         mAutonCommand.start();
+    }
+
+    @Override
+    public void teleopInit()
+    {
+    	if(mAutonCommand != null)
+    	{
+    		mAutonCommand.cancel();
+            Scheduler.getInstance().run();
+    	}
     }
 
     public IDriveTrain getDriveTrain()

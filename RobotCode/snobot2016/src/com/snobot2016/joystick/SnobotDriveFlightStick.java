@@ -76,4 +76,22 @@ public class SnobotDriveFlightStick implements IDriverJoystick
 
     }
 
+    @Override
+    public double getArcadePower()
+    {
+        return 0;
+    }
+
+    @Override
+    public double getArcadeTurn()
+    {
+        return 0;
+    }
+
+    @Override
+    public boolean isArcadeMode()
+    {
+        return false;
+    }
+
 }

@@ -31,6 +31,7 @@ public class Positioner implements ISubsystem, IPositioner
     private IDriveTrain mDriveTrain;
     private double mSpeed;
     public Logger mLogger;
+    private double mOffset;
 
     // private
 
@@ -58,6 +59,7 @@ public class Positioner implements ISubsystem, IPositioner
         mDriveTrain = aDriveTrain;
         mTimer = new Timer();
         mLogger = aLogger;
+        mOffset = 0;
     }
 
     /**
@@ -82,7 +84,7 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         // Orientation
-        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle());
+        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
         double orientationRadians = Math.toRadians(mOrientation);
 
         // ChangeInDistance and X/Y
@@ -168,7 +170,7 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setOrientationRadians(double inputRadians)
     {
-        mOrientation = Math.toDegrees(inputRadians);
+        mOffset = Utilities.boundAngle0to360Degrees(Math.toDegrees(inputRadians));
     }
 
     /**
@@ -179,7 +181,7 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setOrientationDegrees(double inputDegrees)
     {
-        mOrientation = inputDegrees;
+        mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
     }
 
     @Override
