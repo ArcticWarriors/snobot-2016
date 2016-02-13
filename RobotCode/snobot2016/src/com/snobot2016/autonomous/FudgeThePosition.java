@@ -4,7 +4,7 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/*
+/**
  * @author Andrew
  * Command to take (X,Y) positions and replace the once in the positioner with them.
  */
@@ -14,7 +14,7 @@ public class FudgeThePosition extends Command
     private double mXPosition;
     private double mYPosition;
 
-    /*
+    /**
      * Creates a new FudgeThePosition command.
      * 
      * @param aPositioner 
