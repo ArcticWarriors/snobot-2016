@@ -25,7 +25,7 @@ public class DefenseInFront
      */
     public enum Defenses
     {
-        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, OUTER_WORKS, DO_NOTHING;
+        LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, DO_NOTHING;
     }
 
     /*
@@ -44,7 +44,6 @@ public class DefenseInFront
         mDefenseInFront.addObject("Sally Port", Defenses.SALLY_PORT);
         mDefenseInFront.addObject("Rock Wall", Defenses.ROCK_WALL);
         mDefenseInFront.addObject("Rough Terrain", Defenses.ROUGH_TERRAIN);
-        mDefenseInFront.addObject("Just Reach Outer Works", Defenses.OUTER_WORKS);
         mDefenseInFront.addObject("Do Nothing", Defenses.DO_NOTHING);
     }
 

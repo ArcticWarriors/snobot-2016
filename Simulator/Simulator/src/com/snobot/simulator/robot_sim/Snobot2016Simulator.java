@@ -15,12 +15,18 @@ public class Snobot2016Simulator extends ASimulator
     public Snobot2016Simulator()
     {
         // Speed Controllers
-        SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
-        SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
-        SpeedControllerWrapper scaleLiftMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
-        SpeedControllerWrapper scaleTiltMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
-        SpeedControllerWrapper intakeMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
-        SpeedControllerWrapper intakeTiltMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
+        SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sDRIVER_LEFT_MOTOR_PORT.getValue());
+        SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sDRIVER_RIGHT_MOTOR_PORT.getValue());
+        SpeedControllerWrapper scaleLiftMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
+        SpeedControllerWrapper scaleTiltMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
+        SpeedControllerWrapper intakeMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT.getValue());
+        SpeedControllerWrapper intakeTiltMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                .get(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT.getValue());
 
         leftDriveMotor.setName("Left Drive");
         rightDriveMotor.setName("Right Drive");
@@ -30,8 +36,10 @@ public class Snobot2016Simulator extends ASimulator
         intakeTiltMotor.setName("Intake (Tilt)");
 
         // Encoders
-        EncoderWrapper leftDriveEncoder  = SensorActuatorRegistry.get().getEncoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(),  Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
-        EncoderWrapper rightDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(), Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
+        EncoderWrapper leftDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sLEFT_DRIVE_ENCODER_PORT_B.getValue());
+        EncoderWrapper rightDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A.getValue(),
+                Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B.getValue());
         leftDriveEncoder.setName("Left Drive");
         rightDriveEncoder.setName("Right Drive");
         leftDriveEncoder.setSpeedController(leftDriveMotor);
@@ -58,6 +66,7 @@ public class Snobot2016Simulator extends ASimulator
         leftDriveMotor.setMotorParameters(drivetrainSpeed);
         rightDriveMotor.setMotorParameters(-drivetrainSpeed);
         scaleTiltMotor.setMotorParameters(30); // Degrees / second
+        scaleTiltMotor.setPosition(30);
         intakeTiltMotor.setMotorParameters(120);
         scaleLiftMotor.setMotorParameters(10);
 

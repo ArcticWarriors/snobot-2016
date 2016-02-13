@@ -51,7 +51,7 @@ public class RobotWidget2016 extends AutoUpdateWidget
 
         mDrawer.setScaleMotorSpeed(scale_move_motor);
         mDrawer.setScaleTiltMotorSpeed(scale_tilt_motor);
-        mDrawer.setClimbTiltAngle(-scale_pot_angle);
+        mDrawer.setClimbTiltAngle(scale_pot_angle);
         mDrawer.setExtensionHeight(scale_height);
 
         repaint();

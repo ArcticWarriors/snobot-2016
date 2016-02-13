@@ -16,6 +16,7 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
+import com.snobot2016.smartdashboard.DefenseInFront;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -35,6 +36,13 @@ public class CommandParser extends ACommandParser
     protected Snobot mSnobot;
     protected ITable mAutonTable;
     protected String mParserName;
+    protected CommandParser mDefenseParser;
+    protected DefenseInFront mDefenseGetter;
+
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
+    {
+        this(aSnobot, aAutonTable, aParserName, null, null);
+    }
 
     /**
      * Creates a CommandParser object.
@@ -42,12 +50,14 @@ public class CommandParser extends ACommandParser
      * @param aSnobot
      *            The robot using the CommandParser.
      */
-    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName, CommandParser aDefenseParser, DefenseInFront aDefenseGetter)
     {
         super(" ", "#");
         mSnobot = aSnobot;
         mAutonTable = aAutonTable;
         mParserName = aParserName;
+        mDefenseParser = aDefenseParser;
+        mDefenseGetter = aDefenseGetter;
     }
 
     /**
@@ -151,15 +161,30 @@ public class CommandParser extends ACommandParser
                 newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
                 break;
             }
+
+            case Properties2016.sCROSS_DEFENSE:
+            {
+                if (mDefenseParser != null)
+                {
+                    newCommand = mDefenseParser.readFile(mDefenseGetter.getDefensePath());
+                }
+                else
+                {
+                    addError("Defense parser or defense getter is null");
+                }
+                break;
+            }
+            default:
+                addError("Received unexpected command name '" + commandName + "'");
             }
         }
         catch (IndexOutOfBoundsException e)
         {
-            System.err.println("You have not specified enough aguments for the command: " + commandName + ". " + e.getMessage());
+            addError("You have not specified enough aguments for the command: " + commandName + ". " + e.getMessage());
         }
         catch (Exception e)
         {
-            System.err.println("Failed to parse the command: " + commandName + ". " + e.getMessage());
+            addError("Failed to parse the command: " + commandName + ". " + e.getMessage());
             e.printStackTrace();
         }
         return newCommand;
