@@ -17,6 +17,7 @@ import com.snobot2016.joystick.SnobotDriveJoystickFactory;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
+import com.snobot2016.positioner.IMUPositioner;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
 import com.snobot2016.scaling.IScaling;
@@ -24,6 +25,7 @@ import com.snobot2016.scaling.Scaling;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
@@ -31,6 +33,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -77,6 +80,7 @@ public class Snobot extends ASnobot
     // Positioner
     private IPositioner mSnobotPositioner;
     private Gyro mGyro;
+    private Accelerometer mAccelerometer;
 
     // Autonomous
     private CommandGroup mAutonCommand;
@@ -136,7 +140,8 @@ public class Snobot extends ASnobot
 
         // Positioner
         mGyro = new AnalogGyro(Properties2016.sGYRO_SENSOR_PORT.getValue());
-        mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
+        mAccelerometer = new BuiltInAccelerometer();
+        mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer, mDrivetrain, mLogger);//(new Positioner(mGyro, mDrivetrain, mLogger);
         mSubsystems.add(mSnobotPositioner);
 
         // Autonomous

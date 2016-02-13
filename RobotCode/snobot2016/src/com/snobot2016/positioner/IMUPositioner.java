@@ -99,7 +99,7 @@ public class IMUPositioner implements IPositioner, ISubsystem
         double xDistance = (mVelocityX * deltaTime) + (.5 * accelX * Math.pow(deltaTime, 2));
         mXPosition += xDistance;
 
-        double accelY = mAccelerometer.getX();
+        double accelY = mAccelerometer.getY();
         mVelocityY += (accelY * deltaTime);
         double yDistance = (mVelocityY * deltaTime) + (.5 * accelY * Math.pow(deltaTime, 2));
         mYPosition += yDistance;
