@@ -35,6 +35,8 @@ public class Scaling implements IScaling
     private boolean mIsIn; // Is Scaling Extension Compressed
     private boolean mIsOut; // Is Scaling Extension Extended
     private double mVoltage;
+    private boolean mSafeToRaise;
+    private boolean mSafeToLower;
 
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
             AnalogInput aTiltPot, AnalogInput aExtensionPot)
@@ -83,8 +85,13 @@ public class Scaling implements IScaling
             mExtended = (((mVoltage - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())
                     / (Properties2016.sMAX_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())) * 100);
 
-            System.out.println(mVoltage);
+            // System.out.println(mVoltage);
         }
+
+        // System.out.println("mAngle is " + mAngle + " high angle is: " +
+        // high_angle + " low angle is: " + low_angle);
+        mSafeToRaise = mAngle < high_angle;
+        mSafeToLower = mAngle > low_angle;
     }
 
     @Override
@@ -94,22 +101,22 @@ public class Scaling implements IScaling
 
         if (mJoystick.isScaleGoToGroundPressed())
         {
-            System.out.println("GOING INTO GROUND");
+            // System.out.println("GOING INTO GROUND");
             reachGoalAngle(ScaleAngles.Ground);
         }
         else if (mJoystick.isScaleGoToHookPositionPressed())
         {
-            System.out.println("GOING INTO HOOK");
+            // System.out.println("GOING INTO HOOK");
             reachGoalAngle(ScaleAngles.Hook);
         }
         else if (mJoystick.isScaleMoveForIntakePressed())
         {
-            System.out.println("GOING TO MOVE FOR INTAKE");
+            // System.out.println("GOING TO MOVE FOR INTAKE");
             reachGoalAngle(ScaleAngles.MoveForIntake);
         }
         else if (mJoystick.isScaleGoToVerticalPressed())
         {
-            System.out.println("GOING INTO VERTICAL");
+            // System.out.println("GOING INTO VERTICAL");
             reachGoalAngle(ScaleAngles.Vertical);
         }
         else
@@ -260,8 +267,23 @@ public class Scaling implements IScaling
         double goalAngle = goal.getDesiredAngle();
         double kP = Properties2016.sK_P_ANGLE.getValue();
         double error = (goalAngle - mAngle);
-        System.out.println("CHANGING SPEED TO: " + (error * kP));
-        mScaleTiltMotor.set(error * kP);
+        double mSpeed = (error * kP);
+        // System.out.println("CHANGING SPEED TO: " + mSpeed);
+        System.out.println(" The goal angle is: " + goalAngle + ". The current angle is: " + mAngle);
+        if (mSpeed > 0)
+        {
+            if (safeToRaise())
+            {
+                mScaleTiltMotor.set(mSpeed);
+            }
+        }
+        else
+        {
+            if (safeToLower())
+            {
+                mScaleTiltMotor.set(mSpeed);
+            }
+        }
         return (Math.abs(error) < 5);
     }
 
@@ -269,6 +291,18 @@ public class Scaling implements IScaling
     public double percentageScaled()
     {
         return mExtended;
+    }
+
+    @Override
+    public boolean safeToRaise()
+    {
+        return mSafeToRaise;
+    }
+
+    @Override
+    public boolean safeToLower()
+    {
+        return mSafeToLower;
     }
 
 }

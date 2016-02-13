@@ -16,6 +16,7 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
+import com.snobot2016.scaling.IScaling.ScaleAngles;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -109,6 +110,9 @@ public class CommandParser extends ACommandParser
                 break;
             case Properties2016.sSUPER_SMART_HARVESTER:
                 newCommand = new SuperSmartRaiseLowerHarvester(mSnobot.getHarvester(), Double.parseDouble(args.get(1)));
+                break;
+            case Properties2016.sSMART_SCALER:
+                newCommand = new SmartScaler(mSnobot.getScaling(), ScaleAngles.valueOf(args.get(1)));
                 break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
 

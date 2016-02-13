@@ -63,6 +63,7 @@ public class Properties2016
     public static final String sDRIVE_TURN_PATH = "DriveTurnPath";
     public static final String sSMART_HARVESTER = "SmartHarvester";
     public static final String sSUPER_SMART_HARVESTER = "SuperSmartHarvester";
+    public static final String sSMART_SCALER = "SmartScaler";
 
     // Logger
     public static final IntegerProperty sLOG_COUNT = new IntegerProperty("LogCount", 25);
@@ -81,7 +82,7 @@ public class Properties2016
     public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0);
 
     // Scaler Pot
-    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 90);
+    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 110);
     public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("Minimum Angle", 0);
     public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
     public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
