@@ -100,6 +100,8 @@ public class AutonFactory
     public CommandGroup buildAnAuton()
     {
         mSelectStartPosition.setStartPosition();
+        
+        mDefenseCommandParser.readFile(mDefenseInFront.getDefensePath()); //Forces a re-read, publish to dashboard
 
         CommandGroup cobbledCommandGroup = new CommandGroup();
         cobbledCommandGroup.addSequential(mPostDefenseCommandParser.readFile(mSelectAutonomous.getSelected()));

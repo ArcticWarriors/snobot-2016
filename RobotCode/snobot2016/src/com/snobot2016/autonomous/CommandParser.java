@@ -174,6 +174,8 @@ public class CommandParser extends ACommandParser
                 }
                 break;
             }
+            default:
+                addError("Received unexpected command name '" + commandName + "'");
             }
         }
         catch (IndexOutOfBoundsException e)
