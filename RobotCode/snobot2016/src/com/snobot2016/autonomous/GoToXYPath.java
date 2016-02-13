@@ -11,6 +11,11 @@ import com.snobot2016.positioner.IPositioner;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/**
+ * A class that uses the motion profile pather to go to an (X,Y) position
+ * 
+ * @author Andrew
+ */
 public class GoToXYPath extends Command
 {
     private IDriveTrain mDriveTrain;
@@ -63,6 +68,10 @@ public class GoToXYPath extends Command
 
     }
 
+    /**
+     * Init- calculates the drive distance and turn degrees, plugs them into a
+     * path command, and adds it to the command group.
+     */
     @Override
     protected void initialize()
     {
@@ -88,12 +97,18 @@ public class GoToXYPath extends Command
         mCommandGroup.addSequential(mDriveStraightPath);
     }
 
+    /**
+     * Execute part- starts the command group
+     */
     @Override
     protected void execute()
     {
         mCommandGroup.start();
     }
 
+    /**
+     * returns the negation of whether or not the command group is still running
+     */
     @Override
     protected boolean isFinished()
     {

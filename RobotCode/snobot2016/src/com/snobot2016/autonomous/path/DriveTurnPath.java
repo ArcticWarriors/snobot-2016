@@ -7,6 +7,12 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Uses the path follower to turn with a motion profile
+ * 
+ * @author Andrew
+ *
+ */
 public class DriveTurnPath extends Command
 {
     private IDriveTrain mDriveTrain;
@@ -15,6 +21,15 @@ public class DriveTurnPath extends Command
 
     double mStartAngle;
 
+    /**
+     * 
+     * @param aDriveTrain
+     *            The robot's drive train
+     * @param aPositioner
+     *            The robot's positioner
+     * @param aSetpointIterator
+     *            A setpoint iterator for the path follower
+     */
     public DriveTurnPath(IDriveTrain aDriveTrain, IPositioner aPositioner, ISetpointIterator aSetpointIterator)
     {
         mDriveTrain = aDriveTrain;
