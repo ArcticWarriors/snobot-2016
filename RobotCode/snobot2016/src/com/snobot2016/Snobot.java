@@ -11,8 +11,8 @@ import com.snobot2016.harvester.Harvester;
 import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.IDriverJoystick;
 import com.snobot2016.joystick.IOperatorJoystick;
-import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveArcadeJoystick;
+import com.snobot2016.joystick.SnobotDriveFlightStick;
 import com.snobot2016.joystick.SnobotDriveJoystickFactory;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
@@ -75,6 +75,7 @@ public class Snobot extends ASnobot
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
     private AnalogInput mScalePot;
+    private AnalogInput mExtensionPot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
@@ -106,7 +107,6 @@ public class Snobot extends ASnobot
         mRawDriverJoystick = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT.getValue());
         mRawDriverJoystick2 = new Joystick(Properties2016.sDRIVER_JOYSTICK_PORT2.getValue());
         mRawOperatorJoystick = new Joystick(Properties2016.sOPERATOR_JOYSTICK_PORT.getValue());
-        
 
         // Our Joysticks
         mDriverXbox = new SnobotDriveXboxJoystick(mRawDriverJoystick);
@@ -133,7 +133,8 @@ public class Snobot extends ASnobot
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
         mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
+        mExtensionPot = new AnalogInput(Properties2016.sEXTENSION_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot, mExtensionPot);
         mSubsystems.add(mScaling);
 
         // Harvester
@@ -187,11 +188,11 @@ public class Snobot extends ASnobot
     @Override
     public void teleopInit()
     {
-    	if(mAutonCommand != null)
-    	{
-    		mAutonCommand.cancel();
+        if (mAutonCommand != null)
+        {
+            mAutonCommand.cancel();
             Scheduler.getInstance().run();
-    	}
+        }
     }
 
     public IDriveTrain getDriveTrain()

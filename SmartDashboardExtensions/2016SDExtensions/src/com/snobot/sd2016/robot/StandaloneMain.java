@@ -69,7 +69,7 @@ public class StandaloneMain
                     mScaleMotorSpeed += .05;
                     drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
 
-                    height += 0.05;
+                    height -= 0.05;
                     drawerPanel.setExtensionHeight(height);
                 }
                 else if (arg0.getKeyCode() == KeyEvent.VK_UP)
@@ -77,7 +77,7 @@ public class StandaloneMain
                     mScaleMotorSpeed -= .05;
                     drawerPanel.setScaleMotorSpeed(mScaleMotorSpeed);
 
-                    height -= 0.05;
+                    height += 0.05;
                     drawerPanel.setExtensionHeight(height);
                 }
 

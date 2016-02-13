@@ -21,12 +21,11 @@ public interface IOperatorJoystick extends ISubsystem
     boolean isScaleGoToHookPositionPressed();
 
     // Harvester
-    boolean isHarvesterPivotUp();
-
-    boolean isHarvesterPivotDown();
-
     boolean isHarvesterRollerForward();
 
     boolean isHarvesterRollerReverse();
 
+    boolean isHarvesterUp();
+
+    boolean isHarvesterDown();
 }
