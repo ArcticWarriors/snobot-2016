@@ -32,6 +32,7 @@ public class Properties2016
     public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
     public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 2);
     public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 3);
+    public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 4);
 
     // Relay
     public static final IntegerProperty sLIGHT_RELAY = new IntegerProperty("LightRelay", 1);
@@ -96,7 +97,13 @@ public class Properties2016
     public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("Hook Angle", 110);
     public static final DoubleProperty sK_P_ANGLE = new DoubleProperty("KP Angle", 0.005);
 
-    // Harvestor Pot
+    public static final DoubleProperty sMIN_EXTENSION_POT_VOLTAGE = new DoubleProperty("MinExtensionPotVoltage", 1);
+    public static final DoubleProperty sMAX_EXTENSION_POT_VOLTAGE = new DoubleProperty("MaxExtensionPotVoltage", 4);
+
+    public static final DoubleProperty sSCALE_COMPRESSED = new DoubleProperty("Scale Extension Compressed", 0);
+    public static final DoubleProperty sSCALE_EXTENDED = new DoubleProperty("Scale Extension Extended", 1);
+
+    // Harvester Pot
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
     public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);

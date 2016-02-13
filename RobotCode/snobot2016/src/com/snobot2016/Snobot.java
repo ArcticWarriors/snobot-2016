@@ -67,6 +67,7 @@ public class Snobot extends ASnobot
     private IOperatorJoystick mOperatorJoystick;
     private IScaling mScaling;
     private AnalogInput mScalePot;
+    private AnalogInput mExtensionPot;
 
     // Harvester
     private SpeedController mHarvesterPivotMotor;
@@ -123,7 +124,8 @@ public class Snobot extends ASnobot
         mScaleMoveMotor = new Talon(Properties2016.sSCALE_MOVE_MOTOR_PORT.getValue());
         mScaleTiltMotor = new Talon(Properties2016.sSCALE_TILT_MOTOR_PORT.getValue());
         mScalePot = new AnalogInput(Properties2016.sSCALE_POT_PORT.getValue());
-        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot);
+        mExtensionPot = new AnalogInput(Properties2016.sEXTENSION_POT_PORT.getValue());
+        mScaling = new Scaling(mScaleMoveMotor, mScaleTiltMotor, mOperatorJoystick, mLogger, mScalePot, mExtensionPot);
         mSubsystems.add(mScaling);
 
         // Harvester
