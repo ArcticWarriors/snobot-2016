@@ -86,8 +86,8 @@ public class Snobot2016Simulator extends ASimulator
         PotentiometerSimulator scaleLiftPotSim = new PotentiometerSimulator(scaleLiftPot, scaleLiftMotor);
         mSimulatorComponenets.add(scaleLiftPotSim);
 
-        double scaleLiftPotMinVoltage = Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue();
-        double scaleLiftPotMaxVoltage = Properties2016.sMAX_EXTENSION_POT_VOLTAGE.getValue();
+        double scaleLiftPotMinVoltage = Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue();
+        double scaleLiftPotMaxVoltage = Properties2016.sMAX_SCALE_EXTENSION_POT_VOLTAGE.getValue();
         scaleLiftPotSim.setParameters(100, scaleLiftPotMinVoltage, scaleLiftPotMaxVoltage);
 
         // Harvester Potentiometer

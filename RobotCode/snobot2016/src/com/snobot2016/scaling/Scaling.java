@@ -23,20 +23,29 @@ public class Scaling implements IScaling
     private SpeedController mScaleTiltMotor;
     private IOperatorJoystick mJoystick;
     private Timer mTimer;
-    private double mMoveSpeed;
     private double mTiltSpeed;
     private boolean mAmIClimbing;
     private AnalogInput mTiltPot; // Tilt Motor Potentiometer
-    private double mAngle; // Current Potentiometer Angle
-    private boolean mIsUp; // Is scaling up
+    private double mScaleTiltAngle; // Current Potentiometer Angle
+    private boolean mIsScalingMechanismUp; // Is scaling up
     private boolean mIsDown; // Is scaling down
     private AnalogInput mExtensionPot; // Extension Potentiometer
     private double mExtended; // Current Potentiometer Distance Extended
-    private boolean mIsIn; // Is Scaling Extension Compressed
-    private boolean mIsOut; // Is Scaling Extension Extended
     private double mVoltage;
     private boolean mSafeToRaise;
     private boolean mSafeToLower;
+    private static final double sHIGH_SCALE_TILT_MARGINAL_ERROR = 5; // error
+                                                                     // margin
+                                                                     // to find
+                                                                     // if scale
+                                                                     // tilt is
+                                                                     // near max
+    private static final double sLOW_SCALE_TILT_MARGINAL_ERROR = 5; // error
+                                                                    // margin to
+                                                                    // find if
+                                                                    // scale
+                                                                    // tilt is
+                                                                    // near min
 
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
             AnalogInput aTiltPot, AnalogInput aExtensionPot)
@@ -64,34 +73,35 @@ public class Scaling implements IScaling
         double low_angle = Properties2016.sSCALE_LOW_ANGLE.getValue();
         calculateAngle(mTiltPot.getVoltage());
 
-        if (mAngle == high_angle)
+        if (mScaleTiltAngle <= (high_angle + sHIGH_SCALE_TILT_MARGINAL_ERROR) || mScaleTiltAngle >= (high_angle - sHIGH_SCALE_TILT_MARGINAL_ERROR))
         {
-            mIsUp = true;
+            mIsScalingMechanismUp = true;
             mIsDown = false;
         }
-        else if (mAngle == low_angle)
+        else if ((mScaleTiltAngle <= (low_angle + sLOW_SCALE_TILT_MARGINAL_ERROR) || mScaleTiltAngle >= (low_angle - sLOW_SCALE_TILT_MARGINAL_ERROR)))
         {
-            mIsUp = false;
+            mIsScalingMechanismUp = false;
             mIsDown = true;
         }
         else
         {
             mIsDown = false;
-            mIsUp = false;
+            mIsScalingMechanismUp = false;
         }
 
         {
             mVoltage = mExtensionPot.getVoltage();
-            mExtended = (((mVoltage - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())
-                    / (Properties2016.sMAX_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_EXTENSION_POT_VOLTAGE.getValue())) * 100);
+            mExtended = (((mVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
+                    / (Properties2016.sMAX_SCALE_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue()))
+                    * 100);
 
             // System.out.println(mVoltage);
         }
 
         // System.out.println("mAngle is " + mAngle + " high angle is: " +
         // high_angle + " low angle is: " + low_angle);
-        mSafeToRaise = mAngle < high_angle;
-        mSafeToLower = mAngle > low_angle;
+        mSafeToRaise = mScaleTiltAngle < high_angle;
+        mSafeToLower = mScaleTiltAngle > low_angle;
     }
 
     @Override
@@ -102,22 +112,22 @@ public class Scaling implements IScaling
         if (mJoystick.isScaleGoToGroundPressed())
         {
             // System.out.println("GOING INTO GROUND");
-            reachGoalAngle(ScaleAngles.Ground);
+            reachingGoalAngle(ScaleAngles.Ground);
         }
         else if (mJoystick.isScaleGoToHookPositionPressed())
         {
             // System.out.println("GOING INTO HOOK");
-            reachGoalAngle(ScaleAngles.Hook);
+            reachingGoalAngle(ScaleAngles.Hook);
         }
         else if (mJoystick.isScaleMoveForIntakePressed())
         {
             // System.out.println("GOING TO MOVE FOR INTAKE");
-            reachGoalAngle(ScaleAngles.MoveForIntake);
+            reachingGoalAngle(ScaleAngles.MoveForIntake);
         }
         else if (mJoystick.isScaleGoToVerticalPressed())
         {
             // System.out.println("GOING INTO VERTICAL");
-            reachGoalAngle(ScaleAngles.Vertical);
+            reachingGoalAngle(ScaleAngles.Vertical);
         }
         else
         {
@@ -135,7 +145,7 @@ public class Scaling implements IScaling
             mTiltSpeed = 0;
         }
         // Ensures motor will not go higher than highest possible angle
-        else if (mIsUp && mTiltSpeed > 0)
+        else if (mIsScalingMechanismUp && mTiltSpeed > 0)
         {
             mTiltSpeed = 0;
         }
@@ -194,11 +204,8 @@ public class Scaling implements IScaling
     @Override
     public void updateLog()
     {
-        mLogger.updateLogger(mMoveSpeed);
         mLogger.updateLogger(mTiltSpeed);
-        mLogger.updateLogger(mIsIn);
-        mLogger.updateLogger(mIsOut);
-        mLogger.updateLogger(mIsUp);
+        mLogger.updateLogger(mIsScalingMechanismUp);
         mLogger.updateLogger(mIsDown);
     }
 
@@ -210,13 +217,13 @@ public class Scaling implements IScaling
     }
 
     @Override
-    public void pullUpWall()
+    public void raiseScaleExtensionLadder()
     {
         setScaleSpeedMove(1);
     }
 
     @Override
-    public void lowerDownWall()
+    public void lowerScaleExtensionLadder()
     {
         setScaleSpeedMove(-1);
     }
@@ -238,7 +245,7 @@ public class Scaling implements IScaling
         double high_volts = Properties2016.sSCALE_HIGH_VOLTAGE.getValue();
         double low_volts = Properties2016.sSCALE_LOW_VOLTAGE.getValue();
 
-        mAngle = ((high_angle - low_angle) / (high_volts - low_volts)) * (voltage - low_volts);
+        mScaleTiltAngle = ((high_angle - low_angle) / (high_volts - low_volts)) * (voltage - low_volts);
         // Grabs properties of minimum and maximum configs for potentiometer,
         // Obtains the angle of the scaling arm, given the voltage of
         // a configured potentiometer
@@ -246,30 +253,30 @@ public class Scaling implements IScaling
 
     public double getAngle()
     {
-        return mAngle;
+        return mScaleTiltAngle;
     }
 
     @Override
-    public void tiltRaise()
+    public void raiseScaleTiltMechanism()
     {
         mScaleTiltMotor.set(1);
     }
 
     @Override
-    public void tiltLower()
+    public void lowerScaleTiltMechanism()
     {
         mScaleTiltMotor.set(-1);
     }
 
     @Override
-    public boolean reachGoalAngle(ScaleAngles goal)
+    public boolean reachingGoalAngle(ScaleAngles goal)
     {
         double goalAngle = goal.getDesiredAngle();
-        double kP = Properties2016.sK_P_ANGLE.getValue();
-        double error = (goalAngle - mAngle);
+        double kP = Properties2016.sK_P_SCALE_TILT_ANGLE.getValue();
+        double error = (goalAngle - mScaleTiltAngle);
         double mSpeed = (error * kP);
         // System.out.println("CHANGING SPEED TO: " + mSpeed);
-        System.out.println(" The goal angle is: " + goalAngle + ". The current angle is: " + mAngle);
+        System.out.println(" The goal angle is: " + goalAngle + ". The current angle is: " + mScaleTiltAngle);
         if (mSpeed > 0)
         {
             if (safeToRaise())

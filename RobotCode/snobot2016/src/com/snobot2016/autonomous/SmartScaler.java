@@ -27,7 +27,7 @@ public class SmartScaler extends Command
     @Override
     protected void execute()
     {
-        if (mScaling.reachGoalAngle(mGoalAngle))
+        if (mScaling.reachingGoalAngle(mGoalAngle))
         {
             mFinished = true;
         }

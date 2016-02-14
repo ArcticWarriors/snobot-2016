@@ -17,19 +17,19 @@ public class Properties2016
     // Speed Controller
     public static final IntegerProperty sDRIVER_LEFT_MOTOR_PORT = new IntegerProperty("DriverLeftMotor", 0);
     public static final IntegerProperty sDRIVER_RIGHT_MOTOR_PORT = new IntegerProperty("DriverRightMotor", 1);
-    public static final IntegerProperty sSCALE_MOVE_MOTOR_PORT = new IntegerProperty("ScaleMoveMotor", 2);
-    public static final IntegerProperty sSCALE_TILT_MOTOR_PORT = new IntegerProperty("ScaleTiltMotor", 3);
-    public static final IntegerProperty sHARVESTER_ROLLER_MOTOR_PORT = new IntegerProperty("HarvesterRollerMotor", 4);
-    public static final IntegerProperty sHARVESTER_PIVOT_MOTOR_PORT = new IntegerProperty("HarvesterPivotMotor", 5);
+    public static final IntegerProperty sSCALE_MOVE_MOTOR_PORT = new IntegerProperty("ScaleMoveMotorPort", 2);
+    public static final IntegerProperty sSCALE_TILT_MOTOR_PORT = new IntegerProperty("ScaleTiltMotorPort", 3);
+    public static final IntegerProperty sHARVESTER_ROLLER_MOTOR_PORT = new IntegerProperty("HarvesterRollerMotorPort", 4);
+    public static final IntegerProperty sHARVESTER_PIVOT_MOTOR_PORT = new IntegerProperty("HarvesterPivotMotorPort", 5);
 
     // Digital
-    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_A = new IntegerProperty("LeftDriveEncoderA", 0);
-    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_B = new IntegerProperty("LeftDriveEncoderB", 1);
-    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_A = new IntegerProperty("RightDriveEncoderA", 2);
-    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_B = new IntegerProperty("RightDriveEncoderB", 3);
+    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_A = new IntegerProperty("LeftDriveEncoderAPort", 0);
+    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_B = new IntegerProperty("LeftDriveEncoderBPort", 1);
+    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_A = new IntegerProperty("RightDriveEncoderAPort", 2);
+    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_B = new IntegerProperty("RightDriveEncoderBPort", 3);
 
     // Analog
-    public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
+    public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensorPort", 1);
     public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 2);
     public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 3);
     public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 4);
@@ -45,7 +45,7 @@ public class Properties2016
     public static final StringProperty sAUTON_DIRECTORY;
     public static final StringProperty sAUTON_DEFENSE_DIRECTORY;
     public static final StringProperty sAUTON_POST_DEFENSE_DIRECTORY;
-    public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhange", 2);
+    public static final DoubleProperty sAUTON_SETUP_OVERHANG = new DoubleProperty("AutonSetupOverhang", 2);
 
     // Autonomous modes
     public static final String sSTUPID_DRIVE_STRAIGHT = "StupidDriveStraight";
@@ -86,27 +86,24 @@ public class Properties2016
     public static final DoubleProperty sTURN_PATH_KV = new DoubleProperty("TurnPathKVel", 0.0053);
     public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0);
 
-    // Scaler Pot
-    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("Maximum Angle", 110);
-    public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("Minimum Angle", 0);
-    public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("Maximum Voltage", 3.0);
-    public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("Minimum Voltage", 1.0);
+    // Scaler
+    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("MaximumScaleTiltAngle", 110);
+    public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("MinimumScaleTiltAngle", 0);
+    public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("MaximumScalePotVoltage", 3.0);
+    public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("MinimumScalePotVoltage", 1.0);
 
-    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("Scale Ground Angle", 0);
-    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("Move for Intake", 30);
-    public static final DoubleProperty sVERTICAL = new DoubleProperty("Vertical Angle", 90);
-    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("Hook Angle", 110);
-    public static final DoubleProperty sK_P_ANGLE = new DoubleProperty("KP Angle", 0.005);
+    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("ScaleGroundAngle", 0);
+    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("ScaleMoveforIntakeAngle", 30);
+    public static final DoubleProperty sVERTICAL = new DoubleProperty("ScaleVerticalAngle", 90);
+    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("ScaleHookAngle", 110);
+    public static final DoubleProperty sK_P_SCALE_TILT_ANGLE = new DoubleProperty("ScaleAngleKP", 0.005);
 
-    public static final DoubleProperty sMIN_EXTENSION_POT_VOLTAGE = new DoubleProperty("MinExtensionPotVoltage", 1);
-    public static final DoubleProperty sMAX_EXTENSION_POT_VOLTAGE = new DoubleProperty("MaxExtensionPotVoltage", 4);
+    public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("MinScaleExtensionPotVoltage", 1);
+    public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("MaxScaleExtensionPotVoltage", 4);
 
-    public static final DoubleProperty sSCALE_COMPRESSED = new DoubleProperty("Scale Extension Compressed", 0);
-    public static final DoubleProperty sSCALE_EXTENDED = new DoubleProperty("Scale Extension Extended", 1);
-
-    // Harvester Pot
-    public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinPotVoltage", 1);
-    public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxPotVoltage", 4);
+    // Harvester
+    public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinHarvesterPotVoltage", 1);
+    public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxHarvesterPotVoltage", 4);
     public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
 
     public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("LeftDriveEncoderDPP", -0.4);

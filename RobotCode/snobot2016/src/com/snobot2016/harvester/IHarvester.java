@@ -34,6 +34,7 @@ public interface IHarvester extends ISubsystem
     void rollOut();
 
     /**
+     * 
      * Sets the Roller Motor Speed
      * 
      * @param aRollerSpeed
@@ -41,6 +42,7 @@ public interface IHarvester extends ISubsystem
     void setRollerMotorSpeed(double aRollerSpeed);
 
     /**
+     * 
      * Sets the Pivot Motor Speed
      * 
      * @param aPivotSpeed
