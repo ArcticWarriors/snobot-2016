@@ -5,8 +5,8 @@ import com.snobot2016.positioner.IPositioner;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Andrew
- * Command to take (X,Y) positions and replace the once in the positioner with them.
+ * @author Andrew Command to take (X,Y) positions and replace the once in the
+ *         positioner with them.
  */
 public class FudgeThePosition extends Command
 {
@@ -17,12 +17,12 @@ public class FudgeThePosition extends Command
     /**
      * Creates a new FudgeThePosition command.
      * 
-     * @param aPositioner 
-     *          The Robot's positioner.
-     * @param aXPosition 
-     *          The desired new X position
-     * @param aYPosition 
-     *          The desired new Y position
+     * @param aPositioner
+     *            The Robot's positioner.
+     * @param aXPosition
+     *            The desired new X position
+     * @param aYPosition
+     *            The desired new Y position
      */
     public FudgeThePosition(IPositioner aPositioner, double aXPosition, double aYPosition)
     {
@@ -31,6 +31,9 @@ public class FudgeThePosition extends Command
         mYPosition = aYPosition;
     }
 
+    /**
+     * Sets the position based on the args
+     */
     @Override
     protected void initialize()
     {

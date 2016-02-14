@@ -6,6 +6,12 @@ import com.snobot2016.positioner.IPositioner;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/**
+ * This class decides which low goal to drive to and moves to it.
+ * 
+ * @author Andrew
+ *
+ */
 public class GoToLowGoal extends Command
 {
     private IPositioner mPositioner;
@@ -20,6 +26,23 @@ public class GoToLowGoal extends Command
     private double mMaxDriveAccel;
     private CommandGroup mCommandGroup;
 
+    /**
+     * 
+     * @param aPositioner
+     *            The Robot's positioner
+     * @param aDriveTrain
+     *            The robot's drive train
+     * @param aMaxTurnVel
+     *            The maximum speed you want the robot to travel at when turning
+     * @param aMaxTurnAccel
+     *            The maximum speed you want the robot to accelerate at when
+     *            turning
+     * @param aMaxDriveVel
+     *            The maximum speed you want the robot to travel at when driving
+     * @param aMaxDriveAccel
+     *            The maximum speed you want the robot to accelerate at when
+     *            driving
+     */
     public GoToLowGoal(IPositioner aPositioner, IDriveTrain aDriveTrain, double aMaxTurnVel, double aMaxTurnAccel, double aMaxDriveVel,
             double aMaxDriveAccel)
     {
@@ -33,6 +56,10 @@ public class GoToLowGoal extends Command
 
     }
 
+    /**
+     * Init- if statement to decide which low goal to go to; also adds the
+     * correct GoToXYPath command
+     */
     @Override
     protected void initialize()
     {
@@ -52,12 +79,18 @@ public class GoToLowGoal extends Command
         mCommandGroup.addSequential(mGoToXYPath);
     }
 
+    /**
+     * Starts the command group
+     */
     @Override
     protected void execute()
     {
         mCommandGroup.start();
     }
 
+    /**
+     * Returns whether or not the command group is finished
+     */
     @Override
     protected boolean isFinished()
     {
