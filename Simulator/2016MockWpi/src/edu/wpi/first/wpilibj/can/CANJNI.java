@@ -14,9 +14,10 @@ package edu.wpi.first.wpilibj.can;
 // import com.sun.jna.NativeLibrary;
 // import com.sun.jna.Pointer;
 // import com.sun.jna.ptr.IntByReference;
-import edu.wpi.first.wpilibj.hal.JNIWrapper;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+
+import edu.wpi.first.wpilibj.hal.JNIWrapper;
 
 /**
  * JNA Wrapper for library <b>CAN</b><br>
@@ -503,9 +504,13 @@ public class CANJNI extends JNIWrapper {
   public static final int CAN_IS_FRAME_REMOTE = 0x80000000;
   public static final int CAN_IS_FRAME_11BIT = 0x40000000;
 
-  public static native void FRCNetworkCommunicationCANSessionMuxSendMessage(int messageID,
-      ByteBuffer data, int periodMs);
+    public static void FRCNetworkCommunicationCANSessionMuxSendMessage(int messageID, ByteBuffer data, int periodMs)
+    {
 
-  public static native ByteBuffer FRCNetworkCommunicationCANSessionMuxReceiveMessage(
-      IntBuffer messageID, int messageIDMask, ByteBuffer timeStamp);
+    }
+
+    public static ByteBuffer FRCNetworkCommunicationCANSessionMuxReceiveMessage(IntBuffer messageID, int messageIDMask, ByteBuffer timeStamp)
+    {
+        return null;
+    }
 }

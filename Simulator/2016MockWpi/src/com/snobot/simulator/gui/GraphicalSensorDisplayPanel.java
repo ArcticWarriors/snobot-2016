@@ -19,6 +19,7 @@ public class GraphicalSensorDisplayPanel extends JPanel
     }
 
     private SpeedControllerGraphicDisplay mSpeedControllerPanel;
+    private SpeedControllerGraphicDisplay mCanSpeedControllerPanel;
     private SolenoidGraphicDisplay mSolenoidPanel;
     private DigitalSourceGraphicDisplay mDigitalSourcePanel;
     private RelayGraphicDisplay mRelayPanel;
@@ -29,7 +30,8 @@ public class GraphicalSensorDisplayPanel extends JPanel
     {
         SensorActuatorRegistry reg = SensorActuatorRegistry.get();
 
-        mSpeedControllerPanel = new SpeedControllerGraphicDisplay(reg.getSpeedControllers());
+        mSpeedControllerPanel = new SpeedControllerGraphicDisplay(reg.getSpeedControllers(), "Speed Controllers");
+        mCanSpeedControllerPanel = new SpeedControllerGraphicDisplay(reg.getCanSpeedControllers(), "CAN Speed Controllers");
         mSolenoidPanel = new SolenoidGraphicDisplay(reg.getSolenoids());
         mDigitalSourcePanel = new DigitalSourceGraphicDisplay(reg.getDigitalSources());
         mRelayPanel = new RelayGraphicDisplay(reg.getRelays());
@@ -41,6 +43,10 @@ public class GraphicalSensorDisplayPanel extends JPanel
         if (!mSpeedControllerPanel.isEmpty())
         {
             add(mSpeedControllerPanel);
+        }
+        if (!mCanSpeedControllerPanel.isEmpty())
+        {
+            add(mCanSpeedControllerPanel);
         }
         if (!mSolenoidPanel.isEmpty())
         {
@@ -69,6 +75,7 @@ public class GraphicalSensorDisplayPanel extends JPanel
         SensorActuatorRegistry reg = SensorActuatorRegistry.get();
 
         mSpeedControllerPanel.update(reg.getSpeedControllers());
+        mCanSpeedControllerPanel.update(reg.getCanSpeedControllers());
         mSolenoidPanel.update(reg.getSolenoids());
         mDigitalSourcePanel.update(reg.getDigitalSources());
         mRelayPanel.update(reg.getRelays());

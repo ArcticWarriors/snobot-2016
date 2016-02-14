@@ -18,7 +18,7 @@ public class PWMJNI extends DIOJNI
         boolean canAllocate = !SensorActuatorRegistry.get().getSpeedControllers().containsKey(digital_port_pointer);
 
         SpeedControllerWrapper wrapper = new SpeedControllerWrapper((int) digital_port_pointer);
-        SensorActuatorRegistry.get().register(wrapper, (int) digital_port_pointer);
+        SensorActuatorRegistry.get().register(wrapper, (int) digital_port_pointer, false);
 
         return canAllocate;
     }
