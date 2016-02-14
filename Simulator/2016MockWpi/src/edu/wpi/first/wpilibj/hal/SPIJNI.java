@@ -11,14 +11,23 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.AnalogSpiWrapper;
+import com.snobot.simulator.module_wrapper.AnalogWrapper;
+
 public class SPIJNI extends JNIWrapper
 {
     public static void spiInitialize(byte port)
     {
-
+        int conv_port = port + 100;
+        AnalogSpiWrapper spiWrapper = new AnalogSpiWrapper(conv_port);
+        SensorActuatorRegistry.get().register(new AnalogSpiWrapper(conv_port), conv_port);
     }
 
-    public static native int spiTransaction(byte port, ByteBuffer dataToSend, ByteBuffer dataReceived, byte size);
+    public static int spiTransaction(byte port, ByteBuffer dataToSend, ByteBuffer dataReceived, byte size)
+  {
+    return 0;
+  }
 
     public static int spiWrite(byte port, ByteBuffer dataToSend, byte sendSize)
     {
@@ -27,7 +36,13 @@ public class SPIJNI extends JNIWrapper
 
     public static int spiRead(byte port, ByteBuffer dataReceived, byte size)
     {
-        return 0;
+        int numToPut = 0x5200;
+        numToPut = numToPut << 5;
+        numToPut |= 0xe0000000;
+
+        dataReceived.putInt(numToPut);
+        dataReceived.position(0);
+        return 0xe;
     }
 
     public static void spiClose(byte port)
@@ -40,7 +55,10 @@ public class SPIJNI extends JNIWrapper
 
     }
 
-    public static native void spiSetOpts(byte port, int msb_first, int sample_on_trailing, int clk_idle_high);
+    public static void spiSetOpts(byte port, int msb_first, int sample_on_trailing, int clk_idle_high)
+  {
+
+  }
 
     public static void spiSetChipSelectActiveHigh(byte port)
     {
@@ -52,8 +70,11 @@ public class SPIJNI extends JNIWrapper
 
     }
 
-    public static native void spiInitAccumulator(byte port, int period, int cmd, byte xferSize, int validMask, int validValue, byte dataShift,
-            byte dataSize, boolean isSigned, boolean bigEndian);
+    public static void spiInitAccumulator(byte port, int period, int cmd, byte xferSize, int validMask, int validValue, byte dataShift,
+            byte dataSize, boolean isSigned, boolean bigEndian)
+    {
+        
+    }
 
     public static void spiFreeAccumulator(byte port)
     {
@@ -82,7 +103,15 @@ public class SPIJNI extends JNIWrapper
 
     public static long spiGetAccumulatorValue(byte port)
     {
-        return 0;
+        int conv_port = port + 100;
+        AnalogWrapper wrapper = SensorActuatorRegistry.get().getAnalog().get(conv_port);
+
+        double accum = wrapper.getAccumulator();
+
+        accum = accum / 0.0125;
+        accum = accum / 0.001;
+
+        return (long) accum;
     }
 
     public static int spiGetAccumulatorCount(byte port)
@@ -95,5 +124,8 @@ public class SPIJNI extends JNIWrapper
         return 0;
     }
 
-    public static native void spiGetAccumulatorOutput(byte port, LongBuffer value, IntBuffer count);
+    public static void spiGetAccumulatorOutput(byte port, LongBuffer value, IntBuffer count)
+  {
+
+  }
 }

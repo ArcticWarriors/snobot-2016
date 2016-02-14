@@ -19,7 +19,13 @@ public class SnobotDriveTrain implements IDriveTrain
     private Encoder mLeftEncoder;
     private Encoder mRightEncoder;
 
-    public SnobotDriveTrain(SpeedController aLeftMotor, SpeedController aRightMotor, Encoder aLeftEncoder, Encoder aRightEncoder,
+    public SnobotDriveTrain(
+    		SpeedController aLeftMotor, 
+    		SpeedController aLeftMotorB, 
+    		SpeedController aRightMotor, 
+    		SpeedController aRightMotorB, 
+    		Encoder aLeftEncoder, 
+    		Encoder aRightEncoder,
             IDriverJoystick aDriverJoyStick)
     {
         mLeftMotor = aLeftMotor;
@@ -28,7 +34,14 @@ public class SnobotDriveTrain implements IDriveTrain
         mRightEncoder = aRightEncoder;
         mDriveJoystick = aDriverJoyStick;
         
-        mRobotDrive = new RobotDrive(aLeftMotor, aRightMotor);
+        if(aLeftMotorB != null && aRightMotorB != null)
+        {
+            mRobotDrive = new RobotDrive(aLeftMotor, aLeftMotorB, aRightMotor, aRightMotorB);
+        }
+        else
+        {
+            mRobotDrive = new RobotDrive(aLeftMotor, aRightMotor);
+        }
 
         mLeftEncoder.setDistancePerPulse(Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue());
         mRightEncoder.setDistancePerPulse(Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue());

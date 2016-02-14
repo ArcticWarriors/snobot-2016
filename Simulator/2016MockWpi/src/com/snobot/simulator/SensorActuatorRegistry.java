@@ -56,6 +56,7 @@ public class SensorActuatorRegistry
     private static SensorActuatorRegistry mInstance = new SensorActuatorRegistry();
 
     private Map<Integer, SpeedControllerWrapper> mSpeedControllerMap = new HashMap<Integer, SpeedControllerWrapper>();
+    private Map<Integer, SpeedControllerWrapper> mCanSpeedControllerMap = new HashMap<Integer, SpeedControllerWrapper>();
     private Map<Integer, SolenoidWrapper> mSolenoidMap = new HashMap<Integer, SolenoidWrapper>();
     private Map<Integer, RelayWrapper> mRelayMap = new HashMap<Integer, RelayWrapper>();
     private Map<Integer, DigitalSourceWrapper> mDigitalInputMap = new HashMap<Integer, DigitalSourceWrapper>();
@@ -89,9 +90,16 @@ public class SensorActuatorRegistry
         return registerItem(aActuator, aPort, mAnalogMap, "Analog");
     }
 
-    public boolean register(SpeedControllerWrapper aActuator, int aPort)
+    public boolean register(SpeedControllerWrapper aActuator, int aPort, boolean aIsCan)
     {
-        return registerItem(aActuator, aPort, mSpeedControllerMap, "Speed Controller");
+        if (aIsCan)
+        {
+            return registerItem(aActuator, aPort, mCanSpeedControllerMap, "CAN Speed Controller");
+        }
+        else
+        {
+            return registerItem(aActuator, aPort, mSpeedControllerMap, "Speed Controller");
+        }
     }
 
     public boolean register(DigitalSourceWrapper aSensor, int aPort)
@@ -123,6 +131,11 @@ public class SensorActuatorRegistry
     public Map<Integer, SpeedControllerWrapper> getSpeedControllers()
     {
         return mSpeedControllerMap;
+    }
+
+    public Map<Integer, SpeedControllerWrapper> getCanSpeedControllers()
+    {
+        return mCanSpeedControllerMap;
     }
 
     public Map<Integer, SolenoidWrapper> getSolenoids()
