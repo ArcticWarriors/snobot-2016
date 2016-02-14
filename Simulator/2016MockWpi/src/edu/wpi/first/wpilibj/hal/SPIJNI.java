@@ -11,11 +11,17 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.AnalogSpiWrapper;
+import com.snobot.simulator.module_wrapper.AnalogWrapper;
+
 public class SPIJNI extends JNIWrapper
 {
     public static void spiInitialize(byte port)
     {
-
+        int conv_port = port + 100;
+        AnalogSpiWrapper spiWrapper = new AnalogSpiWrapper(conv_port);
+        SensorActuatorRegistry.get().register(new AnalogSpiWrapper(conv_port), conv_port);
     }
 
     public static int spiTransaction(byte port, ByteBuffer dataToSend, ByteBuffer dataReceived, byte size)
@@ -97,7 +103,15 @@ public class SPIJNI extends JNIWrapper
 
     public static long spiGetAccumulatorValue(byte port)
     {
-        return 0;
+        int conv_port = port + 100;
+        AnalogWrapper wrapper = SensorActuatorRegistry.get().getAnalog().get(conv_port);
+
+        double accum = wrapper.getAccumulator();
+
+        accum = accum / 0.0125;
+        accum = accum / 0.001;
+
+        return (long) accum;
     }
 
     public static int spiGetAccumulatorCount(byte port)

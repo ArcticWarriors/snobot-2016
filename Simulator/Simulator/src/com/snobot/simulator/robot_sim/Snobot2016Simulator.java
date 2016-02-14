@@ -66,7 +66,16 @@ public class Snobot2016Simulator extends ASimulator
         lightRelay.setName("Cam. Light");
 
         // Analaog
-        AnalogWrapper gyro = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sGYRO_SENSOR_PORT);
+        AnalogWrapper gyro;
+
+        if (Properties2016.sUSE_SPI_GYRO)
+        {
+            gyro = SensorActuatorRegistry.get().getAnalog().get(100);
+        }
+        else
+        {
+            gyro = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sGYRO_SENSOR_PORT);
+        }
         AnalogWrapper scaleTiltPot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sSCALE_POT_PORT);
         AnalogWrapper scaleLiftPot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sEXTENSION_POT_PORT);
         AnalogWrapper intakePot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sHARVESTER_POT_PORT);

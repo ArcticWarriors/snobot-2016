@@ -43,7 +43,7 @@ public class Properties2016
     public static final int sRIGHT_DRIVE_ENCODER_PORT_B = 3;
 
     // Analog
-    public static final int sGYRO_SENSOR_PORT = 1;
+    public static final int sGYRO_SENSOR_PORT = 7;
     public static final int sHARVESTER_POT_PORT = 0;
     public static final int sSCALE_POT_PORT = 2;
     public static final int sEXTENSION_POT_PORT = 1;
@@ -138,7 +138,7 @@ public class Properties2016
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", false);
             sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/Autonomous");
+            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/Autonomous/");
         }
         else
         {
@@ -150,7 +150,7 @@ public class Properties2016
         }
 
         sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", 
-                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
                 sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
