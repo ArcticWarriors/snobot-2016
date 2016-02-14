@@ -49,7 +49,7 @@ public class TiltLowerScaler extends Command
     {
         if (mTimer.get() < mTime)
         {
-            mScaling.tiltLower();
+            mScaling.lowerScaleTiltMechanism();
         }
     }
 
