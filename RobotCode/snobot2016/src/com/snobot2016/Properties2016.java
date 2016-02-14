@@ -9,33 +9,51 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 public class Properties2016
 {
+    public static final boolean sIS_REAL_ROBOT = true;
+    public static final boolean sUSE_SPI_GYRO = true;
+    public static final boolean sUSE_IMU_POSITIONER = false;
+
+    //**************************************************************
+    // Port Mappings
+    //**************************************************************
+
     // Joysticks
-    public static final IntegerProperty sDRIVER_JOYSTICK_PORT = new IntegerProperty("DriverJoystickPort", 0);
-    public static final IntegerProperty sOPERATOR_JOYSTICK_PORT = new IntegerProperty("OperatorJoystickPort", 1);
-    public static final IntegerProperty sDRIVER_JOYSTICK_PORT2 = new IntegerProperty("DriverJoystickPort2", 2);
+    public static final int sDRIVER_JOYSTICK_PORT = 0;
+    public static final int sOPERATOR_JOYSTICK_PORT = 1;
+    public static final int sDRIVER_JOYSTICK_PORT2 = 2;
 
     // Speed Controller
-    public static final IntegerProperty sDRIVER_LEFT_MOTOR_PORT = new IntegerProperty("DriverLeftMotor", 0);
-    public static final IntegerProperty sDRIVER_RIGHT_MOTOR_PORT = new IntegerProperty("DriverRightMotor", 1);
-    public static final IntegerProperty sSCALE_TILT_MOTOR_PORT = new IntegerProperty("ScaleTiltMotor", 3);
-    public static final IntegerProperty sSCALE_MOVE_MOTOR_PORT = new IntegerProperty("ScaleMoveMotor", 4);
-    public static final IntegerProperty sHARVESTER_ROLLER_MOTOR_PORT = new IntegerProperty("HarvesterRollerMotor", 4);
-    public static final IntegerProperty sHARVESTER_PIVOT_MOTOR_PORT = new IntegerProperty("HarvesterPivotMotor", 1);
+    public static final int sDRIVER_LEFT_MOTOR_PORT = 0;
+    public static final int sDRIVER_RIGHT_MOTOR_PORT = 1;
+    public static final int sSCALE_TILT_MOTOR_PORT = 3;
+    public static final int sSCALE_MOVE_MOTOR_PORT = 4;
+    public static final int sHARVESTER_ROLLER_MOTOR_PORT = 2;
+    public static final int sHARVESTER_PIVOT_MOTOR_PORT = 1;
+
+    // CAN
+    public static final int sDRIVE_CAN_LEFT_A_PORT = 2;
+    public static final int sDRIVE_CAN_LEFT_B_PORT = 3;
+    public static final int sDRIVE_CAN_RIGHT_A_PORT = 1;
+    public static final int sDRIVE_CAN_RIGHT_B_PORT = 4;
 
     // Digital
-    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_A = new IntegerProperty("LeftDriveEncoderA", 0);
-    public static final IntegerProperty sLEFT_DRIVE_ENCODER_PORT_B = new IntegerProperty("LeftDriveEncoderB", 1);
-    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_A = new IntegerProperty("RightDriveEncoderA", 2);
-    public static final IntegerProperty sRIGHT_DRIVE_ENCODER_PORT_B = new IntegerProperty("RightDriveEncoderB", 3);
+    public static final int sLEFT_DRIVE_ENCODER_PORT_A = 0;
+    public static final int sLEFT_DRIVE_ENCODER_PORT_B = 1;
+    public static final int sRIGHT_DRIVE_ENCODER_PORT_A = 2;
+    public static final int sRIGHT_DRIVE_ENCODER_PORT_B = 3;
 
     // Analog
-    public static final IntegerProperty sGYRO_SENSOR_PORT = new IntegerProperty("GyroSensor", 1);
-    public static final IntegerProperty sHARVESTER_POT_PORT = new IntegerProperty("HarvesterPotPort", 0);
-    public static final IntegerProperty sSCALE_POT_PORT = new IntegerProperty("ScalingPotPort", 2);
-    public static final IntegerProperty sEXTENSION_POT_PORT = new IntegerProperty("ExtensionPotPort", 1);
+    public static final int sGYRO_SENSOR_PORT = 1;
+    public static final int sHARVESTER_POT_PORT = 0;
+    public static final int sSCALE_POT_PORT = 2;
+    public static final int sEXTENSION_POT_PORT = 1;
 
     // Relay
-    public static final IntegerProperty sLIGHT_RELAY = new IntegerProperty("LightRelay", 1);
+    public static final int sLIGHT_RELAY = 1;
+
+    //**************************************************************
+    // Configuration Contants
+    //**************************************************************
 
     // Camera
     public static final StringProperty sCAMERA_HOST_IP = new StringProperty("CameraHostIP", "10.1.74.11");
@@ -126,21 +144,13 @@ public class Properties2016
         {
             System.out.println("Using tactical constants");
             sENABLE_CAMERA = new BooleanProperty("EnableCamera", true);
-            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); // TODO
-                                                                            // CHECK
-                                                                            // IF
-                                                                            // THIS
-                                                                            // IS
-                                                                            // ACTUALLY
-                                                                            // USB
-                                                                            // DRIVE
-                                                                            // ON
-                                                                            // ROBORIO
+            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); // TODO CHECK IF THIS IS ACTUALLY USB DRIVE ON ROBORIO
 
             sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/2016Resources/Autonomous/");
         }
 
-        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", 
+                sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
 
         sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
                 sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
