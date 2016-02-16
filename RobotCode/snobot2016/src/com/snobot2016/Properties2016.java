@@ -105,51 +105,59 @@ public class Properties2016
     public static final DoubleProperty sTURN_PATH_KA = new DoubleProperty("TurnPathKAccel", 0);
 
     // Scaler
-    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("MaximumScaleTiltAngle", 110);
-    public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("MinimumScaleTiltAngle", 0);
-    public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("MaximumScalePotVoltage", 3.0);
-    public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("MinimumScalePotVoltage", 1.0);
+    public static final DoubleProperty sSCALE_HIGH_ANGLE = new DoubleProperty("ScaleTiltMaxAngle", 110);
+    public static final DoubleProperty sSCALE_LOW_ANGLE = new DoubleProperty("ScaleTiltMinAngle", 0);
+    public static final DoubleProperty sSCALE_HIGH_VOLTAGE = new DoubleProperty("ScalePotMaxVoltage", 3.0);
+    public static final DoubleProperty sSCALE_LOW_VOLTAGE = new DoubleProperty("ScalePotMinVoltage", 1.0);
 
-    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("ScaleGroundAngle", 0);
-    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("ScaleMoveforIntakeAngle", 30);
-    public static final DoubleProperty sVERTICAL = new DoubleProperty("ScaleVerticalAngle", 90);
-    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("ScaleHookAngle", 110);
+    public static final DoubleProperty sSCALE_GROUND_ANGLE = new DoubleProperty("ScaleAngleGroundPos", 0);
+    public static final DoubleProperty sGET_OUT_OF_THE_WAY_OF_INTAKE = new DoubleProperty("ScaleAngleMoveforIntakePos", 30);
+    public static final DoubleProperty sVERTICAL = new DoubleProperty("ScaleAngleVerticalPos", 90);
+    public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("ScaleAngleHookPos", 110);
     public static final DoubleProperty sK_P_SCALE_TILT_ANGLE = new DoubleProperty("ScaleAngleKP", 0.005);
 
-    public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("MinScaleExtensionPotVoltage", 1);
-    public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("MaxScaleExtensionPotVoltage", 4);
+    public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMinVoltage", 1);
+    public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMaxVoltage", 4);
 
     // Harvester
-    public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("MinHarvesterPotVoltage", 1);
-    public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("MaxHarvesterPotVoltage", 4);
+    public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("HarvesterPotMinVoltage", 1);
+    public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("HarvesterPotMaxVoltage", 4);
     public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
 
-    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("LeftDriveEncoderDPP", -0.4);
-    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("RightDriveEncoderDPP", 0.4);
+    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderLeftDPP", -0.4);
+    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderRightDPP", 0.4);
 
     static
     {
+        String logPath;
+        String autonDir;
+        boolean enableCamera;
+
         if (RobotBase.isSimulation())
         {
-            System.out.println("Using simulation constants");
-            sENABLE_CAMERA = new BooleanProperty("EnableCamera", false);
-            sLOG_FILE_PATH = new StringProperty("LogFilePath", "logs/");
+            logPath = "logs/";
+            autonDir = "../../RobotCode/snobot2016/resources/Autonomous/";
+            enableCamera = false;
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "../../RobotCode/snobot2016/resources/Autonomous");
+            System.out.println("Using simulation constants");
         }
         else
         {
-            System.out.println("Using tactical constants");
-            sENABLE_CAMERA = new BooleanProperty("EnableCamera", true);
-            sLOG_FILE_PATH = new StringProperty("LogFilePath", "/u/logs/"); // TODO CHECK IF THIS IS ACTUALLY USB DRIVE ON ROBORIO
+            logPath = "/u/logs/";// TODO CHECK IF THIS IS ACTUALLY USB DRIVE ON
+                                 // ROBORIO
+            autonDir = "/home/lvuser/2016Resources/Autonomous/";
+            enableCamera = true;
 
-            sAUTON_DIRECTORY = new StringProperty("AutonomousDir", "/home/lvuser/2016Resources/Autonomous/");
+            System.out.println("Using tactical constants");
+
         }
 
-        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDefenses", sAUTON_DIRECTORY.getValue() + "Autonomous/RealAutonomousModes/DefenseAutons");
+        sENABLE_CAMERA = new BooleanProperty("CameraEnable", enableCamera);
+        sLOG_FILE_PATH = new StringProperty("LogFilePath", logPath);
 
-        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonThingsToDoDir",
-                sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
+        sAUTON_DIRECTORY = new StringProperty("AutonDir", autonDir);
+        sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDirDefenses", sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/DefenseAutons");
+        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonDirThingsToDo", sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }
