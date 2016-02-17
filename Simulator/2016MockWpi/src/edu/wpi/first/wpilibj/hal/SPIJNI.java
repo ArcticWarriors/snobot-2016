@@ -83,7 +83,8 @@ public class SPIJNI extends JNIWrapper
 
     public static void spiResetAccumulator(byte port)
     {
-
+        AnalogWrapper wrapper = getWrapper(port);
+        wrapper.setAccumulator(0);
     }
 
     public static void spiSetAccumulatorCenter(byte port, int center)
@@ -103,8 +104,7 @@ public class SPIJNI extends JNIWrapper
 
     public static long spiGetAccumulatorValue(byte port)
     {
-        int conv_port = port + 100;
-        AnalogWrapper wrapper = SensorActuatorRegistry.get().getAnalog().get(conv_port);
+        AnalogWrapper wrapper = getWrapper(port);
 
         double accum = wrapper.getAccumulator();
 
@@ -128,4 +128,12 @@ public class SPIJNI extends JNIWrapper
   {
 
   }
+
+    private static AnalogWrapper getWrapper(byte port)
+    {
+        int conv_port = port + 100;
+        AnalogWrapper wrapper = SensorActuatorRegistry.get().getAnalog().get(conv_port);
+
+        return wrapper;
+    }
 }

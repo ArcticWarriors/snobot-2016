@@ -512,7 +512,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    *         from setDistancePerPulse().
    */
   public double getDistance() {
-    return getRaw() * decodingScaleFactor() * m_distancePerPulse;
+    return EncoderJNI.__getDistance(m_encoder);
   }
 
   /**

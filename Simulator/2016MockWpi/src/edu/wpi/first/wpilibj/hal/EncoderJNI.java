@@ -98,4 +98,9 @@ public class EncoderJNI extends JNIWrapper
 
         return wrapper;
     }
+
+    public static double __getDistance(long aPort)
+    {
+        return getWrapperFromBuffer(aPort).getDistance();
+    }
 }
