@@ -418,6 +418,12 @@ public class CanTalonJNI extends JNIWrapper
 
     public static int GetEncPosition(long handle)
     {
+        int port = (int) handle;
+        if (SensorActuatorRegistry.get().getCanEncoders().containsKey(port))
+        {
+            return SensorActuatorRegistry.get().getCanEncoders().get(port).getRaw();
+        }
+
         return 0;
     }
 

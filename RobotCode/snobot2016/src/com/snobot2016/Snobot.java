@@ -6,7 +6,8 @@ import com.snobot.xlib.ASnobot;
 import com.snobot2016.autonomous.AutonFactory;
 import com.snobot2016.camera.Camera;
 import com.snobot2016.drivetrain.IDriveTrain;
-import com.snobot2016.drivetrain.SnobotDriveTrain;
+import com.snobot2016.drivetrain.SnobotDriveTrainWithCan;
+import com.snobot2016.drivetrain.SnobotDriveTrainWithEncoders;
 import com.snobot2016.harvester.Harvester;
 import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
@@ -78,13 +79,11 @@ public class Snobot extends ASnobot
         // Drive train
         if (Properties2016.sIS_REAL_ROBOT)
         {
-            Encoder leftDriveEncoder = new Encoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A, Properties2016.sLEFT_DRIVE_ENCODER_PORT_B);
-            Encoder rightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A, Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B);
             CANTalon leftMotorA = new CANTalon(Properties2016.sDRIVE_CAN_LEFT_A_PORT);
             CANTalon leftMotorB = new CANTalon(Properties2016.sDRIVE_CAN_LEFT_B_PORT);
             CANTalon rightMotorA = new CANTalon(Properties2016.sDRIVE_CAN_RIGHT_A_PORT);
             CANTalon rightMotorB = new CANTalon(Properties2016.sDRIVE_CAN_RIGHT_B_PORT);
-            mDrivetrain = new SnobotDriveTrain(leftMotorA, leftMotorB, rightMotorA, rightMotorB, leftDriveEncoder, rightDriveEncoder, mDriverXbox);
+            mDrivetrain = new SnobotDriveTrainWithCan(leftMotorA, leftMotorB, rightMotorA, rightMotorB, mDriverXbox);
             mSubsystems.add(mDrivetrain);
         }
         else
@@ -93,7 +92,7 @@ public class Snobot extends ASnobot
             Encoder rightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A, Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B);
             Talon driveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT);
             Talon driveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT);
-            mDrivetrain = new SnobotDriveTrain(driveLeftMotor, null, driveRightMotor, null, leftDriveEncoder, rightDriveEncoder, mDriverXbox);
+            mDrivetrain = new SnobotDriveTrainWithEncoders(driveLeftMotor, null, driveRightMotor, null, leftDriveEncoder, rightDriveEncoder, mDriverXbox);
             mSubsystems.add(mDrivetrain);
         }
 

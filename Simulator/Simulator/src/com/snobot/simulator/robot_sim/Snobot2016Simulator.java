@@ -38,13 +38,26 @@ public class Snobot2016Simulator extends ASimulator
                 SpeedControllerWrapper leftDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_LEFT_B_PORT);
                 SpeedControllerWrapper rightDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_RIGHT_B_PORT);
 
+                EncoderWrapper leftDriveEncoder = new EncoderWrapper(Properties2016.sDRIVE_CAN_LEFT_A_PORT, -1);
+                EncoderWrapper rightDriveEncoder = new EncoderWrapper(Properties2016.sDRIVE_CAN_RIGHT_A_PORT, -1);
+                SensorActuatorRegistry.get().register(leftDriveEncoder, Properties2016.sDRIVE_CAN_LEFT_A_PORT);
+                SensorActuatorRegistry.get().register(rightDriveEncoder, Properties2016.sDRIVE_CAN_RIGHT_A_PORT);
+
+                leftDriveEncoder.setSpeedController(leftDriveMotor);
+                rightDriveEncoder.setSpeedController(rightDriveMotor);
+
                 leftDriveMotor.setName("Left Drive (A)");
                 leftDriveMotorB.setName("Left Drive (B)");
                 rightDriveMotor.setName("Right Drive (A)");
                 rightDriveMotorB.setName("Right Drive (B)");
+                leftDriveEncoder.setName("Left Drive");
+                rightDriveEncoder.setName("Right Drive");
 
                 leftDriveMotor.setMotorParameters(drivetrainSpeed);
                 rightDriveMotor.setMotorParameters(-drivetrainSpeed);
+
+                TankDriveGyroSimulator gyroSim = new TankDriveGyroSimulator(leftDriveEncoder, rightDriveEncoder, gyro);
+                mSimulatorComponenets.add(gyroSim);
             }
             else
             {

@@ -61,6 +61,7 @@ public class SensorActuatorRegistry
     private Map<Integer, RelayWrapper> mRelayMap = new HashMap<Integer, RelayWrapper>();
     private Map<Integer, DigitalSourceWrapper> mDigitalInputMap = new HashMap<Integer, DigitalSourceWrapper>();
     private Map<Integer, AnalogWrapper> mAnalogMap = new HashMap<Integer, AnalogWrapper>();
+    private Map<Integer, EncoderWrapper> mCanEncoderMap = new HashMap<Integer, EncoderWrapper>();
     private Map<EncoderPair, EncoderWrapper> mEncoderMap = new HashMap<EncoderPair, EncoderWrapper>();
     private CompressorWrapper mCompressor = new CompressorWrapper();
 
@@ -128,6 +129,17 @@ public class SensorActuatorRegistry
         return true;
     }
 
+    public boolean register(EncoderWrapper aEncoder, int aPort)
+    {
+        if (mCanEncoderMap.containsKey(aPort))
+        {
+            return false;
+        }
+        mCanEncoderMap.put(aPort, aEncoder);
+
+        return true;
+    }
+
     public Map<Integer, SpeedControllerWrapper> getSpeedControllers()
     {
         return mSpeedControllerMap;
@@ -156,6 +168,11 @@ public class SensorActuatorRegistry
     public Map<Integer, AnalogWrapper> getAnalog()
     {
         return mAnalogMap;
+    }
+
+    public Map<Integer, EncoderWrapper> getCanEncoders()
+    {
+        return mCanEncoderMap;
     }
 
     public Map<EncoderPair, EncoderWrapper> getEncoders()

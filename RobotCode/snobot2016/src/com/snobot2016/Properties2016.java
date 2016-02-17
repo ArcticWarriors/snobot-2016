@@ -23,8 +23,8 @@ public class Properties2016
     public static final int sDRIVER_JOYSTICK_PORT2 = 2;
 
     // Speed Controller
-    public static final int sDRIVER_LEFT_MOTOR_PORT = 0;
-    public static final int sDRIVER_RIGHT_MOTOR_PORT = 1;
+    public static final int sDRIVER_LEFT_MOTOR_PORT = 5;
+    public static final int sDRIVER_RIGHT_MOTOR_PORT = 6;
     public static final int sSCALE_TILT_MOTOR_PORT = 3;
     public static final int sSCALE_MOVE_MOTOR_PORT = 4;
     public static final int sHARVESTER_ROLLER_MOTOR_PORT = 2;
