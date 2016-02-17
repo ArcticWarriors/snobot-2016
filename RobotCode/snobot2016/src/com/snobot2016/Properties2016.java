@@ -31,22 +31,23 @@ public class Properties2016
     public static final int sHARVESTER_PIVOT_MOTOR_PORT = 1;
 
     // CAN
-    public static final int sDRIVE_CAN_LEFT_A_PORT = 2;
-    public static final int sDRIVE_CAN_LEFT_B_PORT = 3;
-    public static final int sDRIVE_CAN_RIGHT_A_PORT = 1;
-    public static final int sDRIVE_CAN_RIGHT_B_PORT = 4;
+    public static final int sDRIVE_CAN_LEFT_A_PORT = 1;
+    public static final int sDRIVE_CAN_LEFT_B_PORT = 2;
+    public static final int sDRIVE_CAN_RIGHT_A_PORT = 4;
+    public static final int sDRIVE_CAN_RIGHT_B_PORT = 3;
 
     // Digital
-        public static final int sLEFT_DRIVE_ENCODER_PORT_A = 0;
+    public static final int sLEFT_DRIVE_ENCODER_PORT_A = 0;
     public static final int sLEFT_DRIVE_ENCODER_PORT_B = 1;
     public static final int sRIGHT_DRIVE_ENCODER_PORT_A = 2;
     public static final int sRIGHT_DRIVE_ENCODER_PORT_B = 3;
+    // public static final int sULTRASONIC_PORT = 4;
 
     // Analog
-    public static final int sGYRO_SENSOR_PORT = 7;
-    public static final int sHARVESTER_POT_PORT = 0;
-    public static final int sSCALE_POT_PORT = 2;
-    public static final int sEXTENSION_POT_PORT = 1;
+    public static final int sGYRO_SENSOR_PORT = 0; // Probably not used...
+    public static final int sHARVESTER_POT_PORT = 3;
+    public static final int sSCALE_POT_PORT = 1;
+    public static final int sEXTENSION_POT_PORT = 2;
 
     // Relay
     public static final int sLIGHT_RELAY = 1;
@@ -119,6 +120,8 @@ public class Properties2016
     public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMinVoltage", 1);
     public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMaxVoltage", 4);
 
+    // public static final DoubleProperty sGOAL_SCALE_HEIGHT_IN_INCHES = new
+    // DoubleProperty("ScaleGoalSonicHeighInches", 35);
     // Harvester
     public static final DoubleProperty sMIN_HARVESTER_POT_VOLTAGE = new DoubleProperty("HarvesterPotMinVoltage", 1);
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("HarvesterPotMaxVoltage", 4);

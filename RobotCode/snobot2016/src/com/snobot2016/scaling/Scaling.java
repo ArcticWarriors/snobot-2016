@@ -34,6 +34,7 @@ public class Scaling implements IScaling
     private double mVoltage;
     private boolean mSafeToRaise;
     private boolean mSafeToLower;
+    // private Ultrasonic mScaleUltrasonic;
     private static final double sHIGH_SCALE_TILT_MARGINAL_ERROR = 5; // error
                                                                      // margin
                                                                      // to find
@@ -196,6 +197,7 @@ public class Scaling implements IScaling
         // SmartDashboard
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, mScaleMoveMotor.get());
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, mScaleTiltMotor.get());
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_TILT_POT_VOLTAGE, mTiltPot.getVoltage());
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, getAngle());
         SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_CURRENT_POSITION, percentageScaled());
