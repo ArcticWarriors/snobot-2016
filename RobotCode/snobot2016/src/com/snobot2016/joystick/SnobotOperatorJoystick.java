@@ -1,5 +1,6 @@
 package com.snobot2016.joystick;
 
+import com.snobot.xlib.Utilities;
 import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -7,8 +8,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class SnobotOperatorJoystick implements IOperatorJoystick
 {
     private Joystick mJoystick;
-    private double mMotorTiltSpeed;
-    private double mMotorMoveSpeed;
+    private double mScaleTiltSpeed;
+    private double mScaleClimbSpeed;
 
     private boolean mMotorRollerSpeedForward;
     private boolean mMotorRollerSpeedReverse;
@@ -37,8 +38,8 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void update()
     {
-        mMotorTiltSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
-        mMotorMoveSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+        mScaleTiltSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS), .02);
+        mScaleClimbSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS), .01);
 
         mMotorRollerSpeedForward = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
         mMotorRollerSpeedReverse = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
@@ -85,14 +86,14 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public double getScaleMoveSpeed()
     {
-        return mMotorMoveSpeed;
+        return mScaleClimbSpeed;
     }
 
     @Override
     public double getScaleTiltSpeed()
     {
 
-        return mMotorTiltSpeed;
+        return mScaleTiltSpeed;
     }
 
     @Override
@@ -127,28 +128,24 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
     public boolean isScaleGoToGroundPressed()
     {
-        // TODO Auto-generated method stub
         return mGroundAngle;
     }
 
     @Override
     public boolean isScaleGoToVerticalPressed()
     {
-        // TODO Auto-generated method stub
         return mVerticalAngle;
     }
 
     @Override
     public boolean isScaleMoveForIntakePressed()
     {
-        // TODO Auto-generated method stub
         return mMoveForIntakeAngle;
     }
 
     @Override
     public boolean isScaleGoToHookPositionPressed()
     {
-        // TODO Auto-generated method stub
         return mHookAngle;
     }
 
