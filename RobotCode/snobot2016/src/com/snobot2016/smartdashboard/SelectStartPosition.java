@@ -27,12 +27,12 @@ public class SelectStartPosition
      */
     public enum StartPositions
     {
-        FIRST_POSITION(26.25, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        SECOND_POSITION(79.125, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        THIRD_POSITION(132, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        FOURTH_POSITION(184.875, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        FIFTH_POSITION(237.75, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        SPY_POSITION(11.5, 306, 180), 
+        FIRST_POSITION(-135.75, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0),
+        SECOND_POSITION(-82.875, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
+        THIRD_POSITION(-30.0, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
+        FOURTH_POSITION(22.875, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
+        FIFTH_POSITION(75.75, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
+        SPY_POSITION(-150.5, 306, 180), 
         ZERO_ZERO_ZERO_POSITION(0, 0, 0);
 
         final double mX;
@@ -44,6 +44,7 @@ public class SelectStartPosition
             mX = aX;
             mY = aY;
             mOrientation = aAngle;
+            System.out.println(mX);
         }
 
     }
