@@ -28,10 +28,10 @@ public class Scaling implements IScaling
     private AnalogInput mTiltPot; // Tilt Motor Potentiometer
     private double mScaleTiltAngle; // Current Potentiometer Angle
     private boolean mIsScalingMechanismUp; // Is scaling up
-    private boolean mIsDown; // Is scaling down
+    private boolean mIsScalingMechanismDown; // Is scaling down
     private AnalogInput mExtensionPot; // Extension Potentiometer
     private double mExtended; // Current Potentiometer Distance Extended
-    private double mVoltage;
+    private double mExtensionVoltage;
     private boolean mSafeToRaise;
     private boolean mSafeToLower;
     private static final double sHIGH_SCALE_TILT_MARGINAL_ERROR = 5; // error
@@ -63,7 +63,12 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-
+        mLogger.addHeader("TiltSpeed");
+        mLogger.addHeader("ScalingMechanismUp");
+        mLogger.addHeader("ScalingMechanismDown");
+        mLogger.addHeader("ScalingTiltAngle");
+        mLogger.addHeader("ExtensionDistance");
+        mLogger.addHeader("ExtensionVoltage");
     }
 
     @Override
@@ -76,22 +81,22 @@ public class Scaling implements IScaling
         if (mScaleTiltAngle <= (high_angle + sHIGH_SCALE_TILT_MARGINAL_ERROR) || mScaleTiltAngle >= (high_angle - sHIGH_SCALE_TILT_MARGINAL_ERROR))
         {
             mIsScalingMechanismUp = true;
-            mIsDown = false;
+            mIsScalingMechanismDown = false;
         }
         else if ((mScaleTiltAngle <= (low_angle + sLOW_SCALE_TILT_MARGINAL_ERROR) || mScaleTiltAngle >= (low_angle - sLOW_SCALE_TILT_MARGINAL_ERROR)))
         {
             mIsScalingMechanismUp = false;
-            mIsDown = true;
+            mIsScalingMechanismDown = true;
         }
         else
         {
-            mIsDown = false;
+            mIsScalingMechanismDown = false;
             mIsScalingMechanismUp = false;
         }
 
         {
-            mVoltage = mExtensionPot.getVoltage();
-            mExtended = (((mVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
+            mExtensionVoltage = mExtensionPot.getVoltage();
+            mExtended = (((mExtensionVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
                     / (Properties2016.sMAX_SCALE_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue()))
                     * 100);
 
@@ -140,7 +145,7 @@ public class Scaling implements IScaling
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
 
         // Ensures motor will not go lower than lowest possible angle
-        if (mIsDown && mTiltSpeed < 0)
+        if (mIsScalingMechanismDown && mTiltSpeed < 0)
         {
             mTiltSpeed = 0;
         }
@@ -206,7 +211,11 @@ public class Scaling implements IScaling
     {
         mLogger.updateLogger(mTiltSpeed);
         mLogger.updateLogger(mIsScalingMechanismUp);
-        mLogger.updateLogger(mIsDown);
+        mLogger.updateLogger(mIsScalingMechanismDown);
+        mLogger.updateLogger(mScaleTiltAngle);
+        mLogger.updateLogger(mExtended);
+        mLogger.updateLogger(mExtensionVoltage);
+
     }
 
     @Override

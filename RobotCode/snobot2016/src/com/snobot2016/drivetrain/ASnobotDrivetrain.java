@@ -1,5 +1,6 @@
 package com.snobot2016.drivetrain;
 
+import com.snobot.xlib.Logger;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IDriverJoystick;
 
@@ -13,13 +14,15 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
     protected final SpeedController mRightMotor;
     protected final IDriverJoystick mDriveJoystick;
     protected final RobotDrive mRobotDrive;
+    protected final Logger mLogger;
 
     public ASnobotDrivetrain(SpeedController aLeftMotor, SpeedController aLeftMotorB, SpeedController aRightMotor, SpeedController aRightMotorB,
-            IDriverJoystick aDriverJoyStick)
+            IDriverJoystick aDriverJoyStick, Logger aLogger)
     {
         mLeftMotor = aLeftMotor;
         mRightMotor = aRightMotor;
         mDriveJoystick = aDriverJoyStick;
+        mLogger = aLogger;
 
         if (aLeftMotorB != null && aRightMotorB != null)
         {
@@ -36,7 +39,10 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
     @Override
     public void init()
     {
-
+        mLogger.addHeader("LeftEncoderDistance");
+        mLogger.addHeader("RightEncoderDitance");
+        mLogger.addHeader("LeftMotorSpeed");
+        mLogger.addHeader("RightMotorSpeed");
     }
 
     @Override
@@ -76,7 +82,10 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
     @Override
     public void updateLog()
     {
-
+        mLogger.updateLogger(getLeftEncoderDistance());
+        mLogger.updateLogger(getRightEncoderDistance());
+        mLogger.updateLogger(mLeftMotor.get());
+        mLogger.updateLogger(mRightMotor.get());
     }
 
     @Override

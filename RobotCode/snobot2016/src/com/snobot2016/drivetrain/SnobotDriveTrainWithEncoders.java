@@ -1,5 +1,6 @@
 package com.snobot2016.drivetrain;
 
+import com.snobot.xlib.Logger;
 import com.snobot2016.Properties2016;
 import com.snobot2016.joystick.IDriverJoystick;
 
@@ -18,9 +19,9 @@ public class SnobotDriveTrainWithEncoders extends ASnobotDrivetrain
     		SpeedController aRightMotorB, 
     		Encoder aLeftEncoder, 
     		Encoder aRightEncoder,
-            IDriverJoystick aDriverJoyStick)
+ IDriverJoystick aDriverJoyStick, Logger aLogger)
     {
-        super(aLeftMotor, aLeftMotorB, aRightMotor, aRightMotorB, aDriverJoyStick);
+        super(aLeftMotor, aLeftMotorB, aRightMotor, aRightMotorB, aDriverJoyStick, aLogger);
 
         mLeftEncoder = aLeftEncoder;
         mRightEncoder = aRightEncoder;
