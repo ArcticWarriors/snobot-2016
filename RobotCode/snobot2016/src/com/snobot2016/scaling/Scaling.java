@@ -87,12 +87,8 @@ public class Scaling implements IScaling
             mExtended = (((mExtensionVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
                     / (Properties2016.sMAX_SCALE_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue()))
                     * 100);
-
-            // System.out.println(mVoltage);
         }
 
-        // System.out.println("mAngle is " + mAngle + " high angle is: " +
-        // high_angle + " low angle is: " + low_angle);
         mSafeToRaise = mScaleTiltAngle < high_angle;
         mSafeToLower = mScaleTiltAngle > low_angle;
     }
@@ -106,7 +102,7 @@ public class Scaling implements IScaling
 
     private void controlClimb()
     {
-        setScaleSpeedTilt(mJoystick.getScaleMoveSpeed());
+        setScaleSpeedMove(mJoystick.getScaleMoveSpeed());
     }
 
     private void controlTilt()
@@ -216,13 +212,13 @@ public class Scaling implements IScaling
     @Override
     public void raiseScaleTiltMechanism()
     {
-        mScaleTiltMotor.set(1);
+        setScaleSpeedTilt(1);
     }
 
     @Override
     public void lowerScaleTiltMechanism()
     {
-        mScaleTiltMotor.set(-1);
+        setScaleSpeedTilt(-1);
     }
 
     @Override
@@ -232,7 +228,7 @@ public class Scaling implements IScaling
         double kP = Properties2016.sK_P_SCALE_TILT_ANGLE.getValue();
         double error = (goalAngle - mScaleTiltAngle);
         double mSpeed = (error * kP);
-        // System.out.println("CHANGING SPEED TO: " + mSpeed);
+
         System.out.println(" The goal angle is: " + goalAngle + ". The current angle is: " + mScaleTiltAngle);
         if (mSpeed > 0)
         {
