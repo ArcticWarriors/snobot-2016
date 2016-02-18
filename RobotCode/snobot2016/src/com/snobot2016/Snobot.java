@@ -83,7 +83,7 @@ public class Snobot extends ASnobot
             CANTalon leftMotorB = new CANTalon(Properties2016.sDRIVE_CAN_LEFT_B_PORT);
             CANTalon rightMotorA = new CANTalon(Properties2016.sDRIVE_CAN_RIGHT_A_PORT);
             CANTalon rightMotorB = new CANTalon(Properties2016.sDRIVE_CAN_RIGHT_B_PORT);
-            mDrivetrain = new SnobotDriveTrainWithCan(leftMotorA, leftMotorB, rightMotorA, rightMotorB, mDriverXbox);
+            mDrivetrain = new SnobotDriveTrainWithCan(leftMotorA, leftMotorB, rightMotorA, rightMotorB, mDriverXbox, mLogger);
             mSubsystems.add(mDrivetrain);
         }
         else
@@ -92,7 +92,8 @@ public class Snobot extends ASnobot
             Encoder rightDriveEncoder = new Encoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A, Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B);
             Talon driveLeftMotor = new Talon(Properties2016.sDRIVER_LEFT_MOTOR_PORT);
             Talon driveRightMotor = new Talon(Properties2016.sDRIVER_RIGHT_MOTOR_PORT);
-            mDrivetrain = new SnobotDriveTrainWithEncoders(driveLeftMotor, null, driveRightMotor, null, leftDriveEncoder, rightDriveEncoder, mDriverXbox);
+            mDrivetrain = new SnobotDriveTrainWithEncoders(driveLeftMotor, null, driveRightMotor, null, leftDriveEncoder, rightDriveEncoder,
+                    mDriverXbox, mLogger);
             mSubsystems.add(mDrivetrain);
         }
 

@@ -22,7 +22,7 @@ public class Harvester implements IHarvester
     private IOperatorJoystick mOperatorJoystick;
     private Logger mLogger;
     private AnalogInput mHarvesterPot;
-    private double mVoltage;
+    private double mHarvesterPotVoltage;
     private boolean mGoodToRaiseHarvester;
     private boolean mGoodToLowerHarvester;
     private double mHarvesterPotPercentage;
@@ -42,15 +42,19 @@ public class Harvester implements IHarvester
     @Override
     public void init()
     {
+        mLogger.addHeader("PivotSpeed");
+        mLogger.addHeader("RollerSpeed");
+        mLogger.addHeader("HarvesterPotVoltage");
+        mLogger.addHeader("HarvesterPercentage");
     }
 
     @Override
     public void update()
     {
-        mVoltage = mHarvesterPot.getVoltage();
-        mGoodToRaiseHarvester = (mVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());
-        mGoodToLowerHarvester = (mVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
-        mHarvesterPotPercentage = (((mVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
+        mHarvesterPotVoltage = mHarvesterPot.getVoltage();
+        mGoodToRaiseHarvester = (mHarvesterPotVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());
+        mGoodToLowerHarvester = (mHarvesterPotVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
+        mHarvesterPotPercentage = (((mHarvesterPotVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
                 / (Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue() - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())) * 100);
 
     }
@@ -118,7 +122,7 @@ public class Harvester implements IHarvester
     {
         mLogger.updateLogger(mPivot);
         mLogger.updateLogger(mRoller);
-        mLogger.updateLogger(mVoltage);
+        mLogger.updateLogger(mHarvesterPotVoltage);
         mLogger.updateLogger(percentageLowered());
     }
 
