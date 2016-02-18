@@ -73,7 +73,7 @@ public interface IScaling extends ISubsystem
      * @return True if the distance between current angle and goal angle is less
      *         than 5, else false
      */
-    boolean reachingGoalAngle(ScaleAngles goal);
+    boolean goToPosition(ScaleAngles goal);
 
     /**
      * Safety check to see if the current position of the scale tilt is already

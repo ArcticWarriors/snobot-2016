@@ -1,6 +1,5 @@
 package com.snobot2016.joystick;
 
-import com.snobot.xlib.Utilities;
 import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -8,21 +7,22 @@ import edu.wpi.first.wpilibj.Joystick;
 public class SnobotOperatorJoystick implements IOperatorJoystick
 {
     private Joystick mJoystick;
-    private double mScaleTiltSpeed;
-    private double mScaleClimbSpeed;
 
-    private boolean mMotorRollerSpeedForward;
-    private boolean mMotorRollerSpeedReverse;
-    private boolean mMotorPivotSpeedUp;
-    private boolean mMotorPivotSpeedDown;
-    private boolean mFinalCountDown;
-    private boolean mHarvesterUp;
-    private boolean mHarvesterDown;
+    // Overrides
+    private double mScaleTiltOverrideSpeed;
+    private double mHarvesterTiltOverrideSpeed;
 
-    private boolean mGroundAngle;
-    private boolean mMoveForIntakeAngle;
-    private boolean mVerticalAngle;
-    private boolean mHookAngle;
+    // Scaling
+    private double mClimbSpeed;
+    private boolean mScaleGoToGround;
+    private boolean mScaleGoToHarvest;
+    private boolean mScaleGoToVertical;
+    private boolean mScaleGoToHang;
+
+    // Harvester
+    private double mHarvestorSpeed;
+    private boolean mMoveHarvestorToUp;
+    private boolean mMoveHarvestorToDown;
 
     public SnobotOperatorJoystick(Joystick aJoystick)
     {
@@ -38,24 +38,38 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void update()
     {
-        // mScaleTiltSpeed =
-        // Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS),
-        // .02);
-        mScaleTiltSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
+        // Overrides
+        mScaleTiltOverrideSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS);
+        mHarvesterTiltOverrideSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
 
-        mScaleClimbSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS), .01);
+        mClimbSpeed = 0;// mJoystick.getRawAxis(XboxButtonMap.);
 
-        mMotorRollerSpeedForward = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
-        mMotorRollerSpeedReverse = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
-        mHarvesterDown = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
-        mHarvesterUp = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
-        mFinalCountDown = mJoystick.getRawButton(XboxButtonMap.START_BUTTON);
 
-        // mGroundAngle = mJoystick.getRawButton(XboxButtonMap.LEFT_TRIGGER);
-        // mMoveForIntakeAngle =
-        // mJoystick.getRawButton(XboxButtonMap.RIGHT_TRIGGER);
-        mVerticalAngle = mJoystick.getRawButton(XboxButtonMap.L3_BUTTON);
-        mHookAngle = mJoystick.getRawButton(XboxButtonMap.R3_BUTTON);
+        mScaleGoToGround = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
+        mScaleGoToHarvest = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
+        mScaleGoToVertical = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
+        mScaleGoToHang = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
+
+        double rightTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_TRIGGER);
+        double leftTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_TRIGGER);
+
+        double harvSpeed = 0;
+        // System.out.println("Right T: " + rightTrigSpeed + ", L " +
+        // leftTrigSpeed);
+
+        if (rightTrigSpeed > .01)
+        {
+            harvSpeed = rightTrigSpeed;
+        }
+        else if (leftTrigSpeed < -.01)
+        {
+            harvSpeed = leftTrigSpeed;
+        }
+
+        mHarvestorSpeed = harvSpeed;
+
+        mMoveHarvestorToUp = mJoystick.getRawButton(XboxButtonMap.RB_BUTTON);
+        mMoveHarvestorToDown = mJoystick.getRawButton(XboxButtonMap.LB_BUTTON);
     }
 
     @Override
@@ -88,70 +102,78 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
     }
 
+    ///////////////////////////////////////////////
+    // Emergency Overrides (for when sensors break)
+    ///////////////////////////////////////////////
+    
+    @Override
+    public double getScaleTiltOverrideSpeed()
+    {
+        return mScaleTiltOverrideSpeed;
+    }
+
+    @Override
+    public double getHarvestorTiltOverrideSpeed()
+    {
+        return mHarvesterTiltOverrideSpeed;
+    }
+
+    ///////////////////////////////////////////////
+    // Scaling
+    ///////////////////////////////////////////////
+    
     @Override
     public double getScaleMoveSpeed()
     {
-        return mScaleClimbSpeed;
+        return mClimbSpeed;
     }
 
     @Override
-    public double getScaleTiltSpeed()
-    {
-
-        return mScaleTiltSpeed;
-    }
-
-    @Override
-    public boolean isFinalCountDown()
-    {
-        return mFinalCountDown;
-    }
-
-    @Override
-    public boolean isHarvesterRollerForward()
-    {
-        return mMotorRollerSpeedForward;
-    }
-
-    @Override
-    public boolean isHarvesterRollerReverse()
-    {
-        return mMotorRollerSpeedReverse;
-    }
-
-    @Override
-    public boolean isHarvesterUp()
-    {
-        return mHarvesterUp;
-    }
-
-    @Override
-    public boolean isHarvesterDown()
-    {
-        return mHarvesterDown;
-    }
-
     public boolean isScaleGoToGroundPressed()
     {
-        return mGroundAngle;
+        return mScaleGoToGround;
     }
 
     @Override
     public boolean isScaleGoToVerticalPressed()
     {
-        return mVerticalAngle;
+        return mScaleGoToVertical;
     }
 
     @Override
     public boolean isScaleMoveForIntakePressed()
     {
-        return mMoveForIntakeAngle;
+        return mScaleGoToHarvest;
     }
 
     @Override
     public boolean isScaleGoToHookPositionPressed()
     {
-        return mHookAngle;
+        return mScaleGoToHang;
+    }
+
+    @Override
+    public boolean isFinalCountDown()
+    {
+        return false; // TODO Disabled for now
+    }
+
+    @Override
+    public double getHarvesterIntakeSpeed()
+    {
+        return mHarvestorSpeed;
+    }
+
+    @Override
+    public boolean moveHarvesterToUpPosition()
+    {
+        return mMoveHarvestorToUp;
+    }
+
+    @Override
+    public boolean moveHarvesterToDownPosition()
+    {
+        return mMoveHarvestorToDown;
     }
 
 }

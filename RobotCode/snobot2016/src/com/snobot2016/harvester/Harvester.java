@@ -62,44 +62,33 @@ public class Harvester implements IHarvester
     @Override
     public void control()
     {
-        // button setup for harvester roller
-        if (mOperatorJoystick.isHarvesterRollerForward() && mOperatorJoystick.isHarvesterRollerReverse())
+        controlIntake();
+        controlPivot();
+
+    }
+
+    private void controlIntake()
+    {
+        double rollerSpeed = mOperatorJoystick.getHarvesterIntakeSpeed();
+        setRollerMotorSpeed(rollerSpeed);
+    }
+
+    private void controlPivot()
+    {
+
+        if (mOperatorJoystick.moveHarvesterToUpPosition())
         {
-            stopRoller();
+            moveToPercentage(100);
         }
-        else if (mOperatorJoystick.isHarvesterRollerForward())
+        else if (mOperatorJoystick.moveHarvesterToDownPosition())
         {
-            rollIn();
+            moveToPercentage(0);
         }
-        else if (mOperatorJoystick.isHarvesterRollerReverse())
-        {
-            rollOut();
-        }
+        // If neither button is pressed, fall back on the override
         else
         {
-            stopRoller();
+            setPivotMotorSpeed(mOperatorJoystick.getHarvestorTiltOverrideSpeed());
         }
-
-        // button setup for harvester pivot
-        if (mOperatorJoystick.isHarvesterUp() && mOperatorJoystick.isHarvesterDown())
-        {
-            stopHarvester();
-        }
-        else if (mOperatorJoystick.isHarvesterUp())
-        {
-            setPivotMotorSpeed(-1);
-            // moveToPercentage(100);
-        }
-        else if (mOperatorJoystick.isHarvesterDown())
-        {
-            setPivotMotorSpeed(1);
-            // moveToPercentage(0);
-        }
-        else
-        {
-            stopHarvester();
-        }
-
     }
 
     @Override

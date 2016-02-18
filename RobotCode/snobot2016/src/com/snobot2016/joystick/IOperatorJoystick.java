@@ -5,27 +5,100 @@ import com.snobot.xlib.ISubsystem;
 public interface IOperatorJoystick extends ISubsystem
 
 {
-    // Scaling
-    double getScaleTiltSpeed();
+    
+    ///////////////////////////////////////////////
+    // Emergency Overrides (for when sensors break)
+    ///////////////////////////////////////////////
+    
+    /**
+     * Emergency override for scale tilt
+     * 
+     * @return The override value for the scaling tilt motor
+     */
+    double getScaleTiltOverrideSpeed();
 
+    /**
+     * Emergency override for the harvestor tilt motor
+     * 
+     * @return Speed for the harvestor tilt motor
+     */
+    double getHarvestorTiltOverrideSpeed();
+
+    ///////////////////////////////////////////////
+    // Scaling
+    ///////////////////////////////////////////////
+
+    /**
+     * Returns the speed the scaling climb motor should be using (no safety)
+     * 
+     * @return The climbimg speed
+     */
     double getScaleMoveSpeed();
 
-    boolean isFinalCountDown();
-
+    /**
+     * Returns if the "Move scaler to the ground" button is pressed. This should
+     * use safety features
+     * 
+     * @return True if the scaler should move to the ground
+     */
     boolean isScaleGoToGroundPressed();
 
+    /**
+     * Returns if the "Move scaler to the 90 deg" button is pressed. This should
+     * use safety features
+     * 
+     * @return True if the scaler should move to the vertical position
+     */
     boolean isScaleGoToVerticalPressed();
 
+    /**
+     * Returns if the "Get the scaler out of the way of the harvester" button is
+     * pressed. This should use safety features
+     * 
+     * @return True if the scaler should move out of the way
+     */
     boolean isScaleMoveForIntakePressed();
 
+    /**
+     * Returns if the "Move scaler so we can hook onto the bar" button is
+     * pressed. This should use safety features
+     * 
+     * @return True if the scaler should move to the hook position
+     */
     boolean isScaleGoToHookPositionPressed();
 
+    /**
+     * Indicates that the user wants to use the auto-hang feature. Should use
+     * safety features
+     * 
+     * @return True if the auto-hang feature is enabled
+     */
+    boolean isFinalCountDown();
+
+    ///////////////////////////////////////////////
     // Harvester
-    boolean isHarvesterRollerForward();
+    ///////////////////////////////////////////////
 
-    boolean isHarvesterRollerReverse();
+    /**
+     * Returns the speed at which the harvester intake motor should be running
+     * 
+     * @return The desired motor speed
+     */
+    double getHarvesterIntakeSpeed();
 
-    boolean isHarvesterUp();
+    /**
+     * Returns if the "Move scaler to safety" button is pressed. Should use
+     * safety features
+     * 
+     * @return True if the harvestor should move to the safe (90 deg) position
+     */
+    boolean moveHarvesterToUpPosition();
 
-    boolean isHarvesterDown();
+    /**
+     * Returns if the "Move scaler to pick up a ball" button is pressed. Should
+     * use safety features
+     * 
+     * @return True if the harvester should move to the down position
+     */
+    boolean moveHarvesterToDownPosition();
 }
