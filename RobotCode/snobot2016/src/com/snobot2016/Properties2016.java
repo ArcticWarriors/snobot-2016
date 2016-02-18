@@ -120,6 +120,8 @@ public class Properties2016
     public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMinVoltage", 1);
     public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMaxVoltage", 4);
 
+    public static final DoubleProperty sLOW_GOAL_Y = new DoubleProperty("LowGoalY", 305);
+    public static final DoubleProperty sLOW_GOAL_X = new DoubleProperty("LowGoalX", 70);
     // public static final DoubleProperty sGOAL_SCALE_HEIGHT_IN_INCHES = new
     // DoubleProperty("ScaleGoalSonicHeighInches", 35);
     // Harvester

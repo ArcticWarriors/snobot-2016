@@ -1,7 +1,2 @@
 CrossDefense
 GoToLowGoal 45 30 45 30
-
-
-# There was an error parsing the commands...
-#
-#Received unexpected command name 'crossDefense'

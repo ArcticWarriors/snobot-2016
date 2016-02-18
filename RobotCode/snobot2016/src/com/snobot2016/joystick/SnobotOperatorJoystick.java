@@ -38,7 +38,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
     @Override
     public void update()
     {
-        mScaleTiltSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS), .02);
+        // mScaleTiltSpeed =
+        // Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS),
+        // .02);
+        mScaleTiltSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS);
+
         mScaleClimbSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS), .01);
 
         mMotorRollerSpeedForward = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
@@ -47,8 +51,9 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         mHarvesterUp = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
         mFinalCountDown = mJoystick.getRawButton(XboxButtonMap.START_BUTTON);
 
-        mGroundAngle = mJoystick.getRawButton(XboxButtonMap.LEFT_TRIGGER);
-        mMoveForIntakeAngle = mJoystick.getRawButton(XboxButtonMap.RIGHT_TRIGGER);
+        // mGroundAngle = mJoystick.getRawButton(XboxButtonMap.LEFT_TRIGGER);
+        // mMoveForIntakeAngle =
+        // mJoystick.getRawButton(XboxButtonMap.RIGHT_TRIGGER);
         mVerticalAngle = mJoystick.getRawButton(XboxButtonMap.L3_BUTTON);
         mHookAngle = mJoystick.getRawButton(XboxButtonMap.R3_BUTTON);
     }

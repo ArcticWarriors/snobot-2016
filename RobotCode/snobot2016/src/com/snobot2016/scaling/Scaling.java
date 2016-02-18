@@ -140,17 +140,18 @@ public class Scaling implements IScaling
     {
         mTiltSpeed = mJoystick.getScaleTiltSpeed();
 
-        // Ensures motor will not go lower than lowest possible angle
-        if (mIsDown && mTiltSpeed < 0)
-        {
-            mTiltSpeed = 0;
-        }
-        // Ensures motor will not go higher than highest possible angle
-        else if (mIsScalingMechanismUp && mTiltSpeed > 0)
-        {
-            mTiltSpeed = 0;
-        }
+        // // Ensures motor will not go lower than lowest possible angle
+        // if (mIsDown && mTiltSpeed < 0)
+        // {
+        // mTiltSpeed = 0;
+        // }
+        // // Ensures motor will not go higher than highest possible angle
+        // else if (mIsScalingMechanismUp && mTiltSpeed > 0)
+        // {
+        // mTiltSpeed = 0;
+        // }
 
+        System.out.println("TILT: " + mTiltSpeed);
         setScaleSpeedTilt(mTiltSpeed);
     }
 
@@ -158,28 +159,29 @@ public class Scaling implements IScaling
     {
         double joystickSpeed = mJoystick.getScaleMoveSpeed();
 
-        // Check to see if they want to auto-scale
-        if (mJoystick.isFinalCountDown())
-        {
-            mAmIClimbing = true;
-            mTimer.start();
-        }
-
-        // If we are scaling, set the motor speed to the climbing speed
-        if (mAmIClimbing)
-        {
-            joystickSpeed = 1;
-        }
-
-        // This means that we were climbing and have finished. Stop the motor,
-        // reset all of the tracking variables
-        if (mAmIClimbing && mTimer.get() > 10)
-        {
-            mTimer.stop();
-            mTimer.reset();
-            mAmIClimbing = false;
-            joystickSpeed = 0;
-        }
+        // // Check to see if they want to auto-scale
+        // if (mJoystick.isFinalCountDown())
+        // {
+        // mAmIClimbing = true;
+        // mTimer.start();
+        // }
+        //
+        // // If we are scaling, set the motor speed to the climbing speed
+        // if (mAmIClimbing)
+        // {
+        // joystickSpeed = 1;
+        // }
+        //
+        // // This means that we were climbing and have finished. Stop the
+        // motor,
+        // // reset all of the tracking variables
+        // if (mAmIClimbing && mTimer.get() > 10)
+        // {
+        // mTimer.stop();
+        // mTimer.reset();
+        // mAmIClimbing = false;
+        // joystickSpeed = 0;
+        // }
 
         setScaleSpeedMove(joystickSpeed);
     }

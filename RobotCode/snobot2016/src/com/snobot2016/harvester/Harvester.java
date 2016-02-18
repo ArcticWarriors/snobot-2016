@@ -83,11 +83,13 @@ public class Harvester implements IHarvester
         }
         else if (mOperatorJoystick.isHarvesterUp())
         {
-            moveToPercentage(100);
+            setPivotMotorSpeed(-1);
+            // moveToPercentage(100);
         }
         else if (mOperatorJoystick.isHarvesterDown())
         {
-            moveToPercentage(0);
+            setPivotMotorSpeed(1);
+            // moveToPercentage(0);
         }
         else
         {
