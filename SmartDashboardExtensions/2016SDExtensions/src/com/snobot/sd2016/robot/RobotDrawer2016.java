@@ -20,12 +20,12 @@ public class RobotDrawer2016 extends JPanel
     private static final double sCHASSIS_WIDTH = 35;
     private static final double sCHASSIS_HEIGHT = 8.25;
 
-    private static final double sROBOT_WIDTH = 100;
-    private static final double sROBOT_HEIGHT = 100;
+    private static final double sROBOT_WIDTH = 75;
+    private static final double sROBOT_HEIGHT = 75;
 
     // Drawing Locations
-    private static final double sCHASSIS_X_START = 25;
-    private static final double sCHASSIS_Y_START = 80;
+    private static final double sCHASSIS_X_START = 10;
+    private static final double sCHASSIS_Y_START = 65;
 
     // Component Colors
     private static final Color sROBOT_BASE_COLOR = Color.black;
@@ -87,13 +87,6 @@ public class RobotDrawer2016 extends JPanel
         double minScaleFactor = Math.min(horizontalScaleFactor, verticalScaleFactor);
 
         mScaleFactor = minScaleFactor;
-
-        // System.out.println(this);
-        // System.out.println("Scale Factor: " + mScaleFactor);
-        // System.out.println(" Horizontal factor : " + horizontalScaleFactor +
-        // ", width : " + getWidth() + ", " + sROBOT_WIDTH);
-        // System.out.println(" Vertical factor : " + verticalScaleFactor +
-        // ", height : " + getHeight() + ", " + sROBOT_HEIGHT);
 
         repaint();
     }

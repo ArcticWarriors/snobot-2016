@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import net.java.games.input.Component.Identifier;
 
-public class XboxJoystick extends SpecificGamepadJoystick
+public class XboxOneJoystick extends SpecificGamepadJoystick
 {
 
     private static final Identifier[] sAXIS = new Identifier[]
@@ -38,7 +38,7 @@ public class XboxJoystick extends SpecificGamepadJoystick
             Identifier.Button._13 // Motion pad
     };
 
-    public XboxJoystick()
+    public XboxOneJoystick()
     {
         super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
     }
