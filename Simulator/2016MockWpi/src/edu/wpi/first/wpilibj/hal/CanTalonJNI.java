@@ -112,7 +112,11 @@ public class CanTalonJNI extends JNIWrapper
         {
             if (value == 0)
             {
-                getEncoderWrapperFromBuffer(handle).reset();
+                EncoderWrapper wrapper = getEncoderWrapperFromBuffer(handle);
+                if (wrapper != null)
+                {
+                    wrapper.reset();
+                }
             }
             else
             {
