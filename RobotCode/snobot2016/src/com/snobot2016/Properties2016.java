@@ -94,10 +94,10 @@ public class Properties2016
     public static final StringProperty sLOG_FILE_PATH;
 
     // Drive path
-    public static final DoubleProperty sDRIVE_PATH_KP = new DoubleProperty("DrivePathKP", 0.0174);
+    public static final DoubleProperty sDRIVE_PATH_KP = new DoubleProperty("DrivePathKP", 0.001);
     public static final DoubleProperty sDRIVE_PATH_KD = new DoubleProperty("DrivePathKD", 0);
-    public static final DoubleProperty sDRIVE_PATH_KV = new DoubleProperty("DrivePathKVel", .009);
-    public static final DoubleProperty sDRIVE_PATH_KA = new DoubleProperty("DrivePathKAccel", 0);
+    public static final DoubleProperty sDRIVE_PATH_KV = new DoubleProperty("DrivePathKVel", 0.0063);
+    public static final DoubleProperty sDRIVE_PATH_KA = new DoubleProperty("DrivePathKAccel", 0.002);
 
     // Turn Path
     public static final DoubleProperty sTURN_PATH_KP = new DoubleProperty("TurnPathKP", 0.005);
@@ -117,8 +117,8 @@ public class Properties2016
     public static final DoubleProperty sHOOK_ANGLE = new DoubleProperty("ScaleAngleHookPos", 110);
     public static final DoubleProperty sK_P_SCALE_TILT_ANGLE = new DoubleProperty("ScaleAngleKP", 0.005);
 
-    public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMinVoltage", 1);
-    public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMaxVoltage", 4);
+    public static final DoubleProperty sMIN_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMinVoltage", 0.78);
+    public static final DoubleProperty sMAX_SCALE_EXTENSION_POT_VOLTAGE = new DoubleProperty("ScaleExtensionPotMaxVoltage", 2.19);
 
     public static final DoubleProperty sLOW_GOAL_Y = new DoubleProperty("LowGoalY", 305);
     public static final DoubleProperty sLOW_GOAL_X = new DoubleProperty("LowGoalX", 70);
@@ -129,8 +129,8 @@ public class Properties2016
     public static final DoubleProperty sMAX_HARVESTER_POT_VOLTAGE = new DoubleProperty("HarvesterPotMaxVoltage", 4);
     public static final DoubleProperty sHARVESTER_POT_KP = new DoubleProperty("HarvestPotKP", .005);
 
-    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderLeftDPP", -0.4);
-    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderRightDPP", 0.4);
+    public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderLeftDPP", -0.00564998);
+    public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderRightDPP", 0.00564998);
 
     static
     {

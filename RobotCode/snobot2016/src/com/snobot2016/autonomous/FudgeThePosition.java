@@ -37,8 +37,7 @@ public class FudgeThePosition extends Command
     @Override
     protected void initialize()
     {
-        mPositioner.setXPosition(mXPosition);
-        mPositioner.setYPosition(mYPosition);
+        mPositioner.setPosition(mXPosition, mYPosition, 0);
     }
 
     @Override

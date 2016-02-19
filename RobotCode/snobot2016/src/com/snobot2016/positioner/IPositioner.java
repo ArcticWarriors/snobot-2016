@@ -15,11 +15,5 @@ public interface IPositioner extends ISubsystem
 
     public double getTotalDistance();
 
-    public void setXPosition(double inputX);
-
-    public void setYPosition(double inputY);
-
-    public void resetOrientationRadians(double inputRadians);
-
-    public void resetOrientationDegrees(double inputDegrees);
+    public void setPosition(double aX, double aY, double aAngle);
 }

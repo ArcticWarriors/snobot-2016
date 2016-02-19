@@ -19,19 +19,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Positioner implements ISubsystem, IPositioner
 {
+    private Timer mTimer;
+    private IDriveTrain mDriveTrain;
+    private Logger mLogger;
+    private Gyro mGyro;
+
     private double mXPosition;
     private double mYPosition;
     private double mOrientation;
     private double mTotalDistance;
-    private double mChangeInDistance;
+
     private double mLastDistance;
-    private Timer mTimer;
     private double mLastTime;
-    private Gyro mGyro;
-    private IDriveTrain mDriveTrain;
     private double mSpeed;
-    public Logger mLogger;
-    private double mOffset;
+    private double mStartAngle;
 
     // private
 
@@ -51,7 +52,6 @@ public class Positioner implements ISubsystem, IPositioner
         mYPosition = 0;
         mOrientation = 0;
         mTotalDistance = 0;
-        mChangeInDistance = 0;
         mLastDistance = 0;
         mLastTime = 0;
         mSpeed = 0;
@@ -59,7 +59,7 @@ public class Positioner implements ISubsystem, IPositioner
         mDriveTrain = aDriveTrain;
         mTimer = new Timer();
         mLogger = aLogger;
-        mOffset = 0;
+        mStartAngle = 0;
     }
 
     /**
@@ -84,18 +84,18 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         // Orientation
-        mOrientation = (mGyro.getAngle() + mOffset);
+        mOrientation = (mGyro.getAngle() + mStartAngle);
         double orientationRadians = Math.toRadians(mOrientation);
 
         // ChangeInDistance and X/Y
         // TODO Need to account for slips when driving over defenses
         mTotalDistance = (mDriveTrain.getRightEncoderDistance() + mDriveTrain.getLeftEncoderDistance()) / 2;
-        mChangeInDistance = mTotalDistance - mLastDistance;
-        mXPosition += mChangeInDistance * Math.sin(orientationRadians);
-        mYPosition += mChangeInDistance * Math.cos(orientationRadians);
+        double deltaDistance = mTotalDistance - mLastDistance;
+        mXPosition += deltaDistance * Math.sin(orientationRadians);
+        mYPosition += deltaDistance * Math.cos(orientationRadians);
 
         // Update
-        mSpeed = (mChangeInDistance) / (mTimer.get() - mLastTime);
+        mSpeed = (deltaDistance) / (mTimer.get() - mLastTime);
         mLastTime = mTimer.get();
         mLastDistance = mTotalDistance;
     }
@@ -140,53 +140,18 @@ public class Positioner implements ISubsystem, IPositioner
         return mTotalDistance;
     }
 
-    /**
-     * Assigns a new X-position to the robot.
-     * 
-     * @param inputX
-     *            The new X-position.
-     */
-    public void setXPosition(double inputX)
+    public void setPosition(double aX, double aY, double aAngle)
     {
         mDriveTrain.resetEncoders();
-        mXPosition = inputX;
-    }
-
-    /**
-     * Assigns a new Y-position to the robot.
-     * 
-     * @param inputY
-     *            The new Y-position.
-     */
-    public void setYPosition(double inputY)
-    {
-        mDriveTrain.resetEncoders();
-        mYPosition = inputY;
-    }
-
-    /**
-     * Assigns a new orientation in radians to the robot.
-     * 
-     * @param offsetRadians
-     *            The offset from north in radians.
-     */
-    public void resetOrientationRadians(double offsetRadians)
-    {
-        resetOrientationDegrees(Math.toDegrees(offsetRadians));
-    }
-
-    /**
-     * Assigns a new orientation in degrees to the robot.
-     * 
-     * @param offsetDegrees
-     *            The offset from north in degrees.
-     */
-    public void resetOrientationDegrees(double offsetDegrees)
-    {
-        // mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
-        mOffset = (offsetDegrees);
-
+        mXPosition = aX;
+        mYPosition = aY;
+        mStartAngle = aAngle;
         mGyro.reset();
+        mDriveTrain.resetEncoders();
+
+        mTotalDistance = 0;
+        mLastDistance = 0;
+        mLastTime = mTimer.get();
     }
 
     @Override

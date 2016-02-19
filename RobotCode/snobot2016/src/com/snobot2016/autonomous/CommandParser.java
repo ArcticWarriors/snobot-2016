@@ -228,6 +228,11 @@ public class CommandParser extends ACommandParser
     @Override
     public CommandGroup readFile(String aFilePath)
     {
+        if (aFilePath == null)
+        {
+            aFilePath = "NOT FOUND!";
+        }
+
         mAutonTable.putString(SmartDashBoardNames.sAUTON_FILENAME, aFilePath);
         return super.readFile(aFilePath);
     }
