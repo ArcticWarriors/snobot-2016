@@ -148,6 +148,7 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setXPosition(double inputX)
     {
+        mDriveTrain.resetEncoders();
         mXPosition = inputX;
     }
 
@@ -159,6 +160,7 @@ public class Positioner implements ISubsystem, IPositioner
      */
     public void setYPosition(double inputY)
     {
+        mDriveTrain.resetEncoders();
         mYPosition = inputY;
     }
 

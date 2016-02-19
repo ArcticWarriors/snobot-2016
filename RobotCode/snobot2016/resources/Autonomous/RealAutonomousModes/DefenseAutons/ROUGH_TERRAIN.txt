@@ -1,1 +1,2 @@
-DriveStraightPath 180 65 30
+#DriveStraightPath 100 65 100
+StupidDriveStraight 2.5 0.45

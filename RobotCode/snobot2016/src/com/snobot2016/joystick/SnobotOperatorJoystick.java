@@ -47,11 +47,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
         if (mJoystick.getRawButton(XboxButtonMap.A_BUTTON))
         {
-            mClimbSpeed = 1;
+            mClimbSpeed = -1;
         }
         else if (mJoystick.getRawButton(XboxButtonMap.Y_BUTTON))
         {
-            mClimbSpeed = -1;
+            mClimbSpeed = 1;
         }
 
 
@@ -63,7 +63,7 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         double rightTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_TRIGGER);
         double leftTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_TRIGGER);
 
-        mHarvestorSpeed = rightTrigSpeed - leftTrigSpeed;
+        mHarvestorSpeed = -(rightTrigSpeed - leftTrigSpeed);
 
         mMoveHarvestorToUp = mJoystick.getRawButton(XboxButtonMap.RB_BUTTON);
         mMoveHarvestorToDown = mJoystick.getRawButton(XboxButtonMap.LB_BUTTON);

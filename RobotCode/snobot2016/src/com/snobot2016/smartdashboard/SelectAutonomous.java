@@ -51,9 +51,18 @@ public class SelectAutonomous
             SnobotAutonCrawler fileProcessor = new SnobotAutonCrawler(aIgnoreString);
             Files.walkFileTree(Paths.get(autonDr.toURI()), fileProcessor);
 
+            boolean isFirst = true;
             for (Path p : fileProcessor.getPaths())
             {
-                output.addObject(p.getFileName().toString(), p.toString());
+                if (isFirst)
+                {
+                    output.addDefault(p.getFileName().toString(), p.toString());
+                    isFirst = false;
+                }
+                else
+                {
+                    output.addObject(p.getFileName().toString(), p.toString());
+                }
             }
         }
         catch (IOException e)

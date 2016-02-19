@@ -9,4 +9,6 @@ public interface IDriveTrain extends ISubsystem
     double getRightEncoderDistance();
 
     double getLeftEncoderDistance();
+
+    void resetEncoders();
 }

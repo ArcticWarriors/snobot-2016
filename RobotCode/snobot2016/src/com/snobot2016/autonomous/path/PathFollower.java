@@ -74,8 +74,15 @@ public class PathFollower
 
             double output = v_term + a_term + p_term;
 
-            System.out.println("Current: " + aCurrPosition + "Error: " + error + ", " + "p: " + p_term + ", " + "v: " + v_term + ", " + "a: " + a_term
-                    + ", " + output);
+            System.out.println(
+                    "Current: " + aCurrPosition  + ", " + 
+                    "Error: " + error + ", " + 
+ "Vel: " + velocity + ", " + 
+                    "p: " + p_term + ", " + 
+                    "v: " + v_term + ", " + 
+                    "a: " + a_term + ", " + 
+                    "output: " + output);
+            
 
             // Update smart dashbaord
             String point_info = mPathPoint + "," + IdealPlotSerializer.serializePathPoint(realPoint);

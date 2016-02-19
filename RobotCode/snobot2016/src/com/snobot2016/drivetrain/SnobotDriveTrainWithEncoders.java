@@ -43,4 +43,11 @@ public class SnobotDriveTrainWithEncoders extends ASnobotDrivetrain
         return mLeftEncoder.getDistance();
     }
 
+    @Override
+    public void resetEncoders()
+    {
+        mLeftEncoder.reset();
+        mRightEncoder.reset();
+    }
+
 }

@@ -84,7 +84,7 @@ public class Scaling implements IScaling
 
         {
             mExtensionVoltage = mExtensionPot.getVoltage();
-            mExtended = (((mExtensionVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
+            mExtended = 100 - (((mExtensionVoltage - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue())
                     / (Properties2016.sMAX_SCALE_EXTENSION_POT_VOLTAGE.getValue() - Properties2016.sMIN_SCALE_EXTENSION_POT_VOLTAGE.getValue()))
                     * 100);
         }
@@ -148,6 +148,7 @@ public class Scaling implements IScaling
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, getAngle());
         SmartDashboard.putNumber(SmartDashBoardNames.sTIMER, mTimer.get());
         SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_CURRENT_POSITION, percentageScaled());
+        SmartDashboard.putNumber(SmartDashBoardNames.sSCALE_EXTENSION_POT, mExtensionPot.getVoltage());
     }
 
     @Override
