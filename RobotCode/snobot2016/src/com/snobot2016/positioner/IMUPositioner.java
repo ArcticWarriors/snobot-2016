@@ -1,7 +1,5 @@
 package com.snobot2016.positioner;
 
-import java.util.ArrayList;
-
 import com.snobot.xlib.ISubsystem;
 import com.snobot.xlib.Logger;
 import com.snobot.xlib.Utilities;
@@ -231,52 +229,12 @@ public class IMUPositioner implements IPositioner, ISubsystem
         return mTotalDistance;
     }
 
-    /**
-     * Assigns a new X-position to the robot.
-     * 
-     * @param inputX
-     *            The new X-position.
-     */
     @Override
-    public void setXPosition(double inputX)
+    public void setPosition(double aX, double aY, double aAngle)
     {
-        mXPosition = inputX;
-    }
-
-    /**
-     * Assigns a new Y-position to the robot.
-     * 
-     * @param inputY
-     *            The new Y-position.
-     */
-    @Override
-    public void setYPosition(double inputY)
-    {
-        mYPosition = inputY;
-    }
-
-    /**
-     * Assigns a new orientation in radians to the robot.
-     * 
-     * @param inputRadians
-     *            The new orientation in radians.
-     */
-    @Override
-    public void resetOrientationRadians(double inputRadians)
-    {
-        mOffset = Math.toDegrees(inputRadians) - mOrientation;
-    }
-
-    /**
-     * Assigns a new orientation in degrees to the robot.
-     * 
-     * @param inputDegrees
-     *            The new orientation in degrees.
-     */
-    @Override
-    public void resetOrientationDegrees(double inputDegrees)
-    {
-        mOffset = inputDegrees - mOrientation;
+        mXPosition = aX;
+        mYPosition = aY;
+        mOffset = aAngle - mOrientation;
     }
     
     private double calcComponentDistance(double accelComponent, double velocityComponent, double time)
