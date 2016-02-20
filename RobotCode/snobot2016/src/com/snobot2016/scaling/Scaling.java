@@ -56,7 +56,12 @@ public class Scaling implements IScaling
     @Override
     public void init()
     {
-
+        mLogger.addHeader("ScaleTileMotorSpeed");
+        mLogger.addHeader("IsScalingMechanismUp");
+        mLogger.addHeader("IsScalingMechanismDown");
+        mLogger.addHeader("ScaleTiltAngle");
+        mLogger.addHeader("PercentageExtended");
+        mLogger.addHeader("ExtensionPotVoltage");
     }
 
     @Override
@@ -159,7 +164,7 @@ public class Scaling implements IScaling
         mLogger.updateLogger(mIsScalingMechanismDown);
         mLogger.updateLogger(mScaleTiltAngle);
         mLogger.updateLogger(mExtended);
-        // mLogger.updateLogger(mExtensionVoltage);
+        mLogger.updateLogger(mExtensionVoltage);
 
     }
 
