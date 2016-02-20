@@ -24,15 +24,6 @@ def parse_datetime(time_string):
 
     return (msec + (sec * 1000) + (minute * 60000) + (hour * 3600000)) / 1000.0
 
-
-def parse_drivemode(value):
-
-    if value == "Tank":
-        return 0
-    else:
-        return 1
-
-
 def plot_driver_joysticks(converted_dict):
 
     print converted_dict.keys()
