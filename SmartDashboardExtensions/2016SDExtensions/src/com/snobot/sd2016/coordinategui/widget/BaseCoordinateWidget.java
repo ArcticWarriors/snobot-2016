@@ -55,7 +55,6 @@ public class BaseCoordinateWidget extends AutoUpdateWidget
         public void componentResized(ComponentEvent e)
         {
           mPanel.updateScale();
-          System.out.println("Size updated");
         }
     };
 

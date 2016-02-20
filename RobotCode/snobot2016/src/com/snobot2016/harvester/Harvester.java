@@ -104,6 +104,7 @@ public class Harvester implements IHarvester
         SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_PIVOT_MOTOR, mPivot);
         SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_ROLLER_MOTOR, mRoller);
         SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_POT_PERCENTAGE, this.percentageLowered());
+        SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_POT_VOLTAGE, mHarvesterPotVoltage);
     }
 
     @Override

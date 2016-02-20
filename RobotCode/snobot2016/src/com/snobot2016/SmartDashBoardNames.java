@@ -19,7 +19,8 @@ public class SmartDashBoardNames
     public static final String sSNOBOT_LIGHT = "Light";
 
     // Acquisition
-    public static final String sHARVESTER_POT_PERCENTAGE = "Pot Percentage";
+    public static final String sHARVESTER_POT_VOLTAGE = "Harv. Pot Voltage";
+    public static final String sHARVESTER_POT_PERCENTAGE = "Harv. Pot Percentage";
     public static final String sHARVESTER_ROLLER_MOTOR = "Harv. Intake Motor";
     public static final String sHARVESTER_PIVOT_MOTOR = "Harv. Tilt Motor";
 
