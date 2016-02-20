@@ -7,6 +7,7 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,6 +35,24 @@ public class Positioner implements ISubsystem, IPositioner
     private double mSpeed;
     private double mStartAngle;
 
+    private double mVelocityX;
+    private double mVelocityY;
+
+    private Accelerometer mAccelerometer;
+    double mErrorX;
+    double mErrorY;
+    double mErrorZ;
+
+    // TODO Get rid of these when done testing
+    double encoderXVelocity;
+    double encoderYVelocity;
+    double accelXVelocity;
+    double accelYVelocity;
+    double avgFiltXVelocity;
+    double avgFiltYVelocity;
+    double compFiltXVelocity;
+    double compFiltYVelocity;
+
     // private
 
     /**
@@ -45,8 +64,10 @@ public class Positioner implements ISubsystem, IPositioner
      *            The DriveTrain to use.
      * @param aLogger
      *            The robot's Logger.
+     * @param aAccelerometer
+     *            The robot's accelerometer
      */
-    public Positioner(Gyro aGyro, IDriveTrain aDriveTrain, Logger aLogger)
+    public Positioner(Gyro aGyro, IDriveTrain aDriveTrain, Logger aLogger, Accelerometer aAccelerometer)
     {
         mXPosition = 0;
         mYPosition = 0;
@@ -60,6 +81,24 @@ public class Positioner implements ISubsystem, IPositioner
         mTimer = new Timer();
         mLogger = aLogger;
         mStartAngle = 0;
+
+        mVelocityX = 0;
+        mVelocityY = 0;
+
+        mAccelerometer = aAccelerometer;
+        mErrorX = 0;
+        mErrorY = 0;
+        mErrorZ = 0;
+
+        // TODO Get rid of these when done testing
+        encoderXVelocity = 0;
+        encoderYVelocity = 0;
+        accelXVelocity = 0;
+        accelYVelocity = 0;
+        avgFiltXVelocity = 0;
+        avgFiltYVelocity = 0;
+        compFiltXVelocity = 0;
+        compFiltYVelocity = 0;
     }
 
     /**
@@ -70,10 +109,17 @@ public class Positioner implements ISubsystem, IPositioner
     {
         mTimer.start();
 
+        // calibrateAccel();
+
         mLogger.addHeader("X-coordinate");
         mLogger.addHeader("Y-coordinate");
         mLogger.addHeader("Orientation");
         mLogger.addHeader("Speed");
+
+        mLogger.addHeader("Accel Error X");
+        mLogger.addHeader("Accel Error Y");
+
+        addFilterTestHeaders();
     }
 
     /**
@@ -83,6 +129,9 @@ public class Positioner implements ISubsystem, IPositioner
     @Override
     public void update()
     {
+        double nowTime = mTimer.get();
+        double deltaTime = nowTime - mLastTime;
+
         // Orientation
         mOrientation = (mGyro.getAngle() + mStartAngle);
         double orientationRadians = Math.toRadians(mOrientation);
@@ -91,11 +140,30 @@ public class Positioner implements ISubsystem, IPositioner
         // TODO Need to account for slips when driving over defenses
         mTotalDistance = (mDriveTrain.getRightEncoderDistance() + mDriveTrain.getLeftEncoderDistance()) / 2;
         double deltaDistance = mTotalDistance - mLastDistance;
-        mXPosition += deltaDistance * Math.sin(orientationRadians);
-        mYPosition += deltaDistance * Math.cos(orientationRadians);
+        double deltaDistanceX = deltaDistance * Math.sin(orientationRadians);
+        double deltaDistanceY = deltaDistance * Math.cos(orientationRadians);
 
+        encoderXVelocity = deltaDistanceX / deltaTime;
+        encoderYVelocity = deltaDistanceY / deltaTime;
+
+        // TODO Get rid of these when done testing
+        mVelocityX = encoderXVelocity;
+        mVelocityY = encoderYVelocity;
+
+        double accelX = (mAccelerometer.getX() - mErrorX) * Math.sin(orientationRadians);
+        double accelY = (mAccelerometer.getY() - mErrorY) * Math.cos(orientationRadians);
+
+        accelXVelocity = accelX * deltaTime + mVelocityX;
+        accelYVelocity = accelY * deltaTime + mVelocityY;
+
+        // TODO Make smarter filter
+        averageFilter(encoderXVelocity, encoderYVelocity, accelXVelocity, accelYVelocity);
+
+        complimentaryFilter(encoderXVelocity, encoderYVelocity, accelXVelocity, accelYVelocity);
         // Update
-        mSpeed = (deltaDistance) / (mTimer.get() - mLastTime);
+
+        // TODO Fix these when done testing
+        mSpeed = (deltaDistance) / deltaTime;
         mLastTime = mTimer.get();
         mLastDistance = mTotalDistance;
     }
@@ -177,6 +245,19 @@ public class Positioner implements ISubsystem, IPositioner
         SmartDashboard.putNumber(SmartDashBoardNames.sY_POSITION, mYPosition);
         SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, Utilities.boundAngle0to360Degrees(mOrientation));
         SmartDashboard.putNumber(SmartDashBoardNames.sSPEED, mSpeed);
+
+        SmartDashboard.putNumber("Encoder X Velocity", encoderXVelocity);
+        SmartDashboard.putNumber("Encoder Y Velocity", encoderYVelocity);
+
+        SmartDashboard.putNumber("Accel X Velocity", accelXVelocity);
+        SmartDashboard.putNumber("Accel Y Velocity", accelYVelocity);
+
+        SmartDashboard.putNumber("Average Filter X", avgFiltXVelocity);
+        SmartDashboard.putNumber("Average Filter Y", avgFiltYVelocity);
+
+        SmartDashboard.putNumber("Complimentary Filter X", compFiltXVelocity);
+        SmartDashboard.putNumber("Complimentary Filter Y", compFiltYVelocity);
+
     }
 
     /**
@@ -190,6 +271,11 @@ public class Positioner implements ISubsystem, IPositioner
         mLogger.updateLogger(mYPosition);
         mLogger.updateLogger(mOrientation);
         mLogger.updateLogger(mSpeed);
+
+        mLogger.updateLogger(mErrorX);
+        mLogger.updateLogger(mErrorY);
+
+        logFilterTest();
     }
 
     @Override
@@ -198,4 +284,81 @@ public class Positioner implements ISubsystem, IPositioner
 
     }
 
+    /**
+     * Calibrate the accelerometer by taking readings over a period of time and
+     * averaging the error. The robot must be stationary during this time
+     * period.
+     */
+    private void calibrateAccel()
+    {
+        int samplesTaken = 0;
+        mErrorX = 0;
+        mErrorY = 0;
+        mErrorZ = 0;
+        double startTime = mTimer.get();
+        while (mTimer.get() <= 4 + startTime)
+        {
+            mErrorX += mAccelerometer.getX();
+            mErrorY += mAccelerometer.getY();
+            mErrorZ += mAccelerometer.getZ();
+            samplesTaken++;
+        }
+        // TODO For some reason the X error is not actually what we are seeing.
+        mErrorX = mErrorX / samplesTaken;
+        mErrorY = mErrorY / samplesTaken;
+        mErrorZ = mErrorZ / samplesTaken;
+
+        SmartDashboard.putNumber("AccelError X", mErrorX);
+        SmartDashboard.putNumber("AccelError Y", mErrorY);
+        SmartDashboard.putNumber("AccelError Z", mErrorZ);
+    }
+
+    private void averageFilter(double aEncoderXVelocity, double aEncoderYVelocity, double aAccelXVelocity, double aAccelYVelocity)
+    {
+
+        avgFiltXVelocity = (aEncoderXVelocity + aAccelXVelocity) / 2;
+        avgFiltYVelocity = (aEncoderYVelocity + aAccelYVelocity) / 2;
+    }
+
+    private void complimentaryFilter(double aEncoderXVelocity, double aEncoderYVelocity, double aAccelXVelocity, double aAccelYVelocity)
+    {
+        // TODO Make configurable
+        double encoderWeight = .75;
+        compFiltXVelocity = aEncoderXVelocity * encoderWeight + aAccelXVelocity * (1 - encoderWeight);
+        compFiltYVelocity = aEncoderYVelocity * encoderWeight + aAccelYVelocity * (1 - encoderWeight);
+    }
+
+    // TODO Get rid of this when done testing
+    private void addFilterTestHeaders()
+    {
+        mLogger.addHeader("Encoder X Velocity");
+        mLogger.addHeader("Encoder Y Velocity");
+        mLogger.addHeader("Accel X Velocity");
+        mLogger.addHeader("Accel X Velocity");
+        mLogger.addHeader("Average Filter X");
+        mLogger.addHeader("Average Filter Y");
+        mLogger.addHeader("Complimentary Filter X");
+        mLogger.addHeader("Complimentary Filter Y");
+    }
+
+    // TODO Get rid of this when done testing
+    private void logFilterTest()
+    {
+        mLogger.updateLogger(encoderXVelocity);
+        mLogger.updateLogger(encoderYVelocity);
+        mLogger.updateLogger(accelXVelocity);
+        mLogger.updateLogger(accelYVelocity);
+        mLogger.updateLogger(avgFiltXVelocity);
+        mLogger.updateLogger(avgFiltYVelocity);
+        mLogger.updateLogger(compFiltXVelocity);
+        mLogger.updateLogger(compFiltYVelocity);
+
+    }
+
+    // TODO Get rid of this when done testing
+    private void calcError()
+    {
+        mErrorX = mAccelerometer.getX();
+        mErrorY = mAccelerometer.getY();
+    }
 }

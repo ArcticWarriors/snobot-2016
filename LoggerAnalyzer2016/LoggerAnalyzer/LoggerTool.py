@@ -78,7 +78,7 @@ def plot_scale_tilt(converted_dict):
     plot_scaling_mechanism(converted_dict)
 
 def plot_extension(converted_dict):
-#     extension_motor_speed = converted_dict["ScaleExtensionMotorSpeed"]
+    extension_motor_speed = converted_dict["ScaleExtensionMotorSpeed"]
     extension_percentage = converted_dict["PercentageExtended"]
     extension_pot_voltage = converted_dict["ExtensionPotVoltage"]
     
@@ -90,11 +90,12 @@ def plot_extension(converted_dict):
     plt.scatter(x_axis, extension_percentage, c=extension_percentage, marker="o", cmap=plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
     
     plt.subplot(3,1,2)
-    plt.ylabel("Voltage")
+    plt.ylabel("EVoltage")
     plt.scatter(x_axis, extension_pot_voltage, c=extension_pot_voltage, marker="o", cmap=plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
     
-    
-#     plt.subplot(3,1,3)
+    plt.subplot(3,1,3)
+    plt.ylabel("Motor Speed")
+    plt.scatter(x_axis,extension_motor_speed, c = extension_motor_speed , marker="o", cmap = plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
     
 def plot_scaling_mechanism(converted_dict):
 
@@ -117,6 +118,31 @@ def plot_scaling_mechanism(converted_dict):
 #     plt.plot(limit_switch_activated, c='b', marker="o")
 
 
+def plot_harvester(converted_dict):
+    pivot_speed = converted_dict["PivotSpeed"]
+    roller_speed = converted_dict["RollerSpeed"]
+    harvester_pot_voltage = converted_dict["HarvesterPotVoltage"]
+    harvester_percentage = converted_dict["HarvesterPercentage"]
+    
+    x_axis = numpy.arange(len(pivot_speed))
+    
+    plt.subplot(4, 1, 1)
+    plt.title("Harvester")
+    plt.ylabel("Pivot Speed")
+    plt.scatter(x_axis, pivot_speed, c=pivot_speed, marker = "o", cmap = plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
+    
+    plt.subplot(4, 1, 2)
+    plt.ylabel("Roller Speed")
+    plt.scatter(x_axis, roller_speed, c=roller_speed, marker = "o", cmap = plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
+    
+    plt.subplot(4,1,3)
+    plt.ylabel("HVoltage")
+    plt.scatter(x_axis, harvester_pot_voltage, c= harvester_pot_voltage, marker = "o", cmap = plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
+    
+    plt.subplot(4,1,4)
+    plt.ylabel("Harvester Percentage")
+    plt.scatter(x_axis, harvester_percentage, c= harvester_percentage, marker = "o", cmap = plt.get_cmap("gist_rainbow_r"), edgecolors = "None")
+    
 def plot_dt(converted_dict):
 
     the_time = converted_dict['Date and Time']
@@ -153,6 +179,10 @@ def main():
     plt.figure(4)
     plot_extension(converted_dict)
     plt.savefig(image_dir + "Extension.png")
+
+    plt.figure(5)
+    plot_harvester(converted_dict)
+    plt.savefig(image_dir + "Harvester.png")
 
     plt.show()
 

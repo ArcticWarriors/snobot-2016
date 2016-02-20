@@ -68,14 +68,16 @@ public class Snobot extends ASnobot
         // Our Joysticks
         SnobotDriveXboxJoystick mDriverXbox = new SnobotDriveXboxJoystick(mRawDriverJoystick);
         SnobotOperatorJoystick mOperatorJoystick = new SnobotOperatorJoystick(mRawOperatorJoystick);
-//        mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick, mRawDriverJoystick2);
-//        mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
-//        mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox, mDriverFlightStick, mArcadeJoystick, mLogger);
+        // mDriverFlightStick = new SnobotDriveFlightStick(mRawDriverJoystick,
+        // mRawDriverJoystick2);
+        // mArcadeJoystick = new SnobotDriveArcadeJoystick(mRawDriverJoystick);
+        // mJoystickFactory = new SnobotDriveJoystickFactory(mDriverXbox,
+        // mDriverFlightStick, mArcadeJoystick, mLogger);
         mSubsystems.add(mDriverXbox);
         mSubsystems.add(mOperatorJoystick);
-//        mSubsystems.add(mDriverFlightStick);
-//        mSubsystems.add(mArcadeJoystick);
-//        mSubsystems.add(mJoystickFactory);
+        // mSubsystems.add(mDriverFlightStick);
+        // mSubsystems.add(mArcadeJoystick);
+        // mSubsystems.add(mJoystickFactory);
 
         // Drive train
         if (Properties2016.sIS_REAL_ROBOT)
@@ -148,7 +150,9 @@ public class Snobot extends ASnobot
         }
         else
         {
-            mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger);
+            // TODO This is temporary and only for testing purposes
+            ADXL362 mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
+            mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger, mAccelerometer);
         }
         mSubsystems.add(mSnobotPositioner);
 
