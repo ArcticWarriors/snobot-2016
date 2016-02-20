@@ -1,5 +1,6 @@
 package com.snobot2016.autonomous;
 
+import com.snobot2016.Properties2016;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.positioner.IPositioner;
 
@@ -16,10 +17,10 @@ public class GoToLowGoal extends Command
 {
     private IPositioner mPositioner;
     private IDriveTrain mDriveTrain;
-    private boolean mGoRight;
-    private Command mGoToXYPath;
-    private double mXPosition;
-    private double mYPosition;
+    // private boolean mGoRight;
+    // private Command mGoToXYPath;
+    // private double mXPosition;
+    // private double mYPosition;
     private double mMaxTurnVel;
     private double mMaxTurnAccel;
     private double mMaxDriveVel;
@@ -52,7 +53,6 @@ public class GoToLowGoal extends Command
         mMaxTurnAccel = aMaxTurnAccel;
         mMaxDriveVel = aMaxDriveVel;
         mMaxDriveAccel = aMaxDriveAccel;
-        mYPosition = 305;
 
     }
 
@@ -63,20 +63,20 @@ public class GoToLowGoal extends Command
     @Override
     protected void initialize()
     {
-        if (mPositioner.getXPosition() >= 0)
+        double mYPosition = Properties2016.sLOW_GOAL_Y.getValue();
+        double mXPosition = Properties2016.sLOW_GOAL_X.getValue();
+        if (mPositioner.getXPosition() < 0)
         {
-            mGoRight = false;
-            mXPosition = 200;
+            mXPosition = -mXPosition;
         }
-        else
-        {
-            mGoRight = true;
-            mXPosition = -200;
-        }
+        GoToXYPath drive_close_to_goal = new GoToXYPath(mDriveTrain, mPositioner, (mXPosition + 15), (mYPosition - 30), mMaxTurnVel, mMaxTurnAccel,
+                mMaxDriveVel,
+                mMaxDriveAccel);
+        GoToXYPath drive_to_goal = new GoToXYPath(mDriveTrain, mPositioner, mXPosition, mYPosition, mMaxTurnVel, mMaxTurnAccel, mMaxDriveVel, mMaxDriveAccel);
 
-        mGoToXYPath = new GoToXYPath(mDriveTrain, mPositioner, mXPosition, mYPosition, mMaxTurnVel, mMaxTurnAccel, mMaxDriveVel, mMaxDriveAccel);
         mCommandGroup = new CommandGroup();
-        mCommandGroup.addSequential(mGoToXYPath);
+        mCommandGroup.addSequential(drive_close_to_goal);
+        mCommandGroup.addSequential(drive_to_goal);
     }
 
     /**

@@ -99,13 +99,21 @@ public class AutonFactory
 
     public CommandGroup buildAnAuton()
     {
-        mSelectStartPosition.setStartPosition();
-        
-        mDefenseCommandParser.readFile(mDefenseInFront.getDefensePath()); //Forces a re-read, publish to dashboard
-
         CommandGroup cobbledCommandGroup = new CommandGroup();
-        cobbledCommandGroup.addSequential(mPostDefenseCommandParser.readFile(mSelectAutonomous.getSelected()));
 
+        try
+        {
+            mSelectStartPosition.setStartPosition();
+
+            mDefenseCommandParser.readFile(mDefenseInFront.getDefensePath()); // Forces a re-read, publish to dashboard
+
+            cobbledCommandGroup.addSequential(mPostDefenseCommandParser.readFile(mSelectAutonomous.getSelected()));
+        }
+        catch (Exception e)
+        {
+            System.err.println("Could not read auton files");
+            e.printStackTrace();
+        }
         return cobbledCommandGroup;
     }
 }

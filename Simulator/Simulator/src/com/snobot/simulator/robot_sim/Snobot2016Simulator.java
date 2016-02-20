@@ -18,7 +18,7 @@ public class Snobot2016Simulator extends ASimulator
         // Drivetrain
         //////////////////////////////
         {
-            double drivetrainSpeed = 3.8 * 12;
+            double drivetrainSpeed = 13 * 12;
             AnalogWrapper gyro;
 
             if (Properties2016.sUSE_SPI_GYRO)
@@ -45,6 +45,8 @@ public class Snobot2016Simulator extends ASimulator
 
                 leftDriveEncoder.setSpeedController(leftDriveMotor);
                 rightDriveEncoder.setSpeedController(rightDriveMotor);
+                leftDriveEncoder.setDistancePerTick(Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue() * 4);
+                rightDriveEncoder.setDistancePerTick(Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue() * 4);
 
                 leftDriveMotor.setName("Left Drive (A)");
                 leftDriveMotorB.setName("Left Drive (B)");

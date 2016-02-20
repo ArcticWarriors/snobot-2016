@@ -1,6 +1,7 @@
 package com.snobot2016.drivetrain;
 
 import com.snobot.xlib.Logger;
+import com.snobot2016.Properties2016;
 import com.snobot2016.joystick.IDriverJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -20,13 +21,20 @@ public class SnobotDriveTrainWithCan extends ASnobotDrivetrain
     @Override
     public double getRightEncoderDistance()
     {
-        return ((CANTalon) mRightMotor).getEncPosition();
+        return ((CANTalon) mRightMotor).getEncPosition() * Properties2016.sRIGHT_ENCODER_DIST_PER_PULSE.getValue();
     }
 
     @Override
     public double getLeftEncoderDistance()
     {
-        return ((CANTalon) mLeftMotor).getEncPosition();
+        return ((CANTalon) mLeftMotor).getEncPosition() * Properties2016.sLEFT_ENCODER_DIST_PER_PULSE.getValue();
+    }
+
+    @Override
+    public void resetEncoders()
+    {
+        ((CANTalon) mLeftMotor).setEncPosition(0);
+        ((CANTalon) mRightMotor).setEncPosition(0);
     }
 
 }

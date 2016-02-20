@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
@@ -166,6 +167,12 @@ public class Snobot extends ASnobot
     {
         mAutonCommand = mAutonFactory.buildAnAuton();
         mAutonCommand.start();
+    }
+
+    public void autonomousPeriodic()
+    {
+        Timer.delay(.005);
+        super.autonomousPeriodic();
     }
 
     @Override

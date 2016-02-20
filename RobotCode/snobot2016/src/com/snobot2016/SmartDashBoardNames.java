@@ -54,5 +54,6 @@ public class SmartDashBoardNames
     public static final String sSCALE_TILT_POT_VOLTAGE = "Scale Tilt Voltage";
     public static final String sTIMER = "Final Countdown";
     public static final String sSCALE_CURRENT_POSITION = "Position of Scaler";
+    public static final String sSCALE_EXTENSION_POT = "Scale Extension Pot";
 
 }
