@@ -106,6 +106,7 @@ public class TextFileDeserializer implements IPathDeserializer {
 
             left.setSegment(i, leftSegment);
             right.setSegment(i, rightSegment);
+            ++i;
         }
 
         System.out.println("...finished parsing path from string.");

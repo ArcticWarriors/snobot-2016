@@ -1,4 +1,7 @@
-Trajectory Position2ToLowGoal.csv
+#DriveStraightPath 120 100 90
+FudgeThePosition Same 140
+Trajectory  Position5ToLowGoal.csv
+
 
 #Drive for _1 seconds at _2 speed
 #StupidDriveStraight 5 .2
@@ -61,13 +64,3 @@ Trajectory Position2ToLowGoal.csv
 #
 #Will run the "cross defense" command.  Uses the defense selected in the SendableChooser
 #CrossDefense
-
-
-# There was an error parsing the commands...
-#
-#Could not read path file ../../RobotCode/snobot2016/resources/traj/Pos2ToLowGoal.csv
-
-
-# There was an error parsing the commands...
-#
-#Could not read path file ../../RobotCode/snobot2016/resources/traj/Positoin2ToLowGoal.csv

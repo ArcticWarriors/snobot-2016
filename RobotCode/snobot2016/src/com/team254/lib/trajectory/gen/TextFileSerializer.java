@@ -42,10 +42,12 @@ public class TextFileSerializer
           Segment left_segment = left.getSegment(i);
           Segment right_segment = right.getSegment(i);
 
+          double leftHeadingDeg = Math.toDegrees(left_segment.heading);
+          double rightHeadingDeg = Math.toDegrees(right_segment.heading);
+
           content += String.format("%.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f, %.3f\n",
-                  left_segment.pos, left_segment.vel, left_segment.acc, left_segment.jerk, left_segment.heading, left_segment.dt, left_segment.x,
-                  left_segment.y, right_segment.pos, right_segment.vel, right_segment.acc, right_segment.jerk, right_segment.heading,
-                  right_segment.dt, right_segment.x, right_segment.y);
+                  left_segment.pos, left_segment.vel, left_segment.acc, left_segment.jerk, leftHeadingDeg, left_segment.dt, left_segment.x, left_segment.y, 
+                  right_segment.pos, right_segment.vel, right_segment.acc, right_segment.jerk, rightHeadingDeg, right_segment.dt, right_segment.x, right_segment.y);
       }
 
       return content;

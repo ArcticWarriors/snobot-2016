@@ -1,0 +1,4 @@
+CrossDefense
+StupidDriveStraight 1 -.3
+FudgeThePosition Same 140
+Trajectory Position5ToLowGoal.csv
