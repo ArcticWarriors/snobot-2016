@@ -47,11 +47,11 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
 
         if (mJoystick.getPOV() == XboxButtonMap.D_PAD_UP)
         {
-            mClimbSpeed = -1;
+            mClimbSpeed = 1;
         }
         else if (mJoystick.getPOV() == XboxButtonMap.D_PAD_DOWN)
         {
-            mClimbSpeed = 1;
+            mClimbSpeed = -1;
         }
         else if (mJoystick.getPOV() == XboxButtonMap.D_PAD_NULL)
         {
