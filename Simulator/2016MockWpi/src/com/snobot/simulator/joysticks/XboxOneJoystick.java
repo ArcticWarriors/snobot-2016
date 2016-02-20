@@ -1,5 +1,6 @@
 package com.snobot.simulator.joysticks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import net.java.games.input.Component.Identifier;
@@ -40,6 +41,6 @@ public class XboxOneJoystick extends SpecificGamepadJoystick
 
     public XboxOneJoystick()
     {
-        super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), new ArrayList());
     }
 }

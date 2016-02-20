@@ -247,4 +247,21 @@ public class Logger
             return true;
         }
     }
+
+    public void flush()
+    {
+        try
+        {
+            if (mLogWriter != null)
+            {
+                mLogWriter.flush();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            this.stop();
+            mLogWriter = null;
+        }
+    }
 }
