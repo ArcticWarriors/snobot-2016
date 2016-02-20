@@ -10,6 +10,8 @@ import com.team254.lib.trajectory.gen.WaypointSequence.Waypoint;
 
 public class GenerateSnobotPaths
 {
+    private static double mYPosForDefenses = 140;
+
     public static String joinPath(String path1, String path2)
     {
         File file1 = new File(path1);
@@ -73,7 +75,7 @@ public class GenerateSnobotPaths
 
         config.dt = .02;
         config.max_acc = 120;
-        config.max_jerk = 40.0 * 12;
+        config.max_jerk = 480;
         config.max_vel = 50;
 
         WaypointSequence p = new WaypointSequence(10000);
@@ -84,9 +86,80 @@ public class GenerateSnobotPaths
         generate(config, p, directory, path_name, kWheelbaseWidth);
     }
 
+    private static void genPos2ToLowGoal(String Directory, double kWheelbaseWidth)
+    {
+        TrajectoryGenerator.Config dudeConfig = new TrajectoryGenerator.Config();
+        final String dudePathName = "Position2ToLowGoal";
+        dudeConfig.dt = .02;
+        dudeConfig.max_acc = 120;
+        dudeConfig.max_jerk = 480;
+        dudeConfig.max_vel = 50;
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(-82.875, mYPosForDefenses, 0));
+        dudeP.addWaypoint(new Waypoint(-82.875, mYPosForDefenses + 200, 0));
+        dudeP.addWaypoint(new Waypoint(-50, 305, 45));
+
+        generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
+    }
+
+    private static void genPos3ToLowGoal(String Directory, double kWheelbaseWidth)
+    {
+        TrajectoryGenerator.Config dudeConfig = new TrajectoryGenerator.Config();
+        final String dudePathName = "Position3ToLowGoal";
+        dudeConfig.dt = .02;
+        dudeConfig.max_acc = 120;
+        dudeConfig.max_jerk = 480;
+        dudeConfig.max_vel = 50;
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(-30, mYPosForDefenses, 0));
+        dudeP.addWaypoint(new Waypoint(-30, mYPosForDefenses + 170, 0));
+        dudeP.addWaypoint(new Waypoint(-50, 305, 45));
+
+        generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
+    }
+
+    private static void genPos4ToLowGoal(String Directory, double kWheelbaseWidth)
+    {
+        TrajectoryGenerator.Config dudeConfig = new TrajectoryGenerator.Config();
+        final String dudePathName = "Position4ToLowGoal";
+        dudeConfig.dt = .02;
+        dudeConfig.max_acc = 120;
+        dudeConfig.max_jerk = 480;
+        dudeConfig.max_vel = 50;
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(22.875, mYPosForDefenses, 0));
+        dudeP.addWaypoint(new Waypoint(22.875, mYPosForDefenses + 170, 0));
+        dudeP.addWaypoint(new Waypoint(50, 305, -45));
+
+        generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
+    }
+
+    private static void genPos5ToLowGoal(String Directory, double kWheelbaseWidth)
+    {
+        TrajectoryGenerator.Config dudeConfig = new TrajectoryGenerator.Config();
+        final String dudePathName = "Position5ToLowGoal";
+        dudeConfig.dt = .02;
+        dudeConfig.max_acc = 120;
+        dudeConfig.max_jerk = 480;
+        dudeConfig.max_vel = 50;
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(75.75, mYPosForDefenses, 0));
+        dudeP.addWaypoint(new Waypoint(75.75, mYPosForDefenses + 170, 0));
+        dudeP.addWaypoint(new Waypoint(50, 305, -45));
+
+        generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
+    }
+
     public static void main(String[] args)
     {
-        String directory = "D:/FIRST/FRC-2016/snobot-2016/RobotCode/snobot2016/resources/traj/";
+        String directory = "../../RobotCode/snobot2016/resources/traj/";
+        File f = new File(directory);
+        System.out.println(f.getAbsolutePath());
+
         if (args.length >= 1)
         {
             directory = args[0];
@@ -95,5 +168,9 @@ public class GenerateSnobotPaths
         final double kWheelbaseWidth = 25.5 / 12;
 
         genLowBarToLowGoal(directory, kWheelbaseWidth);
+        genPos2ToLowGoal(directory, kWheelbaseWidth);
+        genPos3ToLowGoal(directory, kWheelbaseWidth);
+        genPos4ToLowGoal(directory, kWheelbaseWidth);
+        genPos5ToLowGoal(directory, kWheelbaseWidth);
     }
 }
