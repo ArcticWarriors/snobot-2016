@@ -1,5 +1,9 @@
 package com.team254.lib.trajectory.io;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.StringTokenizer;
 
 import com.team254.lib.trajectory.Path;
@@ -58,5 +62,38 @@ public class TextFileDeserializer implements IPathDeserializer {
     System.out.println("...finished parsing path from string.");
     return new Path(name, new Trajectory.Pair(left, right));
   }
+
+    public Path deserializeFromFile(String aFilename)
+    {
+        File the_file = new File(aFilename);
+
+        try
+        {
+            BufferedReader br = new BufferedReader(new FileReader(the_file));
+
+            StringBuilder fileContents = new StringBuilder();
+
+            String line;
+
+            while ((line = br.readLine()) != null)
+            {
+                fileContents.append(line + "\n");
+            }
+
+            br.close();
+
+            return deserialize(fileContents.toString());
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("Could not find the path file.  It should be at : '" + the_file.getAbsolutePath() + "'");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
   
 }

@@ -13,6 +13,7 @@ public class BaseJoystick implements IMockJoystick
     protected final String mName;
     protected final List<Identifier> mAxis;
     protected final List<Identifier> mButtons;
+    protected final List<Identifier> mPOV;
     protected short[] mAxisValues;
     protected short[] mPovValues;
     protected Controller mController;
@@ -21,10 +22,11 @@ public class BaseJoystick implements IMockJoystick
     {
         mAxis = new ArrayList<>();
         mButtons = new ArrayList<>();
+        mPOV = new ArrayList<>();
         mName = aName;
 
         mAxisValues = new short[mAxis.size()];
-        mPovValues = new short[0];
+        mPovValues = new short[mPOV.size()];
     }
 
     @Override
@@ -101,6 +103,24 @@ public class BaseJoystick implements IMockJoystick
     @Override
     public short[] getPovValues()
     {
+        for (int i = 0; i < mPOV.size(); ++i)
+        {
+            Identifier id = mPOV.get(i);
+            Component component = mController.getComponent(id);
+            if (component != null)
+            {
+                double value = component.getPollData();
+                if (value == 0)
+                {
+                    mPovValues[i] = -1;
+                }
+                else
+                {
+                    mPovValues[i] = (short) ((value - .25) * 360);
+                }
+            }
+        }
+
         return mPovValues;
     }
 

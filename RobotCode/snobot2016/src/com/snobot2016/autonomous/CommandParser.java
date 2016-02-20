@@ -16,8 +16,11 @@ import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.Snobot;
 import com.snobot2016.autonomous.path.DriveStraightPath;
 import com.snobot2016.autonomous.path.DriveTurnPath;
+import com.snobot2016.autonomous.trajectory.TrajectoryPathCommand;
 import com.snobot2016.scaling.IScaling.ScaleAngles;
 import com.snobot2016.smartdashboard.DefenseInFront;
+import com.team254.lib.trajectory.Path;
+import com.team254.lib.trajectory.io.TextFileDeserializer;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -200,6 +203,22 @@ public class CommandParser extends ACommandParser
                 newCommand = new GoToLowGoal(mSnobot.getPositioner(), mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)));
                 break;
+            case Properties2016.sDRIVE_TRAJECTORY:
+            {
+                String pathFile = Properties2016.sAUTON_PATH_DIRECTORY.getValue() + "/" + args.get(1).trim();
+                TextFileDeserializer deserializer = new TextFileDeserializer();
+                Path p = deserializer.deserializeFromFile(pathFile);
+
+                if (p == null)
+                {
+                    addError("Could not read path file " + pathFile);
+                }
+                else
+                {
+                    newCommand = new TrajectoryPathCommand(mSnobot.getDriveTrain(), mSnobot.getPositioner(), p);
+                }
+                break;
+            }
             case Properties2016.sCROSS_DEFENSE:
             {
                 if (mDefenseParser != null)

@@ -1,5 +1,6 @@
 package com.snobot.simulator.joysticks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import net.java.games.input.Component.Identifier;
@@ -24,6 +25,6 @@ public class LogitechJoystick extends SpecificGamepadJoystick
 
     public LogitechJoystick()
     {
-        super("Logitech Dual Action", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Logitech Dual Action", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), new ArrayList());
     }
 }

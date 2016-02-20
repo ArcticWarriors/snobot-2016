@@ -6,6 +6,7 @@ import java.util.List;
 import com.snobot.xlib.Utilities;
 import com.snobot.xlib.motion_profile.trajectory.IdealSplineSerializer;
 import com.snobot.xlib.motion_profile.trajectory.SplineSegment;
+import com.snobot2016.Properties2016;
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.drivetrain.IDriveTrain;
 import com.snobot2016.positioner.IPositioner;
@@ -45,12 +46,12 @@ public class TrajectoryPathCommand extends Command
         mSDIdealName = SmartDashBoardNames.sSPLINE_IDEAL_POINTS;
         mSDRealName = SmartDashBoardNames.sSPLINE_REAL_POINT;
 
-        double kP = 0;
-        double kD = 0;
-        double kVelocity = .08;
-        double kAccel = 0;
+        double kP = Properties2016.sDRIVE_PATH_KP.getValue();
+        double kD = Properties2016.sDRIVE_PATH_KD.getValue();
+        double kVelocity = Properties2016.sDRIVE_PATH_KV.getValue();
+        double kAccel = Properties2016.sDRIVE_PATH_KA.getValue();
 
-        mKTurn = .001;
+        mKTurn = Properties2016.sSPLINE_TURN_FACTOR.getValue();
 
         followerLeft.configure(kP, 0, kD, kVelocity, kAccel);
         followerRight.configure(kP, 0, kD, kVelocity, kAccel);
@@ -87,7 +88,7 @@ public class TrajectoryPathCommand extends Command
         double speedLeft = followerLeft.calculate(distanceL);
         double speedRight = followerRight.calculate(distanceR);
 
-        double goalHeading = Math.toDegrees(followerLeft.getHeading());
+        double goalHeading = followerLeft.getHeading();
         double observedHeading = mPositioner.getOrientationDegrees();
 
         double angleDiff = Utilities.getDifferenceInAngleDegrees(observedHeading, goalHeading);
