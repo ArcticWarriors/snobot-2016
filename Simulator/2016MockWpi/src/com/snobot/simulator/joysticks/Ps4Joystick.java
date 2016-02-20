@@ -1,5 +1,6 @@
 package com.snobot.simulator.joysticks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import net.java.games.input.Component.Identifier;
@@ -37,6 +38,6 @@ public class Ps4Joystick extends SpecificGamepadJoystick
 
     public Ps4Joystick()
     {
-        super("Wireless Controller", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Wireless Controller", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), new ArrayList());
     }
 }

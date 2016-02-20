@@ -8,38 +8,34 @@ public class XboxJoystick extends SpecificGamepadJoystick
 {
 
     private static final Identifier[] sAXIS = new Identifier[]
-    { Identifier.Axis.X, // Left x
+    {       Identifier.Axis.X, // Left x
             Identifier.Axis.Y, // Left Y
-            Identifier.Axis.Z, // Right Trigger
             Identifier.Axis.Z, // Left Trigger
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z, // Right x
-            Identifier.Axis.Z // Right x
+            Identifier.Axis.RZ, // Right Trigger
+            Identifier.Axis.RX, // Right x
+            Identifier.Axis.RY, // Right y
     };
 
     private static final Identifier[] sBUTTONS = new Identifier[]
-    { Identifier.Button._0, // Square
-            Identifier.Button._1, // X
-            Identifier.Button._2, // Circle
-            Identifier.Button._3, // Triangle
-            Identifier.Button._4, // L1
-            Identifier.Button._5, // R1
-            Identifier.Button._6, // L2 (half pressed or more)
-            Identifier.Button._7, // R2 (half pressed or more)
-            Identifier.Button._8, // Share
-            Identifier.Button._9, // Options
-            Identifier.Button._10, // L3
-            Identifier.Button._11, // R3
-            Identifier.Button._12, // ps4 button
-            Identifier.Button._13 // Motion pad
+    {       Identifier.Button._0, // A
+            Identifier.Button._1, // B
+            Identifier.Button._2, // X
+            Identifier.Button._3, // Y
+            Identifier.Button._4, // LB
+            Identifier.Button._5, // RB
+            Identifier.Button._6, // windows/back
+            Identifier.Button._7, // lines/start
+            Identifier.Button._8, // Left Joystick In
+            Identifier.Button._9, // Right Joystick In
+    };
+
+    private static final Identifier[] sPOV = new Identifier[] 
+    {  
+            Identifier.Axis.POV
     };
 
     public XboxJoystick()
     {
-        super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), Arrays.asList(sPOV));
     }
 }

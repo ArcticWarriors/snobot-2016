@@ -29,4 +29,11 @@ public class XboxButtonMap
     public static final int START_BUTTON = 8;
     public static final int L3_BUTTON = 9;
     public static final int R3_BUTTON = 10;
+
+    // D-PAD
+    public static final int D_PAD_UP = 0;
+    public static final int D_PAD_RIGHT = 90;
+    public static final int D_PAD_DOWN = 180;
+    public static final int D_PAD_LEFT = 270;
+    public static final int D_PAD_NULL = -1;
 }
