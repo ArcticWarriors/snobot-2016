@@ -40,7 +40,7 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
     public void init()
     {
         mLogger.addHeader("LeftEncoderDistance");
-        mLogger.addHeader("RightEncoderDitance");
+        mLogger.addHeader("RightEncoderDistance");
         mLogger.addHeader("LeftMotorSpeed");
         mLogger.addHeader("RightMotorSpeed");
     }
