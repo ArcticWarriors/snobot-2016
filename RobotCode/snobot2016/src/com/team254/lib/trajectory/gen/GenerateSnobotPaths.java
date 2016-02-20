@@ -5,12 +5,25 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.snobot2016.Properties2016;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.gen.WaypointSequence.Waypoint;
 
 public class GenerateSnobotPaths
 {
-    private static double mYPosForDefenses = 140;
+    private static double sSPOT_1_X = -135;
+    private static double sSPOT_2_X = -82.875;
+    private static double sSPOT_3_X = -30;
+    private static double sSPOT_4_X = 22.875;
+    private static double sSPOT_5_X = 75.75;
+    
+    private static double sCROSSED_DEFENSE_Y = 140;
+    
+    private static double sTURNING_Y = 260;
+    private static double sTURNING_X = 75;
+
+    private static double sGOAL_Y = 305;
+    private static double sGOAL_X = 50;
 
     public static String joinPath(String path1, String path2)
     {
@@ -79,8 +92,8 @@ public class GenerateSnobotPaths
         config.max_vel = 50;
 
         WaypointSequence p = new WaypointSequence(10000);
-        p.addWaypoint(new Waypoint(-135, 30, 0));
-        p.addWaypoint(new Waypoint(-135, 200, 0));
+        p.addWaypoint(new Waypoint(sSPOT_1_X, 30, 0));
+        p.addWaypoint(new Waypoint(sSPOT_1_X, 200, 0));
         p.addWaypoint(new Waypoint(-50, 305, 45));
 
         generate(config, p, directory, path_name, kWheelbaseWidth);
@@ -96,9 +109,9 @@ public class GenerateSnobotPaths
         dudeConfig.max_vel = 50;
 
         WaypointSequence dudeP = new WaypointSequence(10000);
-        dudeP.addWaypoint(new Waypoint(-82.875, mYPosForDefenses, 0));
-        dudeP.addWaypoint(new Waypoint(-82.875, mYPosForDefenses + 200, 0));
-        dudeP.addWaypoint(new Waypoint(-50, 305, 45));
+        dudeP.addWaypoint(new Waypoint(sSPOT_2_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, 45));
 
         generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
     }
@@ -113,9 +126,9 @@ public class GenerateSnobotPaths
         dudeConfig.max_vel = 50;
 
         WaypointSequence dudeP = new WaypointSequence(10000);
-        dudeP.addWaypoint(new Waypoint(-30, mYPosForDefenses, 0));
-        dudeP.addWaypoint(new Waypoint(-30, mYPosForDefenses + 170, 0));
-        dudeP.addWaypoint(new Waypoint(-50, 305, 45));
+        dudeP.addWaypoint(new Waypoint(sSPOT_3_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, 45));
 
         generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
     }
@@ -130,9 +143,9 @@ public class GenerateSnobotPaths
         dudeConfig.max_vel = 50;
 
         WaypointSequence dudeP = new WaypointSequence(10000);
-        dudeP.addWaypoint(new Waypoint(22.875, mYPosForDefenses, 0));
-        dudeP.addWaypoint(new Waypoint(22.875, mYPosForDefenses + 170, 0));
-        dudeP.addWaypoint(new Waypoint(50, 305, -45));
+        dudeP.addWaypoint(new Waypoint(sSPOT_4_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sGOAL_X, sGOAL_Y, -45));
 
         generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
     }
@@ -147,9 +160,9 @@ public class GenerateSnobotPaths
         dudeConfig.max_vel = 50;
 
         WaypointSequence dudeP = new WaypointSequence(10000);
-        dudeP.addWaypoint(new Waypoint(75.75, mYPosForDefenses, 0));
-        dudeP.addWaypoint(new Waypoint(75.75, mYPosForDefenses + 170, 0));
-        dudeP.addWaypoint(new Waypoint(50, 305, -45));
+        dudeP.addWaypoint(new Waypoint(sSPOT_5_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sGOAL_X, sGOAL_Y, -45));
 
         generate(dudeConfig, dudeP, Directory, dudePathName, kWheelbaseWidth);
     }
