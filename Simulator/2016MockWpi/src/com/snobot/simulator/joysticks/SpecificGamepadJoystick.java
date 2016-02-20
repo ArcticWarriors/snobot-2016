@@ -9,7 +9,7 @@ import net.java.games.input.ControllerEnvironment;
 public class SpecificGamepadJoystick extends BaseJoystick
 {
 
-    public SpecificGamepadJoystick(String aName, List<Identifier> aAxisList, List<Identifier> aButtonList)
+    public SpecificGamepadJoystick(String aName, List<Identifier> aAxisList, List<Identifier> aButtonList, List<Identifier> aPOV)
     {
         super(aName);
 
@@ -28,8 +28,9 @@ public class SpecificGamepadJoystick extends BaseJoystick
 
         mAxis.addAll(aAxisList);
         mButtons.addAll(aButtonList);
+        mPOV.addAll(aPOV);
 
         mAxisValues = new short[aAxisList.size()];
-        mPovValues = new short[0];
+        mPovValues = new short[aPOV.size()];
     }
 }
