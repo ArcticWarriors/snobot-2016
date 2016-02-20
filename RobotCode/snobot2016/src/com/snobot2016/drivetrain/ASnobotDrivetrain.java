@@ -60,7 +60,7 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
         }
         else
         {
-            mRobotDrive.tankDrive(-mDriveJoystick.getLeftSpeed(), -mDriveJoystick.getRightSpeed());
+            mRobotDrive.tankDrive(-mDriveJoystick.getLeftSpeed(), -mDriveJoystick.getRightSpeed(), true);
         }
     }
 
