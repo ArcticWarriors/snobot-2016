@@ -1,1 +1,1 @@
-DriveStraightADistance 20 .25
+DriveStraightPath 180 65 120

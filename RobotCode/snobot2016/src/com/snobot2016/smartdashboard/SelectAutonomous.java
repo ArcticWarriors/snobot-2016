@@ -43,22 +43,38 @@ public class SelectAutonomous
         SendableChooser output = new SendableChooser();
         File autonDr = new File(aDir);
 
-        System.out.println("Reading auton files from directory " + autonDr.getAbsolutePath());
-        System.out.println(" Using filter : \"" + aIgnoreString + "\"");
-
-        try
+        if (autonDr.exists())
         {
-            SnobotAutonCrawler fileProcessor = new SnobotAutonCrawler(aIgnoreString);
-            Files.walkFileTree(Paths.get(autonDr.toURI()), fileProcessor);
+            System.out.println("Reading auton files from directory " + autonDr.getAbsolutePath());
+            System.out.println(" Using filter : \"" + aIgnoreString + "\"");
 
-            for (Path p : fileProcessor.getPaths())
+            try
             {
-                output.addObject(p.getFileName().toString(), p.toString());
+                SnobotAutonCrawler fileProcessor = new SnobotAutonCrawler(aIgnoreString);
+                Files.walkFileTree(Paths.get(autonDr.toURI()), fileProcessor);
+
+                boolean isFirst = true;
+                for (Path p : fileProcessor.getPaths())
+                {
+                    if (isFirst)
+                    {
+                        output.addDefault(p.getFileName().toString(), p.toString());
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        output.addObject(p.getFileName().toString(), p.toString());
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
             }
         }
-        catch (IOException e)
+        else
         {
-            e.printStackTrace();
+            System.err.println("Auton directory " + aDir + " does not exist!");
         }
 
         return output;

@@ -7,6 +7,12 @@ import com.snobot2016.positioner.IPositioner;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * uses the motion profile to follow a straight path
+ * 
+ * @author Andrew
+ *
+ */
 public class DriveStraightPath extends Command
 {
     private IDriveTrain mDriveTrain;
@@ -14,6 +20,15 @@ public class DriveStraightPath extends Command
     private PathFollower mPathFollower;
     private double mStartDistance;
 
+    /**
+     * 
+     * @param aDriveTrain
+     *            The robot's drive train
+     * @param aPositioner
+     *            The robot's positioner
+     * @param aSetpointIterator
+     *            A setpoint iterator for the path follower
+     */
     public DriveStraightPath(IDriveTrain aDriveTrain, IPositioner aPositioner, ISetpointIterator aSetpointIterator)
     {
         mDriveTrain = aDriveTrain;

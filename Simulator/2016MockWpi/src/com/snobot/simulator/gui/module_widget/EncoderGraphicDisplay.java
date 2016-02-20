@@ -8,10 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import com.snobot.simulator.SensorActuatorRegistry.EncoderPair;
 import com.snobot.simulator.module_wrapper.EncoderWrapper;
 
-public class EncoderGraphicDisplay extends BaseWidgetDisplay<EncoderPair, EncoderWrapper>
+public class EncoderGraphicDisplay<T> extends BaseWidgetDisplay<T, EncoderWrapper>
 {
     private class EncoderWrapperDisplay extends JPanel
     {
@@ -43,23 +42,23 @@ public class EncoderGraphicDisplay extends BaseWidgetDisplay<EncoderPair, Encode
         }
     }
 
-    public EncoderGraphicDisplay(Map<EncoderPair, EncoderWrapper> map)
+    public EncoderGraphicDisplay(Map<T, EncoderWrapper> map, String aString)
     {
         super(map);
-        setBorder(new TitledBorder("Encoders (Digital Ports)"));
+        setBorder(new TitledBorder(aString));
     }
 
     @Override
-    public void update(Map<EncoderPair, EncoderWrapper> aMap)
+    public void update(Map<T, EncoderWrapper> aMap)
     {
-        for (Entry<EncoderPair, EncoderWrapper> pair : aMap.entrySet())
+        for (Entry<T, EncoderWrapper> pair : aMap.entrySet())
         {
             ((EncoderWrapperDisplay) mWidgetMap.get(pair.getKey())).updateDisplay(pair.getValue());
         }
     }
 
     @Override
-    protected EncoderWrapperDisplay createWidget(Entry<EncoderPair, EncoderWrapper> pair)
+    protected EncoderWrapperDisplay createWidget(Entry<T, EncoderWrapper> pair)
     {
         return new EncoderWrapperDisplay();
     }

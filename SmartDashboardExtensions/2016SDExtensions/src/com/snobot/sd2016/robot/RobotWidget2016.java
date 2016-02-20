@@ -35,7 +35,7 @@ public class RobotWidget2016 extends AutoUpdateWidget
     protected void poll() throws Exception
     {
         double roller_pot_position, roller_motor, roller_pivot_motor;
-        double scale_pot_angle, scale_move_motor, scale_tilt_motor;
+        double scale_pot_angle, scale_move_motor, scale_tilt_motor, scale_height;
 
         roller_pot_position = Robot.getTable().getNumber(SmartDashBoardNames.sPOT_PERCENTAGE, 0);
         roller_motor = Robot.getTable().getNumber(SmartDashBoardNames.sROLLER_MOTOR, 0);
@@ -43,6 +43,7 @@ public class RobotWidget2016 extends AutoUpdateWidget
         scale_pot_angle = Robot.getTable().getNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, 0);
         scale_move_motor = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, 0);
         scale_tilt_motor = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, 0);
+        scale_height = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_CURRENT_POSITION, 0);
 
         mDrawer.setInakeMotorSpeed(roller_motor);
         mDrawer.setIntakeTiltAngle(-(roller_pot_position * 0.9));
@@ -50,7 +51,8 @@ public class RobotWidget2016 extends AutoUpdateWidget
 
         mDrawer.setScaleMotorSpeed(scale_move_motor);
         mDrawer.setScaleTiltMotorSpeed(scale_tilt_motor);
-        mDrawer.setClimbTiltAngle(-scale_pot_angle);
+        mDrawer.setClimbTiltAngle(scale_pot_angle);
+        mDrawer.setExtensionHeight(scale_height);
 
         repaint();
     }

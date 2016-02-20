@@ -33,4 +33,12 @@ public class PathSetpoint
         mVelocity = aVelocity;
         mAcceleration = aAccel;
     }
+
+    @Override
+    public String toString()
+    {
+        return "PathSetpoint [mSegment=" + mSegment + ", mPosition=" + mPosition + ", mVelocity=" + mVelocity + ", mAcceleration=" + mAcceleration
+                + "]";
+    }
+
 }

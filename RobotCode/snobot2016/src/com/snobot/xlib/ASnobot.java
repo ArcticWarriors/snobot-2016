@@ -64,6 +64,13 @@ public abstract class ASnobot extends IterativeRobot implements ISubsystem
     public void disabledInit()
     {
         PropertyManager.saveIfUpdated();
+        mLogger.flush();
+    }
+
+    @Override
+    public void disabledPeriodic()
+    {
+        updateSmartDashboard();
     }
 
     @Override

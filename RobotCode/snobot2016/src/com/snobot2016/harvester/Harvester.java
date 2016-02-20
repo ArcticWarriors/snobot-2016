@@ -2,11 +2,6 @@ package com.snobot2016.harvester;
 
 import com.snobot.xlib.Logger;
 import com.snobot2016.Properties2016;
-/**
- * Author Jeffrey/Michael
- * creates harvester for Snobot
- * 
- */
 import com.snobot2016.SmartDashBoardNames;
 import com.snobot2016.joystick.IOperatorJoystick;
 
@@ -14,109 +9,91 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Author Jeffrey/Michael creates harvester for Snobot
+ * 
+ */
 public class Harvester implements IHarvester
 {
-    private SpeedController mPivotMotor;
-    private SpeedController mRollerMotor;
+    private SpeedController mHarvesterPivotMotor;
+    private SpeedController mHarvesterRollerMotor;
     private double mRoller;
     private double mPivot;
     private IOperatorJoystick mOperatorJoystick;
     private Logger mLogger;
     private AnalogInput mHarvesterPot;
-    private double mVoltage;
-    private boolean mGoodToRaise;
-    private boolean mGoodToLower;
-    private double mPotPercentage;
+    private double mHarvesterPotVoltage;
+    private boolean mGoodToRaiseHarvester;
+    private boolean mGoodToLowerHarvester;
+    private double mHarvesterPotPercentage;
     private double mHarvesterPivotSpeed;
-    
-    
-    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger, AnalogInput aHarvesterPot)
+
+    public Harvester(SpeedController aHarvesterRollerMotor, SpeedController aHarvesterPivotMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
+            AnalogInput aHarvesterPot)
     {
-        mRollerMotor = aHarvesterRollerMotor;
-        mPivotMotor = aHarvesterPivotMotor;
+        mHarvesterRollerMotor = aHarvesterRollerMotor;
+        mHarvesterPivotMotor = aHarvesterPivotMotor;
         mOperatorJoystick = aOperatorJoystick;
         mLogger = aLogger;
         mHarvesterPot = aHarvesterPot;
-        
+
     }
 
     @Override
     public void init()
     {
+        mLogger.addHeader("PivotSpeed");
+        mLogger.addHeader("RollerSpeed");
+        mLogger.addHeader("HarvesterPotVoltage");
+        mLogger.addHeader("HarvesterPercentage");
     }
 
     @Override
     public void update()
     {
-        mVoltage = mHarvesterPot.getVoltage();
-        mGoodToRaise = (mVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());  
-        mGoodToLower = (mVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
-        mPotPercentage = (((mVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue() )/( Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue() - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())) *100);
-        
+        mHarvesterPotVoltage = mHarvesterPot.getVoltage();
+        mGoodToRaiseHarvester = (mHarvesterPotVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());
+        mGoodToLowerHarvester = (mHarvesterPotVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
+        mHarvesterPotPercentage = (((mHarvesterPotVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
+                / (Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue() - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())) * 100);
+
     }
 
     @Override
     public void control()
     {
-        // button setup for harvester roller
-        if (mOperatorJoystick.isHarvesterRollerForward() && mOperatorJoystick.isHarvesterRollerReverse())
-        {
-            stopRoller();
-        }
-        else if (mOperatorJoystick.isHarvesterRollerForward())
-        {
-            rollIn();
-        }
-        else if (mOperatorJoystick.isHarvesterRollerReverse())
-        {
-            rollOut();
-        }
-        else
-        {
-            stopRoller();
-        }
+        controlIntake();
+        controlPivot();
 
-        // button setup for harvester pivot
-//        if (mOperatorJoystick.isHarvesterPivotUp()&& mOperatorJoystick.isHarvesterPivotDown())
-//        {
-//            stopHarvester();
-//        }
-//        else if (mOperatorJoystick.isHarvesterPivotUp())
-//        {
-//            raiseHarvester();
-//        }
-//        else if (mOperatorJoystick.isHarvesterPivotDown())
-//        {
-//            lowerHarvester();
-//        }
-//        else
-//        {
-//            stopHarvester();
-//        }
-        
-        if(mOperatorJoystick.isHarvesterUp()&& mOperatorJoystick.isHarvesterDown())
-        {
-            stopHarvester();
-        }
-        else if (mOperatorJoystick.isHarvesterUp())
+    }
+
+    private void controlIntake()
+    {
+        double rollerSpeed = mOperatorJoystick.getHarvesterIntakeSpeed();
+        setRollerMotorSpeed(rollerSpeed);
+    }
+
+    private void controlPivot()
+    {
+
+        if (mOperatorJoystick.moveHarvesterToUpPosition())
         {
             moveToPercentage(100);
         }
-        else if (mOperatorJoystick.isHarvesterDown())
+        else if (mOperatorJoystick.moveHarvesterToDownPosition())
         {
             moveToPercentage(0);
         }
+        // If neither button is pressed, fall back on the override
         else
         {
-            stopHarvester();
+            setPivotMotorSpeed(mOperatorJoystick.getHarvestorTiltOverrideSpeed());
         }
-
     }
 
     @Override
     public void rereadPreferences()
     {
-        
 
     }
 
@@ -124,9 +101,9 @@ public class Harvester implements IHarvester
     public void updateSmartDashboard()
     {
         // displays pivot and roller motor on SmartDashboard
-        SmartDashboard.putNumber(SmartDashBoardNames.sPIVOT_MOTOR, mPivot);
-        SmartDashboard.putNumber(SmartDashBoardNames.sROLLER_MOTOR, mRoller);
-        SmartDashboard.putNumber(SmartDashBoardNames.sPOT_PERCENTAGE, this.percentageLowered());
+        SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_PIVOT_MOTOR, mPivot);
+        SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_ROLLER_MOTOR, mRoller);
+        SmartDashboard.putNumber(SmartDashBoardNames.sHARVESTER_POT_PERCENTAGE, this.percentageLowered());
     }
 
     @Override
@@ -134,7 +111,7 @@ public class Harvester implements IHarvester
     {
         mLogger.updateLogger(mPivot);
         mLogger.updateLogger(mRoller);
-        mLogger.updateLogger(mVoltage);
+        mLogger.updateLogger(mHarvesterPotVoltage);
         mLogger.updateLogger(percentageLowered());
     }
 
@@ -148,7 +125,7 @@ public class Harvester implements IHarvester
     @Override
     public void raiseHarvester()
     {
-        if(goodToRaise())
+        if (goodToRaise())
         {
             setPivotMotorSpeed(-1);
         }
@@ -157,7 +134,7 @@ public class Harvester implements IHarvester
     @Override
     public void lowerHarvester()
     {
-        if(goodToLower())
+        if (goodToLower())
         {
             setPivotMotorSpeed(1);
         }
@@ -175,77 +152,65 @@ public class Harvester implements IHarvester
         setRollerMotorSpeed(-1);
     }
 
+    @Override
     public void setRollerMotorSpeed(double aRollerSpeed)
     {
         mRoller = aRollerSpeed;
-        mRollerMotor.set(aRollerSpeed);
+        mHarvesterRollerMotor.set(aRollerSpeed);
     }
 
+    @Override
     public void setPivotMotorSpeed(double aPivotSpeed)
     {
         mPivot = aPivotSpeed;
-        mPivotMotor.set(aPivotSpeed);
+        mHarvesterPivotMotor.set(aPivotSpeed);
     }
-    
+
+    @Override
     public boolean goodToRaise()
     {
-        return mGoodToRaise;
+        return mGoodToRaiseHarvester;
     }
-    
+
+    @Override
     public boolean goodToLower()
     {
-        return mGoodToLower;
+        return mGoodToLowerHarvester;
     }
-    
+
+    @Override
     public double percentageLowered()
     {
-        return mPotPercentage;
+        return mHarvesterPotPercentage;
     }
-    
+
+    @Override
     public void stopHarvester()
     {
         setPivotMotorSpeed(0);
     }
-    
+
+    @Override
     public void stopRoller()
     {
         setRollerMotorSpeed(0);
     }
 
-/**
- * 
- */
     @Override
     public boolean moveToPercentage(double aPotGoal)
     {
         boolean raise = true;
         double error = aPotGoal - percentageLowered();
         mHarvesterPivotSpeed = Properties2016.sHARVESTER_POT_KP.getValue() * error;
-        if(mHarvesterPivotSpeed > 0)
+        if (mHarvesterPivotSpeed > 0)
         {
             raise = false;
         }
-        if(raise)
+        if (raise)
         {
-            if(goodToRaise())
+            if (goodToRaise())
             {
-                 if(Math.abs(error) < 10)
-                 {
-                     stopHarvester();
-                     return true;
-                 }
-                 else
-                 {
-                     setPivotMotorSpeed(mHarvesterPivotSpeed);
-                     return false;
-                 }
-            }
-        }
-        else
-        {
-            if(goodToLower())
-            {
-                if(Math.abs(error) < 10)
+                if (Math.abs(error) < 10)
                 {
                     stopHarvester();
                     return true;
@@ -255,7 +220,23 @@ public class Harvester implements IHarvester
                     setPivotMotorSpeed(mHarvesterPivotSpeed);
                     return false;
                 }
-            } 
+            }
+        }
+        else
+        {
+            if (goodToLower())
+            {
+                if (Math.abs(error) < 10)
+                {
+                    stopHarvester();
+                    return true;
+                }
+                else
+                {
+                    setPivotMotorSpeed(mHarvesterPivotSpeed);
+                    return false;
+                }
+            }
         }
         return false;
     }

@@ -8,8 +8,7 @@ public class XboxJoystick extends SpecificGamepadJoystick
 {
 
     private static final Identifier[] sAXIS = new Identifier[]
-    {
-            Identifier.Axis.X, // Left x
+    { Identifier.Axis.X, // Left x
             Identifier.Axis.Y, // Left Y
             Identifier.Axis.Z, // Right Trigger
             Identifier.Axis.Z, // Left Trigger
@@ -23,8 +22,7 @@ public class XboxJoystick extends SpecificGamepadJoystick
     };
 
     private static final Identifier[] sBUTTONS = new Identifier[]
-    {
-            Identifier.Button._0, // Square
+    { Identifier.Button._0, // Square
             Identifier.Button._1, // X
             Identifier.Button._2, // Circle
             Identifier.Button._3, // Triangle
@@ -42,6 +40,6 @@ public class XboxJoystick extends SpecificGamepadJoystick
 
     public XboxJoystick()
     {
-        super("Controller (XBOX One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
+        super("Controller (Xbox One For Windows)", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS));
     }
 }

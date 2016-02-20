@@ -20,12 +20,12 @@ public class RobotDrawer2016 extends JPanel
     private static final double sCHASSIS_WIDTH = 35;
     private static final double sCHASSIS_HEIGHT = 8.25;
 
-    private static final double sROBOT_WIDTH = 100;
-    private static final double sROBOT_HEIGHT = 100;
+    private static final double sROBOT_WIDTH = 75;
+    private static final double sROBOT_HEIGHT = 75;
 
     // Drawing Locations
-    private static final double sCHASSIS_X_START = 25;
-    private static final double sCHASSIS_Y_START = 80;
+    private static final double sCHASSIS_X_START = 10;
+    private static final double sCHASSIS_Y_START = 65;
 
     // Component Colors
     private static final Color sROBOT_BASE_COLOR = Color.black;
@@ -40,12 +40,12 @@ public class RobotDrawer2016 extends JPanel
     // Scale
     private static final double sSCALE_WIDTH = 30;
     private static final double sSCALE_HEIGHT = 4;
-    private static final double sSCALE_X_START = (sCHASSIS_X_START + sHARVESTER_WIDTH);
+    private static final double sSCALE_X_START = (sCHASSIS_X_START + (sSCALE_HEIGHT / 4));
     private static final double sSCALE_Y_START = (sCHASSIS_Y_START - sSCALE_HEIGHT);
     // Scale Extension
     private static final double sSCALE_EXTENSION_WIDTH = 30;
     private static final double sSCALE_EXTENSION_HEIGHT = 4;
-    private static final double sSCALE_EXTENSION_X_START = (sCHASSIS_X_START + sHARVESTER_WIDTH + 2);
+    private static final double sSCALE_EXTENSION_X_START = (sCHASSIS_X_START + (sSCALE_EXTENSION_HEIGHT / 2));
     private static final double sSCALE_EXTENSION_Y_START = (sCHASSIS_Y_START - sSCALE_EXTENSION_HEIGHT);
     /**
      * The scaling factor used for drawing. For example, 1 would mean draw every
@@ -87,13 +87,6 @@ public class RobotDrawer2016 extends JPanel
         double minScaleFactor = Math.min(horizontalScaleFactor, verticalScaleFactor);
 
         mScaleFactor = minScaleFactor;
-
-        // System.out.println(this);
-        // System.out.println("Scale Factor: " + mScaleFactor);
-        // System.out.println("  Horizontal factor : " + horizontalScaleFactor +
-        // ", width : " + getWidth() + ", " + sROBOT_WIDTH);
-        // System.out.println("  Vertical factor : " + verticalScaleFactor +
-        // ", height : " + getHeight() + ", " + sROBOT_HEIGHT);
 
         repaint();
     }
@@ -160,7 +153,7 @@ public class RobotDrawer2016 extends JPanel
 
         AffineTransform transform = new AffineTransform();
         transform.scale(mScaleFactor, mScaleFactor);
-        transform.rotate(Math.toRadians(mClimbTiltAngle), sSCALE_X_START, (sSCALE_Y_START + sSCALE_HEIGHT));
+        transform.rotate(Math.toRadians(mClimbTiltAngle), (sSCALE_X_START + sSCALE_WIDTH), (sSCALE_Y_START + sSCALE_HEIGHT));
 
         Shape shape = transform.createTransformedShape(robotScale);
 
@@ -186,7 +179,8 @@ public class RobotDrawer2016 extends JPanel
 
         AffineTransform transform = new AffineTransform();
         transform.scale(mScaleFactor, mScaleFactor);
-        transform.rotate(Math.toRadians(mClimbTiltAngle), sSCALE_EXTENSION_X_START, (sSCALE_EXTENSION_Y_START + sSCALE_EXTENSION_HEIGHT));
+        transform.rotate(Math.toRadians(mClimbTiltAngle), (sSCALE_EXTENSION_X_START + sSCALE_EXTENSION_WIDTH),
+                (sSCALE_EXTENSION_Y_START + sSCALE_EXTENSION_HEIGHT));
 
         Shape shape = transform.createTransformedShape(robotScale);
 
@@ -273,7 +267,7 @@ public class RobotDrawer2016 extends JPanel
 
     public double getExtensionHeight()
     {
-        return mExtensionHeight;
+        return (-mExtensionHeight);
     }
 
     @Override

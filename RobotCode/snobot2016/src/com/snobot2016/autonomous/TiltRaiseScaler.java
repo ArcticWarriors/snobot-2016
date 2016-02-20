@@ -49,7 +49,7 @@ public class TiltRaiseScaler extends Command
     {
         if (mTimer.get() < mTime)
         {
-            mScaling.tiltRaise();
+            mScaling.raiseScaleTiltMechanism();
         }
     }
 

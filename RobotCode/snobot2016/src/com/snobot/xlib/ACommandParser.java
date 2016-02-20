@@ -1,6 +1,7 @@
 package com.snobot.xlib;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public abstract class ACommandParser
             protected void end()
             {
                 super.end();
-                System.out.println("Command group finished!");
+                System.out.println("Command group '" + aName + "' finished!");
             }
         };
     }
@@ -143,22 +144,31 @@ public abstract class ACommandParser
 
         String fileContents = "";
 
-        try
-        {
-            BufferedReader br = new BufferedReader(new FileReader(aFilePath));
+        File file = new File(aFilePath);
 
-            String line;
-            while ((line = br.readLine()) != null)
+        if (file.exists())
+        {
+            try
             {
-                this.parseLine(output, line, false);
-                fileContents += line + "\n";
-            }
+                BufferedReader br = new BufferedReader(new FileReader(aFilePath));
 
-            br.close();
+                String line;
+                while ((line = br.readLine()) != null)
+                {
+                    this.parseLine(output, line, false);
+                    fileContents += line + "\n";
+                }
+
+                br.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e)
+        else
         {
-            e.printStackTrace();
+            addError("File " + aFilePath + " not found!");
         }
 
         publishParsingResults(fileContents);

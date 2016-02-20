@@ -19,19 +19,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Positioner implements ISubsystem, IPositioner
 {
+    private Timer mTimer;
+    private IDriveTrain mDriveTrain;
+    private Logger mLogger;
+    private Gyro mGyro;
+
     private double mXPosition;
     private double mYPosition;
     private double mOrientation;
     private double mTotalDistance;
-    private double mChangeInDistance;
+
     private double mLastDistance;
-    private Timer mTimer;
     private double mLastTime;
-    private Gyro mGyro;
-    private IDriveTrain mDriveTrain;
     private double mSpeed;
-    public Logger mLogger;
-    private double mOffset;
+    private double mStartAngle;
 
     // private
 
@@ -39,7 +40,7 @@ public class Positioner implements ISubsystem, IPositioner
      * Creates a new Positioner object.
      * 
      * @param aGyro
-     *            The gGyro to use.
+     *            The Gyro to use.
      * @param aDriveTrain
      *            The DriveTrain to use.
      * @param aLogger
@@ -51,7 +52,6 @@ public class Positioner implements ISubsystem, IPositioner
         mYPosition = 0;
         mOrientation = 0;
         mTotalDistance = 0;
-        mChangeInDistance = 0;
         mLastDistance = 0;
         mLastTime = 0;
         mSpeed = 0;
@@ -59,11 +59,11 @@ public class Positioner implements ISubsystem, IPositioner
         mDriveTrain = aDriveTrain;
         mTimer = new Timer();
         mLogger = aLogger;
-        mOffset = 0;
+        mStartAngle = 0;
     }
 
     /**
-     * Starts timer.
+     * Starts timer and adds headers to Logger.
      */
     @Override
     public void init()
@@ -84,18 +84,18 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         // Orientation
-        mOrientation = Utilities.boundAngle0to360Degrees(mGyro.getAngle() + mOffset);
+        mOrientation = (mGyro.getAngle() + mStartAngle);
         double orientationRadians = Math.toRadians(mOrientation);
 
         // ChangeInDistance and X/Y
         // TODO Need to account for slips when driving over defenses
         mTotalDistance = (mDriveTrain.getRightEncoderDistance() + mDriveTrain.getLeftEncoderDistance()) / 2;
-        mChangeInDistance = mTotalDistance - mLastDistance;
-        mXPosition += mChangeInDistance * Math.sin(orientationRadians);
-        mYPosition += mChangeInDistance * Math.cos(orientationRadians);
+        double deltaDistance = mTotalDistance - mLastDistance;
+        mXPosition += deltaDistance * Math.sin(orientationRadians);
+        mYPosition += deltaDistance * Math.cos(orientationRadians);
 
         // Update
-        mSpeed = (mChangeInDistance) / (mTimer.get() - mLastTime);
+        mSpeed = (deltaDistance) / (mTimer.get() - mLastTime);
         mLastTime = mTimer.get();
         mLastDistance = mTotalDistance;
     }
@@ -140,48 +140,18 @@ public class Positioner implements ISubsystem, IPositioner
         return mTotalDistance;
     }
 
-    /**
-     * Assigns a new X-position to the robot.
-     * 
-     * @param inputX
-     *            The new X-position.
-     */
-    public void setXPosition(double inputX)
+    public void setPosition(double aX, double aY, double aAngle)
     {
-        mXPosition = inputX;
-    }
+        mDriveTrain.resetEncoders();
+        mXPosition = aX;
+        mYPosition = aY;
+        mStartAngle = aAngle;
+        mGyro.reset();
+        mDriveTrain.resetEncoders();
 
-    /**
-     * Assigns a new Y-position to the robot.
-     * 
-     * @param inputY
-     *            The new Y-position.
-     */
-    public void setYPosition(double inputY)
-    {
-        mYPosition = inputY;
-    }
-
-    /**
-     * Assigns a new orientation in radians to the robot.
-     * 
-     * @param inputRadians
-     *            The new orientation in radians.
-     */
-    public void setOrientationRadians(double inputRadians)
-    {
-        mOffset = Utilities.boundAngle0to360Degrees(Math.toDegrees(inputRadians));
-    }
-
-    /**
-     * Assigns a new orientation in degrees to the robot.
-     * 
-     * @param inputDegrees
-     *            The new orientation in degrees.
-     */
-    public void setOrientationDegrees(double inputDegrees)
-    {
-        mOffset = Utilities.boundAngle0to360Degrees(inputDegrees);
+        mTotalDistance = 0;
+        mLastDistance = 0;
+        mLastTime = mTimer.get();
     }
 
     @Override
@@ -205,7 +175,7 @@ public class Positioner implements ISubsystem, IPositioner
     {
         SmartDashboard.putNumber(SmartDashBoardNames.sX_POSITION, mXPosition);
         SmartDashboard.putNumber(SmartDashBoardNames.sY_POSITION, mYPosition);
-        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, mOrientation);
+        SmartDashboard.putNumber(SmartDashBoardNames.sORIENTATION, Utilities.boundAngle0to360Degrees(mOrientation));
         SmartDashboard.putNumber(SmartDashBoardNames.sSPEED, mSpeed);
     }
 

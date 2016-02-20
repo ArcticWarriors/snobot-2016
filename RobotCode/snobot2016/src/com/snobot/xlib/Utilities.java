@@ -57,4 +57,12 @@ public class Utilities
 
         return value;
     }
+
+	public static double stopInDeadband(double aInValue, double aDeadband) {
+		if(aInValue <= aDeadband && aInValue >= -aDeadband)
+		{
+			return 0;
+		}
+		return aInValue;
+	}
 }

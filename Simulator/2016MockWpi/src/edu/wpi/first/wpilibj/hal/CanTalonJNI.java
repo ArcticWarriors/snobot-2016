@@ -7,6 +7,10 @@
 
 package edu.wpi.first.wpilibj.hal;
 
+import com.snobot.simulator.SensorActuatorRegistry;
+import com.snobot.simulator.module_wrapper.EncoderWrapper;
+import com.snobot.simulator.module_wrapper.SpeedControllerWrapper;
+
 public class CanTalonJNI extends JNIWrapper
 {
     // Motion Profile status bits
@@ -60,17 +64,26 @@ public class CanTalonJNI extends JNIWrapper
 
     public static long new_CanTalonSRX(int deviceNumber, int controlPeriodMs, int enablePeriodMs)
     {
-        return 0;
+        return new_CanTalonSRX(deviceNumber);
     }
 
     public static long new_CanTalonSRX(int deviceNumber, int controlPeriodMs)
     {
-        return 0;
+        return new_CanTalonSRX(deviceNumber);
     }
 
     public static long new_CanTalonSRX(int deviceNumber)
     {
-        return 0;
+        boolean allocated = SensorActuatorRegistry.get().getCanSpeedControllers().containsKey(deviceNumber);
+        if (allocated)
+        {
+            throw new UnsupportedOperationException("CAN device already allocated at " + deviceNumber);
+        }
+
+        SpeedControllerWrapper wrapper = new SpeedControllerWrapper(deviceNumber);
+        SensorActuatorRegistry.get().register(wrapper, deviceNumber, true);
+
+        return deviceNumber;
     }
 
     public static long new_CanTalonSRX()
@@ -90,12 +103,26 @@ public class CanTalonJNI extends JNIWrapper
 
     public static void Set(long handle, double value)
     {
-
+        getWrapperFromBuffer(handle).set(value);
     }
 
     public static void SetParam(long handle, int paramEnum, double value)
     {
-
+        if (paramEnum == CanTalonJNI.param_t.eEncPosition.value)
+        {
+            if (value == 0)
+            {
+                EncoderWrapper wrapper = getEncoderWrapperFromBuffer(handle);
+                if (wrapper != null)
+                {
+                    wrapper.reset();
+                }
+            }
+            else
+            {
+                System.err.println("Unsupported simulator option...");
+            }
+        }
     }
 
     public static void RequestParam(long handle, int paramEnum)
@@ -351,7 +378,7 @@ public class CanTalonJNI extends JNIWrapper
 
     public static int GetAppliedThrottle(long handle)
     {
-        return 0;
+        return (int) (getWrapperFromBuffer(handle).get() * 1023);
     }
 
     public static int GetCloseLoopErr(long handle)
@@ -406,6 +433,13 @@ public class CanTalonJNI extends JNIWrapper
 
     public static int GetEncPosition(long handle)
     {
+        EncoderWrapper wrapper = getEncoderWrapperFromBuffer(handle);
+        int port = (int) handle;
+        if (wrapper != null)
+        {
+            return wrapper.getRaw();
+        }
+
         return 0;
     }
 
@@ -587,5 +621,25 @@ public class CanTalonJNI extends JNIWrapper
     public static void SetRevFeedbackSensor(long handle, int param)
     {
 
+    }
+
+    // *************************************************
+    // Our custom functions
+    // *************************************************
+    private static SpeedControllerWrapper getWrapperFromBuffer(long deviceId)
+    {
+        return SensorActuatorRegistry.get().getCanSpeedControllers().get((int) deviceId);
+    }
+
+    private static EncoderWrapper getEncoderWrapperFromBuffer(long handle)
+    {
+        int port = (int) handle;
+
+        if (SensorActuatorRegistry.get().getCanEncoders().containsKey(port))
+        {
+            return SensorActuatorRegistry.get().getCanEncoders().get(port);
+        }
+
+        return null;
     }
 }

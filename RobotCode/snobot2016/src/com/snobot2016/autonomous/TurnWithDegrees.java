@@ -68,7 +68,7 @@ public class TurnWithDegrees extends Command
     @Override
     protected void initialize()
     {
-        mEndAngle = Utilities.boundAngle0to360Degrees(mAngleToTurn + mPositioner.getOrientationDegrees());
+        mEndAngle = mAngleToTurn + mPositioner.getOrientationDegrees();
         mFinished = false;
     }
 

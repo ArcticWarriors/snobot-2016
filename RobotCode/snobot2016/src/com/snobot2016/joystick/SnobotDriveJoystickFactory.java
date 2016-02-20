@@ -41,7 +41,7 @@ public class SnobotDriveJoystickFactory implements IDriverJoystick
     @Override
     public void init()
     {
-        
+        mLogger.addHeader("DriveMode");
     }
 
     @Override

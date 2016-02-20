@@ -28,7 +28,7 @@ public class Light implements ILight
     @Override
     public void init()
     {
-
+        mLogger.addHeader("LightOnOff");
     }
 
     @Override

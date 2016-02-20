@@ -82,8 +82,12 @@ public class BaseJoystick implements IMockJoystick
 
             for (int i = 0; i < mButtons.size(); ++i)
             {
-                int pressed = mController.getComponent(mButtons.get(i)).getPollData() == 0 ? 0 : 1;
-                output += (pressed << i);
+                Component component = mController.getComponent(mButtons.get(i));
+                if (component != null)
+                {
+                    int pressed = component.getPollData() == 0 ? 0 : 1;
+                    output += (pressed << i);
+                }
             }
         }
         else

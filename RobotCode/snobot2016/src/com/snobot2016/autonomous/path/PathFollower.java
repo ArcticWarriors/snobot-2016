@@ -8,6 +8,12 @@ import com.snobot2016.SmartDashBoardNames;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
+/**
+ * Follows an ideal path generated elsewhere
+ * 
+ * @author Andrew
+ *
+ */
 public class PathFollower
 {
     private ISetpointIterator mSetpointIterator;
@@ -21,6 +27,17 @@ public class PathFollower
     private double mLastError;
     private double mLastPosition;
 
+    /**
+     * 
+     * @param aSetpointIterator
+     *            Setpoint iterator to follow points
+     * @param aKV
+     *            The multiplier for Velocity
+     * @param aKA
+     *            the multiplier for acceleration
+     * @param aKP
+     *            the multiplier for position
+     */
     public PathFollower(ISetpointIterator aSetpointIterator, double aKV, double aKA, double aKP)
     {
         mSetpointIterator = aSetpointIterator;
@@ -56,6 +73,16 @@ public class PathFollower
             double a_term = mKa * setpoint.mAcceleration;
 
             double output = v_term + a_term + p_term;
+
+            System.out.println(
+                    "Current: " + aCurrPosition  + ", " + 
+                    "Error: " + error + ", " + 
+ "Vel: " + velocity + ", " + 
+                    "p: " + p_term + ", " + 
+                    "v: " + v_term + ", " + 
+                    "a: " + a_term + ", " + 
+                    "output: " + output);
+            
 
             // Update smart dashbaord
             String point_info = mPathPoint + "," + IdealPlotSerializer.serializePathPoint(realPoint);

@@ -39,10 +39,10 @@ public class SpeedControllerGraphicDisplay extends BaseWidgetDisplay<Integer, Sp
         }
     }
 
-    public SpeedControllerGraphicDisplay(Map<Integer, SpeedControllerWrapper> aMap)
+    public SpeedControllerGraphicDisplay(Map<Integer, SpeedControllerWrapper> aMap, String aName)
     {
         super(aMap);
-        setBorder(new TitledBorder("Speed Controllers"));
+        setBorder(new TitledBorder(aName));
     }
 
     @Override
