@@ -171,8 +171,31 @@ public class CommandParser extends ACommandParser
                 break;
             }
             case Properties2016.sFUDGE_THE_POSITION:
-                newCommand = new FudgeThePosition(mSnobot.getPositioner(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)));
+            {
+                double newX;
+                double newY;
+                if (args.get(1).equals("Same"))
+                {
+                    newX = mSnobot.getPositioner().getXPosition();
+                }
+                else
+                {
+                    newX = Double.parseDouble(args.get(1));
+                }
+
+                if (args.get(2).equals("Same"))
+                {
+                    newY = mSnobot.getPositioner().getYPosition();
+                }
+                else
+                {
+                    newY = Double.parseDouble(args.get(2));
+                }
+
+                newCommand = new FudgeThePosition(mSnobot.getPositioner(), newX, newY);
                 break;
+            }
+
             case Properties2016.sGO_TO_LOW_GOAL:
                 newCommand = new GoToLowGoal(mSnobot.getPositioner(), mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)));
