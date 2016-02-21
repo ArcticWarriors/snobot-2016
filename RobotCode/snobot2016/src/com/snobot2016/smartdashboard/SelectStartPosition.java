@@ -32,12 +32,12 @@ public class SelectStartPosition
         THIRD_POSITION(-30.0, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
         FOURTH_POSITION(22.875, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
         FIFTH_POSITION(75.75, 30 - Properties2016.sAUTON_SETUP_OVERHANG.getValue(), 0), 
-        SPY_POSITION(-150.5, 306, 180), 
+        SPY_POSITION(-150.5, 306, 90), 
         ZERO_ZERO_ZERO_POSITION(0, 0, 0);
 
-        final double mX;
-        final double mY;
-        final double mOrientation;
+        public final double mX;
+        public final double mY;
+        public final double mOrientation;
 
         StartPositions(double aX, double aY, double aAngle)
         {

@@ -15,7 +15,7 @@ public class WaypointSequence {
     public Waypoint(double y, double x, double theta) {
       this.x = x;
       this.y = y;
-      this.theta = theta;
+      this.theta = Math.toRadians(theta);
     }
     
     public Waypoint(Waypoint tocopy) {
