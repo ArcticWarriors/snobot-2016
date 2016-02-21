@@ -24,18 +24,26 @@ public class SplineSegment
     /** Heading of the robot, in degrees */
     public double mRobotHeading;
 
+    /** The X position between the left and right wheels */
+    public double mAverageX;
+
+    /** The Y position between the left and right wheels */
+    public double mAverageY;
+
     public SplineSegment()
     {
-        this(0, 0, 0, 0, 0);
+        this(0, 0, 0, 0, 0, 0, 0);
     }
 
-    public SplineSegment(double aLeftPos, double aLeftVel, double aRightPos, double aRightVel, double aHeading)
+    public SplineSegment(double aLeftPos, double aLeftVel, double aRightPos, double aRightVel, double aHeading, double aAvgX, double aAvgY)
     {
         this.mLeftSidePosition = aLeftPos;
         this.mLeftSideVelocity = aLeftVel;
         this.mRightSidePosition = aRightPos;
         this.mRightSideVelocity = aRightVel;
         this.mRobotHeading = aHeading;
+        this.mAverageX = aAvgX;
+        this.mAverageY = aAvgY;
     }
 
     @Override

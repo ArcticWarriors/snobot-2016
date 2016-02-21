@@ -65,6 +65,10 @@ public class BaseCoordinateWidget extends AutoUpdateWidget
         c.x = Robot.getTable().getNumber(SmartDashBoardNames.sX_POSITION, 0) / 12.0;
         c.y = Robot.getTable().getNumber(SmartDashBoardNames.sY_POSITION, 0) / 12.0;
         c.angle = Robot.getTable().getNumber(SmartDashBoardNames.sORIENTATION, 0);
-        mPanel.addPoint(c);
+
+        if (mPanel != null)
+        {
+            mPanel.addPoint(c);
+        }
     }
 }

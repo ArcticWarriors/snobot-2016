@@ -3,22 +3,40 @@ package com.snobot.xlib.motion_profile.trajectory;
 public class SplineSegment
 {
 
-    public double left_pos;
-    public double left_vel;
-    public double right_pos;
-    public double right_vel;
-    public double heading;
+    /** Position of the left wheel */
+    public double mLeftSidePosition;
+
+    /** Velocity of the left wheel */
+    public double mLeftSideVelocity;
+
+    /** Position of the right wheel */
+    public double mRightSidePosition;
+
+    /** Velocity of the right wheel */
+    public double mRightSideVelocity;
+
+    /** Heading of the robot, in degrees */
+    public double mRobotHeading;
+
+    /** The X position between the left and right wheels */
+    public double mAverageX;
+
+    /** The Y position between the left and right wheels */
+    public double mAverageY;
 
     public SplineSegment()
     {
+        this(0, 0, 0, 0, 0, 0, 0);
     }
 
-    public SplineSegment(double left_pos, double left_vel, double right_pos, double right_vel, double heading)
+    public SplineSegment(double aLeftPos, double aLeftVel, double aRightPos, double aRightVel, double aHeading, double aAvgX, double aAvgY)
     {
-        this.left_pos = left_pos;
-        this.left_vel = left_vel;
-        this.right_pos = right_pos;
-        this.right_vel = right_vel;
-        this.heading = heading;
+        this.mLeftSidePosition = aLeftPos;
+        this.mLeftSideVelocity = aLeftVel;
+        this.mRightSidePosition = aRightPos;
+        this.mRightSideVelocity = aRightVel;
+        this.mRobotHeading = aHeading;
+        this.mAverageX = aAvgX;
+        this.mAverageY = aAvgY;
     }
 }

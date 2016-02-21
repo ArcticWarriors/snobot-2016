@@ -98,11 +98,11 @@ public class TrajectoryPathCommand extends Command
         mDrivetrain.setLeftRightSpeed(speedLeft + turn, speedRight - turn);
 
         SplineSegment segment = new SplineSegment();
-        segment.left_pos = distanceL;
-        segment.left_vel = (distanceL - mLastLeftDistance) / dt;
-        segment.right_pos = distanceR;
-        segment.right_vel = (distanceR - mLastRightDistance) / dt;
-        segment.heading = Utilities.boundAngleNeg180to180Degrees(observedHeading);
+        segment.mLeftSidePosition = distanceL;
+        segment.mLeftSideVelocity = (distanceL - mLastLeftDistance) / dt;
+        segment.mRightSidePosition = distanceR;
+        segment.mRightSideVelocity = (distanceR - mLastRightDistance) / dt;
+        segment.mRobotHeading = Utilities.boundAngleNeg180to180Degrees(observedHeading);
 
         String point_info = followerLeft.getCurrentSegment() + "," + IdealSplineSerializer.serializePathPoint(segment);
 
@@ -141,11 +141,11 @@ public class TrajectoryPathCommand extends Command
         for (int i = 0; i < left.getNumSegments(); ++i)
         {
             SplineSegment segment = new SplineSegment();
-            segment.left_pos = left.getSegment(i).pos;
-            segment.left_vel = left.getSegment(i).vel;
-            segment.right_pos = right.getSegment(i).pos;
-            segment.right_vel = right.getSegment(i).vel;
-            segment.heading = right.getSegment(i).heading;
+            segment.mLeftSidePosition = left.getSegment(i).pos;
+            segment.mLeftSideVelocity = left.getSegment(i).vel;
+            segment.mRightSidePosition = right.getSegment(i).pos;
+            segment.mRightSideVelocity = right.getSegment(i).vel;
+            segment.mRobotHeading = right.getSegment(i).heading;
 
             segments.add(segment);
         }

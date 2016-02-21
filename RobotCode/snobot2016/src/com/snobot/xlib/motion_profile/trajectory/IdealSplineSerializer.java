@@ -4,14 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * Serializes a 2D cubic spline into a string, to be used by the SmartDashboard
+ * 
+ * @author PJ
+ *
+ */
 public class IdealSplineSerializer
 {
 
+    /**
+     * Constructor, private because the static functions should be used
+     */
     private IdealSplineSerializer()
     {
 
     }
 
+    /**
+     * De-Serializes a list of spline segments from the given string
+     * 
+     * @param aString
+     *            The string to de-serialize
+     * 
+     * @return The path to drive
+     */
     public static List<SplineSegment> deserializePath(String aString)
     {
         List<SplineSegment> points = new ArrayList<SplineSegment>();
@@ -19,62 +36,70 @@ public class IdealSplineSerializer
 
         while (tokenizer.hasMoreElements())
         {
-            double left_position = Double.parseDouble(tokenizer.nextToken());
-            double left_velocity = Double.parseDouble(tokenizer.nextToken());
-            double right_position = Double.parseDouble(tokenizer.nextToken());
-            double right_velocity = Double.parseDouble(tokenizer.nextToken());
-            double heading = Double.parseDouble(tokenizer.nextToken());
-
-            SplineSegment segment = new SplineSegment();
-            segment.left_pos = left_position;
-            segment.left_vel = left_velocity;
-            segment.right_pos = right_position;
-            segment.right_vel = right_velocity;
-            segment.heading = heading;
-
+            SplineSegment segment = deserializePathPoint(tokenizer);
             points.add(segment);
         }
 
         return points;
     }
 
+    /**
+     * Serializes a path of spline points into a string
+     * 
+     * @param aPoints
+     *            The list of points
+     * 
+     * @return The serialized string
+     */
     public static String serializePath(List<SplineSegment> aPoints)
     {
         StringBuilder output = new StringBuilder();
 
         for (int i = 0; i < aPoints.size(); ++i)
         {
-            output.append(aPoints.get(i).left_pos + ",");
-            output.append(aPoints.get(i).left_vel + ",");
-            output.append(aPoints.get(i).right_pos + ",");
-            output.append(aPoints.get(i).right_vel + ",");
-            output.append(aPoints.get(i).heading + ",");
+            output.append(serializePathPoint(aPoints.get(i)));
         }
 
         return output.toString();
     }
 
+    /**
+     * Serializes a single spline point
+     * 
+     * @param aPoint
+     *            The piont to serialize
+     * 
+     * @return The serialized point
+     */
     public static String serializePathPoint(SplineSegment aPoint)
     {
         return ""
-                + aPoint.left_pos + ", "
-                + aPoint.left_vel + ", "
-                + aPoint.right_pos + ", "
-                + aPoint.right_vel + ", "
-                + aPoint.heading;
+                + aPoint.mLeftSidePosition + ", "
+                + aPoint.mLeftSideVelocity + ", "
+                + aPoint.mRightSidePosition + ", "
+                + aPoint.mRightSideVelocity + ", "
+                + aPoint.mRobotHeading + ",";
     }
 
+    /**
+     * De-serializes a spline point from the given string
+     * 
+     * @param tokenizer
+     *            The tokenizer containing the point to parse
+     * 
+     * @return The de-serialized point
+     */
     public static SplineSegment deserializePathPoint(StringTokenizer tokenizer)
     {
         SplineSegment point = new SplineSegment();
 
         try
         {
-            point.left_pos = Double.parseDouble(tokenizer.nextToken());
-            point.left_vel = Double.parseDouble(tokenizer.nextToken());
-            point.right_pos = Double.parseDouble(tokenizer.nextToken());
-            point.right_vel = Double.parseDouble(tokenizer.nextToken());
-            point.heading = Double.parseDouble(tokenizer.nextToken());
+            point.mLeftSidePosition = Double.parseDouble(tokenizer.nextToken());
+            point.mLeftSideVelocity = Double.parseDouble(tokenizer.nextToken());
+            point.mRightSidePosition = Double.parseDouble(tokenizer.nextToken());
+            point.mRightSideVelocity = Double.parseDouble(tokenizer.nextToken());
+            point.mRobotHeading = Double.parseDouble(tokenizer.nextToken());
         }
         catch (Exception e)
         {

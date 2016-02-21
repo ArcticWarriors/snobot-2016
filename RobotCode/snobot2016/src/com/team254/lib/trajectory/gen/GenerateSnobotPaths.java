@@ -38,10 +38,12 @@ public class GenerateSnobotPaths
     private static final double sGOAL_X = 50;
 
     /** The angle to attack the low goal from */
-    private static final double sGOAL_ANGLE = 45;
+    private static final double sGOAL_ANGLE = 60;
 
+    /** The wheel base of the robot. Helps the generator plan turns */
     private static final double sWHEEL_BASE = 25.5 / 12;
 
+    /** The TrajectoryConfig for driving to the low goal */
     private TrajectoryGenerator.Config mLowGoalConfig;
 
     public GenerateSnobotPaths()
