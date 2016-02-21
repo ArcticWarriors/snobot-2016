@@ -24,6 +24,10 @@ public class StandaloneMain
         p = new SplineSegment();
         path_points.add(p);
 
+        double angle = Math.PI / 2;
+        double radius = 1.7;
+        double angle_mult = .1;
+
         for (int i = 1; i < 10; ++i)
         {
             p = new SplineSegment();
@@ -32,6 +36,9 @@ public class StandaloneMain
             p.mRightSideVelocity = p.mLeftSideVelocity;
             p.mRightSidePosition = p.mLeftSidePosition;
             p.mRobotHeading = i;
+            p.mAverageX = (radius * i) * Math.sin(angle_mult * i);
+            p.mAverageY = (radius * i) * Math.cos(angle_mult * i);
+
             path_points.add(p);
         }
         for (int i = 0; i < 20; ++i)
@@ -42,6 +49,8 @@ public class StandaloneMain
             p.mRightSideVelocity = p.mLeftSideVelocity;
             p.mRightSidePosition = p.mLeftSidePosition;
             p.mRobotHeading = i;
+            p.mAverageX = (radius * i) * Math.sin(angle_mult * i);
+            p.mAverageY = (radius * i) * Math.cos(angle_mult * i);
             path_points.add(p);
         }
         for (int i = 0; i < 10; ++i)
@@ -52,6 +61,8 @@ public class StandaloneMain
             p.mRightSideVelocity = p.mLeftSideVelocity;
             p.mRightSidePosition = p.mLeftSidePosition;
             p.mRobotHeading = i;
+            p.mAverageX = (radius * i) * Math.sin(angle_mult * i);
+            p.mAverageY = (radius * i) * Math.cos(angle_mult * i);
             path_points.add(p);
         }
 
@@ -100,6 +111,8 @@ public class StandaloneMain
                         p.mLeftSidePosition = actuals.get(i - 1).mLeftSidePosition + p.mLeftSideVelocity * .02;
                         p.mRightSidePosition = p.mLeftSidePosition * .5;
                         p.mRobotHeading = i * .8;
+                        p.mAverageX = p.mAverageX * .8;
+                        p.mAverageY = p.mAverageY * .8;
                     }
 
                     actuals.add(p);

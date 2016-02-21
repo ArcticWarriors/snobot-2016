@@ -103,6 +103,8 @@ public class TrajectoryPathCommand extends Command
         segment.mRightSidePosition = distanceR;
         segment.mRightSideVelocity = (distanceR - mLastRightDistance) / dt;
         segment.mRobotHeading = Utilities.boundAngleNeg180to180Degrees(observedHeading);
+        segment.mAverageX = mPositioner.getXPosition();
+        segment.mAverageY = mPositioner.getYPosition();
 
         String point_info = followerLeft.getCurrentSegment() + "," + IdealSplineSerializer.serializePathPoint(segment);
 
@@ -145,7 +147,9 @@ public class TrajectoryPathCommand extends Command
             segment.mLeftSideVelocity = left.getSegment(i).vel;
             segment.mRightSidePosition = right.getSegment(i).pos;
             segment.mRightSideVelocity = right.getSegment(i).vel;
-            segment.mRobotHeading = right.getSegment(i).heading;
+            segment.mRobotHeading = Utilities.boundAngleNeg180to180Degrees(right.getSegment(i).heading);
+            segment.mAverageX = right.getSegment(i).y; // Flipped on purpose
+            segment.mAverageY = right.getSegment(i).x; // Flipped on purpose
 
             segments.add(segment);
         }

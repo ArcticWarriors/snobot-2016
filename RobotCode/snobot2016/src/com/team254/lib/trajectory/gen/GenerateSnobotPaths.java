@@ -31,11 +31,23 @@ public class GenerateSnobotPaths
     /** The X-Coordinate of the point to drive to where the turn should initiate */
     private static final double sTURNING_X = 75;
 
+    // /** The Y-Coordinate of the low goal */
+    // private static final double sGOAL_Y = 305;
+    //
+    // /** The X-Coordinate of the low goal */
+    // private static final double sGOAL_X = 50;
+
     /** The Y-Coordinate of the low goal */
-    private static final double sGOAL_Y = 305;
+    private static final double sLEFT_GOAL_Y = 305;
 
     /** The X-Coordinate of the low goal */
-    private static final double sGOAL_X = 50;
+    private static final double sLEFT_GOAL_X = -30;
+
+    /** The Y-Coordinate of the low goal */
+    private static final double sRIGHT_GOAL_Y = 305;
+
+    /** The X-Coordinate of the low goal */
+    private static final double sRIGHT_GOAL_X = 50;
 
     /** The angle to attack the low goal from */
     private static final double sGOAL_ANGLE = 60;
@@ -132,7 +144,7 @@ public class GenerateSnobotPaths
         WaypointSequence p = new WaypointSequence(10000);
         p.addWaypoint(new Waypoint(sSPOT_1_X, 30, 0));
         p.addWaypoint(new Waypoint(sSPOT_1_X, 200, 0));
-        p.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, sGOAL_ANGLE));
+        p.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
         generate(mLowGoalConfig, p, aDirectory, path_name, sWHEEL_BASE);
     }
@@ -144,7 +156,7 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_1_X, sCROSSED_DEFENSE_Y, 0));
         dudeP.addWaypoint(new Waypoint(sSPOT_1_X, 200, 0));
-        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
@@ -156,7 +168,7 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_2_X, sCROSSED_DEFENSE_Y, 0));
         dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
-        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
@@ -168,7 +180,7 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_3_X, sCROSSED_DEFENSE_Y, 0));
         dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
-        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
@@ -180,7 +192,7 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_4_X, sCROSSED_DEFENSE_Y, 0));
         dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
-        dudeP.addWaypoint(new Waypoint(sGOAL_X, sGOAL_Y, -sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sRIGHT_GOAL_X, sRIGHT_GOAL_Y, -sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
@@ -192,7 +204,7 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_5_X, sCROSSED_DEFENSE_Y, 0));
         dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
-        dudeP.addWaypoint(new Waypoint(sGOAL_X, sGOAL_Y, -sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sRIGHT_GOAL_X, sRIGHT_GOAL_Y, -sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
@@ -203,7 +215,7 @@ public class GenerateSnobotPaths
 
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_SPYBOT_X, sSPOT_SPYBOT_Y, 90));
-        dudeP.addWaypoint(new Waypoint(-sGOAL_X, sGOAL_Y, sGOAL_ANGLE));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }

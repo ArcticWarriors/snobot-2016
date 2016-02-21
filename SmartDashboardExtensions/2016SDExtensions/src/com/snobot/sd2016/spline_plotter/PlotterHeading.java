@@ -15,39 +15,31 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Plots the path of an individual side of the robot
+ * This panel plots the heading v. time
  * 
  * @author PJ
  *
  */
-public class SplineWheelPlotter extends JPanel
+public class PlotterHeading extends JPanel
 {
     private XYSeriesCollection mCollection;
-    private XYSeries mIdealPosition;
-    private XYSeries mIdealVelocity;
-
-    private XYSeries mRealPosition;
-    private XYSeries mRealVelocity;
+    private XYSeries mIdealHeading;
+    private XYSeries mRealHeading;
 
     private JPanel m_chartPanel;
 
-    public SplineWheelPlotter(String chartTitle)
+    public PlotterHeading(String aChartTitle)
     {
         setLayout(new BorderLayout());
-        mIdealPosition = new XYSeries("Ideal  Position");
-        mIdealVelocity = new XYSeries("Ideal  Velocity");
-
-        mRealPosition = new XYSeries("Real  Position");
-        mRealVelocity = new XYSeries("Real  Velocity");
+        mIdealHeading = new XYSeries("Ideal Heading");
+        mRealHeading = new XYSeries("Real Heading");
 
         mCollection = new XYSeriesCollection();
-        mCollection.addSeries(mIdealPosition);
-        mCollection.addSeries(mIdealVelocity);
-        mCollection.addSeries(mRealPosition);
-        mCollection.addSeries(mRealVelocity);
+        mCollection.addSeries(mIdealHeading);
+        mCollection.addSeries(mRealHeading);
 
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                chartTitle,
+                aChartTitle,
                 "Time (sec)",
                 "Data",
                 mCollection,
@@ -64,29 +56,24 @@ public class SplineWheelPlotter extends JPanel
         add(m_chartPanel, BorderLayout.CENTER);
     }
 
-    public void setPath(List<Double> position, List<Double> velocity)
+    public void setPath(List<Double> headings)
     {
-        mIdealPosition.clear();
-        mIdealVelocity.clear();
+        mIdealHeading.clear();
         clearActuals();
 
-        for (int i = 0; i < position.size(); ++i)
+        for (int i = 0; i < headings.size(); ++i)
         {
-            mIdealPosition.add(i, position.get(i));
-            mIdealVelocity.add(i, velocity.get(i));
+            mIdealHeading.add(i, headings.get(i));
         }
     }
 
     public void clearActuals()
     {
-        mRealPosition.clear();
-        mRealVelocity.clear();
+        mRealHeading.clear();
     }
 
-    public void setPoint(int index, double position, double velocity)
+    public void setPoint(int index, double heading)
     {
-        mRealPosition.add(index, position);
-        mRealVelocity.add(index, velocity);
+        mRealHeading.add(index, heading);
     }
-
 }
