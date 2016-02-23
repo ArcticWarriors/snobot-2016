@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Joystick;
 /**
  * 
  * @author jbnol_000
+ * 
+ *  Special class for the arcade joystick mode
  *
  */
 
@@ -15,6 +17,11 @@ public class SnobotDriveArcadeJoystick implements IDriverJoystick
     private double mArcadeTurn;
     private Joystick mJoystick;
     
+    /**
+     * 
+     * @param aJoystick
+     *                  The Arcade mode joystick
+     */
     
     public SnobotDriveArcadeJoystick(Joystick aJoystick)
     {

@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
-/*
+/**
  * @author Andrew/Alec
  */
 public class DefenseInFront
 {
-    /*
+    /**
      * This is the sendable chooser that the class makes.
      */
     private SendableChooser mDefenseInFront;
 
-    /*
+    /**
      * This enum lists all of the defenses and other options for things to do
      * before crossing the Outer Works in autonomous. All of these are sent as a
      * sendableChooser to the smart dashboard; the selected is used in
@@ -28,7 +28,7 @@ public class DefenseInFront
         LOW_BAR, PORTCULLIS, CHIVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, DO_NOTHING;
     }
 
-    /*
+    /**
      * In the constructor, we new up the chooser and add all of the enum
      * options.
      */
@@ -47,7 +47,7 @@ public class DefenseInFront
         mDefenseInFront.addObject("Do Nothing", Defenses.DO_NOTHING);
     }
 
-    /*
+    /**
      * This method can be called to put the defenses sendable chooser onto the
      * dashboard.
      */
@@ -56,7 +56,7 @@ public class DefenseInFront
         SmartDashboard.putData(SmartDashBoardNames.sDEFENSE_SENDER_NAME, mDefenseInFront);
     }
 
-    /*
+    /**
      * This method is used to get the selected output (defaulting to Low Bar).
      */
     public String getDefensePath()

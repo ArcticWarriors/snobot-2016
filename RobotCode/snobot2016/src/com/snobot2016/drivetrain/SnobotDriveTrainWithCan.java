@@ -6,8 +6,31 @@ import com.snobot2016.joystick.IDriverJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
 
+/**
+ * 
+ * @author Team 174
+ * 
+ * The drive train with can motor controllers
+ *
+ */
 public class SnobotDriveTrainWithCan extends ASnobotDrivetrain
 {
+    /**
+     * 
+   * @param aLeftMotor
+    *                  The First Left Motor
+    * @param aLeftMotorB
+    *                   The Second Left Motor
+    * @param aRightMotor
+    *                   The First Right Motor
+    * @param aRightMotorB
+    *                    The Second Right Motor
+    * @param aDriverJoyStick
+    *                       The Driver Joystick
+    * @param aLogger
+    *               The Logger
+    *               
+     */
     public SnobotDriveTrainWithCan(
             CANTalon aLeftMotor, 
     		CANTalon aLeftMotorB, 

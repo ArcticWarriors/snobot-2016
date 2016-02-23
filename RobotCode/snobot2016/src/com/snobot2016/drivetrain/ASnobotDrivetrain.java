@@ -8,6 +8,13 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * 
+ * @author Team 174
+ * 
+ * The base for the Snobot drive train
+ *
+ */
 public abstract class ASnobotDrivetrain implements IDriveTrain
 {
     protected final SpeedController mLeftMotor;
@@ -16,6 +23,22 @@ public abstract class ASnobotDrivetrain implements IDriveTrain
     protected final RobotDrive mRobotDrive;
     protected final Logger mLogger;
 
+   /**
+    * 
+    * @param aLeftMotor
+    *                  The First Left Motor
+    * @param aLeftMotorB
+    *                   The Second Left Motor
+    * @param aRightMotor
+    *                   The First Right Motor
+    * @param aRightMotorB
+    *                    The Second Right Motor
+    * @param aDriverJoyStick
+    *                       The Driver Joystick
+    * @param aLogger
+    *               The Logger
+    *               
+    */
     public ASnobotDrivetrain(SpeedController aLeftMotor, SpeedController aLeftMotorB, SpeedController aRightMotor, SpeedController aRightMotorB,
             IDriverJoystick aDriverJoyStick, Logger aLogger)
     {

@@ -6,6 +6,13 @@ import com.snobot2016.SmartDashBoardNames;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * 
+ * @author jbnol_000
+ * 
+ * Class for choosing which joystick style the driver would like
+ *
+ */
 public class SnobotDriveJoystickFactory implements IDriverJoystick
 {
     private enum DriveMode
@@ -21,6 +28,17 @@ public class SnobotDriveJoystickFactory implements IDriverJoystick
     private Logger mLogger;
     private SendableChooser mDriveModeSelector;
     
+    /**
+     * 
+     * @param aXboxJoystick
+     *                      Xbax Joystick
+     * @param aFlightstickJoytick
+     *                      FlightStick Joystick
+     * @param aHaloJoystick
+     *                     Halo Joystick
+     * @param aLogger
+     *              Logger for the Factory
+     */
     public SnobotDriveJoystickFactory(IDriverJoystick aXboxJoystick,IDriverJoystick aFlightstickJoytick, IDriverJoystick aHaloJoystick, Logger aLogger)
     {
         mXboxJoystick = aXboxJoystick;    

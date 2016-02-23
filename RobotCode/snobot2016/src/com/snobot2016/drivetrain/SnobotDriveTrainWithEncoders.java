@@ -7,11 +7,34 @@ import com.snobot2016.joystick.IDriverJoystick;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 
+/**
+ * 
+ * @author Team 174
+ * 
+ * The drive train encoders, so that we can see how far we have gone
+ *
+ */
 public class SnobotDriveTrainWithEncoders extends ASnobotDrivetrain
 {
+
     private final Encoder mLeftEncoder;
     private final Encoder mRightEncoder;
 
+    /**
+    * @param aLeftMotor
+    *                  The First Left Motor
+    * @param aLeftMotorB
+    *                   The Second Left Motor
+    * @param aRightMotor
+    *                   The First Right Motor
+    * @param aRightMotorB
+    *                    The Second Right Motor
+    * @param aDriverJoyStick
+    *                       The Driver Joystick
+    * @param aLogger
+    *               The Logger
+    *               
+     */
     public SnobotDriveTrainWithEncoders(
     		SpeedController aLeftMotor, 
     		SpeedController aLeftMotorB, 

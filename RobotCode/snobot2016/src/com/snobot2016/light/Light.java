@@ -13,12 +13,27 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * 
+ * @author jbnol_000
+ *
+ *Special class for the light with operator override
+ *
+ */
 public class Light implements ILight
 {
     private Relay mRelay;
     private Logger mLogger;
     private boolean mLightOn;
 
+    /**
+     * 
+     * @param aRelay
+     *              Allows the light to be turned on and off manually
+     * @param aLogger
+     *               Logs how many times the light was turned on and off
+     *  
+     */
     public Light(Relay aRelay, Logger aLogger)
     {
         mRelay = aRelay;
