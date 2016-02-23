@@ -78,7 +78,9 @@ public class IdealSplineSerializer
                 + aPoint.mLeftSideVelocity + ", "
                 + aPoint.mRightSidePosition + ", "
                 + aPoint.mRightSideVelocity + ", "
-                + aPoint.mRobotHeading + ",";
+                + aPoint.mRobotHeading + ","
+                + aPoint.mAverageX + ","
+                + aPoint.mAverageY + ",";
     }
 
     /**
@@ -100,6 +102,8 @@ public class IdealSplineSerializer
             point.mRightSidePosition = Double.parseDouble(tokenizer.nextToken());
             point.mRightSideVelocity = Double.parseDouble(tokenizer.nextToken());
             point.mRobotHeading = Double.parseDouble(tokenizer.nextToken());
+            point.mAverageX = Double.parseDouble(tokenizer.nextToken());
+            point.mAverageY = Double.parseDouble(tokenizer.nextToken());
         }
         catch (Exception e)
         {

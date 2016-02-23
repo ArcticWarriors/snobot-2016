@@ -1,5 +1,6 @@
-DriveStraightPath 120 100 90
-
+#DriveStraightPath 120 100 90
+FudgeThePosition Same 140
+Trajectory  Position5ToLowGoal.csv
 
 
 #Drive for _1 seconds at _2 speed

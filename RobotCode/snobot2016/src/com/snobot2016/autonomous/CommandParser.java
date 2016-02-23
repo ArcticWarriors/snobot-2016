@@ -19,6 +19,8 @@ import com.snobot2016.autonomous.path.DriveTurnPath;
 import com.snobot2016.autonomous.trajectory.TrajectoryPathCommand;
 import com.snobot2016.scaling.IScaling.ScaleAngles;
 import com.snobot2016.smartdashboard.DefenseInFront;
+import com.snobot2016.smartdashboard.SelectStartPosition;
+import com.snobot2016.smartdashboard.SelectStartPosition.StartPositions;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.io.TextFileDeserializer;
 
@@ -42,10 +44,11 @@ public class CommandParser extends ACommandParser
     protected String mParserName;
     protected CommandParser mDefenseParser;
     protected DefenseInFront mDefenseGetter;
+    protected SelectStartPosition mStartPosition;
 
-    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, SelectStartPosition aStartPosition, String aParserName)
     {
-        this(aSnobot, aAutonTable, aParserName, null, null);
+        this(aSnobot, aAutonTable, aParserName, aStartPosition, null, null);
     }
 
     /**
@@ -53,8 +56,10 @@ public class CommandParser extends ACommandParser
      * 
      * @param aSnobot
      *            The robot using the CommandParser.
+     * @param aStartPosition
      */
-    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName, CommandParser aDefenseParser, DefenseInFront aDefenseGetter)
+    public CommandParser(Snobot aSnobot, ITable aAutonTable, String aParserName, SelectStartPosition aStartPosition, CommandParser aDefenseParser,
+            DefenseInFront aDefenseGetter)
     {
         super(" ", "#");
         mSnobot = aSnobot;
@@ -62,6 +67,7 @@ public class CommandParser extends ACommandParser
         mParserName = aParserName;
         mDefenseParser = aDefenseParser;
         mDefenseGetter = aDefenseGetter;
+        mStartPosition = aStartPosition;
     }
 
     /**
@@ -133,104 +139,28 @@ public class CommandParser extends ACommandParser
                 newCommand = new SmartScaler(mSnobot.getScaling(), ScaleAngles.valueOf(args.get(1)));
                 break;
             case Properties2016.sDRIVE_STRAIGHT_PATH:
-
-            {
-                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
-                        Double.parseDouble(args.get(2)), // Max Velocity
-                        Double.parseDouble(args.get(3)), // Max Acceleration
-                        sEXPECTED_DT);
-
-                ISetpointIterator dudeSetpointIterator;
-
-                // TODO create dynamic iterator, way to switch
-                if (true)
-                {
-                    PathGenerator dudePathGenerator = new PathGenerator();
-                    List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
-                    dudeSetpointIterator = new StaticSetpointIterator(dudeList);
-                }
-
-                newCommand = new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+                newCommand = createDrivePathCommand(args);
                 break;
-
-            }
-
             case Properties2016.sDRIVE_TURN_PATH:
-            {
-                PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
-                        Double.parseDouble(args.get(2)), // Max Velocity
-                        Double.parseDouble(args.get(3)), // Max Acceleration
-                        sEXPECTED_DT);
-
-                ISetpointIterator dudeSetpointIterator;
-
-                // TODO create dynamic iterator, way to switch
-                if (true)
-                {
-                    dudeSetpointIterator = new StaticSetpointIterator(dudePathConfig);
-                }
-
-                newCommand = new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+                newCommand = createTurnPathCommand(args);
                 break;
-            }
             case Properties2016.sFUDGE_THE_POSITION:
-            {
-                double newX;
-                double newY;
-                if (args.get(1).equals("Same"))
-                {
-                    newX = mSnobot.getPositioner().getXPosition();
-                }
-                else
-                {
-                    newX = Double.parseDouble(args.get(1));
-                }
-
-                if (args.get(2).equals("Same"))
-                {
-                    newY = mSnobot.getPositioner().getYPosition();
-                }
-                else
-                {
-                    newY = Double.parseDouble(args.get(2));
-                }
-
-                newCommand = new FudgeThePosition(mSnobot.getPositioner(), newX, newY);
+                newCommand = createFudgePosition(args);
                 break;
-            }
-
             case Properties2016.sGO_TO_LOW_GOAL:
                 newCommand = new GoToLowGoal(mSnobot.getPositioner(), mSnobot.getDriveTrain(), Double.parseDouble(args.get(1)),
                         Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)));
                 break;
             case Properties2016.sDRIVE_TRAJECTORY:
-            {
-                String pathFile = Properties2016.sAUTON_PATH_DIRECTORY.getValue() + "/" + args.get(1).trim();
-                TextFileDeserializer deserializer = new TextFileDeserializer();
-                Path p = deserializer.deserializeFromFile(pathFile);
-
-                if (p == null)
-                {
-                    addError("Could not read path file " + pathFile);
-                }
-                else
-                {
-                    newCommand = new TrajectoryPathCommand(mSnobot.getDriveTrain(), mSnobot.getPositioner(), p);
-                }
+                newCommand = createTrajectoryCommand(args.get(1));
                 break;
-            }
             case Properties2016.sCROSS_DEFENSE:
-            {
-                if (mDefenseParser != null)
-                {
-                    newCommand = mDefenseParser.readFile(mDefenseGetter.getDefensePath());
-                }
-                else
-                {
-                    addError("Defense parser or defense getter is null");
-                }
+                newCommand = createCrossDefenseCommand();
                 break;
-            }
+            case Properties2016.sGO_TO_LOW_GOAL_TRAJ:
+                newCommand = createGoToLowGoalWithTrajectoryCommand();
+                break;
+
             default:
                 addError("Received unexpected command name '" + commandName + "'");
             }
@@ -245,6 +175,145 @@ public class CommandParser extends ACommandParser
             e.printStackTrace();
         }
         return newCommand;
+    }
+
+    private Command createGoToLowGoalWithTrajectoryCommand()
+    {
+        StartPositions startPosition = mStartPosition.getSelected();
+
+        String fileName = null;
+
+        switch (startPosition)
+        {
+        case FIRST_POSITION:
+            fileName = "Position1ToLowGoal.csv";
+            break;
+        case SECOND_POSITION:
+            fileName = "Position2ToLowGoal.csv";
+            break;
+        case THIRD_POSITION:
+            fileName = "Position3ToLowGoal.csv";
+            break;
+        case FOURTH_POSITION:
+            fileName = "Position4ToLowGoal.csv";
+            break;
+        case FIFTH_POSITION:
+            fileName = "Position5ToLowGoal.csv";
+            break;
+        case SPY_POSITION:
+            fileName = "SpybotToLowGoal.csv";
+
+        // Intentional Fallthrough
+        case ZERO_ZERO_ZERO_POSITION:
+            break;
+        }
+
+        if (fileName != null)
+        {
+            return createTrajectoryCommand(fileName);
+        }
+        else
+        {
+            addError("Invalid start selection for the low goal trajectory command : " + startPosition);
+            return null;
+        }
+    }
+
+    private Command createCrossDefenseCommand()
+    {
+        Command output = null;
+        if (mDefenseParser != null)
+        {
+            output = mDefenseParser.readFile(mDefenseGetter.getDefensePath());
+        }
+        else
+        {
+            addError("Defense parser or defense getter is null");
+        }
+
+        return output;
+    }
+
+    private Command createTurnPathCommand(List<String> args)
+    {
+        PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                Double.parseDouble(args.get(2)), // Max Velocity
+                Double.parseDouble(args.get(3)), // Max Acceleration
+                sEXPECTED_DT);
+
+        ISetpointIterator dudeSetpointIterator;
+
+        // TODO create dynamic iterator, way to switch
+        if (true)
+        {
+            dudeSetpointIterator = new StaticSetpointIterator(dudePathConfig);
+        }
+
+        return new DriveTurnPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+    }
+
+    private Command createDrivePathCommand(List<String> args)
+    {
+        PathConfig dudePathConfig = new PathConfig(Double.parseDouble(args.get(1)), // Endpoint
+                Double.parseDouble(args.get(2)), // Max Velocity
+                Double.parseDouble(args.get(3)), // Max Acceleration
+                sEXPECTED_DT);
+
+        ISetpointIterator dudeSetpointIterator;
+
+        // TODO create dynamic iterator, way to switch
+        if (true)
+        {
+            PathGenerator dudePathGenerator = new PathGenerator();
+            List<PathSetpoint> dudeList = dudePathGenerator.generate(dudePathConfig);
+            dudeSetpointIterator = new StaticSetpointIterator(dudeList);
+        }
+
+        return new DriveStraightPath(mSnobot.getDriveTrain(), mSnobot.getPositioner(), dudeSetpointIterator);
+    }
+
+    private Command createTrajectoryCommand(String aFile)
+    {
+        String pathFile = Properties2016.sAUTON_PATH_DIRECTORY.getValue() + "/" + aFile.trim();
+        TextFileDeserializer deserializer = new TextFileDeserializer();
+        Path p = deserializer.deserializeFromFile(pathFile);
+
+        Command output = null;
+        if (p == null)
+        {
+            addError("Could not read path file " + pathFile);
+        }
+        else
+        {
+            output = new TrajectoryPathCommand(mSnobot.getDriveTrain(), mSnobot.getPositioner(), p);
+        }
+
+        return output;
+    }
+
+    private Command createFudgePosition(List<String> args)
+    {
+        double newX;
+        double newY;
+        if (args.get(1).equals("Same"))
+        {
+            newX = mSnobot.getPositioner().getXPosition();
+        }
+        else
+        {
+            newX = Double.parseDouble(args.get(1));
+        }
+
+        if (args.get(2).equals("Same"))
+        {
+            newY = mSnobot.getPositioner().getYPosition();
+        }
+        else
+        {
+            newY = Double.parseDouble(args.get(2));
+        }
+
+        return new FudgeThePosition(mSnobot.getPositioner(), newX, newY);
     }
 
     /**

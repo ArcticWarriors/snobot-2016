@@ -10,14 +10,85 @@ import com.team254.lib.trajectory.gen.WaypointSequence.Waypoint;
 
 public class GenerateSnobotPaths
 {
-    public static String joinPath(String path1, String path2)
+    private static final double sSPOT_1_X = -135;
+    private static final double sSPOT_2_X = -82.875;
+    private static final double sSPOT_3_X = -30;
+    private static final double sSPOT_4_X = 22.875;
+    private static final double sSPOT_5_X = 75.75;
+
+    private static final double sSPOT_SPYBOT_X = -150.5;
+    private static final double sSPOT_SPYBOT_Y = 306;
+    
+    /**
+     * Staring Y position, when your back wheels are kissing the courtyard side
+     * of a defense
+     */
+    private static final double sCROSSED_DEFENSE_Y = 140;
+
+    /** The Y-Coordinate of the point to drive to where the turn should initiate */
+    private static final double sTURNING_Y = 260;
+    
+    /** The X-Coordinate of the point to drive to where the turn should initiate */
+    private static final double sTURNING_X = 75;
+
+    // /** The Y-Coordinate of the low goal */
+    // private static final double sGOAL_Y = 305;
+    //
+    // /** The X-Coordinate of the low goal */
+    // private static final double sGOAL_X = 50;
+
+    /** The Y-Coordinate of the low goal */
+    private static final double sLEFT_GOAL_Y = 305;
+
+    /** The X-Coordinate of the low goal */
+    private static final double sLEFT_GOAL_X = -30;
+
+    /** The Y-Coordinate of the low goal */
+    private static final double sRIGHT_GOAL_Y = 305;
+
+    /** The X-Coordinate of the low goal */
+    private static final double sRIGHT_GOAL_X = 50;
+
+    /** The angle to attack the low goal from */
+    private static final double sGOAL_ANGLE = 60;
+
+    /** The wheel base of the robot. Helps the generator plan turns */
+    private static final double sWHEEL_BASE = 25.5 / 12;
+
+    /** The TrajectoryConfig for driving to the low goal */
+    private TrajectoryGenerator.Config mLowGoalConfig;
+
+    public GenerateSnobotPaths()
+    {
+        mLowGoalConfig = new TrajectoryGenerator.Config();
+        mLowGoalConfig.dt = .02;
+        mLowGoalConfig.max_acc = 120;
+        mLowGoalConfig.max_jerk = 480;
+        mLowGoalConfig.max_vel = 50;
+    }
+
+    public void generatePath(String aDirectory)
+    {
+        File f = new File(aDirectory);
+        System.out.println("Dumping trajectories to '" + f.getAbsolutePath() + "'");
+
+        genLowBarToLowGoal(aDirectory);
+        genPos1ToLowGoal(aDirectory);
+        genPos2ToLowGoal(aDirectory);
+        genPos3ToLowGoal(aDirectory);
+        genPos4ToLowGoal(aDirectory);
+        genPos5ToLowGoal(aDirectory);
+        genSpybotToLowGoal(aDirectory);
+    }
+
+    public String joinPaths(String path1, String path2)
     {
         File file1 = new File(path1);
         File file2 = new File(file1, path2);
         return file2.getPath();
     }
 
-    private static boolean writeFile(String path, String data)
+    private boolean writeFile(String path, String data)
     {
         try
         {
@@ -42,19 +113,19 @@ public class GenerateSnobotPaths
         return true;
     }
 
-    private static void generate(TrajectoryGenerator.Config config, WaypointSequence p, String directory, String path_name, double kWheelbaseWidth)
+    private void generate(TrajectoryGenerator.Config aConfig, WaypointSequence aPoints, String aDirectory, String aOutFile, double aWheelbase)
     {
         // WaypointSequence waypoints,
         // TrajectoryGenerator.Config config, double wheelbase_width,
         // String name
 
-        Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+        Path path = PathGenerator.makePath(aPoints, aConfig, aWheelbase, aOutFile);
 
         // Outputs to the directory supplied as the first argument.
         TextFileSerializer js = new TextFileSerializer();
         String serialized = js.serialize(path);
         // System.out.print(serialized);
-        String fullpath = joinPath(directory, path_name + ".csv");
+        String fullpath = joinPaths(aDirectory, aOutFile + ".csv");
         if (!writeFile(fullpath, serialized))
         {
             System.err.println(fullpath + " could not be written!!!!");
@@ -66,34 +137,99 @@ public class GenerateSnobotPaths
         }
     }
 
-    private static void genLowBarToLowGoal(String directory, double kWheelbaseWidth)
+    private void genLowBarToLowGoal(String aDirectory)
     {
-        TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
         final String path_name = "LowBarToLowGoal";
 
-        config.dt = .02;
-        config.max_acc = 120;
-        config.max_jerk = 40.0 * 12;
-        config.max_vel = 50;
-
         WaypointSequence p = new WaypointSequence(10000);
-        p.addWaypoint(new Waypoint(-135, 30, 0));
-        p.addWaypoint(new Waypoint(-135, 200, 0));
-        p.addWaypoint(new Waypoint(-50, 305, 45));
+        p.addWaypoint(new Waypoint(sSPOT_1_X, 30, 0));
+        p.addWaypoint(new Waypoint(sSPOT_1_X, 200, 0));
+        p.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
 
-        generate(config, p, directory, path_name, kWheelbaseWidth);
+        generate(mLowGoalConfig, p, aDirectory, path_name, sWHEEL_BASE);
+    }
+
+    private void genPos1ToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "Position1ToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_1_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sSPOT_1_X, 200, 0));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genPos2ToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "Position2ToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_2_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genPos3ToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "Position3ToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_3_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(-sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genPos4ToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "Position4ToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_4_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sRIGHT_GOAL_X, sRIGHT_GOAL_Y, -sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genPos5ToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "Position5ToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_5_X, sCROSSED_DEFENSE_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sTURNING_X, sTURNING_Y, 0));
+        dudeP.addWaypoint(new Waypoint(sRIGHT_GOAL_X, sRIGHT_GOAL_Y, -sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genSpybotToLowGoal(String aDirectory)
+    {
+        final String dudePathName = "SpybotToLowGoal";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(sSPOT_SPYBOT_X, sSPOT_SPYBOT_Y, 90));
+        dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }
 
     public static void main(String[] args)
     {
-        String directory = "D:/FIRST/FRC-2016/snobot-2016/RobotCode/snobot2016/resources/traj/";
+        String directory = "../../RobotCode/snobot2016/resources/traj/";
+
         if (args.length >= 1)
         {
             directory = args[0];
         }
 
-        final double kWheelbaseWidth = 25.5 / 12;
-
-        genLowBarToLowGoal(directory, kWheelbaseWidth);
+        GenerateSnobotPaths generator = new GenerateSnobotPaths();
+        generator.generatePath(directory);
     }
 }

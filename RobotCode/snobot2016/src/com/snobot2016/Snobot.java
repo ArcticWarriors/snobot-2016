@@ -13,9 +13,9 @@ import com.snobot2016.harvester.IHarvester;
 import com.snobot2016.joystick.SnobotDriveXboxJoystick;
 import com.snobot2016.joystick.SnobotOperatorJoystick;
 import com.snobot2016.light.Light;
-import com.snobot2016.positioner.IMUPositioner;
 import com.snobot2016.positioner.IPositioner;
 import com.snobot2016.positioner.Positioner;
+import com.snobot2016.positioner.SimplePositioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
 
@@ -145,14 +145,16 @@ public class Snobot extends ASnobot
         }
         if (Properties2016.sUSE_IMU_POSITIONER)
         {
+            // ADXL362 mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
+            // mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer,
+            // mDrivetrain, mLogger);
+
             ADXL362 mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
-            mSnobotPositioner = new IMUPositioner(mGyro, mAccelerometer, mDrivetrain, mLogger);
+            mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger, mAccelerometer);
         }
         else
         {
-            // TODO This is temporary and only for testing purposes
-            ADXL362 mAccelerometer = new ADXL362(Accelerometer.Range.k2G);
-            mSnobotPositioner = new Positioner(mGyro, mDrivetrain, mLogger, mAccelerometer);
+            mSnobotPositioner = new SimplePositioner(mGyro, mDrivetrain, mLogger);
         }
         mSubsystems.add(mSnobotPositioner);
 

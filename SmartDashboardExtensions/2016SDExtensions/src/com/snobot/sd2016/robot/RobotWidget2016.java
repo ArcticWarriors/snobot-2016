@@ -45,14 +45,17 @@ public class RobotWidget2016 extends AutoUpdateWidget
         scale_tilt_motor = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, 0);
         scale_height = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_CURRENT_POSITION, 0);
 
-        mDrawer.setInakeMotorSpeed(roller_motor);
-        mDrawer.setIntakeTiltAngle(-(roller_pot_position * 0.9));
-        mDrawer.setInakeTiltMotorSpeed(roller_pivot_motor);
+        if (mDrawer != null)
+        {
+            mDrawer.setInakeMotorSpeed(roller_motor);
+            mDrawer.setIntakeTiltAngle(-(roller_pot_position * 0.9));
+            mDrawer.setInakeTiltMotorSpeed(roller_pivot_motor);
 
-        mDrawer.setScaleMotorSpeed(scale_move_motor);
-        mDrawer.setScaleTiltMotorSpeed(scale_tilt_motor);
-        mDrawer.setClimbTiltAngle(scale_pot_angle);
-        mDrawer.setExtensionHeight(scale_height);
+            mDrawer.setScaleMotorSpeed(scale_move_motor);
+            mDrawer.setScaleTiltMotorSpeed(scale_tilt_motor);
+            mDrawer.setClimbTiltAngle(scale_pot_angle);
+            mDrawer.setExtensionHeight(scale_height);
+        }
 
         repaint();
     }

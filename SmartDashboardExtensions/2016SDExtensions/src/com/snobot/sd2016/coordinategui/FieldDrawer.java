@@ -121,7 +121,6 @@ public class FieldDrawer extends JPanel implements FeetToPixelConverter
      */
     public void addPoint(Coordinate aCoord)
     {
-        System.out.println("Adding points : " + aCoord);
         mCoordinates.add(aCoord);
         trimPoints();
         repaint();

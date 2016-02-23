@@ -34,8 +34,8 @@ public class AutonFactory
         mDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sDEFENSE_AUTON_TABLE);
         mPostDefenseTable = NetworkTable.getTable(SmartDashBoardNames.sPOST_DEFENSE_AUTON_TABLE);
 
-        mDefenseCommandParser = new CommandParser(aSnobot, mDefenseTable, "Defense");
-        mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable, "PostDefense", mDefenseCommandParser, mDefenseInFront);
+        mDefenseCommandParser = new CommandParser(aSnobot, mDefenseTable, mSelectStartPosition, "Defense");
+        mPostDefenseCommandParser = new CommandParser(aSnobot, mPostDefenseTable, "PostDefense", mSelectStartPosition, mDefenseCommandParser, mDefenseInFront);
 
         this.putOnDash();
         addListeners();
