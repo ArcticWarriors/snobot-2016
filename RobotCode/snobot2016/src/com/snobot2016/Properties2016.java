@@ -11,11 +11,11 @@ public class Properties2016
 {
     public static final boolean sIS_REAL_ROBOT = true;
     public static final boolean sUSE_SPI_GYRO = true;
-    public static final boolean sUSE_IMU_POSITIONER = false;
+    public static final boolean sUSE_IMU_POSITIONER = true;
 
-    //**************************************************************
+    // **************************************************************
     // Port Mappings
-    //**************************************************************
+    // **************************************************************
 
     // Joysticks
     public static final int sDRIVER_JOYSTICK_PORT = 0;
@@ -52,9 +52,9 @@ public class Properties2016
     // Relay
     public static final int sLIGHT_RELAY = 1;
 
-    //**************************************************************
+    // **************************************************************
     // Configuration Contants
-    //**************************************************************
+    // **************************************************************
 
     // Camera
     public static final StringProperty sCAMERA_HOST_IP = new StringProperty("CameraHostIP", "10.1.74.11");
@@ -168,7 +168,8 @@ public class Properties2016
         sAUTON_PATH_DIRECTORY = new StringProperty("AutonDirPaths", resourcesDir + "traj");
         sAUTON_DIRECTORY = new StringProperty("AutonDir", resourcesDir + "Autonomous/");
         sAUTON_DEFENSE_DIRECTORY = new StringProperty("AutonDirDefenses", sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/DefenseAutons");
-        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonDirThingsToDo", sAUTON_DIRECTORY.getValue() + "RealAutonomousModes/AutonomousThingsToDo");
+        sAUTON_POST_DEFENSE_DIRECTORY = new StringProperty("AutonDirThingsToDo", sAUTON_DIRECTORY.getValue()
+                + "RealAutonomousModes/AutonomousThingsToDo");
     }
 
 }
