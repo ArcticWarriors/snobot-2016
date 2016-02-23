@@ -23,7 +23,11 @@ public class Camera implements ICamera
    private double mImageWidth;
    private double mDistanceToTarget;
    
-
+/**
+ * 
+ * @param aCamera
+ *              The Camera
+ */
     public Camera(AxisCamera aCamera)
     {
         mCamera = aCamera;
