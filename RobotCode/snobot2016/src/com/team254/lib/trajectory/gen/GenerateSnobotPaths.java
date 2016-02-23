@@ -79,6 +79,7 @@ public class GenerateSnobotPaths
         genPos4ToLowGoal(aDirectory);
         genPos5ToLowGoal(aDirectory);
         genSpybotToLowGoal(aDirectory);
+        genTestPath(aDirectory);
     }
 
     public String joinPaths(String path1, String path2)
@@ -216,6 +217,17 @@ public class GenerateSnobotPaths
         WaypointSequence dudeP = new WaypointSequence(10000);
         dudeP.addWaypoint(new Waypoint(sSPOT_SPYBOT_X, sSPOT_SPYBOT_Y, 90));
         dudeP.addWaypoint(new Waypoint(sLEFT_GOAL_X, sLEFT_GOAL_Y, sGOAL_ANGLE));
+
+        generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
+    }
+
+    private void genTestPath(String aDirectory)
+    {
+        final String dudePathName = "TestPath";
+
+        WaypointSequence dudeP = new WaypointSequence(10000);
+        dudeP.addWaypoint(new Waypoint(0, 0, 0));
+        dudeP.addWaypoint(new Waypoint(-60, 156, -45));
 
         generate(mLowGoalConfig, dudeP, aDirectory, dudePathName, sWHEEL_BASE);
     }

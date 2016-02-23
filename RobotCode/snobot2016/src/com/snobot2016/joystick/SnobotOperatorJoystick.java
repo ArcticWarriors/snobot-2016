@@ -43,30 +43,30 @@ public class SnobotOperatorJoystick implements IOperatorJoystick
         mScaleTiltOverrideSpeed = Utilities.stopInDeadband(-mJoystick.getRawAxis(XboxButtonMap.LEFT_Y_AXIS), .09);
         mHarvesterTiltOverrideSpeed = Utilities.stopInDeadband(mJoystick.getRawAxis(XboxButtonMap.RIGHT_Y_AXIS), .06);
 
-        mClimbSpeed = 0;
+        mHarvestorSpeed = 0;
 
         if (mJoystick.getPOV() == XboxButtonMap.D_PAD_UP)
         {
-            mClimbSpeed = 1;
+            mHarvestorSpeed = -1; // In
         }
         else if (mJoystick.getPOV() == XboxButtonMap.D_PAD_DOWN)
         {
-            mClimbSpeed = -1;
+            mHarvestorSpeed = 1; // Out
         }
         else if (mJoystick.getPOV() == XboxButtonMap.D_PAD_NULL)
         {
-            mClimbSpeed = 0;
+            mHarvestorSpeed = 0;
         }
 
-        mScaleGoToGround = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
-        mScaleGoToHarvest = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
-        mScaleGoToVertical = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
-        mScaleGoToHang = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
+        // mScaleGoToGround = mJoystick.getRawButton(XboxButtonMap.A_BUTTON);
+        // mScaleGoToHarvest = mJoystick.getRawButton(XboxButtonMap.X_BUTTON);
+        // mScaleGoToVertical = mJoystick.getRawButton(XboxButtonMap.Y_BUTTON);
+        // mScaleGoToHang = mJoystick.getRawButton(XboxButtonMap.B_BUTTON);
 
         double rightTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.RIGHT_TRIGGER);
         double leftTrigSpeed = mJoystick.getRawAxis(XboxButtonMap.LEFT_TRIGGER);
 
-        mHarvestorSpeed = -(rightTrigSpeed - leftTrigSpeed);
+        mClimbSpeed = -(rightTrigSpeed - leftTrigSpeed);
 
         mMoveHarvestorToUp = mJoystick.getRawButton(XboxButtonMap.RB_BUTTON);
         mMoveHarvestorToDown = mJoystick.getRawButton(XboxButtonMap.LB_BUTTON);
