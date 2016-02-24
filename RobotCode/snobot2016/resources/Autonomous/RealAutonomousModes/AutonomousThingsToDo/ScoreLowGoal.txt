@@ -1,2 +1,2 @@
 CrossDefense
-GoToLowGoal 45 30 45 30
+#GoToLowGoal 45 30 45 30

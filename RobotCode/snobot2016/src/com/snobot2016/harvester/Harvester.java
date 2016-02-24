@@ -54,7 +54,7 @@ public class Harvester implements IHarvester
         mHarvesterPotVoltage = mHarvesterPot.getVoltage();
         mGoodToRaiseHarvester = (mHarvesterPotVoltage > Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue());
         mGoodToLowerHarvester = (mHarvesterPotVoltage < Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue());
-        mHarvesterPotPercentage = (((mHarvesterPotVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
+        mHarvesterPotPercentage = 100 - (((mHarvesterPotVoltage - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())
                 / (Properties2016.sMAX_HARVESTER_POT_VOLTAGE.getValue() - Properties2016.sMIN_HARVESTER_POT_VOLTAGE.getValue())) * 100);
 
     }
@@ -144,13 +144,13 @@ public class Harvester implements IHarvester
     @Override
     public void rollIn()
     {
-        setRollerMotorSpeed(1);
+        setRollerMotorSpeed(-1);
     }
 
     @Override
     public void rollOut()
     {
-        setRollerMotorSpeed(-1);
+        setRollerMotorSpeed(1);
     }
 
     @Override
@@ -203,6 +203,7 @@ public class Harvester implements IHarvester
         boolean raise = true;
         double error = aPotGoal - percentageLowered();
         mHarvesterPivotSpeed = Properties2016.sHARVESTER_POT_KP.getValue() * error;
+        System.out.println("Error: " + error + ", " + mHarvesterPivotSpeed + ", " + goodToRaise() + ", " + goodToLower());
         if (mHarvesterPivotSpeed > 0)
         {
             raise = false;

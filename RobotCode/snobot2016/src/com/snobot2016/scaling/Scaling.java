@@ -133,6 +133,14 @@ public class Scaling implements IScaling
         else
         {
             double joystickSpeed = mJoystick.getScaleTiltOverrideSpeed();
+            if (joystickSpeed < 0)
+            {
+                joystickSpeed = joystickSpeed * 0.25;
+            }
+            else if (joystickSpeed > 0)
+            {
+                joystickSpeed = joystickSpeed * 0.5;
+            }
             setScaleSpeedTilt(joystickSpeed);
         }
     }

@@ -64,7 +64,7 @@ public class GenerateSnobotPaths
         mLowGoalConfig.dt = .02;
         mLowGoalConfig.max_acc = 120;
         mLowGoalConfig.max_jerk = 480;
-        mLowGoalConfig.max_vel = 50;
+        mLowGoalConfig.max_vel = 45;
     }
 
     public void generatePath(String aDirectory)
