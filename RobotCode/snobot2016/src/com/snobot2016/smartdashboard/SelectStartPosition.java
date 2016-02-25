@@ -7,21 +7,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
-/*
+/**
  * @author Andrew/Alec
  */
 public class SelectStartPosition
 {
-    /*
+    /**
      * The sendable chooser the class returns.
      */
     private SendableChooser mPickPoint;
-    /*
+    
+    /**
      * The positioner.
      */
     private IPositioner mPositioner;
 
-    /*
+    /**
      * This is the enum that becomes the start positions chooser. The numbers
      * are the X, Y, and Orientations for each position.
      */
@@ -49,7 +50,7 @@ public class SelectStartPosition
 
     }
 
-    /*
+    /**
      * Constructor: news up and adds objects to the sendable chooser.
      */
     public SelectStartPosition(IPositioner aPositioner)
@@ -66,7 +67,7 @@ public class SelectStartPosition
         mPositioner = aPositioner;
     }
 
-    /*
+    /**
      * Puts the chooser on the smart dashboard.
      */
     public void putOnDash()
@@ -74,7 +75,7 @@ public class SelectStartPosition
         SmartDashboard.putData("Select Start Position: ", mPickPoint);
     }
 
-    /*
+    /**
      * Returns the selected position.
      */
     public StartPositions getSelected()
@@ -82,7 +83,7 @@ public class SelectStartPosition
         return (StartPositions) mPickPoint.getSelected();
     }
 
-    /*
+    /**
      * Gives the selected position data to the positioner.
      */
     public void setStartPosition()

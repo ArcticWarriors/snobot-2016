@@ -5,6 +5,13 @@ import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * 
+ * @author jbnol_000
+ * 
+ *  The operator Joystick for The snobot
+ *
+ */
 public class SnobotOperatorJoystick implements IOperatorJoystick
 {
     private Joystick mJoystick;

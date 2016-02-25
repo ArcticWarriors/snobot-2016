@@ -2,6 +2,13 @@ package com.snobot2016.joystick;
 
 import com.snobot.xlib.ISubsystem;
 
+/**
+ * 
+ * @author jbnol_000
+ *
+ * Interface for the Operator Joystick
+ *
+ */
 public interface IOperatorJoystick extends ISubsystem
 
 {
@@ -18,9 +25,9 @@ public interface IOperatorJoystick extends ISubsystem
     double getScaleTiltOverrideSpeed();
 
     /**
-     * Emergency override for the harvestor tilt motor
+     * Emergency override for the harvester tilt motor
      * 
-     * @return Speed for the harvestor tilt motor
+     * @return Speed for the harvester tilt motor
      */
     double getHarvestorTiltOverrideSpeed();
 

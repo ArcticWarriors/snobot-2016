@@ -52,6 +52,14 @@ public class Positioner implements ISubsystem, IPositioner
     double avgFiltYVelocity;
     double compFiltXVelocity;
     double compFiltYVelocity;
+    double mAvgFiltXPos;
+    double mAvgFiltYPos;
+    double mCompFiltXPos;
+    double mCompFiltYPos;
+
+    boolean isFirstTime;
+
+    static double mGtoIn_S2 = 386.0885826772;
 
     // private
 
@@ -99,6 +107,12 @@ public class Positioner implements ISubsystem, IPositioner
         avgFiltYVelocity = 0;
         compFiltXVelocity = 0;
         compFiltYVelocity = 0;
+        mAvgFiltXPos = 0;
+        mAvgFiltYPos = 0;
+        mCompFiltXPos = 0;
+        mCompFiltYPos = 0;
+
+        isFirstTime = true;
     }
 
     /**
@@ -130,7 +144,16 @@ public class Positioner implements ISubsystem, IPositioner
     public void update()
     {
         double nowTime = mTimer.get();
-        double deltaTime = nowTime - mLastTime;
+        double deltaTime;
+        if (isFirstTime)
+        {
+            deltaTime = nowTime;
+            isFirstTime = false;
+        }
+        else
+        {
+            deltaTime = nowTime - mLastTime;
+        }
 
         // Orientation
         mOrientation = (mGyro.getAngle() + mStartAngle);
@@ -142,6 +165,8 @@ public class Positioner implements ISubsystem, IPositioner
         double deltaDistance = mTotalDistance - mLastDistance;
         double deltaDistanceX = deltaDistance * Math.sin(orientationRadians);
         double deltaDistanceY = deltaDistance * Math.cos(orientationRadians);
+        mXPosition += deltaDistanceX;
+        mYPosition += deltaDistanceY;
 
         encoderXVelocity = deltaDistanceX / deltaTime;
         encoderYVelocity = deltaDistanceY / deltaTime;
@@ -150,16 +175,22 @@ public class Positioner implements ISubsystem, IPositioner
         mVelocityX = encoderXVelocity;
         mVelocityY = encoderYVelocity;
 
-        double accelX = (mAccelerometer.getX() - mErrorX) * Math.sin(orientationRadians);
-        double accelY = (mAccelerometer.getY() - mErrorY) * Math.cos(orientationRadians);
+        double accelX = (mAccelerometer.getX() - mErrorX) * Math.sin(orientationRadians) * mGtoIn_S2;
+        double accelY = (mAccelerometer.getY() - mErrorY) * Math.cos(orientationRadians) * mGtoIn_S2;
 
         accelXVelocity = accelX * deltaTime + mVelocityX;
         accelYVelocity = accelY * deltaTime + mVelocityY;
 
-        // TODO Make smarter filter
         averageFilter(encoderXVelocity, encoderYVelocity, accelXVelocity, accelYVelocity);
 
+        mAvgFiltXPos += avgFiltXVelocity * deltaTime;
+        mAvgFiltYPos += avgFiltYVelocity * deltaTime;
+
         complimentaryFilter(encoderXVelocity, encoderYVelocity, accelXVelocity, accelYVelocity);
+
+        mCompFiltXPos += compFiltXVelocity * deltaTime;
+        mCompFiltYPos += compFiltYVelocity * deltaTime;
+
         // Update
 
         // TODO Fix these when done testing
@@ -210,6 +241,7 @@ public class Positioner implements ISubsystem, IPositioner
 
     public void setPosition(double aX, double aY, double aAngle)
     {
+        // TODO Are the encoders supposed to be reset twice?
         mDriveTrain.resetEncoders();
         mXPosition = aX;
         mYPosition = aY;
@@ -258,6 +290,11 @@ public class Positioner implements ISubsystem, IPositioner
         SmartDashboard.putNumber("Complimentary Filter X", compFiltXVelocity);
         SmartDashboard.putNumber("Complimentary Filter Y", compFiltYVelocity);
 
+        SmartDashboard.putNumber("Avg-Filter X-Pos", mAvgFiltXPos);
+        SmartDashboard.putNumber("Avg-Filter Y-Pos", mAvgFiltYPos);
+
+        SmartDashboard.putNumber("Comp-Filter X-Pos", mCompFiltXPos);
+        SmartDashboard.putNumber("Comp-Filter Y-Pos", mCompFiltYPos);
     }
 
     /**

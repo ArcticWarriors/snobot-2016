@@ -4,6 +4,13 @@ import com.snobot2016.harvester.IHarvester;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * 
+ * @author Calvin
+ * 
+ * This will raise or lower the harvester in conjunction with where it is located
+ *
+ */
 public class SmartRaiseLowerHarvester extends Command
 {
 
@@ -11,6 +18,14 @@ public class SmartRaiseLowerHarvester extends Command
     private boolean mFinished;
     private boolean mRaise;
     
+    /**
+     * Initializes class variables using outside parameters.
+     * 
+     * @param aHarvester
+     *                  The Harvester
+     * @param aRaiseOrLower
+     *                 Pass in "Raise" or "Lower" the harvester
+     */
     public SmartRaiseLowerHarvester(IHarvester aHarvester, String aRaiseOrLower)
     {
         mRaise = aRaiseOrLower.equalsIgnoreCase("Raise");

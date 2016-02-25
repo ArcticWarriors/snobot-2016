@@ -4,12 +4,23 @@ import com.snobot.xlib.XboxButtonMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * 
+ * @author jbnol_000
+ *
+ * Xbax Joystick class
+ */
 public class SnobotDriveXboxJoystick implements IDriverJoystick
 {
     private Joystick mJoystick;
     private double mLeftSpeed;
     private double mRightSpeed;
 
+    /**
+     * 
+     * @param aJoystick
+     *                  The Joystick
+     */
     public SnobotDriveXboxJoystick(Joystick aJoystick)
     {
         mJoystick = aJoystick;

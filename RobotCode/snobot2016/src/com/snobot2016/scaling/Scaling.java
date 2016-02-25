@@ -16,6 +16,13 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * 
+ * @author jbnol_000
+ * 
+ * Class for the Scaling arm of the Snobot
+ *
+ */
 public class Scaling implements IScaling
 {
     private Logger mLogger;
@@ -39,7 +46,22 @@ public class Scaling implements IScaling
 
     /** error margin to find if scale tilt is near min */
     private static final double sLOW_SCALE_TILT_MARGINAL_ERROR = 5;
-
+/**
+ * 
+ * @param aScaleMoveMotor
+ *                      The Extension motor of the Snobot scaler
+ * @param aScaleTiltMotor
+ *                      The Tilt motor of the Snobot scaler
+ * @param aOperatorJoystick
+ *                        The operator Joystick
+ * @param aLogger
+ *              Logs the movement of the Scaling arm
+ * @param aTiltPot
+ *                 Tilt potentiometer
+ * @param aExtensionPot
+ *                      Extension potentiometer
+ * 
+ */
     public Scaling(SpeedController aScaleMoveMotor, SpeedController aScaleTiltMotor, IOperatorJoystick aOperatorJoystick, Logger aLogger,
             AnalogInput aTiltPot, AnalogInput aExtensionPot)
     {
