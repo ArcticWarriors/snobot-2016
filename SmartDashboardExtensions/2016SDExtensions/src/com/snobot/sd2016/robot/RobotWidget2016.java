@@ -37,9 +37,10 @@ public class RobotWidget2016 extends AutoUpdateWidget
         double roller_pot_position, roller_motor, roller_pivot_motor;
         double scale_pot_angle, scale_move_motor, scale_tilt_motor, scale_height;
 
-        roller_pot_position = Robot.getTable().getNumber(SmartDashBoardNames.sPOT_PERCENTAGE, 0);
-        roller_motor = Robot.getTable().getNumber(SmartDashBoardNames.sROLLER_MOTOR, 0);
-        roller_pivot_motor = Robot.getTable().getNumber(SmartDashBoardNames.sPIVOT_MOTOR, 0);
+        roller_pot_position = Robot.getTable().getNumber(SmartDashBoardNames.sHARVESTER_POT_PERCENTAGE, 0);
+        roller_motor = Robot.getTable().getNumber(SmartDashBoardNames.sHARVESTER_ROLLER_MOTOR, 0);
+        roller_pivot_motor = Robot.getTable().getNumber(SmartDashBoardNames.sHARVESTER_PIVOT_MOTOR, 0);
+
         scale_pot_angle = Robot.getTable().getNumber(SmartDashBoardNames.sSCALNG_CURRENT_ANGLE, 0);
         scale_move_motor = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_MOVE_MOTOR, 0);
         scale_tilt_motor = Robot.getTable().getNumber(SmartDashBoardNames.sSCALE_TILT_MOTOR, 0);

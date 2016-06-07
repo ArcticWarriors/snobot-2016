@@ -2,6 +2,8 @@ package com.snobot.simulator.module_wrapper;
 
 import com.snobot.simulator.ISimulatorUpdater;
 
+import edu.wpi.first.wpilibj.RobotBase;
+
 public class TankDriveGyroSimulator implements ISimulatorUpdater
 {
 
@@ -71,5 +73,11 @@ public class TankDriveGyroSimulator implements ISimulatorUpdater
             // System.out.println("SIMULATOR : angle=" + mAngle + ", right=" +
             // rightDist + ", left=" + leftDist);
         }
+    }
+
+    @Override
+    public void setRobot(RobotBase mRobot)
+    {
+
     }
 }

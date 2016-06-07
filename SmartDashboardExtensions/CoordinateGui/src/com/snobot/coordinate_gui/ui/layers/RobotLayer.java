@@ -45,7 +45,7 @@ public class RobotLayer implements ILayer
         }
     }
 
-    private void drawRobot(Graphics2D g, Coordinate c)
+    protected void drawRobot(Graphics2D g, Coordinate c)
     {
         double centerX = mPixelConverter.convertXPoint(c.x);
         double centerY = mPixelConverter.convertYPoint(c.y);
@@ -70,7 +70,7 @@ public class RobotLayer implements ILayer
         g.fill(shape);
     }
 
-    private void drawReferencePoint(Graphics2D g, Coordinate c)
+    protected void drawReferencePoint(Graphics2D g, Coordinate c)
     {
         double centerX = mPixelConverter.convertXPoint(c.x);
         double centerY = mPixelConverter.convertYPoint(c.y);

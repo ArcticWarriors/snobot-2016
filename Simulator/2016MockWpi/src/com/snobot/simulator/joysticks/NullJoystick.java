@@ -1,5 +1,6 @@
 package com.snobot.simulator.joysticks;
 
+
 public class NullJoystick implements IMockJoystick
 {
     private static final int sNUM_BUTTONS = 10;
@@ -12,6 +13,10 @@ public class NullJoystick implements IMockJoystick
     {
         mAxis = new short[sNUM_BUTTONS];
         mPov = new short[4];
+        for (int i = 0; i < mPov.length; ++i)
+        {
+            mPov[i] = -1;
+        }
     }
 
     @Override

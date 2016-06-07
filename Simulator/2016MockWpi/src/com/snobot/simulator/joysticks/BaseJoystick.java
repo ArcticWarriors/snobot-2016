@@ -6,6 +6,7 @@ import java.util.List;
 import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
+import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary;
 
 public class BaseJoystick implements IMockJoystick
 {
@@ -103,7 +104,10 @@ public class BaseJoystick implements IMockJoystick
     @Override
     public short[] getPovValues()
     {
-        for (int i = 0; i < mPOV.size(); ++i)
+        short[] output = new short[FRCNetworkCommunicationsLibrary.kMaxJoystickPOVs];
+
+        int i;
+        for (i = 0; i < mPOV.size(); ++i)
         {
             Identifier id = mPOV.get(i);
             Component component = mController.getComponent(id);
@@ -112,16 +116,21 @@ public class BaseJoystick implements IMockJoystick
                 double value = component.getPollData();
                 if (value == 0)
                 {
-                    mPovValues[i] = -1;
+                    output[i] = -1;
                 }
                 else
                 {
-                    mPovValues[i] = (short) ((value - .25) * 360);
+                    output[i] = (short) ((value - .25) * 360);
                 }
             }
         }
 
-        return mPovValues;
+        for (; i < output.length; ++i)
+        {
+            output[i] = -1;
+        }
+
+        return output;
     }
 
     public String getName()

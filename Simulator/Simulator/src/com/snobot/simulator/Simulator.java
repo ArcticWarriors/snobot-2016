@@ -90,6 +90,7 @@ public class Simulator
                         try
                         {
                             mSimulator = (ISimulatorUpdater) Class.forName(mSimulatorClassName).newInstance();
+                            mSimulator.setRobot(mRobot);
                             System.out.println("Creating simulator : " + mSimulatorClassName);
 
                             RobotStateSingleton.get().addLoopListener(new RobotStateSingleton.LoopListener()

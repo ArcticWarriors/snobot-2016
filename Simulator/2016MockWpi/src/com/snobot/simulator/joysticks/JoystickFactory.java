@@ -28,7 +28,7 @@ public class JoystickFactory
 
     private JoystickFactory()
     {
-
+        PrintJinputThings.printAll();
         mJoystickMap = new HashMap<Integer, IMockJoystick>();
 
         String errorMessage = "";

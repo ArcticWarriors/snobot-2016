@@ -2,6 +2,8 @@ package com.snobot.simulator.module_wrapper;
 
 import com.snobot.simulator.ISimulatorUpdater;
 
+import edu.wpi.first.wpilibj.RobotBase;
+
 public class PotentiometerSimulator implements ISimulatorUpdater
 {
     private AnalogWrapper mWrapper;
@@ -30,6 +32,12 @@ public class PotentiometerSimulator implements ISimulatorUpdater
     {
         double voltage = mMinVoltage + (mMaxVoltage - mMinVoltage) / mPositionThrow * mSpeedController.getPosition();
         mWrapper.setVoltage(voltage);
+    }
+
+    @Override
+    public void setRobot(RobotBase mRobot)
+    {
+
     }
 
 }

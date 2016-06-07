@@ -19,9 +19,10 @@ public class SmartDashBoardNames
     public static final String sSNOBOT_LIGHT = "Light";
 
     // Acquisition
-    public static final String sPOT_PERCENTAGE = "Pot Percentage";
-    public static final String sROLLER_MOTOR = "Harv. Intake Motor";
-    public static final String sPIVOT_MOTOR = "Harv. Tilt Motor";
+    public static final String sHARVESTER_POT_VOLTAGE = "Harv. Pot Voltage";
+    public static final String sHARVESTER_POT_PERCENTAGE = "Harv. Pot Percentage";
+    public static final String sHARVESTER_ROLLER_MOTOR = "Harv. Intake Motor";
+    public static final String sHARVESTER_PIVOT_MOTOR = "Harv. Tilt Motor";
 
     // JoySticks
     public static final String sDRIVER_JOSTICK_MODE = "Driver Joystick Mode";
@@ -51,6 +52,16 @@ public class SmartDashBoardNames
     public static final String sSCALNG_CURRENT_ANGLE = "Angle of scaler";
     public static final String sSCALE_MOVE_MOTOR = "Scale Move Motor";
     public static final String sSCALE_TILT_MOTOR = "Scale Tilt Motor";
+    public static final String sSCALE_TILT_POT_VOLTAGE = "Scale Tilt Voltage";
     public static final String sTIMER = "Final Countdown";
     public static final String sSCALE_CURRENT_POSITION = "Position of Scaler";
+    public static final String sSCALE_EXTENSION_POT = "Scale Extension Pot";
+
+    // Vision Testing
+    public static final String sCAMERA_INFO = "Camera Info";
+    public static final String sTARGET_LOC_X = "Target Location X";
+    public static final String sTARGET_LOC_Y = "Target Location Y";
+    public static final String sTURRET_ANGLE = "Turret Angle";
+    public static final String sTURRET_MOTOR = "Turret Motor";
+
 }

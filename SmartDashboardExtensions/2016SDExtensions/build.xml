@@ -4,6 +4,10 @@
   
 	<property file="build.properties"/>
 
+    <path id="CoordinateGui.classpath">
+        <pathelement location="${CoordinateGui.location}/bin"/>
+    </path>
+
 	  <target name="clean" description="Clean up all build and distribution artifacts.">
 	    <echo>Cleaning "${build.dir}" and "${dist.dir}"</echo>
 	    <delete dir="${build.dir}"/>
@@ -11,16 +15,14 @@
 	  </target>
 
 	  <!-- Targets -->
-
-	  <target name="compile" description="Compile the source code.">
+	  <target name="compile_coordinate_library" description="Compile the source code.">
 	    <mkdir dir="${build.dir}"/>
-	    <echo>Compiling ${src.dir} with classpath=${classpath} to ${build.dir}</echo>
+	    <echo>Compiling ${CoordinateGui.src_dir} to ${build.dir}</echo>
 
-	    <javac srcdir="${src.dir}"
+	    <javac srcdir="${CoordinateGui.src_dir}"
 	     destdir="${build.dir}"
 	     includeAntRuntime="no"
 	     includeJavaRuntime="no"
-	     classpath="${classpath}"
 	     target="${ant.java.version}"
 	     source="${ant.java.version}"
 	     compiler="javac${ant.java.version}"
@@ -28,7 +30,24 @@
 	    </javac>
 	  </target>
 
-	  <target name="jar" depends="compile">
+	  <target name="compile_extensions" description="Compile the source code." depends="compile_coordinate_library">
+	    <mkdir dir="${build.dir}"/>
+	    <echo>Compiling ${src.dir} with classpath=${classpath} to ${build.dir}</echo>
+
+	    <javac srcdir="${src.dir}"
+	     destdir="${build.dir}"
+	     includeAntRuntime="no"
+	     includeJavaRuntime="no"
+	     target="${ant.java.version}"
+	     source="${ant.java.version}"
+	     compiler="javac${ant.java.version}"
+	     debug="true">
+	    	<classpath path="${build.dir}"/>
+	    	<classpath path="${classpath}"/>
+	    </javac>
+	  </target>
+
+	  <target name="jar" depends="compile_extensions">
 	    <echo>Making jar ${dist.jar}.</echo>
 	    <mkdir dir="${dist.dir}" />
 	    <mkdir dir="${build.jars}" />

@@ -36,8 +36,13 @@ public class Ps4Joystick extends SpecificGamepadJoystick
             Identifier.Button._13 // Motion pad
     };
 
+    private static final Identifier[] sPOV = new Identifier[] 
+    {  
+            Identifier.Axis.POV
+    };
+
     public Ps4Joystick()
     {
-        super("Wireless Controller", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), new ArrayList());
+        super("Wireless Controller", Arrays.asList(sAXIS), Arrays.asList(sBUTTONS), Arrays.asList(sPOV));
     }
 }
