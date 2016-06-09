@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class DataProvider<DataType>
 {
-    public static final int sABSOLUTE_MAX_POINT_MEMORY = 5;
+    public static final int sABSOLUTE_MAX_POINT_MEMORY = 1500; //50 updates/sec * 30 seconds
 
     protected Deque<DataType> mCoordinates;
     protected int mMaxPoints;

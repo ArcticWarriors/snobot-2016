@@ -32,7 +32,7 @@ public class CoordinateLayer implements ILayer
         while (rev_iterator.hasNext())
         {
             int pointMemory = mRenderProperties.getPointMemory();
-            if (coordinateCtr >= pointMemory)
+            if (pointMemory != -1 && coordinateCtr >= pointMemory)
             {
                 break;
             }
@@ -40,6 +40,8 @@ public class CoordinateLayer implements ILayer
             Coordinate coord = rev_iterator.next();
 
             float opacity = 1.0f - ((float) coordinateCtr / pointMemory);
+            opacity = Math.min(1, opacity);
+            opacity = Math.max(0, opacity);
             Color defaultColor = mRenderProperties.getPointColor();
             Color color;
 

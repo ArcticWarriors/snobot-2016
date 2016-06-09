@@ -118,7 +118,7 @@ public class CoordinateLayerConfigPanel extends JPanel
             NumberFormat format = NumberFormat.getInstance();
             NumberFormatter formatter = new NumberFormatter(format);
             formatter.setValueClass(Integer.class);
-            formatter.setMinimum(0);
+            formatter.setMinimum(-1);
             formatter.setMaximum(1000);
             formatter.setAllowsInvalid(false);
 
