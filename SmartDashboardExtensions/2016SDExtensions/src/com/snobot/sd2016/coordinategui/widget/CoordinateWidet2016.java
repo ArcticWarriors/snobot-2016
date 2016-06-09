@@ -33,7 +33,7 @@ public class CoordinateWidet2016 extends AutoUpdateWidget
 
         CoordinateLayerRenderProps trajectoryLayerRenderProps = new CoordinateLayerRenderProps();
         CoordinateLayerRenderProps coordinateLayerRenderProps = new CoordinateLayerRenderProps();
-        RobotLayerRenderProps robotLayerRenderProps = new RobotLayerRenderProps();
+        RobotLayerRenderProps robotLayerRenderProps = new RobotAndTurretLayerRenderProps();
 
         trajectoryLayerRenderProps.setFadeOverTime(false);
         trajectoryLayerRenderProps.setPointSize(5);

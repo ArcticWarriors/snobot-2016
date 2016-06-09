@@ -1,6 +1,5 @@
 package com.snobot.sd2016.coordinategui.widget;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -19,9 +18,6 @@ public class RobotAndTurretLayer extends RobotLayer
     protected final double mTurretWidth;
     protected final double mTurretLength;
 
-    protected Color mTurretColor;
-    protected Color mLineOfSightColor;
-
     public RobotAndTurretLayer(
             DataProvider<Coordinate> aCoordinateDataProvider, 
             DataProvider<Double> aTurretAngleDataProvider, 
@@ -35,9 +31,6 @@ public class RobotAndTurretLayer extends RobotLayer
         mTurretAngleDataProvider = aTurretAngleDataProvider;
         mTurretWidth = 10 / 12.0;
         mTurretLength = 25 / 12.0;
-
-        mTurretColor = Color.black;
-        mLineOfSightColor = Color.cyan;
     }
 
     @Override
@@ -82,7 +75,7 @@ public class RobotAndTurretLayer extends RobotLayer
         transform.translate(turretCenter_x, turretCenter_y);
 
         Shape shape = transform.createTransformedShape(turret);
-        aGraphics.setColor(mTurretColor);
+        aGraphics.setColor(((RobotAndTurretLayerRenderProps) mRenderProperties).getTurretColor());
         aGraphics.fill(shape);
 
         double ray_extent = 10000;
@@ -102,6 +95,7 @@ public class RobotAndTurretLayer extends RobotLayer
         // System.out.println("Ray End: " + ray_end_x + ", " + ray_end_y);
         // double ray_end_x = Math.cos(Math.toRadians(turretAngle)) * 10000;
         // double ray_end_y = Math.sin(Math.toRadians(turretAngle)) * 10000;
+        aGraphics.setColor(((RobotAndTurretLayerRenderProps) mRenderProperties).getLineOfSightColor());
         aGraphics.draw(new Line2D.Double(pivotX, pivotY, ray_end_x, ray_end_y));
     }
 }

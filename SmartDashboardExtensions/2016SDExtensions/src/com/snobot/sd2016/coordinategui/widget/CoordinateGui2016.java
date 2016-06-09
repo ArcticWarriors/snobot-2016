@@ -60,6 +60,7 @@ public class CoordinateGui2016 extends BaseCoordinateGui
     {
         synchronized (mDataLock)
         {
+            mTrajectoryDataProvider.clear();
             for (SplineSegment segment : aSplineSegments)
             {
                 Coordinate coord = new Coordinate(segment.mAverageX / 12.0, segment.mAverageY / 12.0, segment.mRobotHeading);
