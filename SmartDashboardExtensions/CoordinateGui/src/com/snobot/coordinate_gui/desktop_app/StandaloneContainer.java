@@ -1,27 +1,27 @@
 package com.snobot.coordinate_gui.desktop_app;
 
-import java.util.List;
-
 import com.snobot.coordinate_gui.BaseCoordinateGui;
-import com.snobot.coordinate_gui.model.Coordinate;
+import com.snobot.coordinate_gui.ui.layers.ILayerManager.IFieldClickListener;
 
 public class StandaloneContainer
 {
 
-    protected ThreadedCoordinateUpdater mLivePointDrawer;
-    protected List<Coordinate> mLoadedPoints;
     protected BaseCoordinateGui mGui;
 
     public StandaloneContainer(BaseCoordinateGui aGui)
     {
-        mLoadedPoints = CoordinateFileReader.readFile("TestFiles/xxx.log");
         mGui = aGui;
-        mLivePointDrawer = new ThreadedCoordinateUpdater(mGui, 5);
+
+        mGui.getLayerManager().addFieldClickListener(mListener);
     }
 
-    public void drawPoints()
+    private IFieldClickListener mListener = new IFieldClickListener()
     {
-        mLivePointDrawer.terminate();
-        mLivePointDrawer.drawPoints(mLoadedPoints);
-    }
+
+        @Override
+        public void fieldClicked(double aXFeet, double aYFeet)
+        {
+            System.out.println("Field Clicked at " + aXFeet + ", " + aYFeet);
+        }
+    };
 }

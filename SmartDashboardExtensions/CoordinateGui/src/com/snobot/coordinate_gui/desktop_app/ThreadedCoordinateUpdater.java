@@ -15,13 +15,19 @@ public class ThreadedCoordinateUpdater implements Runnable
 	
     private Thread mUpdateThread;
 
-    public ThreadedCoordinateUpdater(BaseCoordinateGui aDataProvider, long aSleepTime)
+    public ThreadedCoordinateUpdater(BaseCoordinateGui aDataProvider)
 	{
         mDataProvider = aDataProvider;
-		mSleepTime = aSleepTime;
 		mPoints = new ArrayList<Coordinate>();
+
+        mSleepTime = 1;
 		mRunning = false;
 	}
+
+    public void setSleepTime(long aSleepTime)
+    {
+        mSleepTime = aSleepTime;
+    }
 	
 	public void drawPoints(final List<Coordinate> aPoints)
 	{

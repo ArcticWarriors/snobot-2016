@@ -5,6 +5,7 @@ import java.awt.Component;
 import com.snobot.coordinate_gui.model.Coordinate;
 import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.model.PixelConverter;
+import com.snobot.coordinate_gui.ui.layers.ILayerManager;
 import com.snobot.coordinate_gui.ui.layers.LayerManager;
 
 public class BaseCoordinateGui
@@ -33,6 +34,11 @@ public class BaseCoordinateGui
             mCoordinateDataProvider.addData(aCoordinate);
         }
         mLayerManager.repaint();
+    }
+
+    public ILayerManager getLayerManager()
+    {
+        return mLayerManager;
     }
 
     public Component getComponent()

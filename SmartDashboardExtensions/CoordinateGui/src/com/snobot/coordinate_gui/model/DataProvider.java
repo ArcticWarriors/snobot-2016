@@ -6,16 +6,40 @@ import java.util.LinkedList;
 
 public class DataProvider<DataType>
 {
+    public static final int sABSOLUTE_MAX_POINT_MEMORY = 5;
+
     protected Deque<DataType> mCoordinates;
+    protected int mMaxPoints;
+
 
     public DataProvider()
     {
+        this(sABSOLUTE_MAX_POINT_MEMORY);
+    }
+
+    public DataProvider(int aMaxPoints)
+    {
+        if (aMaxPoints > sABSOLUTE_MAX_POINT_MEMORY)
+        {
+            throw new IndexOutOfBoundsException("Max memory (" + aMaxPoints + ") must be last than the absolute max (" + sABSOLUTE_MAX_POINT_MEMORY
+                    + ")");
+        }
         mCoordinates = new LinkedList<>();
+        mMaxPoints = aMaxPoints;
     }
 
     public void addData(DataType aCoordinate)
     {
         mCoordinates.add(aCoordinate);
+        trim();
+    }
+
+    protected void trim()
+    {
+        while (mCoordinates.size() > mMaxPoints)
+        {
+            mCoordinates.remove();
+        }
     }
 
     public DataType getMostRecentData()

@@ -8,26 +8,19 @@ import java.util.Iterator;
 import com.snobot.coordinate_gui.model.Coordinate;
 import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.model.PixelConverter;
+import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
 
 public class CoordinateLayer implements ILayer
 {
     protected final DataProvider<Coordinate> mDataProvider;
     protected final PixelConverter mPixelConverter;
+    protected final CoordinateLayerRenderProps mRenderProperties;
 
-    protected int mSize;
-    protected int mPointMemory;
-    private Color mColor;
-    private boolean mFadeOverTime;
-
-    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, PixelConverter aPixelConverter)
+    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, CoordinateLayerRenderProps aRenderProps, PixelConverter aPixelConverter)
     {
         mDataProvider = aDataProvider;
+        mRenderProperties = aRenderProps;
         mPixelConverter = aPixelConverter;
-
-        mSize = 10;
-        mPointMemory = 100;
-        mColor = Color.green;
-        mFadeOverTime = true;
     }
 
     @Override
@@ -38,23 +31,25 @@ public class CoordinateLayer implements ILayer
 
         while (rev_iterator.hasNext())
         {
-            if (mPointMemory != -1 && coordinateCtr >= mPointMemory)
+            int pointMemory = mRenderProperties.getPointMemory();
+            if (coordinateCtr >= pointMemory)
             {
                 break;
             }
 
             Coordinate coord = rev_iterator.next();
 
-            float opacity = 1.0f - ((float) coordinateCtr / mPointMemory);
+            float opacity = 1.0f - ((float) coordinateCtr / pointMemory);
+            Color defaultColor = mRenderProperties.getPointColor();
             Color color;
 
-            if (mFadeOverTime)
+            if (mRenderProperties.isFadeOverTime())
             {
-                color = new Color(mColor.getRed() / 255.0f, mColor.getGreen() / 255.0f, mColor.getBlue() / 255.0f, opacity);
+                color = new Color(defaultColor.getRed() / 255.0f, defaultColor.getGreen() / 255.0f, defaultColor.getBlue() / 255.0f, opacity);
             }
             else
             {
-                color = mColor;
+                color = defaultColor;
             }
 
             paintCoordinate(aGraphics, coord, color);
@@ -66,11 +61,12 @@ public class CoordinateLayer implements ILayer
     {
         if (aCoordinate != null)
         {
-            int x = mPixelConverter.convertXPoint(aCoordinate.x);
-            int y = mPixelConverter.convertYPoint(aCoordinate.y);
+            int x = mPixelConverter.convertXFeetToPixels(aCoordinate.x);
+            int y = mPixelConverter.convertYFeetToPixels(aCoordinate.y);
+            int size = mRenderProperties.getPointSize();
 
             aGraphics.setColor(aColor);
-            aGraphics.fillOval(x - mSize / 2, y - mSize / 2, mSize, mSize);
+            aGraphics.fillOval(x - size / 2, y - size / 2, size, size);
         }
     }
 
@@ -80,24 +76,24 @@ public class CoordinateLayer implements ILayer
         return null;
     }
 
-    public void setSize(int aSize)
-    {
-        this.mSize = aSize;
-    }
-
-    public void setPointMemory(int aPointMemory)
-    {
-        this.mPointMemory = aPointMemory;
-    }
-
-    public void setColor(Color aColor)
-    {
-        this.mColor = aColor;
-    }
-
-    public void setFadeOverTime(boolean aFadeOverTime)
-    {
-        this.mFadeOverTime = aFadeOverTime;
-    }
+    // public void setSize(int aSize)
+    // {
+    // this.mSize = aSize;
+    // }
+    //
+    // public void setPointMemory(int aPointMemory)
+    // {
+    // this.mPointMemory = aPointMemory;
+    // }
+    //
+    // public void setColor(Color aColor)
+    // {
+    // this.mColor = aColor;
+    // }
+    //
+    // public void setFadeOverTime(boolean aFadeOverTime)
+    // {
+    // this.mFadeOverTime = aFadeOverTime;
+    // }
 
 }

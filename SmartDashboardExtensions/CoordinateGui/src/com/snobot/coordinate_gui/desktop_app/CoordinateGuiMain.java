@@ -2,18 +2,33 @@ package com.snobot.coordinate_gui.desktop_app;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import com.snobot.coordinate_gui.desktop_app.config.CoordinateLayerConfigPanel;
+import com.snobot.coordinate_gui.desktop_app.config.PlaybackConfigPanel;
+import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
+import com.snobot.coordinate_gui.ui.renderProps.RobotLayerRenderProps;
 
 public class CoordinateGuiMain extends JFrame
 {
     private CoordinateGuiMain()
     {
-        TestCoordinateGui coordinateGui = new TestCoordinateGui();
-        StandaloneContainer container = new StandaloneContainer(coordinateGui);
+        CoordinateLayerRenderProps coordinateLayerRenderProps = new CoordinateLayerRenderProps();
+        RobotLayerRenderProps robotLayerRenderProps = new RobotLayerRenderProps();
+
+        TestCoordinateGui coordinateGui = new TestCoordinateGui(coordinateLayerRenderProps, robotLayerRenderProps);
+        PlaybackConfigPanel playbackConfig = new PlaybackConfigPanel(coordinateGui);
+        CoordinateLayerConfigPanel coordinateLayerConfigPanel = new CoordinateLayerConfigPanel(coordinateLayerRenderProps);
+
+        JPanel configContaner = new JPanel();
+        configContaner.setLayout(new BoxLayout(configContaner, BoxLayout.Y_AXIS));
+        configContaner.add(playbackConfig);
+        configContaner.add(coordinateLayerConfigPanel);
 
         add(BorderLayout.CENTER, coordinateGui.getComponent());
-
-        container.drawPoints();
+        add(BorderLayout.EAST, configContaner);
     }
 
     public static void main(String[] args)

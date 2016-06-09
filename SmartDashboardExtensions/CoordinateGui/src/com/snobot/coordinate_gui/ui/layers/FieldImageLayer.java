@@ -64,8 +64,8 @@ public class FieldImageLayer implements ILayer
     {
         if (mFieldImage != null)
         {
-            int width = mPixelConverter.convertPixels(mFieldWidth);
-            int height = mPixelConverter.convertPixels(mFieldHeight);
+            int width = mPixelConverter.convertFeetToPixels(mFieldWidth);
+            int height = mPixelConverter.convertFeetToPixels(mFieldHeight);
             aGraphics.drawImage(mFieldImage, 0, 0, width, height, null);
         }
 

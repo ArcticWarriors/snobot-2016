@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +15,27 @@ import javax.swing.JPanel;
 
 import com.snobot.coordinate_gui.model.PixelConverter;
 
-public class LayerManager extends JPanel
+public class LayerManager extends JPanel implements ILayerManager
 {
+    protected final List<IFieldClickListener> mFieldClickListeners;
     protected final List<ILayer> mLayers;
     protected PixelConverter mConverter;
     protected Object mLock;
+
+    protected MouseListener mMouseListener = new MouseAdapter()
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            double x_feet = mConverter.convertXPixelsToFeet(e.getX());
+            double y_feet = mConverter.convertYPixelsToFeet(e.getY());
+
+            for (IFieldClickListener listener : mFieldClickListeners)
+            {
+                listener.fieldClicked(x_feet, y_feet);
+            }
+        }
+    };
 
     protected ComponentAdapter mResizeListener = new ComponentAdapter()
     {
@@ -30,10 +49,22 @@ public class LayerManager extends JPanel
 
     public LayerManager(PixelConverter aConverter, Object aLock)
     {
+        mFieldClickListeners = new ArrayList<>();
         mLayers = new ArrayList<>();
         mConverter = aConverter;
         mLock = aLock;
         addComponentListener(mResizeListener);
+        addMouseListener(mMouseListener);
+    }
+
+    public void addFieldClickListener(IFieldClickListener aListener)
+    {
+        mFieldClickListeners.add(aListener);
+    }
+
+    public void removeFieldClickListener(IFieldClickListener aListener)
+    {
+        mFieldClickListeners.remove(aListener);
     }
 
     public void addLayer(ILayer aLayer)
