@@ -7,8 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.snobot.coordinate_gui.desktop_app.config.CoordinateLayerConfigPanel;
+import com.snobot.coordinate_gui.desktop_app.config.CreatePointsLayerConfigPanel;
 import com.snobot.coordinate_gui.desktop_app.config.PlaybackConfigPanel;
 import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
+import com.snobot.coordinate_gui.ui.renderProps.CreatePointsLayerRenderProps;
 import com.snobot.coordinate_gui.ui.renderProps.RobotLayerRenderProps;
 
 public class CoordinateGuiMain extends JFrame
@@ -17,15 +19,19 @@ public class CoordinateGuiMain extends JFrame
     {
         CoordinateLayerRenderProps coordinateLayerRenderProps = new CoordinateLayerRenderProps();
         RobotLayerRenderProps robotLayerRenderProps = new RobotLayerRenderProps();
+        CreatePointsLayerRenderProps createPontsLayerRenderProps = new CreatePointsLayerRenderProps();
 
-        TestCoordinateGui coordinateGui = new TestCoordinateGui(coordinateLayerRenderProps, robotLayerRenderProps);
+        TestCoordinateGui coordinateGui = new TestCoordinateGui(coordinateLayerRenderProps, robotLayerRenderProps, createPontsLayerRenderProps);
         PlaybackConfigPanel playbackConfig = new PlaybackConfigPanel(coordinateGui);
         CoordinateLayerConfigPanel coordinateLayerConfigPanel = new CoordinateLayerConfigPanel(coordinateLayerRenderProps);
+        CreatePointsLayerConfigPanel createPointsConfigPanel = new CreatePointsLayerConfigPanel(createPontsLayerRenderProps,
+                coordinateGui.getCreatePointsDataProvider());
 
         JPanel configContaner = new JPanel();
         configContaner.setLayout(new BoxLayout(configContaner, BoxLayout.Y_AXIS));
         configContaner.add(playbackConfig);
         configContaner.add(coordinateLayerConfigPanel);
+        configContaner.add(createPointsConfigPanel);
 
         add(BorderLayout.CENTER, coordinateGui.getComponent());
         add(BorderLayout.EAST, configContaner);

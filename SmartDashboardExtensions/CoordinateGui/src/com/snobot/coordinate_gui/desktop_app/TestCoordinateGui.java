@@ -1,10 +1,14 @@
 package com.snobot.coordinate_gui.desktop_app;
 
 import com.snobot.coordinate_gui.BaseCoordinateGui;
+import com.snobot.coordinate_gui.model.Coordinate;
+import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.ui.layers.CoordinateLayer;
+import com.snobot.coordinate_gui.ui.layers.CreatePointsLayer;
 import com.snobot.coordinate_gui.ui.layers.FieldImageLayer;
 import com.snobot.coordinate_gui.ui.layers.RobotLayer;
 import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
+import com.snobot.coordinate_gui.ui.renderProps.CreatePointsLayerRenderProps;
 import com.snobot.coordinate_gui.ui.renderProps.RobotLayerRenderProps;
 
 public class TestCoordinateGui extends BaseCoordinateGui
@@ -21,19 +25,32 @@ public class TestCoordinateGui extends BaseCoordinateGui
     private static final double ROBOT_HEIGHT = 44 / 12.0;
 
     protected FieldImageLayer mFieldLayer;
-    protected CoordinateLayer mCoordinateLayer;
+    protected CoordinateLayer<CoordinateLayerRenderProps> mCoordinateLayer;
     protected RobotLayer mRobotLayer;
+    protected CreatePointsLayer createPointsLayer;
 
-    public TestCoordinateGui(CoordinateLayerRenderProps aCoordinateLayerRenderProps, RobotLayerRenderProps aRobotLayerRenderProps)
+    protected DataProvider<Coordinate> mCreatePointsDataProvider;
+
+    public TestCoordinateGui(CoordinateLayerRenderProps aCoordinateLayerRenderProps, RobotLayerRenderProps aRobotLayerRenderProps,
+            CreatePointsLayerRenderProps aCreatePontsLayerRenderProps)
     {
         super(CENTER_POINT_X, CENTER_POINT_Y);
         
+        mCreatePointsDataProvider = new DataProvider<Coordinate>();
+
         mFieldLayer = new FieldImageLayer(FIELD_IMAGE_PATH, mConverter, FIELD_WIDTH, FIELD_HEIGHT);
         mRobotLayer = new RobotLayer(mCoordinateDataProvider, aRobotLayerRenderProps, mConverter, ROBOT_WIDTH, ROBOT_HEIGHT);
-        mCoordinateLayer = new CoordinateLayer(mCoordinateDataProvider, aCoordinateLayerRenderProps, mConverter);
+        mCoordinateLayer = new CoordinateLayer<>(mCoordinateDataProvider, aCoordinateLayerRenderProps, mConverter);
+        createPointsLayer = new CreatePointsLayer(mLayerManager, mCreatePointsDataProvider, aCreatePontsLayerRenderProps, mConverter);
 
         mLayerManager.addLayer(mFieldLayer);
         mLayerManager.addLayer(mRobotLayer);
         mLayerManager.addLayer(mCoordinateLayer);
+        mLayerManager.addLayer(createPointsLayer);
+    }
+
+    public DataProvider<Coordinate> getCreatePointsDataProvider()
+    {
+        return mCreatePointsDataProvider;
     }
 }

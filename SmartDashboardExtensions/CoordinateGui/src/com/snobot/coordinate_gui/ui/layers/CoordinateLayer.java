@@ -10,13 +10,13 @@ import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.model.PixelConverter;
 import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
 
-public class CoordinateLayer implements ILayer
+public class CoordinateLayer<RenderPropertiesType extends CoordinateLayerRenderProps> implements ILayer
 {
     protected final DataProvider<Coordinate> mDataProvider;
     protected final PixelConverter mPixelConverter;
-    protected final CoordinateLayerRenderProps mRenderProperties;
+    protected final RenderPropertiesType mRenderProperties;
 
-    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, CoordinateLayerRenderProps aRenderProps, PixelConverter aPixelConverter)
+    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, RenderPropertiesType aRenderProps, PixelConverter aPixelConverter)
     {
         mDataProvider = aDataProvider;
         mRenderProperties = aRenderProps;

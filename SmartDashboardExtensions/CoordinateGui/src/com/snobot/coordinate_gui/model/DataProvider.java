@@ -52,6 +52,11 @@ public class DataProvider<DataType>
         return mCoordinates.descendingIterator();
     }
 
+    public Deque<DataType> getAllData()
+    {
+        return mCoordinates;
+    }
+
     public void clear()
     {
         mCoordinates.clear();

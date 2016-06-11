@@ -7,7 +7,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class LayerManager extends JPanel implements ILayerManager
     protected PixelConverter mConverter;
     protected Object mLock;
 
-    protected MouseListener mMouseListener = new MouseAdapter()
+    protected MouseAdapter mMouseListener = new MouseAdapter()
     {
         @Override
         public void mouseClicked(MouseEvent e)
@@ -32,7 +31,31 @@ public class LayerManager extends JPanel implements ILayerManager
 
             for (IFieldClickListener listener : mFieldClickListeners)
             {
-                listener.fieldClicked(x_feet, y_feet);
+                listener.onClicked(x_feet, y_feet);
+            }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e)
+        {
+            double x_feet = mConverter.convertXPixelsToFeet(e.getX());
+            double y_feet = mConverter.convertYPixelsToFeet(e.getY());
+
+            for (IFieldClickListener listener : mFieldClickListeners)
+            {
+                listener.onDrag(x_feet, y_feet);
+            }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e)
+        {
+            double x_feet = mConverter.convertXPixelsToFeet(e.getX());
+            double y_feet = mConverter.convertYPixelsToFeet(e.getY());
+
+            for (IFieldClickListener listener : mFieldClickListeners)
+            {
+                listener.onHover(x_feet, y_feet);
             }
         }
     };
@@ -55,6 +78,7 @@ public class LayerManager extends JPanel implements ILayerManager
         mLock = aLock;
         addComponentListener(mResizeListener);
         addMouseListener(mMouseListener);
+        addMouseMotionListener(mMouseListener);
     }
 
     public void addFieldClickListener(IFieldClickListener aListener)
@@ -101,6 +125,11 @@ public class LayerManager extends JPanel implements ILayerManager
                 layer.render(graphics);
             }
         }
+    }
+
+    public void render()
+    {
+        repaint();
     }
 
 }

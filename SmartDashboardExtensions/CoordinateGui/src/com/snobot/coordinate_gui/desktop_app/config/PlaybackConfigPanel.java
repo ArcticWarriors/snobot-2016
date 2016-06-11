@@ -44,7 +44,7 @@ public class PlaybackConfigPanel extends JPanel
 
         if (returnValue == JFileChooser.APPROVE_OPTION)
         {
-            mFileDisplay.setText(fc.getName());
+            mFileDisplay.setText(fc.getSelectedFile().getAbsolutePath());
         }
     }
 

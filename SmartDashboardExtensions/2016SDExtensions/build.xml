@@ -27,6 +27,7 @@
 	     source="${ant.java.version}"
 	     compiler="javac${ant.java.version}"
 	     debug="true">
+	        <exclude name="**/com/snobot/coordinate_gui/desktop_app/**"/>
 	    </javac>
 	  </target>
 
