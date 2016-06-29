@@ -72,18 +72,28 @@ public class GeneratePathFromConfigFile
         generate(trajectoryConfig, waypoints, aOutDirectory, aOutFile, wheelbase);
     }
 
-    private static List<Coordinate> generate(TrajectoryGenerator.Config aConfig, WaypointSequence aPoints, String aDirectory, String aOutFile,
+    public static List<Coordinate> generateX(TrajectoryGenerator.Config aConfig, WaypointSequence aPoints, String aDirectory, String aOutFile,
+            double aWheelbase)
+    {
+        Path path = PathGenerator.makePath(aPoints, aConfig, aWheelbase, aOutFile);
+
+        List<Coordinate> output = PathUtils.getCoordinatesFromPath(path);
+
+        return output;
+    }
+
+    public static List<Coordinate> generate(TrajectoryGenerator.Config aConfig, WaypointSequence aPoints, String aDirectory, String aOutFile,
             double aWheelbase)
     {
         Path path = PathGenerator.makePath(aPoints, aConfig, aWheelbase, aOutFile);
         
-        List<Coordinate> output = PathUtils.getCoordinatesFromPath(path);
+        List<Coordinate> output = generateX(aConfig, aPoints, aDirectory, aOutFile, aWheelbase);
 
         // Outputs to the directory supplied as the first argument.
         TextFileSerializer js = new TextFileSerializer();
         String serialized = js.serialize(path);
         // System.out.print(serialized);
-        String fullpath = joinPaths(aDirectory, aOutFile + ".csv");
+        String fullpath = joinPaths(aDirectory, aOutFile);
         System.out.println(fullpath);
         if (!writeFile(fullpath, serialized))
         {

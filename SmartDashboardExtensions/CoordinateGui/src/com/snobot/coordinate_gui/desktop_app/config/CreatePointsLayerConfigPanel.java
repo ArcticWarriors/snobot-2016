@@ -6,13 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -26,10 +24,15 @@ import com.snobot.coordinate_gui.model.Coordinate;
 import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.ui.layers.ILayerManager;
 import com.snobot.coordinate_gui.ui.renderProps.CreatePointsLayerRenderProps;
+import com.team254.lib.trajectory.Path;
+import com.team254.lib.trajectory.gen.PathGenerator;
+import com.team254.lib.trajectory.gen.TrajectoryGenerator;
+import com.team254.lib.trajectory.gen.TrajectoryGenerator.Config;
+import com.team254.lib.trajectory.gen.WaypointSequence;
+import com.team254.lib.trajectory.gen.WaypointSequence.Waypoint;
 
 public class CreatePointsLayerConfigPanel extends JPanel
 {
-    private static final String sDEFAULT_DIRECTORY = "C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/trajectory_config";
     private final ButtonGroup buttonGroup = new ButtonGroup();
     private final DataProvider<Coordinate> mTrajectoryConfigDataProvider;
     private final DataProvider<Coordinate> mTrajectoryPreviewDataProvider;
@@ -41,6 +44,9 @@ public class CreatePointsLayerConfigPanel extends JPanel
     private JRadioButton mRdbtnZeroDegrees = new JRadioButton("0 Degrees");
     private JRadioButton mRdbtnCalculateAngle = new JRadioButton("Calculate Angle");
     private JRadioButton mRdbtnCustomAngle = new JRadioButton("");
+
+    private String mDefaultProfileDirectory = ".";
+    private String mDefaultConfigDirectory = ".";
 
     private ActionListener mPointAngleTypeListener = new ActionListener()
     {
@@ -65,10 +71,11 @@ public class CreatePointsLayerConfigPanel extends JPanel
             }
             else
             {
-                System.out.println("Unknown selectio");
+                System.out.println("Unknown selection");
             }
         }
     };
+    private JButton btnGeneratePath;
 
     public CreatePointsLayerConfigPanel(ILayerManager aLayerManager, CreatePointsLayerRenderProps aRenderProps,
             DataProvider<Coordinate> aTrajConfigDataProvider,
@@ -79,109 +86,58 @@ public class CreatePointsLayerConfigPanel extends JPanel
         mTrajectoryPreviewDataProvider = aTrajPrevDataProvider;
         mRenderProps = aRenderProps;
         initComponents();
-        
-        // String config_path = "position1_post_defense.yml";
-        // String preview_path = "Position1ToLowGoal.csv";
+    }
 
-        // String config_path = "position2_post_defense.yml";
-        // String preview_path = "Position2ToLowGoal.csv";
+    private void generateFromConfig()
+    {
+        TrajectoryGenerator.Config trajectoryConfig = new Config();
+        trajectoryConfig.dt = .02;
+        trajectoryConfig.max_acc = 120;
+        trajectoryConfig.max_jerk = 480;
+        trajectoryConfig.max_vel = 45;
 
-        // String config_path = "position3_post_defense.yml";
-        // String preview_path = "Position3ToLowGoal.csv";
+        double wheelbase = 25.5 / 12;
 
-        // String config_path = "position4_post_defense.yml";
-        // String preview_path = "Position4ToLowGoal.csv";
+        WaypointSequence waypoints = new WaypointSequence(1000);
 
-        String config_path = "position5_post_defense.yml";
-        String preview_path = "Position5ToLowGoal.csv";
-
-        // loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/LowBarToLowGoal.csv");
-        // loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/Position2ToLowGoal.csv");
-        loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/" + preview_path);
-
-        mTrajectoryConfigDataProvider.clear();
-
-        System.out.println("\n\n");
-        for (Coordinate coord : TrajectoryConfigReader.load("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/trajectory_config/" + config_path))
+        for (Coordinate coord : mTrajectoryConfigDataProvider.getAllData())
         {
-            mTrajectoryConfigDataProvider.addData(coord);
-            System.out.println(coord);
+            waypoints.addWaypoint(new Waypoint(coord.x * 12, coord.y * 12, coord.angle));
         }
 
-        System.out.println(mTrajectoryConfigDataProvider.getAllData());
-    }
+        Path path = PathGenerator.makePath(waypoints, trajectoryConfig, wheelbase, "TempPath");
 
-    private void clearTrajectoryPreivew()
-    {
         mTrajectoryPreviewDataProvider.clear();
-    }
-
-    private void loadTrajectoryPreview(String aFile)
-    {
-        clearTrajectoryPreivew();
-
-        for (Coordinate coord : PathUtils.getCoordinatesFromFile(aFile))
+        for (Coordinate coord : PathUtils.getCoordinatesFromPath(path))
         {
             mTrajectoryPreviewDataProvider.addData(coord);
         }
 
-        System.out.println(mTrajectoryPreviewDataProvider.getAllData());
-
         mLayerManager.render();
     }
 
-    private void loadProfileBtnPressed()
+    public String getDefaultProfileDirectory()
     {
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(new File(sDEFAULT_DIRECTORY));
-        int returnValue = fc.showOpenDialog(this);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION)
-        {
-            mTrajectoryConfigDataProvider.clear();
-
-            for (Coordinate coord : TrajectoryConfigReader.load(fc.getSelectedFile().getAbsolutePath()))
-            {
-                mTrajectoryConfigDataProvider.addData(coord);
-            }
-
-            loadTrajectoryPreview(fc.getSelectedFile().getAbsolutePath());
-        }
+        return mDefaultProfileDirectory;
     }
 
-    private void saveProfileBtnPressed()
+    public void setDefaultProfileDirectory(String aDirectory)
     {
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(new File(sDEFAULT_DIRECTORY));
-        int returnValue = fc.showOpenDialog(this);
+        mDefaultProfileDirectory = aDirectory;
+    }
 
-        if (returnValue == JFileChooser.APPROVE_OPTION)
-        {
-            TrajectoryConfigReader.dump(mTrajectoryConfigDataProvider.getAllData(), fc.getSelectedFile().getAbsolutePath());
-            loadTrajectoryPreview(fc.getSelectedFile().getAbsolutePath());
-        }
+    public String getDefaultConfigDirectory()
+    {
+        return mDefaultConfigDirectory;
+    }
+
+    public void setDefaultConfigDirectory(String aDirectory)
+    {
+        mDefaultConfigDirectory = aDirectory;
     }
 
     private void initComponents()
     {
-
-        JButton btnLoadProfile = new JButton("Load Profile");
-        btnLoadProfile.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                loadProfileBtnPressed();
-            }
-        });
-
-        JButton btnSaveProfile = new JButton("Save Profile");
-        btnSaveProfile.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                saveProfileBtnPressed();
-            }
-        });
 
         JPanel singlePointPanel = new JPanel();
         singlePointPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Single Point Angle", TitledBorder.LEADING,
@@ -191,6 +147,15 @@ public class CreatePointsLayerConfigPanel extends JPanel
 
         mDragSeperationField = new JTextField();
         mDragSeperationField.setColumns(10);
+
+        btnGeneratePath = new JButton("Generate Path");
+        btnGeneratePath.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                generateFromConfig();
+            }
+        });
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
                 groupLayout
@@ -201,11 +166,9 @@ public class CreatePointsLayerConfigPanel extends JPanel
                         .addGroup(
                                 groupLayout
                                         .createParallelGroup(Alignment.LEADING)
-                                        .addComponent(btnSaveProfile)
-                                        .addComponent(btnLoadProfile)
-                                        .addComponent(lblDragSeperation)
                                         .addComponent(mDragSeperationField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                                GroupLayout.PREFERRED_SIZE).addComponent(lblDragSeperation).addComponent(btnGeneratePath))
+                        .addContainerGap(234, Short.MAX_VALUE)));
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
                 groupLayout
                         .createSequentialGroup()
@@ -215,14 +178,12 @@ public class CreatePointsLayerConfigPanel extends JPanel
                                         .createParallelGroup(Alignment.LEADING)
                                         .addGroup(
                                                 groupLayout.createSequentialGroup()
-                                                        .addComponent(singlePointPanel, GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE).addGap(11))
+                                                        .addComponent(singlePointPanel, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE).addGap(11))
                                         .addGroup(
                                                 groupLayout
                                                         .createSequentialGroup()
-                                                        .addComponent(btnSaveProfile)
-                                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                                        .addComponent(btnLoadProfile)
-                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addComponent(btnGeneratePath)
+                                                        .addGap(42)
                                                         .addComponent(lblDragSeperation)
                                                         .addPreferredGap(ComponentPlacement.RELATED)
                                                         .addComponent(mDragSeperationField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,

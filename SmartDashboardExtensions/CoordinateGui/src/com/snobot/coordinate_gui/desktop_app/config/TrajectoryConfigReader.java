@@ -16,7 +16,7 @@ import com.snobot.coordinate_gui.model.Coordinate;
 public class TrajectoryConfigReader
 {
 
-    public static void dump(Collection<Coordinate> points, String aFile)
+    public static void dump(Collection<Coordinate> points, double dt, double aMaxVelocity, double aMaxAcceleration, double aMaxJerk, String aFile)
     {
 
 //        try
@@ -35,11 +35,11 @@ public class TrajectoryConfigReader
         {
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(aFile)));
 
-            bw.write(".02,120,480,45\n");
+            bw.write("" + dt + "," + aMaxVelocity + "," + aMaxAcceleration + "," + aMaxJerk + "\n");
 
             for (Coordinate c : points)
             {
-                bw.write("" + c.x + "," + c.y + "," + c.angle + "\n");
+                bw.write("" + c.x * 12 + "," + c.y * 12 + "," + c.angle + "\n");
             }
 
             bw.close();
