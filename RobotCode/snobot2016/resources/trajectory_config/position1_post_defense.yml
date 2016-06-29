@@ -1,0 +1,20 @@
+.02,120,480,45
+-135,140,0
+-135,200,0
+-30,305,60
+
+
+#    private static final double sSPOT_1_X = -135;
+#    private static final double sSPOT_2_X = -82.875;
+#    private static final double sSPOT_3_X = -30;
+#    private static final double sSPOT_4_X = 22.875;
+#    private static final double sSPOT_5_X = 75.75;
+#
+#    private static final double sSPOT_SPYBOT_X = -150.5;
+#    private static final double sSPOT_SPYBOT_Y = 306;
+#    private static final double sCROSSED_DEFENSE_Y = 140;
+#    private static final double sLEFT_GOAL_Y = 305;
+#    private static final double sLEFT_GOAL_X = -30;
+#    private static final double sRIGHT_GOAL_Y = 305;
+#    private static final double sRIGHT_GOAL_X = 50;
+#    private static final double sGOAL_ANGLE = 60;
