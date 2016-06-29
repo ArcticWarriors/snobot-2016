@@ -1,5 +1,7 @@
 package com.team254.lib.trajectory.gen;
 
+import java.security.InvalidParameterException;
+
 /**
  * Do cubic spline interpolation between points.
  *
@@ -61,12 +63,12 @@ public class Spline
         return Math.abs(x - y) < 1E-6;
     }
 
-    public static boolean reticulateSplines(WaypointSequence.Waypoint start, WaypointSequence.Waypoint goal, Spline result, Type type)
+    public static void reticulateSplines(WaypointSequence.Waypoint start, WaypointSequence.Waypoint goal, Spline result, Type type)
     {
-        return reticulateSplines(start.x, start.y, start.theta, goal.x, goal.y, goal.theta, result, type);
+        reticulateSplines(start.x, start.y, start.theta, goal.x, goal.y, goal.theta, result, type);
     }
 
-    public static boolean reticulateSplines(double x0, double y0, double theta0, double x1, double y1, double theta1, Spline result, Type type)
+    public static void reticulateSplines(double x0, double y0, double theta0, double x1, double y1, double theta1, Spline result, Type type)
     {
         System.out.println("Reticulating splines...");
         result.type_ = type;
@@ -77,7 +79,7 @@ public class Spline
         double x1_hat = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
         if (x1_hat == 0)
         {
-            return false;
+            throw new InvalidParameterException("X1 Hat (" + x1_hat + ") must be equal to zero");
         }
         result.knot_distance_ = x1_hat;
         result.theta_offset_ = Math.atan2(y1 - y0, x1 - x0);
@@ -89,14 +91,14 @@ public class Spline
         // line between p0 and p1.
         if (almostEqual(Math.abs(theta0_hat), Math.PI / 2) || almostEqual(Math.abs(theta1_hat), Math.PI / 2))
         {
-            return false;
+            throw new InvalidParameterException("Cannot have end angle of 90 degrees off staright line");
         }
         // We also cannot handle the case that the end angle is facing towards
         // the
         // start angle (total turn > 90 degrees).
         if (Math.abs(ChezyMath.getDifferenceInAngleRadians(theta0_hat, theta1_hat)) >= Math.PI / 2)
         {
-            return false;
+            throw new InvalidParameterException("Total turn is greater than 90 degrees");
         }
         // Turn angles into derivatives (slopes)
         double yp0_hat = Math.tan(theta0_hat);
@@ -119,8 +121,6 @@ public class Spline
             result.d_ = 0;
             result.e_ = yp0_hat;
         }
-
-        return true;
     }
 
     public double calculateLength()

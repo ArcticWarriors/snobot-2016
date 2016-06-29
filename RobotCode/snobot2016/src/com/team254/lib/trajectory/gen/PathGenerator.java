@@ -1,5 +1,7 @@
 package com.team254.lib.trajectory.gen;
 
+import java.security.InvalidParameterException;
+
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
 
@@ -40,7 +42,7 @@ public class PathGenerator
     {
         if (path.getNumWaypoints() < 2)
         {
-            return null;
+            throw new InvalidParameterException("Paths must have at least two points");
         }
 
         // Compute the total length of the path by creating splines for each
@@ -52,10 +54,10 @@ public class PathGenerator
         for (int i = 0; i < splines.length; ++i)
         {
             splines[i] = new Spline();
-            if (!Spline.reticulateSplines(path.getWaypoint(i), path.getWaypoint(i + 1), splines[i], Spline.QuinticHermite))
-            {
-                return null;
-            }
+
+            // Might throw
+            Spline.reticulateSplines(path.getWaypoint(i), path.getWaypoint(i + 1), splines[i], Spline.QuinticHermite);
+
             spline_lengths[i] = splines[i].calculateLength();
             total_distance += spline_lengths[i];
         }
