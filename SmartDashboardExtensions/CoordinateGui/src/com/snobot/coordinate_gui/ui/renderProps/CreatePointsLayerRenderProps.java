@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.snobot.coordinate_gui.model.Coordinate;
 
-public class CreatePointsLayerRenderProps extends CoordinateLayerRenderProps
+public class CreatePointsLayerRenderProps
 {
     public enum AngleCalculationType
     {
@@ -17,11 +17,22 @@ public class CreatePointsLayerRenderProps extends CoordinateLayerRenderProps
     private double mGridFactorY;
     private double mMinDragDistance;
 
+    private CoordinateLayerRenderProps mConfigRenderProperties;
+    private CoordinateLayerRenderProps mPreviewRenderProperties;
+
     public CreatePointsLayerRenderProps()
     {
-        setFadeOverTime(false);
-        setPointSize(5);
-        setPointMemory(-1);
+        mConfigRenderProperties = new CoordinateLayerRenderProps();
+        mConfigRenderProperties.setFadeOverTime(false);
+        mConfigRenderProperties.setPointSize(5);
+        mConfigRenderProperties.setPointMemory(-1);
+        mConfigRenderProperties.setPointColor(Color.green);
+
+        mPreviewRenderProperties = new CoordinateLayerRenderProps();
+        mPreviewRenderProperties.setFadeOverTime(false);
+        mPreviewRenderProperties.setPointSize(2);
+        mPreviewRenderProperties.setPointMemory(-1);
+        mPreviewRenderProperties.setPointColor(Color.red);
 
         mSnapToGrid = true;
         mGridFactorX = .25;
@@ -92,5 +103,15 @@ public class CreatePointsLayerRenderProps extends CoordinateLayerRenderProps
     public double getMinDragDistance()
     {
         return mMinDragDistance;
+    }
+
+    public CoordinateLayerRenderProps getConfigRenderProperties()
+    {
+        return mConfigRenderProperties;
+    }
+
+    public CoordinateLayerRenderProps getPreviewRenderProperties()
+    {
+        return mPreviewRenderProperties;
     }
 }

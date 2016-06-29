@@ -9,21 +9,34 @@ import com.snobot.coordinate_gui.model.PixelConverter;
 import com.snobot.coordinate_gui.ui.layers.ILayerManager.IFieldClickListener;
 import com.snobot.coordinate_gui.ui.renderProps.CreatePointsLayerRenderProps;
 
-public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderProps>
+public class CreatePointsLayer implements ILayer
 {
     protected final PixelConverter mPixelConverter;
     protected final ILayerManager mLayerManager;
-    protected final DataProvider<Coordinate> mDataProvider;
+    protected final DataProvider<Coordinate> mTrajectoryConfigDataProvider;
+    protected final DataProvider<Coordinate> mTrajectoryPreviewDataProvider;
+    protected final CreatePointsLayerRenderProps mRenderProperties;
+    protected final CoordinateLayer mConfigLayer;
+    protected final CoordinateLayer mPreviewLayer;
 
     private Coordinate mActiveCoordinate;
 
-    public CreatePointsLayer(ILayerManager aLayerManager, DataProvider<Coordinate> aDataProvider, CreatePointsLayerRenderProps aRenderProperties,
+
+    public CreatePointsLayer(
+            ILayerManager aLayerManager, 
+            DataProvider<Coordinate> aTrajConfigDataProvider,
+            DataProvider<Coordinate> aTrajPreviewDataProvider, 
+            CreatePointsLayerRenderProps aRenderProperties,
             PixelConverter aPixelConverter)
     {
-        super(aDataProvider, aRenderProperties, aPixelConverter);
+        mConfigLayer = new CoordinateLayer(aTrajConfigDataProvider, aRenderProperties.getConfigRenderProperties(), aPixelConverter);
+        mPreviewLayer = new CoordinateLayer(aTrajPreviewDataProvider, aRenderProperties.getPreviewRenderProperties(), aPixelConverter);
+
         mPixelConverter = aPixelConverter;
         mLayerManager = aLayerManager;
-        mDataProvider = aDataProvider;
+        mTrajectoryConfigDataProvider = aTrajConfigDataProvider;
+        mTrajectoryPreviewDataProvider = aTrajPreviewDataProvider;
+        mRenderProperties = aRenderProperties;
 
         mLayerManager.addFieldClickListener(new IFieldClickListener()
         {
@@ -31,8 +44,7 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
             @Override
             public void onClicked(double aXFeet, double aYFeet)
             {
-                mDataProvider.addData(createCoordinate(aXFeet, aYFeet));
-                mLayerManager.render();
+                addTrajectoryConfigPoints(createCoordinate(aXFeet, aYFeet));
             }
 
             @Override
@@ -40,7 +52,7 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
             {
                 boolean shouldAdd = true;
 
-                Coordinate lastCoord = mDataProvider.getMostRecentData();
+                Coordinate lastCoord = mTrajectoryConfigDataProvider.getMostRecentData();
                 if (lastCoord != null)
                 {
                     double dx = lastCoord.x - aXFeet;
@@ -54,7 +66,7 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
 
                 if (shouldAdd)
                 {
-                    mDataProvider.addData(createCoordinate(aXFeet, aYFeet));
+                    addTrajectoryConfigPoints(createCoordinate(aXFeet, aYFeet));
                     mLayerManager.render();
                 }
             }
@@ -70,6 +82,14 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
         mActiveCoordinate = null;
     }
 
+    private void addTrajectoryConfigPoints(Coordinate aCoord)
+    {
+        // I have altered the preview, pray I do not alter it further
+        mTrajectoryPreviewDataProvider.clear();
+        mTrajectoryConfigDataProvider.addData(aCoord);
+        mLayerManager.render();
+    }
+
     private Coordinate createCoordinate(double aXFeet, double aYFeet)
     {
         Coordinate output;
@@ -79,13 +99,13 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
         {
             double snapped_x = getSnappedX(aXFeet);
             double snapped_y = getSnappedY(aYFeet);
-            double angle = mRenderProperties.getAngle(mDataProvider.getMostRecentData(), snapped_x, snapped_y);
+            double angle = mRenderProperties.getAngle(mTrajectoryConfigDataProvider.getMostRecentData(), snapped_x, snapped_y);
 
             output = new Coordinate(snapped_x, snapped_y, angle);
         }
         else
         {
-            double angle = mRenderProperties.getAngle(mDataProvider.getMostRecentData(), aXFeet, aYFeet);
+            double angle = mRenderProperties.getAngle(mTrajectoryConfigDataProvider.getMostRecentData(), aXFeet, aYFeet);
             output = new Coordinate(aXFeet, aYFeet, angle);
         }
 
@@ -107,16 +127,16 @@ public class CreatePointsLayer extends CoordinateLayer<CreatePointsLayerRenderPr
     @Override
     public void render(Graphics2D aGraphics)
     {
-        super.render(aGraphics);
+        mPreviewLayer.render(aGraphics);
+        mConfigLayer.render(aGraphics);
 
         if (mActiveCoordinate != null)
         {
-            CreatePointsLayerRenderProps renderProps = ((CreatePointsLayerRenderProps) mRenderProperties);
             int x = mPixelConverter.convertXFeetToPixels(mActiveCoordinate.x);
             int y = mPixelConverter.convertYFeetToPixels(mActiveCoordinate.y);
-            int size = (renderProps.getActivePointSize());
+            int size = (mRenderProperties.getActivePointSize());
 
-            aGraphics.setColor(renderProps.getActivePointColor());
+            aGraphics.setColor(mRenderProperties.getActivePointColor());
             aGraphics.fillOval(x - size / 2, y - size / 2, size, size);
             
             String toDraw = String.format("%.02f, %.02f, %.02f", mActiveCoordinate.x, mActiveCoordinate.y, mActiveCoordinate.angle);

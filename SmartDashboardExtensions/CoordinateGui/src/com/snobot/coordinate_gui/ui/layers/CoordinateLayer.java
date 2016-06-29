@@ -10,13 +10,13 @@ import com.snobot.coordinate_gui.model.DataProvider;
 import com.snobot.coordinate_gui.model.PixelConverter;
 import com.snobot.coordinate_gui.ui.renderProps.CoordinateLayerRenderProps;
 
-public class CoordinateLayer<RenderPropertiesType extends CoordinateLayerRenderProps> implements ILayer
+public class CoordinateLayer implements ILayer
 {
     protected final DataProvider<Coordinate> mDataProvider;
     protected final PixelConverter mPixelConverter;
-    protected final RenderPropertiesType mRenderProperties;
+    protected final CoordinateLayerRenderProps mRenderProperties;
 
-    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, RenderPropertiesType aRenderProps, PixelConverter aPixelConverter)
+    public CoordinateLayer(DataProvider<Coordinate> aDataProvider, CoordinateLayerRenderProps aRenderProps, PixelConverter aPixelConverter)
     {
         mDataProvider = aDataProvider;
         mRenderProperties = aRenderProps;
@@ -26,12 +26,17 @@ public class CoordinateLayer<RenderPropertiesType extends CoordinateLayerRenderP
     @Override
     public void render(Graphics2D aGraphics)
     {
-        Iterator<Coordinate> rev_iterator = mDataProvider.getReverseIterator();
+        renderCoordinates(aGraphics, mDataProvider, mRenderProperties);
+    }
+
+    protected void renderCoordinates(Graphics2D aGraphics, DataProvider<Coordinate> dataProvider, CoordinateLayerRenderProps renderProperties)
+    {
+        Iterator<Coordinate> rev_iterator = dataProvider.getReverseIterator();
         int coordinateCtr = 0;
 
         while (rev_iterator.hasNext())
         {
-            int pointMemory = mRenderProperties.getPointMemory();
+            int pointMemory = renderProperties.getPointMemory();
             if (pointMemory != -1 && coordinateCtr >= pointMemory)
             {
                 break;
@@ -42,10 +47,10 @@ public class CoordinateLayer<RenderPropertiesType extends CoordinateLayerRenderP
             float opacity = 1.0f - ((float) coordinateCtr / pointMemory);
             opacity = Math.min(1, opacity);
             opacity = Math.max(0, opacity);
-            Color defaultColor = mRenderProperties.getPointColor();
+            Color defaultColor = renderProperties.getPointColor();
             Color color;
 
-            if (mRenderProperties.isFadeOverTime())
+            if (renderProperties.isFadeOverTime())
             {
                 color = new Color(defaultColor.getRed() / 255.0f, defaultColor.getGreen() / 255.0f, defaultColor.getBlue() / 255.0f, opacity);
             }
@@ -54,21 +59,20 @@ public class CoordinateLayer<RenderPropertiesType extends CoordinateLayerRenderP
                 color = defaultColor;
             }
 
-            paintCoordinate(aGraphics, coord, color);
+            paintCoordinate(aGraphics, coord, color, renderProperties.getPointSize());
             ++coordinateCtr;
         }
     }
 
-    private void paintCoordinate(Graphics2D aGraphics, Coordinate aCoordinate, Color aColor)
+    private void paintCoordinate(Graphics2D aGraphics, Coordinate aCoordinate, Color aColor, int aSize)
     {
         if (aCoordinate != null)
         {
             int x = mPixelConverter.convertXFeetToPixels(aCoordinate.x);
             int y = mPixelConverter.convertYFeetToPixels(aCoordinate.y);
-            int size = mRenderProperties.getPointSize();
 
             aGraphics.setColor(aColor);
-            aGraphics.fillOval(x - size / 2, y - size / 2, size, size);
+            aGraphics.fillOval(x - aSize / 2, y - aSize / 2, aSize, aSize);
         }
     }
 

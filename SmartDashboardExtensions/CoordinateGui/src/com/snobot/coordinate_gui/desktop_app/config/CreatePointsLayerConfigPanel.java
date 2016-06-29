@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -20,15 +21,20 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import com.snobot.coordinate_gui.desktop_app.trajectory.PathUtils;
 import com.snobot.coordinate_gui.model.Coordinate;
 import com.snobot.coordinate_gui.model.DataProvider;
+import com.snobot.coordinate_gui.ui.layers.ILayerManager;
 import com.snobot.coordinate_gui.ui.renderProps.CreatePointsLayerRenderProps;
 
 public class CreatePointsLayerConfigPanel extends JPanel
 {
+    private static final String sDEFAULT_DIRECTORY = "C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/trajectory_config";
     private final ButtonGroup buttonGroup = new ButtonGroup();
-    private DataProvider<Coordinate> mDataProvider;
-    private CreatePointsLayerRenderProps mRenderProps;
+    private final DataProvider<Coordinate> mTrajectoryConfigDataProvider;
+    private final DataProvider<Coordinate> mTrajectoryPreviewDataProvider;
+    private final CreatePointsLayerRenderProps mRenderProps;
+    private final ILayerManager mLayerManager;
 
     private JTextField mCustomAngleField;
     private JTextField mDragSeperationField;
@@ -64,39 +70,95 @@ public class CreatePointsLayerConfigPanel extends JPanel
         }
     };
 
-    public CreatePointsLayerConfigPanel(CreatePointsLayerRenderProps aRenderProps, DataProvider<Coordinate> aDataProvider)
+    public CreatePointsLayerConfigPanel(ILayerManager aLayerManager, CreatePointsLayerRenderProps aRenderProps,
+            DataProvider<Coordinate> aTrajConfigDataProvider,
+            DataProvider<Coordinate> aTrajPrevDataProvider)
     {
-        mDataProvider = aDataProvider;
+        mLayerManager = aLayerManager;
+        mTrajectoryConfigDataProvider = aTrajConfigDataProvider;
+        mTrajectoryPreviewDataProvider = aTrajPrevDataProvider;
         mRenderProps = aRenderProps;
         initComponents();
+        
+        // String config_path = "position1_post_defense.yml";
+        // String preview_path = "Position1ToLowGoal.csv";
+
+        // String config_path = "position2_post_defense.yml";
+        // String preview_path = "Position2ToLowGoal.csv";
+
+        // String config_path = "position3_post_defense.yml";
+        // String preview_path = "Position3ToLowGoal.csv";
+
+        // String config_path = "position4_post_defense.yml";
+        // String preview_path = "Position4ToLowGoal.csv";
+
+        String config_path = "position5_post_defense.yml";
+        String preview_path = "Position5ToLowGoal.csv";
+
+        // loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/LowBarToLowGoal.csv");
+        // loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/Position2ToLowGoal.csv");
+        loadTrajectoryPreview("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/traj/" + preview_path);
+
+        mTrajectoryConfigDataProvider.clear();
+
+        System.out.println("\n\n");
+        for (Coordinate coord : TrajectoryConfigReader.load("C:/Users/PJ/Documents/GitHub/Frc2016/RobotCode/snobot2016/resources/trajectory_config/" + config_path))
+        {
+            mTrajectoryConfigDataProvider.addData(coord);
+            System.out.println(coord);
+        }
+
+        System.out.println(mTrajectoryConfigDataProvider.getAllData());
+    }
+
+    private void clearTrajectoryPreivew()
+    {
+        mTrajectoryPreviewDataProvider.clear();
+    }
+
+    private void loadTrajectoryPreview(String aFile)
+    {
+        clearTrajectoryPreivew();
+
+        for (Coordinate coord : PathUtils.getCoordinatesFromFile(aFile))
+        {
+            mTrajectoryPreviewDataProvider.addData(coord);
+        }
+
+        System.out.println(mTrajectoryPreviewDataProvider.getAllData());
+
+        mLayerManager.render();
     }
 
     private void loadProfileBtnPressed()
     {
         JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(sDEFAULT_DIRECTORY));
         int returnValue = fc.showOpenDialog(this);
 
         if (returnValue == JFileChooser.APPROVE_OPTION)
         {
-            mDataProvider.clear();
+            mTrajectoryConfigDataProvider.clear();
 
-            System.out.println(fc.getName());
             for (Coordinate coord : TrajectoryConfigReader.load(fc.getSelectedFile().getAbsolutePath()))
             {
-                mDataProvider.addData(coord);
+                mTrajectoryConfigDataProvider.addData(coord);
             }
-        }
 
+            loadTrajectoryPreview(fc.getSelectedFile().getAbsolutePath());
+        }
     }
 
     private void saveProfileBtnPressed()
     {
         JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(sDEFAULT_DIRECTORY));
         int returnValue = fc.showOpenDialog(this);
 
         if (returnValue == JFileChooser.APPROVE_OPTION)
         {
-            TrajectoryConfigReader.dump(mDataProvider.getAllData(), fc.getSelectedFile().getAbsolutePath());
+            TrajectoryConfigReader.dump(mTrajectoryConfigDataProvider.getAllData(), fc.getSelectedFile().getAbsolutePath());
+            loadTrajectoryPreview(fc.getSelectedFile().getAbsolutePath());
         }
     }
 

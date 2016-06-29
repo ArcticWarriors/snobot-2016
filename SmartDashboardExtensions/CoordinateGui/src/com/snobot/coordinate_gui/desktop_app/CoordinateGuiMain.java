@@ -24,8 +24,9 @@ public class CoordinateGuiMain extends JFrame
         TestCoordinateGui coordinateGui = new TestCoordinateGui(coordinateLayerRenderProps, robotLayerRenderProps, createPontsLayerRenderProps);
         PlaybackConfigPanel playbackConfig = new PlaybackConfigPanel(coordinateGui);
         CoordinateLayerConfigPanel coordinateLayerConfigPanel = new CoordinateLayerConfigPanel(coordinateLayerRenderProps);
-        CreatePointsLayerConfigPanel createPointsConfigPanel = new CreatePointsLayerConfigPanel(createPontsLayerRenderProps,
-                coordinateGui.getCreatePointsDataProvider());
+        CreatePointsLayerConfigPanel createPointsConfigPanel = new CreatePointsLayerConfigPanel(coordinateGui.getLayerManager(),
+                createPontsLayerRenderProps,
+                coordinateGui.getCreatePointsDataProvider(), coordinateGui.getTrajectoryPreivewDataProvider());
 
         JPanel configContaner = new JPanel();
         configContaner.setLayout(new BoxLayout(configContaner, BoxLayout.Y_AXIS));

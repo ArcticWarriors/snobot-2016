@@ -25,11 +25,12 @@ public class TestCoordinateGui extends BaseCoordinateGui
     private static final double ROBOT_HEIGHT = 44 / 12.0;
 
     protected FieldImageLayer mFieldLayer;
-    protected CoordinateLayer<CoordinateLayerRenderProps> mCoordinateLayer;
+    protected CoordinateLayer mCoordinateLayer;
     protected RobotLayer mRobotLayer;
     protected CreatePointsLayer createPointsLayer;
 
     protected DataProvider<Coordinate> mCreatePointsDataProvider;
+    protected DataProvider<Coordinate> mTrajectoryPreviewDataProvider;
 
     public TestCoordinateGui(CoordinateLayerRenderProps aCoordinateLayerRenderProps, RobotLayerRenderProps aRobotLayerRenderProps,
             CreatePointsLayerRenderProps aCreatePontsLayerRenderProps)
@@ -37,11 +38,13 @@ public class TestCoordinateGui extends BaseCoordinateGui
         super(CENTER_POINT_X, CENTER_POINT_Y);
         
         mCreatePointsDataProvider = new DataProvider<Coordinate>();
+        mTrajectoryPreviewDataProvider = new DataProvider<Coordinate>();
 
         mFieldLayer = new FieldImageLayer(FIELD_IMAGE_PATH, mConverter, FIELD_WIDTH, FIELD_HEIGHT);
         mRobotLayer = new RobotLayer(mCoordinateDataProvider, aRobotLayerRenderProps, mConverter, ROBOT_WIDTH, ROBOT_HEIGHT);
-        mCoordinateLayer = new CoordinateLayer<>(mCoordinateDataProvider, aCoordinateLayerRenderProps, mConverter);
-        createPointsLayer = new CreatePointsLayer(mLayerManager, mCreatePointsDataProvider, aCreatePontsLayerRenderProps, mConverter);
+        mCoordinateLayer = new CoordinateLayer(mCoordinateDataProvider, aCoordinateLayerRenderProps, mConverter);
+        createPointsLayer = new CreatePointsLayer(mLayerManager, mCreatePointsDataProvider, mTrajectoryPreviewDataProvider,
+                aCreatePontsLayerRenderProps, mConverter);
 
         mLayerManager.addLayer(mFieldLayer);
         mLayerManager.addLayer(mRobotLayer);
@@ -52,5 +55,10 @@ public class TestCoordinateGui extends BaseCoordinateGui
     public DataProvider<Coordinate> getCreatePointsDataProvider()
     {
         return mCreatePointsDataProvider;
+    }
+
+    public DataProvider<Coordinate> getTrajectoryPreivewDataProvider()
+    {
+        return mTrajectoryPreviewDataProvider;
     }
 }
