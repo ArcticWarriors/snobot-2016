@@ -14,9 +14,9 @@ public class Snobot2016Simulator extends ASimulator
 {
     public Snobot2016Simulator()
     {
-        //////////////////////////////
+        // ////////////////////////////
         // Drivetrain
-        //////////////////////////////
+        // ////////////////////////////
         {
             double drivetrainSpeed = 13 * 12;
             AnalogWrapper gyro;
@@ -30,13 +30,17 @@ public class Snobot2016Simulator extends ASimulator
                 gyro = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sGYRO_SENSOR_PORT);
             }
             gyro.setName("Gyro");
-            
+
             if (Properties2016.sIS_REAL_ROBOT)
             {
-                SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_LEFT_A_PORT);
-                SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_RIGHT_A_PORT);
-                SpeedControllerWrapper leftDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_LEFT_B_PORT);
-                SpeedControllerWrapper rightDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers().get(Properties2016.sDRIVE_CAN_RIGHT_B_PORT);
+                SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getCanSpeedControllers()
+                        .get(Properties2016.sDRIVE_CAN_LEFT_A_PORT);
+                SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getCanSpeedControllers()
+                        .get(Properties2016.sDRIVE_CAN_RIGHT_A_PORT);
+                SpeedControllerWrapper leftDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers()
+                        .get(Properties2016.sDRIVE_CAN_LEFT_B_PORT);
+                SpeedControllerWrapper rightDriveMotorB = SensorActuatorRegistry.get().getCanSpeedControllers()
+                        .get(Properties2016.sDRIVE_CAN_RIGHT_B_PORT);
 
                 EncoderWrapper leftDriveEncoder = new EncoderWrapper(Properties2016.sDRIVE_CAN_LEFT_A_PORT, -1);
                 EncoderWrapper rightDriveEncoder = new EncoderWrapper(Properties2016.sDRIVE_CAN_RIGHT_A_PORT, -1);
@@ -63,10 +67,14 @@ public class Snobot2016Simulator extends ASimulator
             }
             else
             {
-                SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sDRIVER_LEFT_MOTOR_PORT);
-                SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sDRIVER_RIGHT_MOTOR_PORT);
-                EncoderWrapper leftDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A, Properties2016.sLEFT_DRIVE_ENCODER_PORT_B);
-                EncoderWrapper rightDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A, Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B);
+                SpeedControllerWrapper leftDriveMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                        .get(Properties2016.sDRIVER_LEFT_MOTOR_PORT);
+                SpeedControllerWrapper rightDriveMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                        .get(Properties2016.sDRIVER_RIGHT_MOTOR_PORT);
+                EncoderWrapper leftDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sLEFT_DRIVE_ENCODER_PORT_A,
+                        Properties2016.sLEFT_DRIVE_ENCODER_PORT_B);
+                EncoderWrapper rightDriveEncoder = SensorActuatorRegistry.get().getEncoder(Properties2016.sRIGHT_DRIVE_ENCODER_PORT_A,
+                        Properties2016.sRIGHT_DRIVE_ENCODER_PORT_B);
 
                 leftDriveMotor.setName("Left Drive");
                 rightDriveMotor.setName("Right Drive");
@@ -86,11 +94,10 @@ public class Snobot2016Simulator extends ASimulator
 
             }
         }
-        
-        
-        //////////////////////////////
+
+        // ////////////////////////////
         // Scaler
-        //////////////////////////////
+        // ////////////////////////////
         {
             SpeedControllerWrapper scaleLiftMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sSCALE_MOVE_MOTOR_PORT);
             SpeedControllerWrapper scaleTiltMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sSCALE_TILT_MOTOR_PORT);
@@ -124,12 +131,13 @@ public class Snobot2016Simulator extends ASimulator
             scaleLiftPotSim.setParameters(100, scaleLiftPotMinVoltage, scaleLiftPotMaxVoltage);
         }
 
-        //////////////////////////////
+        // ////////////////////////////
         // Intake
-        //////////////////////////////
+        // ////////////////////////////
         {
             SpeedControllerWrapper intakeMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sHARVESTER_ROLLER_MOTOR_PORT);
-            SpeedControllerWrapper intakeTiltMotor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT);
+            SpeedControllerWrapper intakeTiltMotor = SensorActuatorRegistry.get().getSpeedControllers()
+                    .get(Properties2016.sHARVESTER_PIVOT_MOTOR_PORT);
             AnalogWrapper intakePot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sHARVESTER_POT_PORT);
             PotentiometerSimulator intakePotSim = new PotentiometerSimulator(intakePot, intakeTiltMotor);
 
@@ -145,12 +153,35 @@ public class Snobot2016Simulator extends ASimulator
             mSimulatorComponenets.add(intakePotSim);
         }
 
-        //////////////////////////////
+        // ////////////////////////////
         // Light
-        //////////////////////////////
+        // ////////////////////////////
         {
             RelayWrapper lightRelay = SensorActuatorRegistry.get().getRelays().get(Properties2016.sLIGHT_RELAY);
             lightRelay.setName("Cam. Light");
+        }
+
+        // ////////////////////////////
+        // Shooter
+        // ////////////////////////////
+        {
+            SpeedControllerWrapper turret_motor = SensorActuatorRegistry.get().getSpeedControllers().get(Properties2016.sSHOOTER_TURRET_MOTOR);
+            turret_motor.setName("Shooter Turret");
+            turret_motor.setMotorParameters(180);
+
+            AnalogWrapper turret_pot = SensorActuatorRegistry.get().getAnalog().get(Properties2016.sSHOOTER_TURRET_POT);
+            turret_pot.setName("Turret Pot");
+
+            PotentiometerSimulator turret_pot_sim = new PotentiometerSimulator(turret_pot, turret_motor);
+            turret_pot_sim.setParameters(5, 0, 5);
+
+            mSimulatorComponenets.add(turret_pot_sim);
+        }
+
+        // Camera Sim
+        {
+            CameraSim cameraSim = new CameraSim();
+            mSimulatorComponenets.add(cameraSim);
         }
     }
 

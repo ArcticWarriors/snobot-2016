@@ -18,6 +18,8 @@ import com.snobot2016.positioner.Positioner;
 import com.snobot2016.positioner.SimplePositioner;
 import com.snobot2016.scaling.IScaling;
 import com.snobot2016.scaling.Scaling;
+import com.visionTest.auto_turret.AutoTurretManager;
+import com.visionTest.shooter.Shooter;
 
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -54,6 +56,10 @@ public class Snobot extends ASnobot
     // Autonomous
     private CommandGroup mAutonCommand;
     private AutonFactory mAutonFactory;
+
+    // Vision Test
+    private Shooter mShooter;
+    private AutoTurretManager mTurretManager;
 
     public Snobot()
     {
@@ -160,6 +166,18 @@ public class Snobot extends ASnobot
 
         // Autonomous
         mAutonFactory = new AutonFactory(this.getPositioner(), this);
+
+        // Vision Test
+        Talon shooterTurretMotor = new Talon(Properties2016.sSHOOTER_TURRET_MOTOR);
+        Talon shooterShootMotor = new Talon(Properties2016.sSHOOTER_SHOOT_MOTOR);
+        AnalogInput shooterTurretPot = new AnalogInput(Properties2016.sSHOOTER_TURRET_POT);
+        mShooter = new Shooter(shooterTurretMotor, shooterShootMotor, shooterTurretPot);
+        mSubsystems.add(mShooter);
+
+        mTurretManager = new AutoTurretManager(mSnobotPositioner, mShooter);
+        mSubsystems.add(mTurretManager);
+
+        mSnobotPositioner.setPosition(-20, 0, 0);
     }
 
     @Override
@@ -179,6 +197,11 @@ public class Snobot extends ASnobot
     {
         Timer.delay(.005);
         super.autonomousPeriodic();
+
+        if (mTurretManager.isAutoAiming())
+        {
+            mTurretManager.control();
+        }
     }
 
     @Override
@@ -209,5 +232,10 @@ public class Snobot extends ASnobot
     public IScaling getScaling()
     {
         return this.mScaling;
+    }
+
+    public Shooter getShooter()
+    {
+        return mShooter;
     }
 }

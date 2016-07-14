@@ -52,6 +52,11 @@ public class Properties2016
     // Relay
     public static final int sLIGHT_RELAY = 1;
 
+    // Vision Test
+    public static final int sSHOOTER_TURRET_MOTOR = 5; // SC
+    public static final int sSHOOTER_SHOOT_MOTOR = 6; // SC
+    public static final int sSHOOTER_TURRET_POT = 4; // Analog
+
     // **************************************************************
     // Configuration Contants
     // **************************************************************
@@ -137,6 +142,11 @@ public class Properties2016
 
     public static final DoubleProperty sLEFT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderLeftDPP", -0.00564998);
     public static final DoubleProperty sRIGHT_ENCODER_DIST_PER_PULSE = new DoubleProperty("DriveEncoderRightDPP", 0.00564998);
+
+    // **************************************************************
+    // Configuration Contants
+    // **************************************************************
+    public static final DoubleProperty sTURRET_KP = new DoubleProperty("TurretKP", -0.0005);
 
     static
     {

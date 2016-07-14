@@ -57,4 +57,11 @@ public class SmartDashBoardNames
     public static final String sSCALE_CURRENT_POSITION = "Position of Scaler";
     public static final String sSCALE_EXTENSION_POT = "Scale Extension Pot";
 
+    // Vision Testing
+    public static final String sCAMERA_INFO = "Camera Info";
+    public static final String sTARGET_LOC_X = "Target Location X";
+    public static final String sTARGET_LOC_Y = "Target Location Y";
+    public static final String sTURRET_ANGLE = "Turret Angle";
+    public static final String sTURRET_MOTOR = "Turret Motor";
+
 }
