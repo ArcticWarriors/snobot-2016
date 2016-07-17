@@ -64,7 +64,10 @@ public class AutoTurretManager implements ISubsystem
             double camera_angle = Double.parseDouble(parts[1]);
             double camera_distance = Double.parseDouble(parts[2]);
 
-            mStateManager.setCurrentCameraState(timestamp, camera_angle, camera_distance);
+            if (mStateManager.canCalculate(timestamp))
+            {
+                mStateManager.setCurrentCameraState(timestamp, camera_angle, camera_distance);
+            }
         }
 
         double absolute_desired_angle = mStateManager.calculateDesiredAngleFromState();
