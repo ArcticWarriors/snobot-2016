@@ -188,4 +188,36 @@ public class StateMangerTest_SimpleAngles
 
         Assert.assertEquals(-30, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
     }
+
+    @Test
+    /**
+     * 
+     */
+    public void testRobotAngleSkewed_TurretAngleSkewed_Calculation0()
+    {
+        double timestamp = 0;
+
+        mStateManager.saveRobotState(timestamp, 10, 0, -25, -35);
+        mStateManager.setCurrentCameraState(timestamp, 0, 11.547);
+
+        Assert.assertEquals(0.000, mStateManager.getTargetLocation().mX, sEPSILON);
+        Assert.assertEquals(5.773, mStateManager.getTargetLocation().mY, sEPSILON);
+        Assert.assertEquals(-60, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
+    }
+
+    @Test
+    /**
+     * 
+     */
+    public void testRobotAngleSkewed_TurretAngleSkewed_Calculation1()
+    {
+        double timestamp = 0;
+
+        mStateManager.saveRobotState(timestamp, 10, 17.5, -25, -35);
+        mStateManager.setCurrentCameraState(timestamp, 45, 20);
+
+        Assert.assertEquals(4.823, mStateManager.getTargetLocation().mX, sEPSILON);
+        Assert.assertEquals(36.818, mStateManager.getTargetLocation().mY, sEPSILON);
+        Assert.assertEquals(-15, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
+    }
 }
