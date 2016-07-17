@@ -28,6 +28,45 @@ public class StateMangerTest_SimpleAngles
     }
 
     @Test
+    public void testTargetStraightAhead()
+    {
+        double timestamp = 0;
+
+        mStateManager.saveRobotState(timestamp, 0, 0, 0, 0);
+        mStateManager.setCurrentCameraState(timestamp, 0, 27);
+
+        Assert.assertEquals(0, mStateManager.getTargetLocation().mX, sEPSILON);
+        Assert.assertEquals(27, mStateManager.getTargetLocation().mY, sEPSILON);
+        Assert.assertEquals(0, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
+    }
+
+    @Test
+    public void testRobotToLeftOfTarget()
+    {
+        double timestamp = 0;
+
+        mStateManager.saveRobotState(timestamp, -13.5, 0, 0, 0);
+        mStateManager.setCurrentCameraState(timestamp, 26.565, 30.186);
+
+        Assert.assertEquals(0, mStateManager.getTargetLocation().mX, sEPSILON);
+        Assert.assertEquals(27, mStateManager.getTargetLocation().mY, sEPSILON);
+        Assert.assertEquals(26.565, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
+    }
+
+    @Test
+    public void testRobotToRightOfTarget()
+    {
+        double timestamp = 0;
+
+        mStateManager.saveRobotState(timestamp, 13.5, 0, 0, 0);
+        mStateManager.setCurrentCameraState(timestamp, -26.565, 30.186);
+
+        Assert.assertEquals(0, mStateManager.getTargetLocation().mX, sEPSILON);
+        Assert.assertEquals(27, mStateManager.getTargetLocation().mY, sEPSILON);
+        Assert.assertEquals(-26.565, mStateManager.calculateDesiredAngleFromState(), sEPSILON);
+    }
+
+    @Test
     /**
      * - Robot to the left of the y-axis, pointing straight ahead.
      * - Camera sees the target at 45 degrees, 14.14 feet away ([10, 10] away, at [0, 10])
