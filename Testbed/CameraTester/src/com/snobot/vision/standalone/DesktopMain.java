@@ -1,19 +1,18 @@
 package com.snobot.vision.standalone;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import org.opencv.core.Core;
 import org.yaml.snakeyaml.Yaml;
-
-import xcom.snobot.vision.standalone.VisionTester;
 
 public class DesktopMain
 {
@@ -21,7 +20,7 @@ public class DesktopMain
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws IOException
     {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         Yaml yaml = new Yaml();
         Map<String, Object> config = (Map<String, Object>) yaml.load(new FileInputStream("config/test_images.yml"));
@@ -31,7 +30,10 @@ public class DesktopMain
 
         for (String file : files)
         {
-            JPanel testPanel = new VisionTester(file);
+            Image image = ImageIO.read(new File(file));
+
+            VisionTestPanel testPanel = new VisionTestPanel();
+            testPanel.setOriginalImage(image);
 
             if (oneAtATime)
             {
