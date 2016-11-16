@@ -7,6 +7,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/PJ/Downloads/opencv/build/java/x64"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/PJ/Desktop/JavaLibs/snakeyaml-1.11.jar"/>
+	<classpathentry kind="lib" path="snakeyaml-1.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
