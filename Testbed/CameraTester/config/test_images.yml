@@ -1,5 +1,6 @@
 
-one_at_a_time: False
+one_at_a_time: false
+threshold_config: config/test_images_original_threshold.yml
 images:
     - "TestTargets_originals/-5x15_0deg.jpg"
     - "TestTargets_originals/-5x20_0deg.jpg"

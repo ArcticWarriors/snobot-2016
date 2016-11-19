@@ -1,6 +1,5 @@
 package com.snobot.vision.standalone;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +19,7 @@ public class MjpegReceiver
 
     public interface ImageReceiver
     {
-        public void onImage(Image image);
+        public void onImage(BufferedImage image);
     }
 
     public MjpegReceiver()
@@ -71,24 +70,16 @@ public class MjpegReceiver
         return ImageIO.read(new ByteArrayInputStream(imageBuffer.toByteArray()));
     }
 
-    public void runReceiver(String imageUrl, List<ImageReceiver> imageRecievers)
+    public void runReceiver(String imageUrl, List<ImageReceiver> imageRecievers) throws IOException
     {
         System.out.println("Attempting to receive MJPEG stream from : " + imageUrl);
 
         ByteArrayOutputStream imageBuffer = new ByteArrayOutputStream();
         InputStream stream = null;
 
-        try
-        {
-            URL url = new URL(imageUrl);
-            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-            stream = urlConn.getInputStream();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return;
-        }
+        URL url = new URL(imageUrl);
+        HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+        stream = urlConn.getInputStream();
 
         while (mRunning)
         {
@@ -104,6 +95,7 @@ public class MjpegReceiver
             catch (Exception e)
             {
                 System.err.println("Could not save image : " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

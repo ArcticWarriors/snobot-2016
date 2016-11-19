@@ -16,8 +16,59 @@ public class MainServer
 {
     private static final String IMAGE_CONFIG = "config/test_images.yml";
 
+    private interface ImageWaiter
+    {
+        public void waitForNextImage();
+    }
+
+    public static class ImageWaiterThreadSleep implements ImageWaiter
+    {
+        private int delay;
+
+        public ImageWaiterThreadSleep(int delay)
+        {
+            this.delay = delay;
+        }
+
+        public void waitForNextImage()
+        {
+            try
+            {
+                Thread.sleep(delay);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static class ImageWaiterConsoleInput implements ImageWaiter
+    {
+        public ImageWaiterConsoleInput()
+        {
+        }
+
+        public void waitForNextImage()
+        {
+            try
+            {
+                System.out.println("Press enter for next image...");
+                 int input = -1;
+                 do
+                 {
+                    input = System.in.read();
+                } while (input != '\n');
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
-    public MainServer() throws IOException
+    public MainServer(ImageWaiter imageWaiter) throws IOException
     {
         MjpgServer server = MjpgServer.getInstance();
 
@@ -37,21 +88,15 @@ public class MainServer
                 byte[] imageInByte = baos.toByteArray();
                 baos.close();
 
-                try
-                {
-                    Thread.sleep(1000);
-                    server.update(imageInByte);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                imageWaiter.waitForNextImage();
+                server.update(imageInByte);
             }
         }
     }
 
     public static void main(String[] args) throws IOException
     {
-        new MainServer();
+        // new MainServer(new ImageWaiterThreadSleep(1000));
+        new MainServer(new ImageWaiterConsoleInput());
     }
 }

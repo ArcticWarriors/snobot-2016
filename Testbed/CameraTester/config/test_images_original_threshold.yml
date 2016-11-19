@@ -1,0 +1,20 @@
+thresholds: 
+   # min: !!com.snobot.vision.HslThreshold 
+   #     hue: 22
+   #     lum: 34
+   #     sat: 156
+   #     
+   # max: !!com.snobot.vision.HslThreshold 
+   #     hue: 87
+   #     lum: 255
+   #     sat: 213
+        
+    min: !!com.snobot.vision.HslThreshold 
+        hue: 36
+        sat: 38
+        lum: 38
+        
+    max: !!com.snobot.vision.HslThreshold 
+        hue: 87
+        sat: 255
+        lum: 219

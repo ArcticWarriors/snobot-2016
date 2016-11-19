@@ -1,7 +1,7 @@
 package com.snobot.vision.standalone;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +12,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import org.opencv.core.Core;
 import org.yaml.snakeyaml.Yaml;
+
+import com.snobot.vision.HslThreshold;
+import com.snobot.vision.VisionAlgorithm;
 
 public class DesktopMain
 {
@@ -20,19 +24,26 @@ public class DesktopMain
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws IOException
     {
-        // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         Yaml yaml = new Yaml();
         Map<String, Object> config = (Map<String, Object>) yaml.load(new FileInputStream("config/test_images.yml"));
         List<String> files = (List<String>) config.get("images");
         boolean oneAtATime = Boolean.parseBoolean(config.get("one_at_a_time").toString());
+        String thresholdsFile = (String) config.get("threshold_config");
 
+        Map<String, Map<String, Object>> thresholdConfig = (Map<String, Map<String, Object>>) yaml.load(new FileInputStream(thresholdsFile));
+        HslThreshold minThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("min");
+        HslThreshold maxThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("max");
 
         for (String file : files)
         {
-            Image image = ImageIO.read(new File(file));
+            BufferedImage image = ImageIO.read(new File(file));
 
-            VisionTestPanel testPanel = new VisionTestPanel();
+            VisionAlgorithm algorithm = new VisionAlgorithm();
+            algorithm.setThresholds(minThreshold, maxThreshold);
+
+            VisionTestPanel testPanel = new VisionTestPanel(algorithm);
             testPanel.setOriginalImage(image);
 
             if (oneAtATime)
