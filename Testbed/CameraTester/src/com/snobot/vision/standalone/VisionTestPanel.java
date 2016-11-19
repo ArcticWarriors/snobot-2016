@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import com.snobot.vision.HslThreshold;
@@ -64,7 +65,7 @@ public class VisionTestPanel extends JPanel
         }
         else
         {
-            JFileChooser fc = new JFileChooser();
+            JFileChooser fc = new JFileChooser("./config");
             int result = fc.showSaveDialog(this);
             if (result == JFileChooser.APPROVE_OPTION)
             {
@@ -86,7 +87,7 @@ public class VisionTestPanel extends JPanel
         HslThreshold minThresh = tuningPanel.getMinThreshold();
         HslThreshold maxThresh = tuningPanel.getMaxThreshold();
 
-        JFileChooser fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser("./config");
         int result = fc.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION)
         {
@@ -97,7 +98,9 @@ public class VisionTestPanel extends JPanel
             Map<String, Object> config = new HashMap<String, Object>();
             config.put("thresholds", thresholdConfig);
 
-            Yaml yaml = new Yaml();
+            DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            Yaml yaml = new Yaml(options);
             try
             {
                 yaml.dump(config, new FileWriter(fc.getSelectedFile()));
