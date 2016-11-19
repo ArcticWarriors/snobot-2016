@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import org.opencv.core.Core;
 import org.yaml.snakeyaml.Yaml;
 
-import com.snobot.vision.HslThreshold;
 import com.snobot.vision.VisionAlgorithm;
 
 public class DesktopMain
@@ -32,18 +31,12 @@ public class DesktopMain
         boolean oneAtATime = Boolean.parseBoolean(config.get("one_at_a_time").toString());
         String thresholdsFile = (String) config.get("threshold_config");
 
-        Map<String, Map<String, Object>> thresholdConfig = (Map<String, Map<String, Object>>) yaml.load(new FileInputStream(thresholdsFile));
-        HslThreshold minThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("min");
-        HslThreshold maxThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("max");
-
         for (String file : files)
         {
             BufferedImage image = ImageIO.read(new File(file));
 
             VisionAlgorithm algorithm = new VisionAlgorithm();
-            algorithm.setThresholds(minThreshold, maxThreshold);
-
-            VisionTestPanel testPanel = new VisionTestPanel(algorithm);
+            VisionTestPanel testPanel = new VisionTestPanel(algorithm, thresholdsFile);
             testPanel.setOriginalImage(image);
 
             if (oneAtATime)

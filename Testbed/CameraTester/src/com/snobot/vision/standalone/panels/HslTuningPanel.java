@@ -50,6 +50,16 @@ public class HslTuningPanel extends JPanel
         listener = aListener;
     }
 
+    public HslThreshold getMinThreshold()
+    {
+        return new HslThreshold(minHueWidget.getValue(), minSatWidget.getValue(), minLumWidget.getValue());
+    }
+
+    public HslThreshold getMaxThreshold()
+    {
+        return new HslThreshold(maxHueWidget.getValue(), maxSatWidget.getValue(), maxLumWidget.getValue());
+    }
+
     public void setThresholds(HslThreshold minThreshold, HslThreshold maxThreshold)
     {
         minHueWidget.setValue(minThreshold.hue);
@@ -66,12 +76,9 @@ public class HslTuningPanel extends JPanel
         @Override
         public void stateChanged(ChangeEvent e)
         {
-            HslThreshold min = new HslThreshold(minHueWidget.getValue(), minSatWidget.getValue(), minLumWidget.getValue());
-            HslThreshold max = new HslThreshold(maxHueWidget.getValue(), maxSatWidget.getValue(), maxLumWidget.getValue());
-
             if (listener != null)
             {
-                listener.setThresholds(min, max);
+                listener.setThresholds(getMinThreshold(), getMaxThreshold());
             }
         }
     };

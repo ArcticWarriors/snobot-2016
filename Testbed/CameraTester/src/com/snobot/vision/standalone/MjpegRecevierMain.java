@@ -5,29 +5,23 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.opencv.core.Core;
-import org.yaml.snakeyaml.Yaml;
 
-import com.snobot.vision.HslThreshold;
 import com.snobot.vision.VisionAlgorithm;
 import com.snobot.vision.standalone.MjpegReceiver.ImageReceiver;
-import com.snobot.vision.standalone.panels.HslTuningPanel;
 
 public class MjpegRecevierMain
 {
     private MjpegReceiver reciever;
     private VisionTestPanel visionPanel;
-    private HslTuningPanel tuningPanel;
     private VisionAlgorithm visionAlgorithm;
 
     private MjpegReceiver.ImageReceiver imageReciver = new ImageReceiver()
@@ -53,17 +47,10 @@ public class MjpegRecevierMain
     @SuppressWarnings("unchecked")
     public MjpegRecevierMain(String urlAddress, String thresholdConfigFile) throws FileNotFoundException
     {
-        Yaml yaml = new Yaml();
-        Map<String, Map<String, Object>> thresholdConfig = (Map<String, Map<String, Object>>) yaml.load(new FileInputStream(thresholdConfigFile));
-        HslThreshold minThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("min");
-        HslThreshold maxThreshold = (HslThreshold) thresholdConfig.get("thresholds").get("max");
 
         visionAlgorithm = new VisionAlgorithm();
         reciever = new MjpegReceiver();
-        visionPanel = new VisionTestPanel(visionAlgorithm);
-        tuningPanel = new HslTuningPanel();
-        tuningPanel.setListener(visionAlgorithm);
-        tuningPanel.setThresholds(minThreshold, maxThreshold);
+        visionPanel = new VisionTestPanel(visionAlgorithm, thresholdConfigFile);
 
         List<ImageReceiver> imageReceivers = Arrays.asList(imageReciver);
 
@@ -90,7 +77,6 @@ public class MjpegRecevierMain
         frame.addWindowListener(closingListener);
         frame.setLayout(new BorderLayout());
         frame.add(visionPanel, BorderLayout.CENTER);
-        frame.add(tuningPanel, BorderLayout.NORTH);
         frame.setSize(700, 540);
         frame.setVisible(true);
     }
