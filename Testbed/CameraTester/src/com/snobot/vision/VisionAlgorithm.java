@@ -18,10 +18,10 @@ public class VisionAlgorithm implements com.snobot.vision.standalone.SetThreshol
         public void onCalculation(Mat original, Mat postThreshold);
     }
 
-    private List<ProcessedImageListener> mUpdateListeners;
-    private Scalar minThreshold;
-    private Scalar maxThreshold;
-    private BufferedImage currentImage;
+    protected List<ProcessedImageListener> mUpdateListeners;
+    protected Scalar minThreshold;
+    protected Scalar maxThreshold;
+    protected BufferedImage currentImage;
 
     public VisionAlgorithm()
     {
