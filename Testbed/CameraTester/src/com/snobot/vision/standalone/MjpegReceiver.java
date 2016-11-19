@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import javax.imageio.ImageIO;
 public class MjpegReceiver
 {
     private static final int[] START_BYTES = new int[]{ 0xFF, 0xD8 };
-    private static final int[] END_BYTES = new int[]{ 0xFF, 0xD9 };
+    private static final byte[] END_BYTES = "--boundary".getBytes();
     private boolean mRunning;
 
     public interface ImageReceiver
@@ -67,7 +68,8 @@ public class MjpegReceiver
             }
         }
 
-        return ImageIO.read(new ByteArrayInputStream(imageBuffer.toByteArray()));
+        byte[] imageBytes = imageBuffer.toByteArray();
+        return ImageIO.read(new ByteArrayInputStream(imageBytes));
     }
 
     public void runReceiver(String imageUrl, List<ImageReceiver> imageRecievers) throws IOException
@@ -91,6 +93,11 @@ public class MjpegReceiver
                 {
                     recv.onImage(image);
                 }
+            }
+            catch (SocketException e)
+            {
+                System.err.println("Got a socket extension, shutting down : " + e.getMessage());
+                mRunning = false;
             }
             catch (Exception e)
             {
