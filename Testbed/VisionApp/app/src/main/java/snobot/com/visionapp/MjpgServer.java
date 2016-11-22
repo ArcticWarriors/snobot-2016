@@ -11,35 +11,32 @@ import java.util.ArrayList;
 
 public class MjpgServer {
 
-    public static final String K_BOUNDARY = "boundary";
-    private static MjpgServer sInst = null;
+    private static final String K_BOUNDARY = "boundary";
+    private static final MjpgServer sInst = new MjpgServer();
 
-    public static final String TAG = "MJPG";
+    private static final String TAG = "MJPG";
 
     public static MjpgServer getInstance()
     {
-        if (sInst == null) {
-            sInst = new MjpgServer();
-        }
         return sInst;
     }
 
     private ArrayList<Connection> mConnections = new ArrayList<>();
-    private Object mLock = new Object();
+    private final Object mLock = new Object();
 
     private class Connection {
 
         private Socket mSocket;
 
-        public Connection(Socket s) {
+        private Connection(Socket s) {
             mSocket = s;
         }
 
-        public boolean isAlive() {
+        private boolean isAlive() {
             return !mSocket.isClosed() && mSocket.isConnected();
         }
 
-        public void start() {
+        private void start() {
             try {
                 Log.i(TAG, "Starting a connection!");
                 OutputStream stream = mSocket.getOutputStream();
@@ -54,11 +51,11 @@ public class MjpgServer {
             }
         }
 
-        public void writeImageUpdate(byte[] buffer) {
+        private void writeImageUpdate(byte[] buffer) {
             if (!isAlive()) {
                 return;
             }
-            OutputStream stream = null;
+            OutputStream stream;
             try {
                 stream = mSocket.getOutputStream();
 
@@ -83,15 +80,33 @@ public class MjpgServer {
 
     private ServerSocket mServerSocket;
     private boolean mRunning;
-    private Thread mRunThread;
-    private Long mLastUpdate = 0L;
 
     private MjpgServer() {
         try {
             mServerSocket = new ServerSocket(5800);
             mRunning = true;
-            mRunThread = new Thread(runner);
-            mRunThread.start();
+            Runnable runner = new Runnable() {
+
+                @Override
+                public void run() {
+                    while (mRunning) {
+                        try {
+                            Log.i(TAG, "Waiting for connections");
+                            Socket s = mServerSocket.accept();
+                            Log.i("MjpgServer", "Got a socket: " + s);
+                            Connection c = new Connection(s);
+                            synchronized (mLock) {
+                                mConnections.add(c);
+                            }
+                            c.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            Thread runThread = new Thread(runner);
+            runThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,23 +118,14 @@ public class MjpgServer {
 
     private class SendUpdateTask extends AsyncTask<byte[], Void, Void> {
 
-        protected void onProgressUpdate(Integer... progress) {
-        }
-
-        protected void onPostExecute(Long result) {
-        }
-
         @Override
         protected Void doInBackground(byte[]... params) {
-            update(params[0], true);
+            threadSafeUpdate(params[0]);
             return null;
         }
     }
 
-    private void update(byte[] bytes, boolean updateTimer) {
-        if (updateTimer) {
-            mLastUpdate = System.currentTimeMillis();
-        }
+    private void threadSafeUpdate(byte[] bytes) {
         synchronized (mLock) {
             ArrayList<Integer> badIndices = new ArrayList<>(mConnections.size());
             try
@@ -148,24 +154,4 @@ public class MjpgServer {
         }
     }
 
-    private Runnable runner = new Runnable() {
-
-        @Override
-        public void run() {
-            while (mRunning) {
-                try {
-                    Log.i(TAG, "Waiting for connections");
-                    Socket s = mServerSocket.accept();
-                    Log.i("MjpgServer", "Got a socket: " + s);
-                    Connection c = new Connection(s);
-                    synchronized (mLock) {
-                        mConnections.add(c);
-                    }
-                    c.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
 }
