@@ -3,6 +3,7 @@ package snobot.com.visionapp;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CaptureRequest;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
@@ -16,13 +17,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 import snobot.com.visionapp.camera.CameraRenderer;
+import snobot.com.visionapp.utils.MjpgServer;
+import snobot.com.visionapp.utils.RobotConnection;
 
 
 public class CameraActivity extends AppCompatActivity {
     private static final String TAG = "CameraActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 200;
+
+    private static RobotConnection sRobotConnection;
 
     private TextureView textureView;
 
@@ -30,6 +37,12 @@ public class CameraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(sRobotConnection == null)
+        {
+            sRobotConnection = new VisionRobotConnection();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         textureView = (TextureView) findViewById(R.id.texture);
@@ -44,7 +57,16 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        cameraRenderer = new CameraRenderer(textureView);
+        Map<CaptureRequest.Key, Object> captureRequests = new HashMap<>();
+        captureRequests.put(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_OFF);
+
+        captureRequests.put(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_OFF);
+        captureRequests.put(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_OFF);
+        captureRequests.put(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
+        captureRequests.put(CaptureRequest.SENSOR_EXPOSURE_TIME, 1000000L);
+        captureRequests.put(CaptureRequest.LENS_FOCUS_DISTANCE, .2f);
+
+        cameraRenderer = new CameraRenderer(captureRequests, textureView);
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
