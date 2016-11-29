@@ -183,7 +183,9 @@ public class CameraRenderer {
             cameraDevice = null;
         }
 
-        stopBackgroundThread();
+        if(mBackgroundThread != null) {
+            stopBackgroundThread();
+        }
     }
 
     public void runSingleCapture(ImageReader.OnImageAvailableListener imageListener)

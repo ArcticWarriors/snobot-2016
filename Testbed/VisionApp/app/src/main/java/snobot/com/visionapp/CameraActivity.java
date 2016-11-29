@@ -29,7 +29,7 @@ public class CameraActivity extends AppCompatActivity {
     private static final String TAG = "CameraActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 200;
 
-    private static RobotConnection sRobotConnection;
+    private static VisionRobotConnection sRobotConnection;
 
     private TextureView textureView;
 
@@ -41,6 +41,7 @@ public class CameraActivity extends AppCompatActivity {
         if(sRobotConnection == null)
         {
             sRobotConnection = new VisionRobotConnection();
+            sRobotConnection.start();
         }
 
         super.onCreate(savedInstanceState);
@@ -152,6 +153,10 @@ public class CameraActivity extends AppCompatActivity {
     protected void onImageBytes(byte[] bytes)
     {
         MjpgServer.getInstance().update(bytes);
+        if(sRobotConnection != null)
+        {
+            sRobotConnection.sendPictureTakenMessage();
+        }
         Log.i(TAG, "Captured image");
     }
 }

@@ -96,7 +96,7 @@ public abstract class RobotConnection {
                     try {
                         jsonMessage = reader.readLine();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //Timeout is OK
                     }
                     if (jsonMessage != null) {
                         handleMessage(jsonMessage);
@@ -242,31 +242,5 @@ public abstract class RobotConnection {
     protected abstract void onRobotDisconnected();
 
     protected abstract void sendHeartbeatMessage();
-
-//
-//    public void broadcastRobotConnected() {
-//        Intent i = new Intent(RobotConnectionStatusBroadcastReceiver.ACTION_ROBOT_CONNECTED);
-//        m_context.sendBroadcast(i);
-//    }
-//
-//    public void broadcastShotTaken() {
-//        Intent i = new Intent(RobotEventBroadcastReceiver.ACTION_SHOT_TAKEN);
-//        m_context.sendBroadcast(i);
-//    }
-//
-//    public void broadcastWantVisionMode() {
-//        Intent i = new Intent(RobotEventBroadcastReceiver.ACTION_WANT_VISION);
-//        m_context.sendBroadcast(i);
-//    }
-//
-//    public void broadcastWantIntakeMode() {
-//        Intent i = new Intent(RobotEventBroadcastReceiver.ACTION_WANT_INTAKE);
-//        m_context.sendBroadcast(i);
-//    }
-//
-//    public void broadcastRobotDisconnected() {
-//        Intent i = new Intent(RobotConnectionStatusBroadcastReceiver.ACTION_ROBOT_DISCONNECTED);
-//        m_context.sendBroadcast(i);
-//    }
 
 }

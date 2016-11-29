@@ -22,14 +22,26 @@ public class VisionAdbServer extends RobotConnectionServer
     @Override
     public void handleMessage(String message, double timestamp)
     {
+        Level logLevel = Level.INFO;
         if ("heartbeat".equals(message))
         {
             String outMessage = "heartbeat";
             ByteBuffer buffer = ByteBuffer.wrap(outMessage.getBytes());
             send(buffer);
+
+            logLevel = Level.FINE;
+        }
+        else if ("pictureTaken".equals(message))
+        {
+            logLevel = Level.INFO;
+        }
+        else
+        {
+            System.err.println("Unknown message " + message);
+            logLevel = Level.SEVERE;
         }
 
-        sLOGGER.log(Level.INFO, message);
+        sLOGGER.log(logLevel, message);
     }
 
     public double getTimestamp()

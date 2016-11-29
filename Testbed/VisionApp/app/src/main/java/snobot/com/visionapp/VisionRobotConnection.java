@@ -45,7 +45,13 @@ public class VisionRobotConnection extends RobotConnection {
 
     @Override
     protected void sendHeartbeatMessage() {
-        String message  = "heartbeat";
+        String message  = "heartbeat\n";
+        send(ByteBuffer.wrap(message.getBytes()));
+    }
+
+    public void sendPictureTakenMessage()
+    {
+        String message = "pictureTaken\n";
         send(ByteBuffer.wrap(message.getBytes()));
     }
 }
