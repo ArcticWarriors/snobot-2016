@@ -23,8 +23,9 @@ public abstract class RobotConnection {
     public static final int sDEFAULT_CONNECTION_PORT = 8254;
     public static final String sDEFAULT_CONNECTION_HOST = "localhost";
     public static final int sCONNECTION_THREAD_SLEEP_TIME = 100;
-    public static final int sHEARTBEAT_TIMEOUT = 800;
-    public static final int sSEND_HEARTBEAT_PERIOD = 100;
+    public static final int sSEND_HEARTBEAT_PERIOD = 1000;
+    public static final int sHEARTBEAT_TIMEOUT = sSEND_HEARTBEAT_PERIOD * 5;
+    public static final int sWRITE_THREAD_TIMEOUT = sSEND_HEARTBEAT_PERIOD * 3;
 
     private int mSendPort;
     private String mSendAddress;
@@ -59,7 +60,7 @@ public abstract class RobotConnection {
             while (mRunning) {
                 ByteBuffer nextToSend = null;
                 try {
-                    nextToSend = mMessageQueue.poll(250, TimeUnit.MILLISECONDS);
+                    nextToSend = mMessageQueue.poll(sWRITE_THREAD_TIMEOUT, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
                     Log.e(sTAG, "Couldn't poll queue");
                 }

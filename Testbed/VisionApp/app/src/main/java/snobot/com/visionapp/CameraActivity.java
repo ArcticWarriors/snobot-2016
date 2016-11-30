@@ -1,6 +1,7 @@
 package snobot.com.visionapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CaptureRequest;
@@ -25,7 +26,7 @@ import snobot.com.visionapp.utils.MjpgServer;
 import snobot.com.visionapp.utils.RobotConnection;
 
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends Activity {
     private static final String TAG = "CameraActivity";
     private static final int REQUEST_CAMERA_PERMISSION = 200;
 

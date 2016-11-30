@@ -28,8 +28,10 @@ public class VisionRobotConnection extends RobotConnection {
         {
             mLastHeartbeatReceiveTime = System.currentTimeMillis();
         }
-
-        Log.i(sTAG, "Parsing messages: " + message);
+        else
+        {
+            Log.e(sTAG, "Parsing unknown messages: " + message);
+        }
     }
 
 
