@@ -6,12 +6,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import org.opencv.core.Core;
 
@@ -52,27 +48,10 @@ public class MjpegRecevierMain
         reciever = new MjpegReceiver();
         visionPanel = new VisionTestPanel(visionAlgorithm, thresholdConfigFile);
 
-        List<ImageReceiver> imageReceivers = Arrays.asList(imageReciver);
+        reciever.addImageReceiver(imageReciver);
+        reciever.start(urlAddress);
 
         JFrame frame = new JFrame();
-        Thread receiverThread = new Thread(new Runnable()
-        {
-
-            @Override
-            public void run()
-            {
-                try
-                {
-                    reciever.runReceiver(urlAddress, imageReceivers);
-                }
-                catch (IOException e)
-                {
-                    JOptionPane.showMessageDialog(frame, "Error running receiver", "Error", JOptionPane.ERROR_MESSAGE, null);
-                    frame.dispose();
-                }
-            }
-        });
-        receiverThread.start();
 
         frame.addWindowListener(closingListener);
         frame.setLayout(new BorderLayout());

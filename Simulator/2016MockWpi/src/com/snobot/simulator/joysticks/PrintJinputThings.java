@@ -1,15 +1,24 @@
 package com.snobot.simulator.joysticks;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
+import net.java.games.input.Controller.Type;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Rumbler;
 
 public class PrintJinputThings
 {
 
-    // http://www.java-gaming.org/index.php?topic=16866.0
     public static void printAll()
+    {
+        printAll(Arrays.asList(Type.UNKNOWN, Type.KEYBOARD));
+    }
+
+    // http://www.java-gaming.org/index.php?topic=16866.0
+    public static void printAll(Collection<Type> typesToIgnore)
     {
         Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
 
@@ -17,16 +26,19 @@ public class PrintJinputThings
 
         for (int i = 0; i < ca.length; i++)
         {
-
-            if (ca[i].getType().toString().equals("Mouse") || ca[i].getType().toString().equals("USB Receiver")
-                    || ca[i].getType().toString().equals("Unknown"))
+            Type type = ca[i].getType();
+            if (typesToIgnore.contains(type))
             {
                 continue;
             }
+
             Component[] components = ca[i].getComponents();
 
             /* Get the name of the controller */
-            System.out.println("  " + ca[i].getName() + ", Type: " + ca[i].getType().toString());
+            System.out.println("  " + ca[i].getName());
+            System.out.println("  Type: " + ca[i].getType().toString());
+            System.out.println("  PortType: " + ca[i].getPortType().toString());
+            System.out.println("  PortNumber: " + ca[i].getPortNumber());
             System.out.println("  Component Count: " + components.length);
 
             for (int j = 0; j < components.length; j++)
@@ -56,15 +68,13 @@ public class PrintJinputThings
             }
 
             Rumbler[] rumblers = ca[i].getRumblers();
-            System.out.println("  Rumbler count : " + rumblers.length);
+            System.out.println("  Rumbler Count : " + rumblers.length);
 
             for (int j = 0; j < rumblers.length; j++)
             {
                 System.out.println(rumblers[j]);
                 // mController.getRumblers();
             }
-
-            System.out.println("Number of rumblers: " + ca[i].getRumblers().length);
 
             System.out.println("\n\n");
         }

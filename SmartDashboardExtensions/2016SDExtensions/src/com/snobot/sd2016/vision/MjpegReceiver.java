@@ -1,4 +1,4 @@
-package com.snobot.vision.standalone;
+package com.snobot.sd2016.vision;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
